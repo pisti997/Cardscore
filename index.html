@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>CardScore</title>
 
@@ -14,245 +15,441 @@
 
 <main class="app">
 
-    <!-- HOME -->
+    <!-- =========================
+         HOME
+    ========================== -->
 
-    <div id="home">
+    <section id="home">
 
-        <div class="logo">🃏</div>
+        <header class="home-header">
 
-        <h1>CardScore</h1>
+            <div class="cardscore-logo">
+                🃏
+            </div>
 
-        <p class="subtitle">
-            Il tuo segnapunti per i giochi di carte
-        </p>
+            <h1>CardScore</h1>
 
-        <h2>Scegli il gioco</h2>
+            <p class="subtitle">
+                Il tuo punteggio, ogni partita.
+            </p>
+
+        </header>
+
+
+        <h2 class="section-title">
+            SCEGLI IL GIOCO
+        </h2>
+
 
         <div class="games">
 
-            <button class="game-button" onclick="scegliGioco('UNO')">
-                🟦 UNO
+
+            <!-- UNO -->
+
+            <button
+                class="game-card"
+                onclick="scegliGioco('UNO')"
+            >
+
+                <div class="game-logo">
+
+                    <img
+                        src="immagini/uno.png"
+                        alt="Logo UNO"
+                    >
+
+                </div>
+
+                <div class="game-info">
+
+                    <strong>
+                        UNO
+                    </strong>
+
+                    <span>
+                        Gioco di carte
+                    </span>
+
+                </div>
+
             </button>
 
-            <button class="game-button" onclick="scegliGioco('Pili Pili')">
-                🟣 Pili Pili
+
+            <!-- PILI PILI -->
+
+            <button
+                class="game-card"
+                onclick="scegliGioco('Pili Pili')"
+            >
+
+                <div class="game-logo">
+
+                    <img
+                        src="immagini/pili-pili.png"
+                        alt="Logo Pili Pili"
+                    >
+
+                </div>
+
+                <div class="game-info">
+
+                    <strong>
+                        PILI PILI
+                    </strong>
+
+                    <span>
+                        Gioco di carte
+                    </span>
+
+                </div>
+
             </button>
 
-            <button class="game-button" onclick="scegliGioco('Scala 40')">
-                🟢 Scala 40
+
+            <!-- SCALA 40 -->
+
+            <button
+                class="game-card"
+                onclick="scegliGioco('Scala 40')"
+            >
+
+                <div class="game-logo">
+
+                    <img
+                        src="immagini/scala40.png"
+                        alt="Logo Scala 40"
+                    >
+
+                </div>
+
+                <div class="game-info">
+
+                    <strong>
+                        SCALA 40
+                    </strong>
+
+                    <span>
+                        Gioco di carte
+                    </span>
+
+                </div>
+
             </button>
 
-            <button class="game-button" onclick="scegliGioco('Scopa')">
-                🟡 Scopa
+
+            <!-- SCOPA -->
+
+            <button
+                class="game-card"
+                onclick="scegliGioco('Scopa')"
+            >
+
+                <div class="game-logo">
+
+                    <img
+                        src="immagini/scopa.png"
+                        alt="Logo Scopa"
+                    >
+
+                </div>
+
+                <div class="game-info">
+
+                    <strong>
+                        SCOPA
+                    </strong>
+
+                    <span>
+                        Gioco di carte
+                    </span>
+
+                </div>
+
             </button>
 
         </div>
 
 
-        <!-- PARTITA IN CORSO -->
+        <!-- =========================
+             PARTITA IN CORSO
+        ========================== -->
 
-        <div id="partita-in-corso" style="display:none">
+        <section
+            id="partita-in-corso"
+            style="display:none"
+        >
 
-            <h2>🔄 Partita in corso</h2>
+            <div class="saved-title">
+
+                <span>
+                    🎮
+                </span>
+
+                <h2>
+                    PARTITA IN CORSO
+                </h2>
+
+            </div>
+
 
             <div id="partita-salvata"></div>
 
-            <button onclick="continuaPartita()">
+
+            <button
+                class="primary-button"
+                onclick="continuaPartita()"
+            >
                 ▶️ Continua partita
             </button>
 
-            <button onclick="nuovaPartita()">
+
+            <button
+                class="secondary-button"
+                onclick="nuovaPartita()"
+            >
                 🆕 Nuova partita
             </button>
 
-        </div>
+        </section>
 
-    </div>
+    </section>
 
 
-    <!-- NUOVA PARTITA -->
+    <!-- =========================
+         NUOVA PARTITA
+    ========================== -->
 
-    <div id="nuova-partita" style="display:none">
+    <section
+        id="nuova-partita"
+        style="display:none"
+    >
 
-        <button onclick="tornaHome()">
+        <button
+            class="back-button"
+            onclick="tornaHome()"
+        >
             ← Indietro
         </button>
 
-        <h1 id="titolo-gioco"></h1>
 
-        <p class="subtitle">
-            Crea la tua partita
-        </p>
+        <div class="page-header">
+
+            <h1 id="titolo-gioco"></h1>
+
+            <p class="subtitle">
+                Configura la tua partita
+            </p>
+
+        </div>
 
 
         <!-- GIOCATORI -->
 
-        <h2>Giocatori</h2>
+        <div class="settings-card">
 
-        <input
-            id="nome-giocatore"
-            type="text"
-            placeholder="Nome giocatore"
-        >
+            <h2>
+                👥 Giocatori
+            </h2>
 
-        <button onclick="aggiungiGiocatore()">
-            + Aggiungi giocatore
-        </button>
-
-        <div id="lista-giocatori"></div>
-
-
-        <!-- SISTEMA -->
-
-        <h2>Sistema di punteggio</h2>
-
-        <select
-            id="sistema-punteggio"
-            onchange="cambiaSistemaPunteggio()"
-        >
-
-            <option value="semplice">
-                Punteggio semplice
-            </option>
-
-            <option value="game-set">
-                Game / Set / Match
-            </option>
-
-        </select>
-
-
-        <!-- GAME / SET / MATCH -->
-
-        <div
-            id="impostazioni-game-set"
-            style="display:none"
-        >
-
-            <h2>Impostazioni</h2>
-
-            <label for="punti-game">
-                🎯 Punti per vincere un Game
-            </label>
 
             <input
-                id="punti-game"
-                type="number"
-                min="1"
-                value="21"
+                id="nome-giocatore"
+                type="text"
+                placeholder="Nome giocatore"
             >
 
 
-            <label for="game-set">
-                🎮 Game per vincere un Set
-            </label>
-
-            <input
-                id="game-set"
-                type="number"
-                min="1"
-                value="3"
+            <button
+                onclick="aggiungiGiocatore()"
             >
+                + Aggiungi giocatore
+            </button>
 
 
-            <label for="set-match">
-                🏆 Set per vincere la Partita
-            </label>
-
-            <input
-                id="set-match"
-                type="number"
-                min="1"
-                value="2"
-            >
+            <div id="lista-giocatori"></div>
 
         </div>
 
 
-        <!-- PUNTEGGIO SEMPLICE -->
+        <!-- SISTEMA -->
 
-        <div id="impostazioni-semplici">
+        <div class="settings-card">
 
-            <h2>Obiettivo partita</h2>
+            <h2>
+                ⚙️ Sistema di punteggio
+            </h2>
 
-            <select id="obiettivo">
 
-                <option value="100">
-                    100 punti
+            <select
+                id="sistema-punteggio"
+                onchange="cambiaSistemaPunteggio()"
+            >
+
+                <option value="semplice">
+                    Punteggio semplice
                 </option>
 
-                <option value="200">
-                    200 punti
-                </option>
-
-                <option value="300">
-                    300 punti
-                </option>
-
-                <option value="500" selected>
-                    500 punti
-                </option>
-
-                <option value="1000">
-                    1000 punti
-                </option>
-
-                <option value="personalizzato">
-                    Personalizzato
+                <option value="game-set">
+                    Game / Set / Match
                 </option>
 
             </select>
 
 
+            <!-- GAME / SET / MATCH -->
+
             <div
-                id="campo-personalizzato"
+                id="impostazioni-game-set"
                 style="display:none"
             >
 
+                <label for="punti-game">
+                    Punti per vincere un Game
+                </label>
+
                 <input
-                    id="obiettivo-personalizzato"
+                    id="punti-game"
                     type="number"
                     min="1"
-                    placeholder="Inserisci obiettivo"
+                    value="21"
                 >
+
+
+                <label for="game-set">
+                    Game per vincere un Set
+                </label>
+
+                <input
+                    id="game-set"
+                    type="number"
+                    min="1"
+                    value="3"
+                >
+
+
+                <label for="set-match">
+                    Set per vincere la Partita
+                </label>
+
+                <input
+                    id="set-match"
+                    type="number"
+                    min="1"
+                    value="2"
+                >
+
+            </div>
+
+
+            <!-- PUNTEGGIO SEMPLICE -->
+
+            <div id="impostazioni-semplici">
+
+                <label for="obiettivo">
+                    🎯 Obiettivo partita
+                </label>
+
+
+                <select id="obiettivo">
+
+                    <option value="100">
+                        100 punti
+                    </option>
+
+                    <option value="200">
+                        200 punti
+                    </option>
+
+                    <option value="300">
+                        300 punti
+                    </option>
+
+                    <option
+                        value="500"
+                        selected
+                    >
+                        500 punti
+                    </option>
+
+                    <option value="1000">
+                        1000 punti
+                    </option>
+
+                    <option value="personalizzato">
+                        Personalizzato
+                    </option>
+
+                </select>
+
+
+                <div
+                    id="campo-personalizzato"
+                    style="display:none"
+                >
+
+                    <input
+                        id="obiettivo-personalizzato"
+                        type="number"
+                        min="1"
+                        placeholder="Inserisci obiettivo"
+                    >
+
+                </div>
 
             </div>
 
         </div>
 
 
-        <button onclick="iniziaPartita()">
+        <button
+            class="primary-button start-button"
+            onclick="iniziaPartita()"
+        >
             🎮 Inizia partita
         </button>
 
-    </div>
+    </section>
 
 
-    <!-- PARTITA -->
+    <!-- =========================
+         PARTITA
+    ========================== -->
 
-    <div id="partita" style="display:none">
+    <section
+        id="partita"
+        style="display:none"
+    >
 
-        <button onclick="tornaHome()">
+        <button
+            class="back-button"
+            onclick="tornaHome()"
+        >
             ← Esci
         </button>
 
 
-        <h1 id="titolo-partita"></h1>
+        <div class="page-header">
 
-        <p
-            class="subtitle"
-            id="numero-mano"
-        >
-            Turno 1
-        </p>
+            <h1 id="titolo-partita"></h1>
+
+            <p
+                class="subtitle"
+                id="numero-mano"
+            >
+                Turno 1
+            </p>
+
+        </div>
 
 
-        <p id="obiettivo-display"></p>
+        <div id="obiettivo-display"></div>
 
 
-        <!-- GAME / SET / MATCH -->
+        <!-- =========================
+             GAME / SET / MATCH
+        ========================== -->
 
-        <div
+        <section
             id="punteggio-game-set"
             style="display:none"
         >
@@ -293,68 +490,84 @@
 
             <div id="tabellone-game-set"></div>
 
-        </div>
+        </section>
 
 
-        <!-- PUNTEGGIO SEMPLICE -->
+        <!-- =========================
+             PUNTEGGIO SEMPLICE
+        ========================== -->
 
-        <div
-            id="punteggio-semplice"
-        >
+        <section id="punteggio-semplice">
 
-            <h2>
-                Punteggio
+            <h2 class="section-title">
+                PUNTEGGIO
             </h2>
 
             <div id="tabellone"></div>
 
-        </div>
+        </section>
 
 
-        <!-- NUOVO TURNO -->
+        <!-- =========================
+             NUOVO TURNO
+        ========================== -->
 
-        <h2>
-            Nuovo turno
-        </h2>
+        <section class="turno-card">
 
-
-        <label for="giocatore-vincitore">
-            🏆 Giocatore
-        </label>
-
-        <select
-            id="giocatore-vincitore"
-        >
-        </select>
+            <h2>
+                ➕ Nuovo turno
+            </h2>
 
 
-        <label for="punti">
-            Punti ottenuti
-        </label>
-
-        <input
-            id="punti"
-            type="number"
-            min="0"
-            placeholder="Inserisci punti"
-        >
+            <label for="giocatore-vincitore">
+                Giocatore
+            </label>
 
 
-        <button onclick="aggiungiMano()">
-            ➕ Nuovo turno
-        </button>
+            <select
+                id="giocatore-vincitore"
+            >
+            </select>
 
 
-        <button onclick="annullaUltimoTurno()">
-            ↩️ Annulla ultimo turno
-        </button>
+            <label for="punti">
+                Punti ottenuti
+            </label>
 
 
-        <!-- STORICO -->
+            <input
+                id="punti"
+                type="number"
+                min="0"
+                placeholder="Inserisci punti"
+            >
+
+
+            <button
+                class="primary-button"
+                onclick="aggiungiMano()"
+            >
+                ➕ Registra turno
+            </button>
+
+
+            <button
+                class="secondary-button"
+                onclick="annullaUltimoTurno()"
+            >
+                ↩️ Annulla ultimo turno
+            </button>
+
+        </section>
+
+
+        <!-- =========================
+             STORICO
+        ========================== -->
 
         <div id="storico"></div>
 
-    </div>
+    </section>
 
 </main>
 
