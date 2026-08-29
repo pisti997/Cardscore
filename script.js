@@ -7,18 +7,18 @@ let obiettivoPartita = 500;
 
 
 // ========================
-// SALVATAGGIO AUTOMATICO
+// SALVA PARTITA
 // ========================
 
 function salvaPartita() {
 
     const partita = {
-        giocoScelto: giocoScelto,
+        gioco: giocoScelto,
         giocatori: giocatori,
         punteggi: punteggi,
         storico: storico,
-        numeroTurno: numeroTurno,
-        obiettivoPartita: obiettivoPartita
+        turno: numeroTurno,
+        obiettivo: obiettivoPartita
     };
 
     localStorage.setItem(
@@ -29,73 +29,24 @@ function salvaPartita() {
 
 
 // ========================
-// CARICA PARTITA
-// ========================
-
-function caricaPartita() {
-
-    const dati =
-        localStorage.getItem("cardscore_partita");
-
-    if (!dati) {
-        return false;
-    }
-
-    try {
-
-        const partita =
-            JSON.parse(dati);
-
-        giocoScelto =
-            partita.giocoScelto;
-
-        giocatori =
-            partita.giocatori;
-
-        punteggi =
-            partita.punteggi;
-
-        storico =
-            partita.storico;
-
-        numeroTurno =
-            partita.numeroTurno;
-
-        obiettivoPartita =
-            partita.obiettivoPartita;
-
-        return true;
-
-    } catch (errore) {
-
-        console.error(
-            "Errore nel caricamento:",
-            errore
-        );
-
-        return false;
-    }
-}
-
-
-// ========================
 // MOSTRA PARTITA SALVATA
 // ========================
 
-function mostraPartitaSalvata() {
+function aggiornaPartitaSalvata() {
 
     const dati =
         localStorage.getItem("cardscore_partita");
 
     const sezione =
-        document.getElementById(
-            "partita-in-corso"
-        );
+        document.getElementById("partita-in-corso");
 
     const contenitore =
-        document.getElementById(
-            "partita-salvata"
-        );
+        document.getElementById("partita-salvata");
+
+
+    if (!sezione || !contenitore) {
+        return;
+    }
 
 
     if (!dati) {
@@ -112,25 +63,33 @@ function mostraPartitaSalvata() {
             JSON.parse(dati);
 
 
-        sezione.style.display = "block";
+        if (
+            !partita.giocatori ||
+            partita.giocatori.length < 2
+        ) {
+
+            sezione.style.display = "none";
+
+            return;
+        }
 
 
-        let testo =
+        let html =
             "<strong>" +
-            partita.giocoScelto +
+            partita.gioco +
             "</strong><br>";
 
 
-        testo +=
+        html +=
             "Turno " +
-            partita.numeroTurno +
-            "<br>";
+            partita.turno +
+            "<br><br>";
 
 
         partita.giocatori.forEach(
             function(nome, indice) {
 
-                testo +=
+                html +=
                     nome +
                     ": " +
                     partita.punteggi[indice] +
@@ -139,10 +98,17 @@ function mostraPartitaSalvata() {
         );
 
 
-        contenitore.innerHTML = testo;
+        contenitore.innerHTML = html;
+
+        sezione.style.display = "block";
 
 
     } catch (errore) {
+
+        console.log(
+            "Errore partita salvata:",
+            errore
+        );
 
         sezione.style.display = "none";
     }
@@ -155,53 +121,93 @@ function mostraPartitaSalvata() {
 
 function continuaPartita() {
 
-    if (!caricaPartita()) {
+    const dati =
+        localStorage.getItem("cardscore_partita");
+
+
+    if (!dati) {
 
         alert(
-            "Non è stata trovata una partita salvata."
+            "Non c'è nessuna partita salvata."
         );
 
         return;
     }
 
 
-    document.getElementById("home")
-        .style.display = "none";
+    try {
+
+        const partita =
+            JSON.parse(dati);
 
 
-    document.getElementById("nuova-partita")
-        .style.display = "none";
+        giocoScelto =
+            partita.gioco;
+
+        giocatori =
+            partita.giocatori;
+
+        punteggi =
+            partita.punteggi;
+
+        storico =
+            partita.storico || [];
+
+        numeroTurno =
+            partita.turno;
+
+        obiettivoPartita =
+            partita.obiettivo;
 
 
-    document.getElementById("partita")
-        .style.display = "block";
+        document.getElementById(
+            "home"
+        ).style.display = "none";
 
 
-    document.getElementById(
-        "titolo-partita"
-    ).textContent =
-        giocoScelto;
+        document.getElementById(
+            "nuova-partita"
+        ).style.display = "none";
 
 
-    document.getElementById(
-        "numero-mano"
-    ).textContent =
-        "Turno " + numeroTurno;
+        document.getElementById(
+            "partita"
+        ).style.display = "block";
 
 
-    document.getElementById(
-        "obiettivo-display"
-    ).textContent =
-        "🎯 Obiettivo: " +
-        obiettivoPartita +
-        " punti";
+        document.getElementById(
+            "titolo-partita"
+        ).textContent =
+            giocoScelto;
 
 
-    creaSelettoreVincitore();
+        document.getElementById(
+            "numero-mano"
+        ).textContent =
+            "Turno " + numeroTurno;
 
-    creaTabellone();
 
-    mostraStorico();
+        document.getElementById(
+            "obiettivo-display"
+        ).textContent =
+            "🎯 Obiettivo: " +
+            obiettivoPartita +
+            " punti";
+
+
+        creaSelettoreVincitore();
+
+        creaTabellone();
+
+        mostraStorico();
+
+
+    } catch (errore) {
+
+        alert(
+            "Non è stato possibile recuperare la partita."
+        );
+    }
 }
 
 
@@ -232,8 +238,9 @@ function nuovaPartita() {
     ).style.display = "none";
 
 
-    document.getElementById("home")
-        .style.display = "none";
+    document.getElementById(
+        "home"
+    ).style.display = "none";
 
 
     document.getElementById(
@@ -251,8 +258,9 @@ function scegliGioco(gioco) {
     giocoScelto = gioco;
 
 
-    document.getElementById("home")
-        .style.display = "none";
+    document.getElementById(
+        "home"
+    ).style.display = "none";
 
 
     document.getElementById(
@@ -314,7 +322,10 @@ document.addEventListener(
         }
 
 
-        mostraPartitaSalvata();
+        // Controlla subito se c'è
+        // una partita salvata
+
+        aggiornaPartitaSalvata();
     }
 );
 
@@ -393,7 +404,9 @@ function mostraGiocatori() {
                 nome;
 
 
-            lista.appendChild(elemento);
+            lista.appendChild(
+                elemento
+            );
         }
     );
 }
@@ -405,8 +418,9 @@ function mostraGiocatori() {
 
 function tornaHome() {
 
-    document.getElementById("home")
-        .style.display = "block";
+    document.getElementById(
+        "home"
+    ).style.display = "block";
 
 
     document.getElementById(
@@ -419,18 +433,7 @@ function tornaHome() {
     ).style.display = "none";
 
 
-    giocatori = [];
-
-    punteggi = [];
-
-    storico = [];
-
-    numeroTurno = 1;
-
-    obiettivoPartita = 500;
-
-
-    mostraPartitaSalvata();
+    aggiornaPartitaSalvata();
 }
 
 
@@ -545,8 +548,6 @@ function iniziaPartita() {
 
     mostraStorico();
 
-
-    // SALVATAGGIO AUTOMATICO
 
     salvaPartita();
 }
@@ -749,8 +750,6 @@ function aggiungiMano() {
     mostraStorico();
 
 
-    // SALVATAGGIO AUTOMATICO
-
     salvaPartita();
 
 
@@ -877,14 +876,12 @@ function annullaUltimoTurno() {
     mostraStorico();
 
 
-    // SALVATAGGIO AUTOMATICO
-
     salvaPartita();
 }
 
 
 // ========================
-// CONTROLLO VITTORIA
+// VITTORIA
 // ========================
 
 function controllaVittoria() {
@@ -903,9 +900,7 @@ function controllaVittoria() {
             alert(
                 "🏆 " +
                 giocatori[i] +
-                " ha raggiunto " +
-                obiettivoPartita +
-                " punti e ha vinto!"
+                " ha vinto!"
             );
 
             return;
