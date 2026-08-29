@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,6 @@
 
     <main class="app">
 
-        <!-- HOME -->
         <div id="home">
 
             <div class="logo">🃏</div>
@@ -49,7 +49,6 @@
         </div>
 
 
-        <!-- NUOVA PARTITA -->
         <div id="nuova-partita" style="display:none">
 
             <button onclick="tornaHome()">← Indietro</button>
@@ -79,7 +78,6 @@
         </div>
 
 
-        <!-- PARTITA -->
         <div id="partita" style="display:none">
 
             <button onclick="tornaHome()">← Esci</button>
@@ -90,17 +88,12 @@
                 Turno 1
             </p>
 
-
-            <!-- TABELLA TOTALI -->
             <div id="tabellone"></div>
 
-
-            <!-- INSERIMENTO PUNTI -->
             <h2>Chi ha fatto punti?</h2>
 
             <select id="giocatore-punti">
             </select>
-
 
             <h2>Punteggio</h2>
 
@@ -111,7 +104,6 @@
                 min="0"
             >
 
-
             <button onclick="aggiungiMano()">
                 ➕ Nuovo turno
             </button>
@@ -120,8 +112,8 @@
 
     </main>
 
-
     <script src="script.js"></script>
 
 </body>
+
 </html>
