@@ -110,7 +110,10 @@
 
         <h2>Sistema di punteggio</h2>
 
-        <select id="sistema-punteggio" onchange="cambiaSistemaPunteggio()">
+        <select
+            id="sistema-punteggio"
+            onchange="cambiaSistemaPunteggio()"
+        >
 
             <option value="semplice">
                 Punteggio semplice
@@ -123,15 +126,18 @@
         </select>
 
 
-        <!-- IMPOSTAZIONI GAME / SET / MATCH -->
+        <!-- GAME / SET / MATCH -->
 
-        <div id="impostazioni-game-set" style="display:none">
+        <div
+            id="impostazioni-game-set"
+            style="display:none"
+        >
 
-            <h2>Impostazioni</h2>
+            <h2>Impostazioni Game / Set / Match</h2>
 
 
             <label for="punti-game">
-                🎯 Punti per Game
+                🎯 Punti per vincere un Game
             </label>
 
             <input
@@ -139,12 +145,11 @@
                 type="number"
                 min="1"
                 value="21"
-                placeholder="Punti per Game"
             >
 
 
             <label for="game-set">
-                🎮 Game per Set
+                🎮 Game per vincere un Set
             </label>
 
             <input
@@ -152,12 +157,11 @@
                 type="number"
                 min="1"
                 value="3"
-                placeholder="Game per Set"
             >
 
 
             <label for="set-match">
-                🏆 Set per Match
+                🏆 Set per vincere la Partita
             </label>
 
             <input
@@ -165,13 +169,12 @@
                 type="number"
                 min="1"
                 value="2"
-                placeholder="Set per Match"
             >
 
         </div>
 
 
-        <!-- OBIETTIVO SEMPLICE -->
+        <!-- PUNTEGGIO SEMPLICE -->
 
         <div id="impostazioni-semplici">
 
@@ -206,7 +209,10 @@
             </select>
 
 
-            <div id="campo-personalizzato" style="display:none">
+            <div
+                id="campo-personalizzato"
+                style="display:none"
+            >
 
                 <input
                     id="obiettivo-personalizzato"
@@ -240,50 +246,92 @@
 
         <h1 id="titolo-partita"></h1>
 
-        <p class="subtitle" id="numero-mano">
+        <p
+            class="subtitle"
+            id="numero-mano"
+        >
             Turno 1
         </p>
 
 
-        <!-- OBIETTIVO -->
-
         <p id="obiettivo-display">
-            🎯 Obiettivo: 500 punti
+            🎯 Obiettivo
         </p>
 
 
-        <!-- PUNTEGGIO GAME / SET -->
+        <!-- ========================= -->
+        <!-- GAME / SET / MATCH -->
+        <!-- ========================= -->
 
-        <div id="punteggio-game-set" style="display:none">
+        <div
+            id="punteggio-game-set"
+            style="display:none"
+        >
 
-            <h2>🏆 Game / Set</h2>
+            <h2>
+                🏆 Game / Set / Match
+            </h2>
+
+
+            <div class="match-header">
+
+                <div>
+                    Giocatore
+                </div>
+
+                <div>
+                    Punti
+                </div>
+
+                <div>
+                    Game
+                </div>
+
+                <div>
+                    Set
+                </div>
+
+            </div>
+
 
             <div id="tabellone-game-set"></div>
 
         </div>
 
 
+        <!-- ========================= -->
         <!-- PUNTEGGIO SEMPLICE -->
+        <!-- ========================= -->
 
-        <div id="punteggio-semplice">
+        <div
+            id="punteggio-semplice"
+        >
 
-            <h2>Punteggio</h2>
+            <h2>
+                Punteggio
+            </h2>
 
             <div id="tabellone"></div>
 
         </div>
 
 
+        <!-- ========================= -->
         <!-- NUOVO TURNO -->
+        <!-- ========================= -->
 
-        <h2>Nuovo turno</h2>
+        <h2>
+            Nuovo turno
+        </h2>
 
 
         <label for="giocatore-vincitore">
-            🏆 Vincitore
+            🏆 Giocatore
         </label>
 
-        <select id="giocatore-vincitore">
+        <select
+            id="giocatore-vincitore"
+        >
         </select>
 
 
