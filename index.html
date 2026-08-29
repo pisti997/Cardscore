@@ -13,7 +13,7 @@
 
     <main class="app">
 
-        <!-- SCHERMATA INIZIALE -->
+        <!-- HOME -->
         <div id="home">
 
             <div class="logo">🃏</div>
@@ -49,7 +49,7 @@
         </div>
 
 
-        <!-- SCHERMATA NUOVA PARTITA -->
+        <!-- NUOVA PARTITA -->
         <div id="nuova-partita" style="display:none">
 
             <button onclick="tornaHome()">← Indietro</button>
@@ -79,7 +79,7 @@
         </div>
 
 
-        <!-- SCHERMATA PARTITA -->
+        <!-- PARTITA -->
         <div id="partita" style="display:none">
 
             <button onclick="tornaHome()">← Esci</button>
@@ -87,13 +87,33 @@
             <h1 id="titolo-partita"></h1>
 
             <p class="subtitle" id="numero-mano">
-                Mano 1
+                Turno 1
             </p>
 
+
+            <!-- TABELLA TOTALI -->
             <div id="tabellone"></div>
 
+
+            <!-- INSERIMENTO PUNTI -->
+            <h2>Chi ha fatto punti?</h2>
+
+            <select id="giocatore-punti">
+            </select>
+
+
+            <h2>Punteggio</h2>
+
+            <input
+                id="punti"
+                type="number"
+                placeholder="Inserisci punti"
+                min="0"
+            >
+
+
             <button onclick="aggiungiMano()">
-                ➕ Aggiungi mano
+                ➕ Nuovo turno
             </button>
 
         </div>
