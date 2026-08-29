@@ -20,7 +20,7 @@ let setVinti = [];
 
 
 // ========================================
-// SALVATAGGIO AUTOMATICO
+// SALVA PARTITA
 // ========================================
 
 function salvaPartita() {
@@ -28,11 +28,9 @@ function salvaPartita() {
     const partita = {
 
         gioco: giocoScelto,
-
         giocatori: giocatori,
 
         punteggi: punteggi,
-
         storico: storico,
 
         turno: numeroTurno,
@@ -42,15 +40,12 @@ function salvaPartita() {
         obiettivo: obiettivoPartita,
 
         puntiGame: puntiPerGame,
-
         gameSet: gamePerSet,
-
         setMatch: setPerMatch,
 
         puntiAttualiGame: puntiGame,
 
         gameVinti: gameVinti,
-
         setVinti: setVinti
     };
 
@@ -63,7 +58,7 @@ function salvaPartita() {
 
 
 // ========================================
-// MOSTRA PARTITA SALVATA
+// PARTITA SALVATA
 // ========================================
 
 function aggiornaPartitaSalvata() {
@@ -693,10 +688,6 @@ function iniziaPartita() {
         ).value;
 
 
-    // ==============================
-    // PUNTEGGIO SEMPLICE
-    // ==============================
-
     if (
         sistemaPunteggio ===
         "semplice"
@@ -748,10 +739,6 @@ function iniziaPartita() {
         }
     }
 
-
-    // ==============================
-    // GAME / SET / MATCH
-    // ==============================
 
     if (
         sistemaPunteggio ===
@@ -886,11 +873,10 @@ function aggiornaSchermataPartita() {
         document.getElementById(
             "obiettivo-display"
         ).textContent =
-            "🎯 " +
             puntiPerGame +
-            " punti = Game • " +
+            " punti = Game  •  " +
             gamePerSet +
-            " Game = Set • " +
+            " Game = Set  •  " +
             setPerMatch +
             " Set = Match";
 
@@ -1032,58 +1018,45 @@ function creaTabelloneGameSet() {
         "";
 
 
-    // Troviamo il miglior giocatore
-    // per evidenziarlo
+    // Troviamo chi è in vantaggio
 
-    let migliorSet = -1;
-    let migliorGame = -1;
-    let migliorPunti = -1;
+    let leader = 0;
 
 
-    giocatori.forEach(
-        function(nome, indice) {
+    for (
+        let i = 1;
+        i < giocatori.length;
+        i++
+    ) {
 
-            if (
-                setVinti[indice] >
-                migliorSet
-            ) {
+        if (
+            setVinti[i] >
+            setVinti[leader]
+        ) {
 
-                migliorSet =
-                    setVinti[indice];
+            leader = i;
 
-                migliorGame =
-                    gameVinti[indice];
+        } else if (
+            setVinti[i] ===
+            setVinti[leader] &&
+            gameVinti[i] >
+            gameVinti[leader]
+        ) {
 
-                migliorPunti =
-                    puntiGame[indice];
+            leader = i;
 
-            } else if (
-                setVinti[indice] ===
-                migliorSet &&
-                gameVinti[indice] >
-                migliorGame
-            ) {
+        } else if (
+            setVinti[i] ===
+            setVinti[leader] &&
+            gameVinti[i] ===
+            gameVinti[leader] &&
+            puntiGame[i] >
+            puntiGame[leader]
+        ) {
 
-                migliorGame =
-                    gameVinti[indice];
-
-                migliorPunti =
-                    puntiGame[indice];
-
-            } else if (
-                setVinti[indice] ===
-                migliorSet &&
-                gameVinti[indice] ===
-                migliorGame &&
-                puntiGame[indice] >
-                migliorPunti
-            ) {
-
-                migliorPunti =
-                    puntiGame[indice];
-            }
+            leader = i;
         }
-    );
+    }
 
 
     giocatori.forEach(
@@ -1096,18 +1069,11 @@ function creaTabelloneGameSet() {
 
 
             riga.className =
-                "score-row";
+                "score-row match-row";
 
-
-            // Evidenziamo il leader
 
             if (
-                setVinti[indice] ===
-                migliorSet &&
-                gameVinti[indice] ===
-                migliorGame &&
-                puntiGame[indice] ===
-                migliorPunti
+                indice === leader
             ) {
 
                 riga.classList.add(
@@ -1181,6 +1147,22 @@ function creaTabelloneGameSet() {
             );
         }
     );
+
+
+    const stato =
+        document.getElementById(
+            "stato-match"
+        );
+
+
+    if (stato) {
+
+        stato.textContent =
+            "Game " +
+            (gameVinti[leader] + 1) +
+            "  •  Set " +
+            (setVinti[leader] + 1);
+    }
 }
 
 
@@ -1240,23 +1222,13 @@ function aggiungiMano() {
 
 
     // ====================================
-    // PUNTEGGIO SEMPLICE
+    // SEMPLICE
     // ====================================
 
     if (
         sistemaPunteggio ===
         "semplice"
     ) {
-
-        const puntiTurno =
-            new Array(
-                giocatori.length
-            ).fill(0);
-
-
-        puntiTurno[indice] =
-            punti;
-
 
         punteggi[indice] +=
             punti;
@@ -1285,14 +1257,9 @@ function aggiungiMano() {
 
     else {
 
-        // Aggiungiamo i punti
-        // al Game corrente
-
         puntiGame[indice] +=
             punti;
 
-
-        // Totale generale
 
         punteggi[indice] +=
             punti;
@@ -1357,16 +1324,12 @@ function controllaGame(indice) {
     );
 
 
-    // Azzera i punti del Game
+    // Azzera il Game
 
-    for (
-        let i = 0;
-        i < puntiGame.length;
-        i++
-    ) {
-
-        puntiGame[i] = 0;
-    }
+    puntiGame =
+        new Array(
+            giocatori.length
+        ).fill(0);
 
 
     // ====================================
@@ -1390,14 +1353,10 @@ function controllaGame(indice) {
 
         // Azzera i Game
 
-        for (
-            let i = 0;
-            i < gameVinti.length;
-            i++
-        ) {
-
-            gameVinti[i] = 0;
-        }
+        gameVinti =
+            new Array(
+                giocatori.length
+            ).fill(0);
 
 
         // ====================================
@@ -1419,6 +1378,40 @@ function controllaGame(indice) {
             localStorage.removeItem(
                 "cardscore_partita"
             );
+        }
+    }
+}
+
+
+// ========================================
+// CONTROLLO VITTORIA SEMPLICE
+// ========================================
+
+function controllaVittoria() {
+
+    for (
+        let i = 0;
+        i < punteggi.length;
+        i++
+    ) {
+
+        if (
+            punteggi[i] >=
+            obiettivoPartita
+        ) {
+
+            alert(
+                "🏆 " +
+                giocatori[i] +
+                " ha vinto la partita!"
+            );
+
+
+            localStorage.removeItem(
+                "cardscore_partita"
+            );
+
+            return;
         }
     }
 }
