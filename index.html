@@ -12,211 +12,184 @@
 
 <body>
 
-    <main class="app">
+<main class="app">
 
-        <!-- ========================= -->
-        <!-- HOME -->
-        <!-- ========================= -->
+    <!-- HOME -->
 
-        <div id="home">
+    <div id="home">
 
-            <div class="logo">🃏</div>
+        <div class="logo">🃏</div>
 
-            <h1>CardScore</h1>
+        <h1>CardScore</h1>
 
-            <p class="subtitle">
-                Il tuo segnapunti per i giochi di carte
-            </p>
+        <p class="subtitle">
+            Il tuo segnapunti per i giochi di carte
+        </p>
 
-            <h2>Scegli il gioco</h2>
+        <h2>Scegli il gioco</h2>
 
-            <div class="games">
+        <div class="games">
 
-                <button class="game-button" onclick="scegliGioco('UNO')">
-                    🟦 UNO
-                </button>
+            <button class="game-button" onclick="scegliGioco('UNO')">
+                🟦 UNO
+            </button>
 
-                <button class="game-button" onclick="scegliGioco('Pili Pili')">
-                    🟣 Pili Pili
-                </button>
+            <button class="game-button" onclick="scegliGioco('Pili Pili')">
+                🟣 Pili Pili
+            </button>
 
-                <button class="game-button" onclick="scegliGioco('Scala 40')">
-                    🟢 Scala 40
-                </button>
+            <button class="game-button" onclick="scegliGioco('Scala 40')">
+                🟢 Scala 40
+            </button>
 
-                <button class="game-button" onclick="scegliGioco('Scopa')">
-                    🟡 Scopa
-                </button>
-
-            </div>
+            <button class="game-button" onclick="scegliGioco('Scopa')">
+                🟡 Scopa
+            </button>
 
         </div>
 
-
-        <!-- ========================= -->
-        <!-- NUOVA PARTITA -->
-        <!-- ========================= -->
-
-        <div id="nuova-partita" style="display:none">
-
-            <button onclick="tornaHome()">
-                ← Indietro
-            </button>
-
-            <h1 id="titolo-gioco"></h1>
-
-            <p class="subtitle">
-                Crea la tua partita
-            </p>
+    </div>
 
 
-            <!-- GIOCATORI -->
+    <!-- NUOVA PARTITA -->
 
-            <h2>Giocatori</h2>
+    <div id="nuova-partita" style="display:none">
 
-            <input
-                id="nome-giocatore"
-                type="text"
-                placeholder="Nome giocatore"
-            >
+        <button onclick="tornaHome()">
+            ← Indietro
+        </button>
 
-            <button onclick="aggiungiGiocatore()">
-                + Aggiungi giocatore
-            </button>
+        <h1 id="titolo-gioco"></h1>
 
-            <div id="lista-giocatori"></div>
+        <p class="subtitle">
+            Crea la tua partita
+        </p>
 
 
-            <!-- OBIETTIVO -->
+        <h2>Giocatori</h2>
 
-            <h2>Obiettivo partita</h2>
+        <input
+            id="nome-giocatore"
+            type="text"
+            placeholder="Nome giocatore"
+        >
 
-            <select
-                id="obiettivo"
-                onchange="cambiaObiettivo()"
-            >
+        <button onclick="aggiungiGiocatore()">
+            + Aggiungi giocatore
+        </button>
 
-                <option value="100">
-                    100 punti
-                </option>
+        <div id="lista-giocatori"></div>
 
-                <option value="200">
-                    200 punti
-                </option>
 
-                <option value="300">
-                    300 punti
-                </option>
+        <h2>Obiettivo partita</h2>
 
-                <option value="500" selected>
-                    500 punti
-                </option>
+        <select id="obiettivo">
 
-                <option value="1000">
-                    1000 punti
-                </option>
+            <option value="100">100 punti</option>
 
-                <option value="personalizzato">
-                    Personalizzato
-                </option>
+            <option value="200">200 punti</option>
 
-            </select>
+            <option value="300">300 punti</option>
 
+            <option value="500" selected>500 punti</option>
+
+            <option value="1000">1000 punti</option>
+
+            <option value="personalizzato">
+                Personalizzato
+            </option>
+
+        </select>
+
+
+        <!-- CAMPO PERSONALIZZATO -->
+
+        <div id="campo-personalizzato" style="display:none">
 
             <input
                 id="obiettivo-personalizzato"
                 type="number"
-                placeholder="Inserisci obiettivo"
                 min="1"
-                style="display:none"
+                placeholder="Inserisci obiettivo"
             >
-
-
-            <button onclick="iniziaPartita()">
-                🎮 Inizia partita
-            </button>
 
         </div>
 
 
-        <!-- ========================= -->
-        <!-- PARTITA -->
-        <!-- ========================= -->
+        <button onclick="iniziaPartita()">
+            🎮 Inizia partita
+        </button>
 
-        <div id="partita" style="display:none">
-
-            <button onclick="tornaHome()">
-                ← Esci
-            </button>
+    </div>
 
 
-            <h1 id="titolo-partita"></h1>
+    <!-- PARTITA -->
 
-            <p class="subtitle" id="numero-mano">
-                Turno 1
-            </p>
+    <div id="partita" style="display:none">
 
-
-            <!-- OBIETTIVO -->
-
-            <p id="obiettivo-display">
-                🎯 Obiettivo: 500 punti
-            </p>
+        <button onclick="tornaHome()">
+            ← Esci
+        </button>
 
 
-            <!-- TABELLONE -->
+        <h1 id="titolo-partita"></h1>
 
-            <h2>Punteggio</h2>
-
-            <div id="tabellone"></div>
-
-
-            <!-- NUOVO TURNO -->
-
-            <h2>Nuovo turno</h2>
+        <p class="subtitle" id="numero-mano">
+            Turno 1
+        </p>
 
 
-            <label for="giocatore-vincitore">
-                🏆 Vincitore
-            </label>
-
-            <select id="giocatore-vincitore">
-            </select>
+        <p id="obiettivo-display">
+            🎯 Obiettivo: 500 punti
+        </p>
 
 
-            <label for="punti">
-                Punti ottenuti
-            </label>
+        <h2>Punteggio</h2>
 
-            <input
-                id="punti"
-                type="number"
-                placeholder="Inserisci punti"
-                min="0"
-            >
+        <div id="tabellone"></div>
 
 
-            <button onclick="aggiungiMano()">
-                ➕ Nuovo turno
-            </button>
+        <h2>Nuovo turno</h2>
 
 
-            <button onclick="annullaUltimoTurno()">
-                ↩️ Annulla ultimo turno
-            </button>
+        <label for="giocatore-vincitore">
+            🏆 Vincitore
+        </label>
+
+        <select id="giocatore-vincitore">
+        </select>
 
 
-            <!-- STORICO -->
+        <label for="punti">
+            Punti ottenuti
+        </label>
 
-            <div id="storico">
-            </div>
+        <input
+            id="punti"
+            type="number"
+            min="0"
+            placeholder="Inserisci punti"
+        >
 
-        </div>
 
-    </main>
+        <button onclick="aggiungiMano()">
+            ➕ Nuovo turno
+        </button>
 
 
-    <script src="script.js"></script>
+        <button onclick="annullaUltimoTurno()">
+            ↩️ Annulla ultimo turno
+        </button>
+
+
+        <div id="storico"></div>
+
+    </div>
+
+</main>
+
+
+<script src="script.js"></script>
 
 </body>
 
