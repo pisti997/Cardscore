@@ -14,10 +14,7 @@ let puntiPerGame = 21;
 let gamePerSet = 3;
 let setPerMatch = 2;
 
-// Punteggio attuale del Game
 let puntiGame = [];
-
-// Game e Set vinti
 let gameVinti = [];
 let setVinti = [];
 
@@ -57,6 +54,7 @@ function salvaPartita() {
         setVinti: setVinti
     };
 
+
     localStorage.setItem(
         "cardscore_partita",
         JSON.stringify(partita)
@@ -65,7 +63,7 @@ function salvaPartita() {
 
 
 // ========================================
-// PARTITA SALVATA
+// MOSTRA PARTITA SALVATA
 // ========================================
 
 function aggiornaPartitaSalvata() {
@@ -75,19 +73,23 @@ function aggiornaPartitaSalvata() {
             "cardscore_partita"
         );
 
+
     const sezione =
         document.getElementById(
             "partita-in-corso"
         );
+
 
     const contenitore =
         document.getElementById(
             "partita-salvata"
         );
 
+
     if (!sezione || !contenitore) {
         return;
     }
+
 
     if (!dati) {
 
@@ -97,10 +99,12 @@ function aggiornaPartitaSalvata() {
         return;
     }
 
+
     try {
 
         const partita =
             JSON.parse(dati);
+
 
         if (
             !partita.giocatori ||
@@ -113,29 +117,18 @@ function aggiornaPartitaSalvata() {
             return;
         }
 
+
         let html =
             "<strong>" +
             partita.gioco +
             "</strong><br><br>";
 
+
         html +=
             "Turno " +
             partita.turno +
-            "<br>";
+            "<br><br>";
 
-        if (
-            partita.sistema ===
-            "game-set"
-        ) {
-
-            html +=
-                "Game / Set / Match<br><br>";
-
-        } else {
-
-            html +=
-                "Punteggio semplice<br><br>";
-        }
 
         partita.giocatori.forEach(
             function(nome, indice) {
@@ -148,8 +141,10 @@ function aggiornaPartitaSalvata() {
             }
         );
 
+
         contenitore.innerHTML =
             html;
+
 
         sezione.style.display =
             "block";
@@ -173,6 +168,7 @@ function continuaPartita() {
             "cardscore_partita"
         );
 
+
     if (!dati) {
 
         alert(
@@ -182,40 +178,52 @@ function continuaPartita() {
         return;
     }
 
+
     try {
 
         const partita =
             JSON.parse(dati);
 
+
         giocoScelto =
             partita.gioco;
+
 
         giocatori =
             partita.giocatori || [];
 
+
         punteggi =
             partita.punteggi || [];
+
 
         storico =
             partita.storico || [];
 
+
         numeroTurno =
             partita.turno || 1;
+
 
         sistemaPunteggio =
             partita.sistema || "semplice";
 
+
         obiettivoPartita =
             partita.obiettivo || 500;
+
 
         puntiPerGame =
             partita.puntiGame || 21;
 
+
         gamePerSet =
             partita.gameSet || 3;
 
+
         setPerMatch =
             partita.setMatch || 2;
+
 
         puntiGame =
             partita.puntiAttualiGame ||
@@ -223,11 +231,13 @@ function continuaPartita() {
                 giocatori.length
             ).fill(0);
 
+
         gameVinti =
             partita.gameVinti ||
             new Array(
                 giocatori.length
             ).fill(0);
+
 
         setVinti =
             partita.setVinti ||
@@ -241,15 +251,18 @@ function continuaPartita() {
         ).style.display =
             "none";
 
+
         document.getElementById(
             "nuova-partita"
         ).style.display =
             "none";
 
+
         document.getElementById(
             "partita"
         ).style.display =
             "block";
+
 
         aggiornaSchermataPartita();
 
@@ -272,6 +285,7 @@ function nuovaPartita() {
         "cardscore_partita"
     );
 
+
     giocoScelto = "";
 
     giocatori = [];
@@ -288,17 +302,22 @@ function nuovaPartita() {
 
     numeroTurno = 1;
 
+
     sistemaPunteggio =
         "semplice";
+
 
     obiettivoPartita =
         500;
 
+
     puntiPerGame =
         21;
 
+
     gamePerSet =
         3;
+
 
     setPerMatch =
         2;
@@ -309,10 +328,12 @@ function nuovaPartita() {
     ).style.display =
         "none";
 
+
     document.getElementById(
         "home"
     ).style.display =
         "none";
+
 
     document.getElementById(
         "nuova-partita"
@@ -325,20 +346,24 @@ function nuovaPartita() {
     ).innerHTML =
         "";
 
+
     document.getElementById(
         "nome-giocatore"
     ).value =
         "";
+
 
     document.getElementById(
         "sistema-punteggio"
     ).value =
         "semplice";
 
+
     document.getElementById(
         "impostazioni-game-set"
     ).style.display =
         "none";
+
 
     document.getElementById(
         "impostazioni-semplici"
@@ -356,6 +381,7 @@ function scegliGioco(gioco) {
     giocoScelto =
         gioco;
 
+
     giocatori = [];
 
     punteggi = [];
@@ -376,20 +402,24 @@ function scegliGioco(gioco) {
     ).style.display =
         "none";
 
+
     document.getElementById(
         "nuova-partita"
     ).style.display =
         "block";
+
 
     document.getElementById(
         "titolo-gioco"
     ).textContent =
         gioco;
 
+
     document.getElementById(
         "lista-giocatori"
     ).innerHTML =
         "";
+
 
     document.getElementById(
         "nome-giocatore"
@@ -409,10 +439,12 @@ function cambiaSistemaPunteggio() {
             "sistema-punteggio"
         ).value;
 
+
     const impostazioni =
         document.getElementById(
             "impostazioni-game-set"
         );
+
 
     const semplici =
         document.getElementById(
@@ -452,6 +484,7 @@ function controllaObiettivo() {
             "obiettivo"
         );
 
+
     const campo =
         document.getElementById(
             "campo-personalizzato"
@@ -470,6 +503,7 @@ function controllaObiettivo() {
 
         campo.style.display =
             "none";
+
 
         document.getElementById(
             "obiettivo-personalizzato"
@@ -492,6 +526,7 @@ document.addEventListener(
                 "sistema-punteggio"
             );
 
+
         if (sistema) {
 
             sistema.addEventListener(
@@ -505,6 +540,7 @@ document.addEventListener(
             document.getElementById(
                 "obiettivo"
             );
+
 
         if (obiettivo) {
 
@@ -531,6 +567,7 @@ function aggiungiGiocatore() {
             "nome-giocatore"
         );
 
+
     const nome =
         input.value.trim();
 
@@ -545,7 +582,9 @@ function aggiungiGiocatore() {
     }
 
 
-    if (giocatori.length >= 6) {
+    if (
+        giocatori.length >= 6
+    ) {
 
         alert(
             "Puoi inserire massimo 6 giocatori."
@@ -574,6 +613,7 @@ function mostraGiocatori() {
             "lista-giocatori"
         );
 
+
     lista.innerHTML =
         "";
 
@@ -586,10 +626,12 @@ function mostraGiocatori() {
                     "p"
                 );
 
+
             elemento.textContent =
                 (indice + 1) +
                 ". " +
                 nome;
+
 
             lista.appendChild(
                 elemento
@@ -610,15 +652,18 @@ function tornaHome() {
     ).style.display =
         "block";
 
+
     document.getElementById(
         "nuova-partita"
     ).style.display =
         "none";
 
+
     document.getElementById(
         "partita"
     ).style.display =
         "none";
+
 
     aggiornaPartitaSalvata();
 }
@@ -630,7 +675,9 @@ function tornaHome() {
 
 function iniziaPartita() {
 
-    if (giocatori.length < 2) {
+    if (
+        giocatori.length < 2
+    ) {
 
         alert(
             "Servono almeno 2 giocatori!"
@@ -784,6 +831,7 @@ function iniziaPartita() {
     ).style.display =
         "none";
 
+
     document.getElementById(
         "partita"
     ).style.display =
@@ -815,7 +863,7 @@ function aggiornaSchermataPartita() {
         numeroTurno;
 
 
-    criaSeletorSeguro();
+    creaSelettoreVincitore();
 
 
     if (
@@ -883,7 +931,7 @@ function aggiornaSchermataPartita() {
 // SELETTORE VINCITORE
 // ========================================
 
-function criaSeletorSeguro() {
+function creaSelettoreVincitore() {
 
     const selettore =
         document.getElementById(
@@ -903,11 +951,14 @@ function criaSeletorSeguro() {
                     "option"
                 );
 
+
             opzione.value =
                 indice;
 
+
             opzione.textContent =
                 nome;
+
 
             selettore.appendChild(
                 opzione
@@ -966,7 +1017,7 @@ function creaTabellone() {
 
 
 // ========================================
-// TABELLONE GAME / SET
+// TABELLONE GAME / SET / MATCH
 // ========================================
 
 function creaTabelloneGameSet() {
@@ -979,6 +1030,60 @@ function creaTabelloneGameSet() {
 
     tabellone.innerHTML =
         "";
+
+
+    // Troviamo il miglior giocatore
+    // per evidenziarlo
+
+    let migliorSet = -1;
+    let migliorGame = -1;
+    let migliorPunti = -1;
+
+
+    giocatori.forEach(
+        function(nome, indice) {
+
+            if (
+                setVinti[indice] >
+                migliorSet
+            ) {
+
+                migliorSet =
+                    setVinti[indice];
+
+                migliorGame =
+                    gameVinti[indice];
+
+                migliorPunti =
+                    puntiGame[indice];
+
+            } else if (
+                setVinti[indice] ===
+                migliorSet &&
+                gameVinti[indice] >
+                migliorGame
+            ) {
+
+                migliorGame =
+                    gameVinti[indice];
+
+                migliorPunti =
+                    puntiGame[indice];
+
+            } else if (
+                setVinti[indice] ===
+                migliorSet &&
+                gameVinti[indice] ===
+                migliorGame &&
+                puntiGame[indice] >
+                migliorPunti
+            ) {
+
+                migliorPunti =
+                    puntiGame[indice];
+            }
+        }
+    );
 
 
     giocatori.forEach(
@@ -994,23 +1099,81 @@ function creaTabelloneGameSet() {
                 "score-row";
 
 
-            riga.innerHTML =
-                "<strong>" +
-                nome +
-                "</strong>" +
+            // Evidenziamo il leader
 
-                "<span>" +
+            if (
+                setVinti[indice] ===
+                migliorSet &&
+                gameVinti[indice] ===
+                migliorGame &&
+                puntiGame[indice] ===
+                migliorPunti
+            ) {
 
-                "Punti Game: " +
-                puntiGame[indice] +
+                riga.classList.add(
+                    "leader"
+                );
+            }
 
-                " | Game: " +
-                gameVinti[indice] +
 
-                " | Set: " +
-                setVinti[indice] +
+            const nomeElemento =
+                document.createElement(
+                    "strong"
+                );
 
-                "</span>";
+
+            nomeElemento.textContent =
+                nome;
+
+
+            const puntiElemento =
+                document.createElement(
+                    "span"
+                );
+
+
+            puntiElemento.textContent =
+                puntiGame[indice];
+
+
+            const gameElemento =
+                document.createElement(
+                    "span"
+                );
+
+
+            gameElemento.textContent =
+                gameVinti[indice];
+
+
+            const setElemento =
+                document.createElement(
+                    "span"
+                );
+
+
+            setElemento.textContent =
+                setVinti[indice];
+
+
+            riga.appendChild(
+                nomeElemento
+            );
+
+
+            riga.appendChild(
+                puntiElemento
+            );
+
+
+            riga.appendChild(
+                gameElemento
+            );
+
+
+            riga.appendChild(
+                setElemento
+            );
 
 
             tabellone.appendChild(
@@ -1045,7 +1208,9 @@ function aggiungiMano() {
         );
 
 
-    if (input.value === "") {
+    if (
+        input.value === ""
+    ) {
 
         alert(
             "Inserisci il punteggio."
@@ -1121,14 +1286,13 @@ function aggiungiMano() {
     else {
 
         // Aggiungiamo i punti
-        // SOLO al Game corrente
+        // al Game corrente
 
         puntiGame[indice] +=
             punti;
 
 
-        // Aggiungiamo anche
-        // al totale storico
+        // Totale generale
 
         punteggi[indice] +=
             punti;
@@ -1147,9 +1311,6 @@ function aggiungiMano() {
         });
 
 
-        // Controlliamo se ha
-        // raggiunto il Game
-
         controllaGame(indice);
     }
 
@@ -1166,7 +1327,6 @@ function aggiungiMano() {
 
 
     aggiornaSchermataPartita();
-
 
     salvaPartita();
 }
@@ -1187,9 +1347,6 @@ function controllaGame(indice) {
     }
 
 
-    // Il giocatore ha vinto
-    // un Game
-
     gameVinti[indice]++;
 
 
@@ -1202,10 +1359,14 @@ function controllaGame(indice) {
 
     // Azzera i punti del Game
 
-    puntiGame =
-        new Array(
-            giocatori.length
-        ).fill(0);
+    for (
+        let i = 0;
+        i < puntiGame.length;
+        i++
+    ) {
+
+        puntiGame[i] = 0;
+    }
 
 
     // ====================================
@@ -1229,10 +1390,14 @@ function controllaGame(indice) {
 
         // Azzera i Game
 
-        gameVinti =
-            new Array(
-                giocatori.length
-            ).fill(0);
+        for (
+            let i = 0;
+            i < gameVinti.length;
+            i++
+        ) {
+
+            gameVinti[i] = 0;
+        }
 
 
         // ====================================
@@ -1275,7 +1440,9 @@ function mostraStorico() {
         "<h2>📋 Storico turni</h2>";
 
 
-    if (storico.length === 0) {
+    if (
+        storico.length === 0
+    ) {
 
         elemento.innerHTML +=
             "<p>Nessun turno ancora registrato.</p>";
@@ -1304,7 +1471,8 @@ function mostraStorico() {
 
 
             riga.innerHTML =
-                "<strong>Turno " +
+                "<strong>" +
+                "Turno " +
                 turno.numero +
                 "</strong><br>" +
 
@@ -1352,7 +1520,7 @@ function annullaUltimoTurno() {
 
 
 // ========================================
-// RICALCOLA TUTTA LA PARTITA
+// RICALCOLA PARTITA
 // ========================================
 
 function ricalcolaPartita() {
