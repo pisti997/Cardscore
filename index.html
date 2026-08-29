@@ -89,6 +89,8 @@
         </p>
 
 
+        <!-- GIOCATORI -->
+
         <h2>Giocatori</h2>
 
         <input
@@ -104,45 +106,116 @@
         <div id="lista-giocatori"></div>
 
 
-        <h2>Obiettivo partita</h2>
+        <!-- SISTEMA DI PUNTEGGIO -->
 
-        <select id="obiettivo">
+        <h2>Sistema di punteggio</h2>
 
-            <option value="100">
-                100 punti
+        <select id="sistema-punteggio" onchange="cambiaSistemaPunteggio()">
+
+            <option value="semplice">
+                Punteggio semplice
             </option>
 
-            <option value="200">
-                200 punti
-            </option>
-
-            <option value="300">
-                300 punti
-            </option>
-
-            <option value="500" selected>
-                500 punti
-            </option>
-
-            <option value="1000">
-                1000 punti
-            </option>
-
-            <option value="personalizzato">
-                Personalizzato
+            <option value="game-set">
+                Game / Set / Match
             </option>
 
         </select>
 
 
-        <div id="campo-personalizzato" style="display:none">
+        <!-- IMPOSTAZIONI GAME / SET / MATCH -->
+
+        <div id="impostazioni-game-set" style="display:none">
+
+            <h2>Impostazioni</h2>
+
+
+            <label for="punti-game">
+                🎯 Punti per Game
+            </label>
 
             <input
-                id="obiettivo-personalizzato"
+                id="punti-game"
                 type="number"
                 min="1"
-                placeholder="Inserisci obiettivo"
+                value="21"
+                placeholder="Punti per Game"
             >
+
+
+            <label for="game-set">
+                🎮 Game per Set
+            </label>
+
+            <input
+                id="game-set"
+                type="number"
+                min="1"
+                value="3"
+                placeholder="Game per Set"
+            >
+
+
+            <label for="set-match">
+                🏆 Set per Match
+            </label>
+
+            <input
+                id="set-match"
+                type="number"
+                min="1"
+                value="2"
+                placeholder="Set per Match"
+            >
+
+        </div>
+
+
+        <!-- OBIETTIVO SEMPLICE -->
+
+        <div id="impostazioni-semplici">
+
+            <h2>Obiettivo partita</h2>
+
+            <select id="obiettivo">
+
+                <option value="100">
+                    100 punti
+                </option>
+
+                <option value="200">
+                    200 punti
+                </option>
+
+                <option value="300">
+                    300 punti
+                </option>
+
+                <option value="500" selected>
+                    500 punti
+                </option>
+
+                <option value="1000">
+                    1000 punti
+                </option>
+
+                <option value="personalizzato">
+                    Personalizzato
+                </option>
+
+            </select>
+
+
+            <div id="campo-personalizzato" style="display:none">
+
+                <input
+                    id="obiettivo-personalizzato"
+                    type="number"
+                    min="1"
+                    placeholder="Inserisci obiettivo"
+                >
+
+            </div>
 
         </div>
 
@@ -172,15 +245,36 @@
         </p>
 
 
+        <!-- OBIETTIVO -->
+
         <p id="obiettivo-display">
             🎯 Obiettivo: 500 punti
         </p>
 
 
-        <h2>Punteggio</h2>
+        <!-- PUNTEGGIO GAME / SET -->
 
-        <div id="tabellone"></div>
+        <div id="punteggio-game-set" style="display:none">
 
+            <h2>🏆 Game / Set</h2>
+
+            <div id="tabellone-game-set"></div>
+
+        </div>
+
+
+        <!-- PUNTEGGIO SEMPLICE -->
+
+        <div id="punteggio-semplice">
+
+            <h2>Punteggio</h2>
+
+            <div id="tabellone"></div>
+
+        </div>
+
+
+        <!-- NUOVO TURNO -->
 
         <h2>Nuovo turno</h2>
 
@@ -214,6 +308,8 @@
             ↩️ Annulla ultimo turno
         </button>
 
+
+        <!-- STORICO -->
 
         <div id="storico"></div>
 
