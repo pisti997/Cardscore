@@ -14,7 +14,10 @@
 
     <main class="app">
 
+        <!-- ========================= -->
         <!-- HOME -->
+        <!-- ========================= -->
+
         <div id="home">
 
             <div class="logo">🃏</div>
@@ -50,10 +53,15 @@
         </div>
 
 
+        <!-- ========================= -->
         <!-- NUOVA PARTITA -->
+        <!-- ========================= -->
+
         <div id="nuova-partita" style="display:none">
 
-            <button onclick="tornaHome()">← Indietro</button>
+            <button onclick="tornaHome()">
+                ← Indietro
+            </button>
 
             <h1 id="titolo-gioco"></h1>
 
@@ -61,6 +69,8 @@
                 Crea la tua partita
             </p>
 
+
+            <!-- GIOCATORI -->
 
             <h2>Giocatori</h2>
 
@@ -77,21 +87,49 @@
             <div id="lista-giocatori"></div>
 
 
+            <!-- OBIETTIVO -->
+
             <h2>Obiettivo partita</h2>
 
-            <select id="obiettivo">
+            <select
+                id="obiettivo"
+                onchange="cambiaObiettivo()"
+            >
 
-                <option value="100">100 punti</option>
+                <option value="100">
+                    100 punti
+                </option>
 
-                <option value="200">200 punti</option>
+                <option value="200">
+                    200 punti
+                </option>
 
-                <option value="300">300 punti</option>
+                <option value="300">
+                    300 punti
+                </option>
 
-                <option value="500" selected>500 punti</option>
+                <option value="500" selected>
+                    500 punti
+                </option>
 
-                <option value="1000">1000 punti</option>
+                <option value="1000">
+                    1000 punti
+                </option>
+
+                <option value="personalizzato">
+                    Personalizzato
+                </option>
 
             </select>
+
+
+            <input
+                id="obiettivo-personalizzato"
+                type="number"
+                placeholder="Inserisci obiettivo"
+                min="1"
+                style="display:none"
+            >
 
 
             <button onclick="iniziaPartita()">
@@ -101,7 +139,10 @@
         </div>
 
 
+        <!-- ========================= -->
         <!-- PARTITA -->
+        <!-- ========================= -->
+
         <div id="partita" style="display:none">
 
             <button onclick="tornaHome()">
@@ -116,7 +157,14 @@
             </p>
 
 
-            <!-- TABELLA PUNTEGGI -->
+            <!-- OBIETTIVO -->
+
+            <p id="obiettivo-display">
+                🎯 Obiettivo: 500 punti
+            </p>
+
+
+            <!-- TABELLONE -->
 
             <h2>Punteggio</h2>
 
@@ -126,6 +174,7 @@
             <!-- NUOVO TURNO -->
 
             <h2>Nuovo turno</h2>
+
 
             <label for="giocatore-vincitore">
                 🏆 Vincitore
