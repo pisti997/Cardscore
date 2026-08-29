@@ -14,9 +14,7 @@
 
 <main class="app">
 
-    <!-- ========================= -->
     <!-- HOME -->
-    <!-- ========================= -->
 
     <div id="home">
 
@@ -72,9 +70,7 @@
     </div>
 
 
-    <!-- ========================= -->
     <!-- NUOVA PARTITA -->
-    <!-- ========================= -->
 
     <div id="nuova-partita" style="display:none">
 
@@ -106,7 +102,7 @@
         <div id="lista-giocatori"></div>
 
 
-        <!-- SISTEMA DI PUNTEGGIO -->
+        <!-- SISTEMA -->
 
         <h2>Sistema di punteggio</h2>
 
@@ -133,8 +129,7 @@
             style="display:none"
         >
 
-            <h2>Impostazioni Game / Set / Match</h2>
-
+            <h2>Impostazioni</h2>
 
             <label for="punti-game">
                 🎯 Punti per vincere un Game
@@ -233,9 +228,7 @@
     </div>
 
 
-    <!-- ========================= -->
     <!-- PARTITA -->
-    <!-- ========================= -->
 
     <div id="partita" style="display:none">
 
@@ -254,23 +247,27 @@
         </p>
 
 
-        <p id="obiettivo-display">
-            🎯 Obiettivo
-        </p>
+        <p id="obiettivo-display"></p>
 
 
-        <!-- ========================= -->
         <!-- GAME / SET / MATCH -->
-        <!-- ========================= -->
 
         <div
             id="punteggio-game-set"
             style="display:none"
         >
 
-            <h2>
-                🏆 Game / Set / Match
-            </h2>
+            <div class="match-title">
+
+                <h2>
+                    🏆 Game / Set / Match
+                </h2>
+
+                <p id="stato-match">
+                    Match in corso
+                </p>
+
+            </div>
 
 
             <div class="match-header">
@@ -299,9 +296,7 @@
         </div>
 
 
-        <!-- ========================= -->
         <!-- PUNTEGGIO SEMPLICE -->
-        <!-- ========================= -->
 
         <div
             id="punteggio-semplice"
@@ -316,9 +311,7 @@
         </div>
 
 
-        <!-- ========================= -->
         <!-- NUOVO TURNO -->
-        <!-- ========================= -->
 
         <h2>
             Nuovo turno
