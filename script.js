@@ -14,6 +14,10 @@ let puntiPerGame = 21;
 let gamePerSet = 3;
 let setPerMatch = 2;
 
+// Punteggio attuale del Game
+let puntiGame = [];
+
+// Game e Set vinti
 let gameVinti = [];
 let setVinti = [];
 
@@ -25,10 +29,15 @@ let setVinti = [];
 function salvaPartita() {
 
     const partita = {
+
         gioco: giocoScelto,
+
         giocatori: giocatori,
+
         punteggi: punteggi,
+
         storico: storico,
+
         turno: numeroTurno,
 
         sistema: sistemaPunteggio,
@@ -36,10 +45,15 @@ function salvaPartita() {
         obiettivo: obiettivoPartita,
 
         puntiGame: puntiPerGame,
+
         gameSet: gamePerSet,
+
         setMatch: setPerMatch,
 
+        puntiAttualiGame: puntiGame,
+
         gameVinti: gameVinti,
+
         setVinti: setVinti
     };
 
@@ -51,76 +65,77 @@ function salvaPartita() {
 
 
 // ========================================
-// MOSTRA PARTITA SALVATA
+// PARTITA SALVATA
 // ========================================
 
 function aggiornaPartitaSalvata() {
 
     const dati =
-        localStorage.getItem("cardscore_partita");
+        localStorage.getItem(
+            "cardscore_partita"
+        );
 
     const sezione =
-        document.getElementById("partita-in-corso");
+        document.getElementById(
+            "partita-in-corso"
+        );
 
     const contenitore =
-        document.getElementById("partita-salvata");
-
+        document.getElementById(
+            "partita-salvata"
+        );
 
     if (!sezione || !contenitore) {
         return;
     }
 
-
     if (!dati) {
 
-        sezione.style.display = "none";
+        sezione.style.display =
+            "none";
 
         return;
     }
-
 
     try {
 
         const partita =
             JSON.parse(dati);
 
-
         if (
             !partita.giocatori ||
             partita.giocatori.length < 2
         ) {
 
-            sezione.style.display = "none";
+            sezione.style.display =
+                "none";
 
             return;
         }
-
 
         let html =
             "<strong>" +
             partita.gioco +
             "</strong><br><br>";
 
-
         html +=
             "Turno " +
             partita.turno +
             "<br>";
 
-
         if (
-            partita.sistema === "game-set"
+            partita.sistema ===
+            "game-set"
         ) {
 
             html +=
-                "Sistema Game / Set / Match<br><br>";
+                "Game / Set / Match<br><br>";
 
         } else {
 
             html +=
                 "Punteggio semplice<br><br>";
         }
-
 
         partita.giocatori.forEach(
             function(nome, indice) {
@@ -133,15 +148,16 @@ function aggiornaPartitaSalvata() {
             }
         );
 
+        contenitore.innerHTML =
+            html;
 
-        contenitore.innerHTML = html;
-
-        sezione.style.display = "block";
-
+        sezione.style.display =
+            "block";
 
     } catch (errore) {
 
-        sezione.style.display = "none";
+        sezione.style.display =
+            "none";
     }
 }
 
@@ -153,8 +169,9 @@ function aggiornaPartitaSalvata() {
 function continuaPartita() {
 
     const dati =
-        localStorage.getItem("cardscore_partita");
-
+        localStorage.getItem(
+            "cardscore_partita"
+        );
 
     if (!dati) {
 
@@ -165,12 +182,10 @@ function continuaPartita() {
         return;
     }
 
-
     try {
 
         const partita =
             JSON.parse(dati);
-
 
         giocoScelto =
             partita.gioco;
@@ -187,33 +202,32 @@ function continuaPartita() {
         numeroTurno =
             partita.turno || 1;
 
-
         sistemaPunteggio =
             partita.sistema || "semplice";
-
 
         obiettivoPartita =
             partita.obiettivo || 500;
 
-
         puntiPerGame =
             partita.puntiGame || 21;
-
 
         gamePerSet =
             partita.gameSet || 3;
 
-
         setPerMatch =
             partita.setMatch || 2;
 
+        puntiGame =
+            partita.puntiAttualiGame ||
+            new Array(
+                giocatori.length
+            ).fill(0);
 
         gameVinti =
             partita.gameVinti ||
             new Array(
                 giocatori.length
             ).fill(0);
-
 
         setVinti =
             partita.setVinti ||
@@ -224,21 +238,20 @@ function continuaPartita() {
 
         document.getElementById(
             "home"
-        ).style.display = "none";
-
+        ).style.display =
+            "none";
 
         document.getElementById(
             "nuova-partita"
-        ).style.display = "none";
-
+        ).style.display =
+            "none";
 
         document.getElementById(
             "partita"
-        ).style.display = "block";
-
+        ).style.display =
+            "block";
 
         aggiornaSchermataPartita();
-
 
     } catch (errore) {
 
@@ -259,7 +272,6 @@ function nuovaPartita() {
         "cardscore_partita"
     );
 
-
     giocoScelto = "";
 
     giocatori = [];
@@ -268,61 +280,70 @@ function nuovaPartita() {
 
     storico = [];
 
-    numeroTurno = 1;
-
-    sistemaPunteggio = "semplice";
-
-    obiettivoPartita = 500;
-
-    puntiPerGame = 21;
-
-    gamePerSet = 3;
-
-    setPerMatch = 2;
+    puntiGame = [];
 
     gameVinti = [];
 
     setVinti = [];
 
+    numeroTurno = 1;
+
+    sistemaPunteggio =
+        "semplice";
+
+    obiettivoPartita =
+        500;
+
+    puntiPerGame =
+        21;
+
+    gamePerSet =
+        3;
+
+    setPerMatch =
+        2;
+
 
     document.getElementById(
         "partita-in-corso"
-    ).style.display = "none";
-
+    ).style.display =
+        "none";
 
     document.getElementById(
         "home"
-    ).style.display = "none";
-
+    ).style.display =
+        "none";
 
     document.getElementById(
         "nuova-partita"
-    ).style.display = "block";
+    ).style.display =
+        "block";
 
 
     document.getElementById(
         "lista-giocatori"
-    ).innerHTML = "";
-
+    ).innerHTML =
+        "";
 
     document.getElementById(
         "nome-giocatore"
-    ).value = "";
-
+    ).value =
+        "";
 
     document.getElementById(
         "sistema-punteggio"
-    ).value = "semplice";
-
+    ).value =
+        "semplice";
 
     document.getElementById(
         "impostazioni-game-set"
-    ).style.display = "none";
-
+    ).style.display =
+        "none";
 
     document.getElementById(
         "impostazioni-semplici"
-    ).style.display = "block";
+    ).style.display =
+        "block";
 }
 
 
@@ -332,7 +353,8 @@ function nuovaPartita() {
 
 function scegliGioco(gioco) {
 
-    giocoScelto = gioco;
+    giocoScelto =
+        gioco;
 
     giocatori = [];
 
@@ -340,41 +362,44 @@ function scegliGioco(gioco) {
 
     storico = [];
 
-    numeroTurno = 1;
+    puntiGame = [];
 
     gameVinti = [];
 
     setVinti = [];
 
+    numeroTurno = 1;
+
 
     document.getElementById(
         "home"
-    ).style.display = "none";
-
+    ).style.display =
+        "none";
 
     document.getElementById(
         "nuova-partita"
-    ).style.display = "block";
-
+    ).style.display =
+        "block";
 
     document.getElementById(
         "titolo-gioco"
-    ).textContent = gioco;
-
+    ).textContent =
+        gioco;
 
     document.getElementById(
         "lista-giocatori"
-    ).innerHTML = "";
-
+    ).innerHTML =
+        "";
 
     document.getElementById(
         "nome-giocatore"
-    ).value = "";
+    ).value =
+        "";
 }
 
 
 // ========================================
-// CAMBIO SISTEMA DI PUNTEGGIO
+// CAMBIO SISTEMA
 // ========================================
 
 function cambiaSistemaPunteggio() {
@@ -384,12 +409,10 @@ function cambiaSistemaPunteggio() {
             "sistema-punteggio"
         ).value;
 
-
     const impostazioni =
         document.getElementById(
             "impostazioni-game-set"
         );
-
 
     const semplici =
         document.getElementById(
@@ -397,7 +420,9 @@ function cambiaSistemaPunteggio() {
         );
 
 
-    if (sistema === "game-set") {
+    if (
+        sistema === "game-set"
+    ) {
 
         impostazioni.style.display =
             "block";
@@ -427,7 +452,6 @@ function controllaObiettivo() {
             "obiettivo"
         );
 
-
     const campo =
         document.getElementById(
             "campo-personalizzato"
@@ -449,7 +473,8 @@ function controllaObiettivo() {
 
         document.getElementById(
             "obiettivo-personalizzato"
-        ).value = "";
+        ).value =
+            "";
     }
 }
 
@@ -467,7 +492,6 @@ document.addEventListener(
                 "sistema-punteggio"
             );
 
-
         if (sistema) {
 
             sistema.addEventListener(
@@ -481,7 +505,6 @@ document.addEventListener(
             document.getElementById(
                 "obiettivo"
             );
-
 
         if (obiettivo) {
 
@@ -507,7 +530,6 @@ function aggiungiGiocatore() {
         document.getElementById(
             "nome-giocatore"
         );
-
 
     const nome =
         input.value.trim();
@@ -552,22 +574,22 @@ function mostraGiocatori() {
             "lista-giocatori"
         );
 
-
-    lista.innerHTML = "";
+    lista.innerHTML =
+        "";
 
 
     giocatori.forEach(
         function(nome, indice) {
 
             const elemento =
-                document.createElement("p");
-
+                document.createElement(
+                    "p"
+                );
 
             elemento.textContent =
                 (indice + 1) +
                 ". " +
                 nome;
-
 
             lista.appendChild(
                 elemento
@@ -585,18 +607,18 @@ function tornaHome() {
 
     document.getElementById(
         "home"
-    ).style.display = "block";
-
+    ).style.display =
+        "block";
 
     document.getElementById(
         "nuova-partita"
-    ).style.display = "none";
-
+    ).style.display =
+        "none";
 
     document.getElementById(
         "partita"
-    ).style.display = "none";
-
+    ).style.display =
+        "none";
 
     aggiornaPartitaSalvata();
 }
@@ -629,7 +651,8 @@ function iniziaPartita() {
     // ==============================
 
     if (
-        sistemaPunteggio === "semplice"
+        sistemaPunteggio ===
+        "semplice"
     ) {
 
         const selettore =
@@ -653,7 +676,10 @@ function iniziaPartita() {
                 Number(campo.value);
 
 
-            if (!valore || valore <= 0) {
+            if (
+                !valore ||
+                valore <= 0
+            ) {
 
                 alert(
                     "Inserisci un obiettivo valido."
@@ -681,7 +707,8 @@ function iniziaPartita() {
     // ==============================
 
     if (
-        sistemaPunteggio === "game-set"
+        sistemaPunteggio ===
+        "game-set"
     ) {
 
         puntiPerGame =
@@ -729,6 +756,12 @@ function iniziaPartita() {
         ).fill(0);
 
 
+    puntiGame =
+        new Array(
+            giocatori.length
+        ).fill(0);
+
+
     gameVinti =
         new Array(
             giocatori.length
@@ -748,23 +781,23 @@ function iniziaPartita() {
 
     document.getElementById(
         "nuova-partita"
-    ).style.display = "none";
-
+    ).style.display =
+        "none";
 
     document.getElementById(
         "partita"
-    ).style.display = "block";
+    ).style.display =
+        "block";
 
 
     aggiornaSchermataPartita();
-
 
     salvaPartita();
 }
 
 
 // ========================================
-// AGGIORNA SCHERMATA PARTITA
+// AGGIORNA SCHERMATA
 // ========================================
 
 function aggiornaSchermataPartita() {
@@ -778,10 +811,11 @@ function aggiornaSchermataPartita() {
     document.getElementById(
         "numero-mano"
     ).textContent =
-        "Turno " + numeroTurno;
+        "Turno " +
+        numeroTurno;
 
 
-    creaSelettoreVincitore();
+    criaSeletorSeguro();
 
 
     if (
@@ -849,7 +883,7 @@ function aggiornaSchermataPartita() {
 // SELETTORE VINCITORE
 // ========================================
 
-function creaSelettoreVincitore() {
+function criaSeletorSeguro() {
 
     const selettore =
         document.getElementById(
@@ -857,7 +891,8 @@ function creaSelettoreVincitore() {
         );
 
 
-    selettore.innerHTML = "";
+    selettore.innerHTML =
+        "";
 
 
     giocatori.forEach(
@@ -868,11 +903,11 @@ function creaSelettoreVincitore() {
                     "option"
                 );
 
+            opzione.value =
+                indice;
 
-            opzione.value = indice;
-
-            opzione.textContent = nome;
-
+            opzione.textContent =
+                nome;
 
             selettore.appendChild(
                 opzione
@@ -894,7 +929,8 @@ function creaTabellone() {
         );
 
 
-    tabellone.innerHTML = "";
+    tabellone.innerHTML =
+        "";
 
 
     giocatori.forEach(
@@ -914,6 +950,7 @@ function creaTabellone() {
                 "<strong>" +
                 nome +
                 "</strong>" +
+
                 "<span>" +
                 "Totale: " +
                 punteggi[indice] +
@@ -929,7 +966,7 @@ function creaTabellone() {
 
 
 // ========================================
-// TABELLONE GAME / SET / MATCH
+// TABELLONE GAME / SET
 // ========================================
 
 function creaTabelloneGameSet() {
@@ -940,7 +977,8 @@ function creaTabelloneGameSet() {
         );
 
 
-    tabellone.innerHTML = "";
+    tabellone.innerHTML =
+        "";
 
 
     giocatori.forEach(
@@ -960,13 +998,18 @@ function creaTabelloneGameSet() {
                 "<strong>" +
                 nome +
                 "</strong>" +
+
                 "<span>" +
-                "Punti: " +
-                punteggi[indice] +
+
+                "Punti Game: " +
+                puntiGame[indice] +
+
                 " | Game: " +
                 gameVinti[indice] +
+
                 " | Set: " +
                 setVinti[indice] +
+
                 "</span>";
 
 
@@ -1013,7 +1056,9 @@ function aggiungiMano() {
 
 
     const punti =
-        Number(input.value);
+        Number(
+            input.value
+        );
 
 
     if (
@@ -1054,11 +1099,14 @@ function aggiungiMano() {
 
         storico.push({
 
-            numero: numeroTurno,
+            numero:
+                numeroTurno,
 
-            vincitore: indice,
+            vincitore:
+                indice,
 
-            punti: puntiTurno
+            punti:
+                punti
         });
 
 
@@ -1070,10 +1118,17 @@ function aggiungiMano() {
     // GAME / SET / MATCH
     // ====================================
 
-    if (
-        sistemaPunteggio ===
-        "game-set"
-    ) {
+    else {
+
+        // Aggiungiamo i punti
+        // SOLO al Game corrente
+
+        puntiGame[indice] +=
+            punti;
+
+
+        // Aggiungiamo anche
+        // al totale storico
 
         punteggi[indice] +=
             punti;
@@ -1081,25 +1136,33 @@ function aggiungiMano() {
 
         storico.push({
 
-            numero: numeroTurno,
+            numero:
+                numeroTurno,
 
-            vincitore: indice,
+            vincitore:
+                indice,
 
-            punti: punti
+            punti:
+                punti
         });
 
 
-        aggiornaGameSet(indice);
+        // Controlliamo se ha
+        // raggiunto il Game
+
+        controllaGame(indice);
     }
 
 
     numeroTurno++;
 
 
-    input.value = "";
+    input.value =
+        "";
 
 
-    selettore.selectedIndex = 0;
+    selettore.selectedIndex =
+        0;
 
 
     aggiornaSchermataPartita();
@@ -1110,51 +1173,87 @@ function aggiungiMano() {
 
 
 // ========================================
-// AGGIORNA GAME E SET
+// CONTROLLA GAME
 // ========================================
 
-function aggiornaGameSet(indice) {
+function controllaGame(indice) {
 
-    const gameTotali =
-        Math.floor(
-            punteggi[indice] /
-            puntiPerGame
+    if (
+        puntiGame[indice] <
+        puntiPerGame
+    ) {
+
+        return;
+    }
+
+
+    // Il giocatore ha vinto
+    // un Game
+
+    gameVinti[indice]++;
+
+
+    alert(
+        "🎉 " +
+        giocatori[indice] +
+        " vince il Game!"
+    );
+
+
+    // Azzera i punti del Game
+
+    puntiGame =
+        new Array(
+            giocatori.length
+        ).fill(0);
+
+
+    // ====================================
+    // CONTROLLA SET
+    // ====================================
+
+    if (
+        gameVinti[indice] >=
+        gamePerSet
+    ) {
+
+        setVinti[indice]++;
+
+
+        alert(
+            "🏆 " +
+            giocatori[indice] +
+            " vince il Set!"
         );
 
 
-    while (
-        gameVinti[indice] <
-        gameTotali
-    ) {
+        // Azzera i Game
 
-        gameVinti[indice]++;
+        gameVinti =
+            new Array(
+                giocatori.length
+            ).fill(0);
 
+
+        // ====================================
+        // CONTROLLA MATCH
+        // ====================================
 
         if (
-            gameVinti[indice] >=
-            gamePerSet
+            setVinti[indice] >=
+            setPerMatch
         ) {
 
-            gameVinti[indice] = 0;
-
-            setVinti[indice]++;
-
-
-            if (
-                setVinti[indice] >=
-                setPerMatch
-            ) {
-
-                setVinti[indice] =
-                    setPerMatch;
+            alert(
+                "🏆🏆🏆 " +
+                giocatori[indice] +
+                " VINCE LA PARTITA!"
+            );
 
 
-                alert(
-                    "🏆 " +
-                    giocatori[indice] +
-                    " ha vinto la partita!"
-                );
-            }
+            localStorage.removeItem(
+                "cardscore_partita"
+            );
         }
     }
 }
@@ -1208,6 +1307,7 @@ function mostraStorico() {
                 "<strong>Turno " +
                 turno.numero +
                 "</strong><br>" +
+
                 "🏆 " +
                 nome +
                 " +" +
@@ -1229,7 +1329,9 @@ function mostraStorico() {
 
 function annullaUltimoTurno() {
 
-    if (storico.length === 0) {
+    if (
+        storico.length === 0
+    ) {
 
         alert(
             "Non ci sono turni da annullare."
@@ -1250,12 +1352,18 @@ function annullaUltimoTurno() {
 
 
 // ========================================
-// RICALCOLA PARTITA
+// RICALCOLA TUTTA LA PARTITA
 // ========================================
 
 function ricalcolaPartita() {
 
     punteggi =
+        new Array(
+            giocatori.length
+        ).fill(0);
+
+
+    puntiGame =
         new Array(
             giocatori.length
         ).fill(0);
@@ -1281,7 +1389,9 @@ function ricalcolaPartita() {
 
 
             const punti =
-                Number(turno.punti) || 0;
+                Number(
+                    turno.punti
+                ) || 0;
 
 
             punteggi[indice] +=
@@ -1293,17 +1403,18 @@ function ricalcolaPartita() {
                 "game-set"
             ) {
 
-                const gameTotali =
-                    Math.floor(
-                        punteggi[indice] /
-                        puntiPerGame
-                    );
+                puntiGame[indice] +=
+                    punti;
 
 
                 while (
-                    gameVinti[indice] <
-                    gameTotali
+                    puntiGame[indice] >=
+                    puntiPerGame
                 ) {
+
+                    puntiGame[indice] -=
+                        puntiPerGame;
+
 
                     gameVinti[indice]++;
 
