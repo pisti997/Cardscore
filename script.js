@@ -573,3 +573,18 @@ function controllaVittoria() {
         }
     }
 }
+function cambiaObiettivo() {
+
+    const selettore = document.getElementById("obiettivo");
+    const campo = document.getElementById("obiettivo-personalizzato");
+
+    if (selettore.value === "personalizzato") {
+
+        campo.style.display = "block";
+
+    } else {
+
+        campo.style.display = "none";
+        campo.value = "";
+    }
+}
