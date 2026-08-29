@@ -14,7 +14,9 @@
 
 <main class="app">
 
+    <!-- ========================= -->
     <!-- HOME -->
+    <!-- ========================= -->
 
     <div id="home">
 
@@ -48,10 +50,31 @@
 
         </div>
 
+
+        <!-- PARTITA IN CORSO -->
+
+        <div id="partita-in-corso" style="display:none">
+
+            <h2>🔄 Partita in corso</h2>
+
+            <div id="partita-salvata"></div>
+
+            <button onclick="continuaPartita()">
+                ▶️ Continua partita
+            </button>
+
+            <button onclick="nuovaPartita()">
+                🆕 Nuova partita
+            </button>
+
+        </div>
+
     </div>
 
 
+    <!-- ========================= -->
     <!-- NUOVA PARTITA -->
+    <!-- ========================= -->
 
     <div id="nuova-partita" style="display:none">
 
@@ -85,15 +108,25 @@
 
         <select id="obiettivo">
 
-            <option value="100">100 punti</option>
+            <option value="100">
+                100 punti
+            </option>
 
-            <option value="200">200 punti</option>
+            <option value="200">
+                200 punti
+            </option>
 
-            <option value="300">300 punti</option>
+            <option value="300">
+                300 punti
+            </option>
 
-            <option value="500" selected>500 punti</option>
+            <option value="500" selected>
+                500 punti
+            </option>
 
-            <option value="1000">1000 punti</option>
+            <option value="1000">
+                1000 punti
+            </option>
 
             <option value="personalizzato">
                 Personalizzato
@@ -101,8 +134,6 @@
 
         </select>
 
-
-        <!-- CAMPO PERSONALIZZATO -->
 
         <div id="campo-personalizzato" style="display:none">
 
@@ -123,7 +154,9 @@
     </div>
 
 
+    <!-- ========================= -->
     <!-- PARTITA -->
+    <!-- ========================= -->
 
     <div id="partita" style="display:none">
 
