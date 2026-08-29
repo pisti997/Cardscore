@@ -1,5 +1,8 @@
 let giocoScelto = "";
 let giocatori = [];
+let punteggi = [];
+let numeroMano = 1;
+
 
 function scegliGioco(gioco) {
 
@@ -11,6 +14,7 @@ function scegliGioco(gioco) {
     document.getElementById("titolo-gioco").textContent = gioco;
 }
 
+
 function aggiungiGiocatore() {
 
     const input = document.getElementById("nome-giocatore");
@@ -20,12 +24,18 @@ function aggiungiGiocatore() {
         return;
     }
 
+    if (giocatori.length >= 6) {
+        alert("Puoi inserire massimo 6 giocatori.");
+        return;
+    }
+
     giocatori.push(nome);
 
     input.value = "";
 
     mostraGiocatori();
 }
+
 
 function mostraGiocatori() {
 
@@ -43,13 +53,18 @@ function mostraGiocatori() {
     });
 }
 
+
 function tornaHome() {
 
-    document.getElementById("nuova-partita").style.display = "none";
     document.getElementById("home").style.display = "block";
+    document.getElementById("nuova-partita").style.display = "none";
+    document.getElementById("partita").style.display = "none";
 
     giocatori = [];
+    punteggi = [];
+    numeroMano = 1;
 }
+
 
 function iniziaPartita() {
 
@@ -58,10 +73,88 @@ function iniziaPartita() {
         return;
     }
 
-    alert(
-        "Partita di " +
-        giocoScelto +
-        " iniziata!\n\nGiocatori: " +
-        giocatori.join(", ")
-    );
+    punteggi = [];
+
+    for (let i = 0; i < giocatori.length; i++) {
+        punteggi.push(0);
+    }
+
+    numeroMano = 1;
+
+    document.getElementById("nuova-partita").style.display = "none";
+    document.getElementById("partita").style.display = "block";
+
+    document.getElementById("titolo-partita").textContent =
+        giocoScelto;
+
+    creaTabellone();
+}
+
+
+function creaTabellone() {
+
+    const tabellone = document.getElementById("tabellone");
+
+    tabellone.innerHTML = "";
+
+    giocatori.forEach(function(nome, indice) {
+
+        const riga = document.createElement("div");
+
+        riga.className = "score-row";
+
+        riga.innerHTML = `
+            <div>
+                <strong>${nome}</strong>
+                <br>
+                <span>Totale: ${punteggi[indice]}</span>
+            </div>
+
+            <input
+                type="number"
+                id="punteggio-${indice}"
+                placeholder="Punti"
+                min="0"
+            >
+        `;
+
+        tabellone.appendChild(riga);
+    });
+}
+
+
+function aggiungiMano() {
+
+    let validi = true;
+    let nuoviPunteggi = [];
+
+    for (let i = 0; i < giocatori.length; i++) {
+
+        const input = document.getElementById("punteggio-" + i);
+
+        const punti = Number(input.value);
+
+        if (input.value === "" || punti < 0) {
+            validi = false;
+            break;
+        }
+
+        nuoviPunteggi.push(punti);
+    }
+
+    if (!validi) {
+        alert("Inserisci i punti di tutti i giocatori.");
+        return;
+    }
+
+    for (let i = 0; i < giocatori.length; i++) {
+        punteggi[i] += nuoviPunteggi[i];
+    }
+
+    numeroMano++;
+
+    document.getElementById("numero-mano").textContent =
+        "Mano " + numeroMano;
+
+    creaTabellone();
 }
