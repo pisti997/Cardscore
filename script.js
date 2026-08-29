@@ -49,7 +49,8 @@ function mostraGiocatori() {
 
         const elemento = document.createElement("p");
 
-        elemento.textContent = (indice + 1) + ". " + nome;
+        elemento.textContent =
+            (indice + 1) + ". " + nome;
 
         lista.appendChild(elemento);
     });
@@ -102,13 +103,15 @@ function iniziaPartita() {
 
 function creaSelettoreGiocatori() {
 
-    const selettore = document.getElementById("giocatore-punti");
+    const selettore =
+        document.getElementById("giocatore-punti");
 
     selettore.innerHTML = "";
 
     giocatori.forEach(function(nome, indice) {
 
-        const opzione = document.createElement("option");
+        const opzione =
+            document.createElement("option");
 
         opzione.value = indice;
         opzione.textContent = nome;
@@ -120,13 +123,15 @@ function creaSelettoreGiocatori() {
 
 function creaTabellone() {
 
-    const tabellone = document.getElementById("tabellone");
+    const tabellone =
+        document.getElementById("tabellone");
 
     tabellone.innerHTML = "";
 
     giocatori.forEach(function(nome, indice) {
 
-        const riga = document.createElement("div");
+        const riga =
+            document.createElement("div");
 
         riga.className = "score-row";
 
@@ -142,32 +147,42 @@ function creaTabellone() {
 
 function mostraStorico() {
 
-    let storicoElemento = document.getElementById("storico");
+    let storicoElemento =
+        document.getElementById("storico");
 
     if (!storicoElemento) {
 
-        storicoElemento = document.createElement("div");
+        storicoElemento =
+            document.createElement("div");
 
         storicoElemento.id = "storico";
 
-        document.getElementById("partita").appendChild(storicoElemento);
+        document.getElementById("partita")
+            .appendChild(storicoElemento);
     }
 
-    storicoElemento.innerHTML = "<h2>Storico turni</h2>";
+    storicoElemento.innerHTML =
+        "<h2>Storico turni</h2>";
 
     if (storico.length === 0) {
+
         storicoElemento.innerHTML +=
             "<p>Nessun turno ancora registrato.</p>";
+
         return;
     }
 
     storico.forEach(function(turno) {
 
-        const riga = document.createElement("div");
+        const riga =
+            document.createElement("div");
 
         riga.className = "storico-riga";
 
-        let testo = "<strong>Turno " + turno.numero + "</strong><br>";
+        let testo =
+            "<strong>Turno " +
+            turno.numero +
+            "</strong><br>";
 
         giocatori.forEach(function(nome, indice) {
 
@@ -216,27 +231,29 @@ function aggiungiMano() {
     }
 
 
-    // Creiamo il punteggio del turno.
-    // Tutti partono da zero.
+    // Tutti i giocatori partono da zero
     const puntiTurno =
         new Array(giocatori.length).fill(0);
 
 
-    // Solo il giocatore selezionato riceve punti.
-    puntiTurno[indiceGiocatore] = punti;
+    // Solo il giocatore selezionato riceve punti
+    puntiTurno[indiceGiocatore] =
+        punti;
 
 
-    // Aggiorniamo il totale.
-    punteggi[indiceGiocatore] += punti;
+    // Aggiorniamo il totale
+    punteggi[indiceGiocatore] +=
+        punti;
 
 
-    // Salviamo il turno nello storico.
+    // Salviamo il turno
     storico.push({
         numero: numeroTurno,
         punti: puntiTurno
     });
 
 
+    // Passiamo al turno successivo
     numeroTurno++;
 
 
@@ -244,9 +261,15 @@ function aggiungiMano() {
         "Turno " + numeroTurno;
 
 
+    // Svuotiamo il campo punteggio
     input.value = "";
 
 
+    // Torniamo automaticamente al primo giocatore
+    selettore.selectedIndex = 0;
+
+
+    // Aggiorniamo tutto
     creaTabellone();
     mostraStorico();
 }
