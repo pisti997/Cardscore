@@ -6,9 +6,9 @@ let numeroTurno = 1;
 let obiettivoPartita = 500;
 
 
-// =========================
-// SCELTA DEL GIOCO
-// =========================
+// ========================
+// SCELTA GIOCO
+// ========================
 
 function scegliGioco(gioco) {
 
@@ -22,35 +22,36 @@ function scegliGioco(gioco) {
 }
 
 
-// =========================
-// CAMBIO OBIETTIVO
-// =========================
+// ========================
+// OBIETTIVO PERSONALIZZATO
+// ========================
 
-function cambiaObiettivo() {
+document.getElementById("obiettivo").addEventListener(
+    "change",
+    function() {
 
-    const selettore =
-        document.getElementById("obiettivo");
+        const campo =
+            document.getElementById("campo-personalizzato");
 
-    const personalizzato =
-        document.getElementById("obiettivo-personalizzato");
+        if (this.value === "personalizzato") {
 
+            campo.style.display = "block";
 
-    if (selettore.value === "personalizzato") {
+        } else {
 
-        personalizzato.style.display = "block";
+            campo.style.display = "none";
 
-    } else {
-
-        personalizzato.style.display = "none";
-
-        personalizzato.value = "";
+            document.getElementById(
+                "obiettivo-personalizzato"
+            ).value = "";
+        }
     }
-}
+);
 
 
-// =========================
+// ========================
 // AGGIUNGI GIOCATORE
-// =========================
+// ========================
 
 function aggiungiGiocatore() {
 
@@ -71,7 +72,7 @@ function aggiungiGiocatore() {
 
     if (giocatori.length >= 6) {
 
-        alert("Puoi inserire massimo 6 giocatori.");
+        alert("Massimo 6 giocatori.");
 
         return;
     }
@@ -85,9 +86,9 @@ function aggiungiGiocatore() {
 }
 
 
-// =========================
+// ========================
 // MOSTRA GIOCATORI
-// =========================
+// ========================
 
 function mostraGiocatori() {
 
@@ -97,22 +98,24 @@ function mostraGiocatori() {
     lista.innerHTML = "";
 
 
-    giocatori.forEach(function(nome, indice) {
+    giocatori.forEach(
+        function(nome, indice) {
 
-        const elemento =
-            document.createElement("p");
+            const elemento =
+                document.createElement("p");
 
-        elemento.textContent =
-            (indice + 1) + ". " + nome;
+            elemento.textContent =
+                (indice + 1) + ". " + nome;
 
-        lista.appendChild(elemento);
-    });
+            lista.appendChild(elemento);
+        }
+    );
 }
 
 
-// =========================
+// ========================
 // TORNA HOME
-// =========================
+// ========================
 
 function tornaHome() {
 
@@ -135,9 +138,9 @@ function tornaHome() {
 }
 
 
-// =========================
+// ========================
 // INIZIA PARTITA
-// =========================
+// ========================
 
 function iniziaPartita() {
 
@@ -149,22 +152,20 @@ function iniziaPartita() {
     }
 
 
-    const obiettivo =
+    const selettore =
         document.getElementById("obiettivo");
 
 
-    // OBIETTIVO PERSONALIZZATO
+    if (selettore.value === "personalizzato") {
 
-    if (obiettivo.value === "personalizzato") {
-
-        const personalizzato =
+        const campo =
             document.getElementById(
                 "obiettivo-personalizzato"
             );
 
 
         const valore =
-            Number(personalizzato.value);
+            Number(campo.value);
 
 
         if (!valore || valore <= 0) {
@@ -182,11 +183,9 @@ function iniziaPartita() {
     } else {
 
         obiettivoPartita =
-            Number(obiettivo.value);
+            Number(selettore.value);
     }
 
-
-    // AZZERIAMO I PUNTEGGI
 
     punteggi = [];
 
@@ -206,8 +205,6 @@ function iniziaPartita() {
     numeroTurno = 1;
 
 
-    // CAMBIO SCHERMATA
-
     document.getElementById(
         "nuova-partita"
     ).style.display = "none";
@@ -220,13 +217,14 @@ function iniziaPartita() {
 
     document.getElementById(
         "titolo-partita"
-    ).textContent = giocoScelto;
+    ).textContent =
+        giocoScelto;
 
 
     document.getElementById(
         "numero-mano"
     ).textContent =
-        "Turno " + numeroTurno;
+        "Turno 1";
 
 
     document.getElementById(
@@ -245,9 +243,9 @@ function iniziaPartita() {
 }
 
 
-// =========================
+// ========================
 // SELETTORE VINCITORE
-// =========================
+// ========================
 
 function creaSelettoreVincitore() {
 
@@ -260,25 +258,25 @@ function creaSelettoreVincitore() {
     selettore.innerHTML = "";
 
 
-    giocatori.forEach(function(nome, indice) {
+    giocatori.forEach(
+        function(nome, indice) {
 
-        const opzione =
-            document.createElement("option");
+            const opzione =
+                document.createElement("option");
 
+            opzione.value = indice;
 
-        opzione.value = indice;
+            opzione.textContent = nome;
 
-        opzione.textContent = nome;
-
-
-        selettore.appendChild(opzione);
-    });
+            selettore.appendChild(opzione);
+        }
+    );
 }
 
 
-// =========================
+// ========================
 // TABELLONE
-// =========================
+// ========================
 
 function creaTabellone() {
 
@@ -291,45 +289,44 @@ function creaTabellone() {
     tabellone.innerHTML = "";
 
 
-    giocatori.forEach(function(nome, indice) {
+    giocatori.forEach(
+        function(nome, indice) {
 
-        const riga =
-            document.createElement("div");
+            const riga =
+                document.createElement("div");
 
-
-        riga.className = "score-row";
-
-
-        const nomeElemento =
-            document.createElement("strong");
+            riga.className = "score-row";
 
 
-        nomeElemento.textContent =
-            nome;
+            const nomeElemento =
+                document.createElement("strong");
+
+            nomeElemento.textContent =
+                nome;
 
 
-        const punteggioElemento =
-            document.createElement("span");
+            const puntiElemento =
+                document.createElement("span");
+
+            puntiElemento.textContent =
+                "Totale: " +
+                punteggi[indice];
 
 
-        punteggioElemento.textContent =
-            "Totale: " +
-            punteggi[indice];
+            riga.appendChild(nomeElemento);
+
+            riga.appendChild(puntiElemento);
 
 
-        riga.appendChild(nomeElemento);
-
-        riga.appendChild(punteggioElemento);
-
-
-        tabellone.appendChild(riga);
-    });
+            tabellone.appendChild(riga);
+        }
+    );
 }
 
 
-// =========================
-// AGGIUNGI TURNO
-// =========================
+// ========================
+// NUOVO TURNO
+// ========================
 
 function aggiungiMano() {
 
@@ -347,18 +344,16 @@ function aggiungiMano() {
         Number(selettore.value);
 
 
-    const punti =
-        Number(input.value);
-
-
     if (input.value === "") {
 
-        alert(
-            "Inserisci il punteggio."
-        );
+        alert("Inserisci il punteggio.");
 
         return;
     }
+
+
+    const punti =
+        Number(input.value);
 
 
     if (punti < 0) {
@@ -371,27 +366,19 @@ function aggiungiMano() {
     }
 
 
-    // TUTTI PARTONO DA ZERO
-
     const puntiTurno =
         new Array(
             giocatori.length
         ).fill(0);
 
 
-    // SOLO IL VINCITORE PRENDE PUNTI
-
     puntiTurno[indiceVincitore] =
         punti;
 
 
-    // AGGIORNIAMO IL TOTALE
-
     punteggi[indiceVincitore] +=
         punti;
 
-
-    // SALVIAMO IL TURNO
 
     storico.push({
 
@@ -402,8 +389,6 @@ function aggiungiMano() {
         punti: puntiTurno
     });
 
-
-    // PASSIAMO AL TURNO SUCCESSIVO
 
     numeroTurno++;
 
@@ -423,79 +408,78 @@ function aggiungiMano() {
 
     mostraStorico();
 
-
     controllaVittoria();
 }
 
 
-// =========================
+// ========================
 // STORICO
-// =========================
+// ========================
 
 function mostraStorico() {
 
-    const storicoElemento =
+    const elemento =
         document.getElementById(
             "storico"
         );
 
 
-    storicoElemento.innerHTML =
+    elemento.innerHTML =
         "<h2>📋 Storico turni</h2>";
 
 
     if (storico.length === 0) {
 
-        storicoElemento.innerHTML +=
+        elemento.innerHTML +=
             "<p>Nessun turno ancora registrato.</p>";
 
         return;
     }
 
 
-    storico.forEach(function(turno) {
+    storico.forEach(
+        function(turno) {
 
-        const riga =
-            document.createElement("div");
-
-
-        riga.className =
-            "storico-riga";
+            const riga =
+                document.createElement("div");
 
 
-        const vincitore =
-            giocatori[
-                turno.vincitore
-            ];
+            riga.className =
+                "storico-riga";
 
 
-        const punti =
-            turno.punti[
-                turno.vincitore
-            ];
+            const vincitore =
+                giocatori[
+                    turno.vincitore
+                ];
 
 
-        riga.innerHTML =
-            "<strong>Turno " +
-            turno.numero +
-            "</strong><br>" +
-            "🏆 " +
-            vincitore +
-            " +" +
-            punti +
-            " punti";
+            const punti =
+                turno.punti[
+                    turno.vincitore
+                ];
 
 
-        storicoElemento.appendChild(
-            riga
-        );
-    });
+            riga.innerHTML =
+                "<strong>Turno " +
+                turno.numero +
+                "</strong><br>" +
+                "🏆 " +
+                vincitore +
+                " +" +
+                punti +
+                " punti";
+
+
+            elemento.appendChild(riga);
+        }
+    );
 }
 
 
-// =========================
-// ANNULLA ULTIMO TURNO
-// =========================
+// ========================
+// ANNULLA TURNO
+// ========================
 
 function annullaUltimoTurno() {
 
@@ -544,9 +528,9 @@ function annullaUltimoTurno() {
 }
 
 
-// =========================
+// ========================
 // CONTROLLO VITTORIA
-// =========================
+// ========================
 
 function controllaVittoria() {
 
@@ -571,20 +555,5 @@ function controllaVittoria() {
 
             return;
         }
-    }
-}
-function cambiaObiettivo() {
-
-    const selettore = document.getElementById("obiettivo");
-    const campo = document.getElementById("obiettivo-personalizzato");
-
-    if (selettore.value === "personalizzato") {
-
-        campo.style.display = "block";
-
-    } else {
-
-        campo.style.display = "none";
-        campo.value = "";
     }
 }
