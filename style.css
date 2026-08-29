@@ -10,29 +10,42 @@ body {
 }
 
 .app {
+    width: 100%;
     max-width: 500px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 30px 20px 50px;
 }
 
 .logo {
     font-size: 48px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 h1 {
-    font-size: 36px;
-    margin: 0;
+    font-size: 34px;
+    margin: 0 0 8px;
+}
+
+h2 {
+    font-size: 21px;
+    margin: 28px 0 14px;
 }
 
 .subtitle {
     color: #6e6e73;
-    margin-bottom: 40px;
+    margin: 0 0 30px;
 }
 
-h2 {
-    font-size: 22px;
-    margin-bottom: 15px;
+
+/* BOTTONI */
+
+button {
+    border: none;
+    border-radius: 14px;
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .games {
@@ -43,16 +56,102 @@ h2 {
 .game-button {
     width: 100%;
     padding: 20px;
-    border: none;
-    border-radius: 18px;
     background: white;
     font-size: 20px;
-    font-weight: 600;
     text-align: left;
     box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-    cursor: pointer;
 }
 
 .game-button:active {
     transform: scale(0.98);
+}
+
+
+/* INPUT */
+
+input,
+select {
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    border: 1px solid #d2d2d7;
+    border-radius: 12px;
+    background: white;
+    font-size: 17px;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #007aff;
+}
+
+
+/* TABELLONE */
+
+#tabellone {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.score-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 16px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.score-row strong {
+    font-size: 18px;
+}
+
+.score-row span {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+/* STORICO */
+
+#storico {
+    margin-top: 35px;
+}
+
+.storico-riga {
+    background: white;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    line-height: 1.6;
+}
+
+
+/* SCHERMATA PARTITA */
+
+#partita button {
+    margin-bottom: 10px;
+}
+
+
+/* ADATTO A IPHONE */
+
+@media (max-width: 400px) {
+
+    .app {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .score-row {
+        padding: 14px;
+    }
 }
