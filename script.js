@@ -221,6 +221,28 @@ function aggiungiMano() {
 
         return;
     }
+    
+    function annullaUltimoTurno() {
+
+    if (storico.length === 0) {
+        alert("Non ci sono turni da annullare.");
+        return;
+    }
+
+    const ultimoTurno = storico.pop();
+
+    for (let i = 0; i < giocatori.length; i++) {
+        punteggi[i] -= ultimoTurno.punti[i];
+    }
+
+    numeroTurno--;
+
+    document.getElementById("numero-mano").textContent =
+        "Turno " + numeroTurno;
+
+    creaTabellone();
+    mostraStorico();
+}
 
 
     if (punti < 0) {
