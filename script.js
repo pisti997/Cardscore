@@ -1,6 +1,7 @@
 let giocoScelto = "";
 let giocatori = [];
 let punteggi = [];
+let storico = [];
 let numeroTurno = 1;
 
 
@@ -63,6 +64,7 @@ function tornaHome() {
 
     giocatori = [];
     punteggi = [];
+    storico = [];
     numeroTurno = 1;
 }
 
@@ -75,6 +77,7 @@ function iniziaPartita() {
     }
 
     punteggi = [];
+    storico = [];
 
     for (let i = 0; i < giocatori.length; i++) {
         punteggi.push(0);
@@ -93,6 +96,7 @@ function iniziaPartita() {
 
     creaSelettoreGiocatori();
     creaTabellone();
+    mostraStorico();
 }
 
 
@@ -136,42 +140,113 @@ function creaTabellone() {
 }
 
 
+function mostraStorico() {
+
+    let storicoElemento = document.getElementById("storico");
+
+    if (!storicoElemento) {
+
+        storicoElemento = document.createElement("div");
+
+        storicoElemento.id = "storico";
+
+        document.getElementById("partita").appendChild(storicoElemento);
+    }
+
+    storicoElemento.innerHTML = "<h2>Storico turni</h2>";
+
+    if (storico.length === 0) {
+        storicoElemento.innerHTML +=
+            "<p>Nessun turno ancora registrato.</p>";
+        return;
+    }
+
+    storico.forEach(function(turno) {
+
+        const riga = document.createElement("div");
+
+        riga.className = "storico-riga";
+
+        let testo = "<strong>Turno " + turno.numero + "</strong><br>";
+
+        giocatori.forEach(function(nome, indice) {
+
+            testo +=
+                nome +
+                ": " +
+                turno.punti[indice] +
+                " punti<br>";
+        });
+
+        riga.innerHTML = testo;
+
+        storicoElemento.appendChild(riga);
+    });
+}
+
+
 function aggiungiMano() {
 
-    const selettore = document.getElementById("giocatore-punti");
-    const input = document.getElementById("punti");
+    const selettore =
+        document.getElementById("giocatore-punti");
 
-    const indiceGiocatore = Number(selettore.value);
-    const punti = Number(input.value);
+    const input =
+        document.getElementById("punti");
+
+    const indiceGiocatore =
+        Number(selettore.value);
+
+    const punti =
+        Number(input.value);
 
 
     if (input.value === "") {
+
         alert("Inserisci il punteggio.");
+
         return;
     }
 
 
     if (punti < 0) {
+
         alert("Il punteggio non può essere negativo.");
+
         return;
     }
 
 
-    // Aggiungiamo i punti solo al giocatore selezionato
+    // Creiamo il punteggio del turno.
+    // Tutti partono da zero.
+    const puntiTurno =
+        new Array(giocatori.length).fill(0);
+
+
+    // Solo il giocatore selezionato riceve punti.
+    puntiTurno[indiceGiocatore] = punti;
+
+
+    // Aggiorniamo il totale.
     punteggi[indiceGiocatore] += punti;
 
 
-    // Passiamo al turno successivo
+    // Salviamo il turno nello storico.
+    storico.push({
+        numero: numeroTurno,
+        punti: puntiTurno
+    });
+
+
     numeroTurno++;
+
 
     document.getElementById("numero-mano").textContent =
         "Turno " + numeroTurno;
 
 
-    // Svuotiamo il campo
     input.value = "";
 
 
-    // Aggiorniamo il tabellone
     creaTabellone();
+    mostraStorico();
 }
