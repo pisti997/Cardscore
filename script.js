@@ -26,13 +26,10 @@ let setVinti = [];
 function salvaPartita() {
 
     const partita = {
-
         gioco: giocoScelto,
         giocatori: giocatori,
-
         punteggi: punteggi,
         storico: storico,
-
         turno: numeroTurno,
 
         sistema: sistemaPunteggio,
@@ -49,7 +46,6 @@ function salvaPartita() {
         setVinti: setVinti
     };
 
-
     localStorage.setItem(
         "cardscore_partita",
         JSON.stringify(partita)
@@ -58,7 +54,7 @@ function salvaPartita() {
 
 
 // ========================================
-// PARTITA SALVATA
+// MOSTRA PARTITA SALVATA
 // ========================================
 
 function aggiornaPartitaSalvata() {
@@ -68,23 +64,19 @@ function aggiornaPartitaSalvata() {
             "cardscore_partita"
         );
 
-
     const sezione =
         document.getElementById(
             "partita-in-corso"
         );
-
 
     const contenitore =
         document.getElementById(
             "partita-salvata"
         );
 
-
     if (!sezione || !contenitore) {
         return;
     }
-
 
     if (!dati) {
 
@@ -94,12 +86,10 @@ function aggiornaPartitaSalvata() {
         return;
     }
 
-
     try {
 
         const partita =
             JSON.parse(dati);
-
 
         if (
             !partita.giocatori ||
@@ -112,18 +102,15 @@ function aggiornaPartitaSalvata() {
             return;
         }
 
-
         let html =
             "<strong>" +
             partita.gioco +
             "</strong><br><br>";
 
-
         html +=
             "Turno " +
             partita.turno +
             "<br><br>";
-
 
         partita.giocatori.forEach(
             function(nome, indice) {
@@ -136,10 +123,8 @@ function aggiornaPartitaSalvata() {
             }
         );
 
-
         contenitore.innerHTML =
             html;
-
 
         sezione.style.display =
             "block";
@@ -163,7 +148,6 @@ function continuaPartita() {
             "cardscore_partita"
         );
 
-
     if (!dati) {
 
         alert(
@@ -173,52 +157,40 @@ function continuaPartita() {
         return;
     }
 
-
     try {
 
         const partita =
             JSON.parse(dati);
 
-
         giocoScelto =
             partita.gioco;
-
 
         giocatori =
             partita.giocatori || [];
 
-
         punteggi =
             partita.punteggi || [];
-
 
         storico =
             partita.storico || [];
 
-
         numeroTurno =
             partita.turno || 1;
-
 
         sistemaPunteggio =
             partita.sistema || "semplice";
 
-
         obiettivoPartita =
             partita.obiettivo || 500;
-
 
         puntiPerGame =
             partita.puntiGame || 21;
 
-
         gamePerSet =
             partita.gameSet || 3;
 
-
         setPerMatch =
             partita.setMatch || 2;
-
 
         puntiGame =
             partita.puntiAttualiGame ||
@@ -226,13 +198,11 @@ function continuaPartita() {
                 giocatori.length
             ).fill(0);
 
-
         gameVinti =
             partita.gameVinti ||
             new Array(
                 giocatori.length
             ).fill(0);
-
 
         setVinti =
             partita.setVinti ||
@@ -240,24 +210,20 @@ function continuaPartita() {
                 giocatori.length
             ).fill(0);
 
-
         document.getElementById(
             "home"
         ).style.display =
             "none";
-
 
         document.getElementById(
             "nuova-partita"
         ).style.display =
             "none";
 
-
         document.getElementById(
             "partita"
         ).style.display =
             "block";
-
 
         aggiornaSchermataPartita();
 
@@ -280,7 +246,6 @@ function nuovaPartita() {
         "cardscore_partita"
     );
 
-
     giocoScelto = "";
 
     giocatori = [];
@@ -297,68 +262,55 @@ function nuovaPartita() {
 
     numeroTurno = 1;
 
-
     sistemaPunteggio =
         "semplice";
-
 
     obiettivoPartita =
         500;
 
-
     puntiPerGame =
         21;
-
 
     gamePerSet =
         3;
 
-
     setPerMatch =
         2;
-
 
     document.getElementById(
         "partita-in-corso"
     ).style.display =
         "none";
 
-
     document.getElementById(
         "home"
     ).style.display =
         "none";
-
 
     document.getElementById(
         "nuova-partita"
     ).style.display =
         "block";
 
-
     document.getElementById(
         "lista-giocatori"
     ).innerHTML =
         "";
-
 
     document.getElementById(
         "nome-giocatore"
     ).value =
         "";
 
-
     document.getElementById(
         "sistema-punteggio"
     ).value =
         "semplice";
 
-
     document.getElementById(
         "impostazioni-game-set"
     ).style.display =
         "none";
-
 
     document.getElementById(
         "impostazioni-semplici"
@@ -376,7 +328,6 @@ function scegliGioco(gioco) {
     giocoScelto =
         gioco;
 
-
     giocatori = [];
 
     punteggi = [];
@@ -391,30 +342,25 @@ function scegliGioco(gioco) {
 
     numeroTurno = 1;
 
-
     document.getElementById(
         "home"
     ).style.display =
         "none";
-
 
     document.getElementById(
         "nuova-partita"
     ).style.display =
         "block";
 
-
     document.getElementById(
         "titolo-gioco"
     ).textContent =
         gioco;
 
-
     document.getElementById(
         "lista-giocatori"
     ).innerHTML =
         "";
-
 
     document.getElementById(
         "nome-giocatore"
@@ -434,18 +380,15 @@ function cambiaSistemaPunteggio() {
             "sistema-punteggio"
         ).value;
 
-
     const impostazioni =
         document.getElementById(
             "impostazioni-game-set"
         );
 
-
     const semplici =
         document.getElementById(
             "impostazioni-semplici"
         );
-
 
     if (
         sistema === "game-set"
@@ -479,12 +422,10 @@ function controllaObiettivo() {
             "obiettivo"
         );
 
-
     const campo =
         document.getElementById(
             "campo-personalizzato"
         );
-
 
     if (
         selettore.value ===
@@ -498,7 +439,6 @@ function controllaObiettivo() {
 
         campo.style.display =
             "none";
-
 
         document.getElementById(
             "obiettivo-personalizzato"
@@ -521,7 +461,6 @@ document.addEventListener(
                 "sistema-punteggio"
             );
 
-
         if (sistema) {
 
             sistema.addEventListener(
@@ -530,12 +469,10 @@ document.addEventListener(
             );
         }
 
-
         const obiettivo =
             document.getElementById(
                 "obiettivo"
             );
-
 
         if (obiettivo) {
 
@@ -544,7 +481,6 @@ document.addEventListener(
                 controllaObiettivo
             );
         }
-
 
         aggiornaPartitaSalvata();
     }
@@ -562,10 +498,8 @@ function aggiungiGiocatore() {
             "nome-giocatore"
         );
 
-
     const nome =
         input.value.trim();
-
 
     if (nome === "") {
 
@@ -575,7 +509,6 @@ function aggiungiGiocatore() {
 
         return;
     }
-
 
     if (
         giocatori.length >= 6
@@ -587,7 +520,6 @@ function aggiungiGiocatore() {
 
         return;
     }
-
 
     giocatori.push(nome);
 
@@ -608,10 +540,8 @@ function mostraGiocatori() {
             "lista-giocatori"
         );
 
-
     lista.innerHTML =
         "";
-
 
     giocatori.forEach(
         function(nome, indice) {
@@ -621,12 +551,10 @@ function mostraGiocatori() {
                     "p"
                 );
 
-
             elemento.textContent =
                 (indice + 1) +
                 ". " +
                 nome;
-
 
             lista.appendChild(
                 elemento
@@ -647,18 +575,15 @@ function tornaHome() {
     ).style.display =
         "block";
 
-
     document.getElementById(
         "nuova-partita"
     ).style.display =
         "none";
 
-
     document.getElementById(
         "partita"
     ).style.display =
         "none";
-
 
     aggiornaPartitaSalvata();
 }
@@ -681,12 +606,13 @@ function iniziaPartita() {
         return;
     }
 
-
     sistemaPunteggio =
         document.getElementById(
             "sistema-punteggio"
         ).value;
 
+
+    // SEMPLICE
 
     if (
         sistemaPunteggio ===
@@ -698,21 +624,17 @@ function iniziaPartita() {
                 "obiettivo"
             );
 
-
         if (
             selettore.value ===
             "personalizzato"
         ) {
 
-            const campo =
-                document.getElementById(
-                    "obiettivo-personalizzato"
-                );
-
-
             const valore =
-                Number(campo.value);
-
+                Number(
+                    document.getElementById(
+                        "obiettivo-personalizzato"
+                    ).value
+                );
 
             if (
                 !valore ||
@@ -725,7 +647,6 @@ function iniziaPartita() {
 
                 return;
             }
-
 
             obiettivoPartita =
                 valore;
@@ -740,6 +661,8 @@ function iniziaPartita() {
     }
 
 
+    // GAME / SET / MATCH
+
     if (
         sistemaPunteggio ===
         "game-set"
@@ -752,14 +675,12 @@ function iniziaPartita() {
                 ).value
             );
 
-
         gamePerSet =
             Number(
                 document.getElementById(
                     "game-set"
                 ).value
             );
-
 
         setPerMatch =
             Number(
@@ -768,11 +689,8 @@ function iniziaPartita() {
                 ).value
             );
 
-
         if (
-            puntiPerGame <= 0 ||
-            gamePerSet <= 0 ||
-            setPerMatch <= 0
+            pontosInvalidos()
         ) {
 
             alert(
@@ -789,24 +707,20 @@ function iniziaPartita() {
             giocatori.length
         ).fill(0);
 
-
     puntiGame =
         new Array(
             giocatori.length
         ).fill(0);
-
 
     gameVinti =
         new Array(
             giocatori.length
         ).fill(0);
 
-
     setVinti =
         new Array(
             giocatori.length
         ).fill(0);
-
 
     storico = [];
 
@@ -817,7 +731,6 @@ function iniziaPartita() {
         "nuova-partita"
     ).style.display =
         "none";
-
 
     document.getElementById(
         "partita"
@@ -832,6 +745,25 @@ function iniziaPartita() {
 
 
 // ========================================
+// CONTROLLO VALORI
+// ========================================
+
+function pontosInvalidos() {
+
+    return (
+        !Number.isFinite(puntiPerGame) ||
+        puntiPerGame <= 0 ||
+
+        !Number.isFinite(gamePerSet) ||
+        gamePerSet <= 0 ||
+
+        !Number.isFinite(setPerMatch) ||
+        setPerMatch <= 0
+    );
+}
+
+
+// ========================================
 // AGGIORNA SCHERMATA
 // ========================================
 
@@ -842,13 +774,11 @@ function aggiornaSchermataPartita() {
     ).textContent =
         giocoScelto;
 
-
     document.getElementById(
         "numero-mano"
     ).textContent =
         "Turno " +
         numeroTurno;
-
 
     creaSelettoreVincitore();
 
@@ -863,23 +793,20 @@ function aggiornaSchermataPartita() {
         ).style.display =
             "block";
 
-
         document.getElementById(
             "punteggio-semplice"
         ).style.display =
             "none";
 
-
         document.getElementById(
             "obiettivo-display"
         ).textContent =
             puntiPerGame +
-            " punti = Game  •  " +
+            " punti = Game • " +
             gamePerSet +
-            " Game = Set  •  " +
+            " Game = Set • " +
             setPerMatch +
             " Set = Match";
-
 
         creaTabelloneGameSet();
 
@@ -890,12 +817,10 @@ function aggiornaSchermataPartita() {
         ).style.display =
             "none";
 
-
         document.getElementById(
             "punteggio-semplice"
         ).style.display =
             "block";
-
 
         document.getElementById(
             "obiettivo-display"
@@ -904,17 +829,15 @@ function aggiornaSchermataPartita() {
             obiettivoPartita +
             " punti";
 
-
         creaTabellone();
     }
-
 
     mostraStorico();
 }
 
 
 // ========================================
-// SELETTORE VINCITORE
+// SELETTORE
 // ========================================
 
 function creaSelettoreVincitore() {
@@ -924,10 +847,8 @@ function creaSelettoreVincitore() {
             "giocatore-vincitore"
         );
 
-
     selettore.innerHTML =
         "";
-
 
     giocatori.forEach(
         function(nome, indice) {
@@ -937,14 +858,11 @@ function creaSelettoreVincitore() {
                     "option"
                 );
 
-
             opzione.value =
                 indice;
 
-
             opzione.textContent =
                 nome;
-
 
             selettore.appendChild(
                 opzione
@@ -965,10 +883,8 @@ function creaTabellone() {
             "tabellone"
         );
 
-
     tabellone.innerHTML =
         "";
-
 
     giocatori.forEach(
         function(nome, indice) {
@@ -978,10 +894,8 @@ function creaTabellone() {
                     "div"
                 );
 
-
             riga.className =
                 "score-row";
-
 
             riga.innerHTML =
                 "<strong>" +
@@ -992,7 +906,6 @@ function creaTabellone() {
                 "Totale: " +
                 punteggi[indice] +
                 "</span>";
-
 
             tabellone.appendChild(
                 riga
@@ -1013,50 +926,85 @@ function creaTabelloneGameSet() {
             "tabellone-game-set"
         );
 
-
     tabellone.innerHTML =
         "";
 
 
-    // Troviamo chi è in vantaggio
+    // Troviamo il valore migliore
+    // senza favorire il primo giocatore
 
-    let leader = 0;
+    let migliore =
+        null;
 
 
-    for (
-        let i = 1;
-        i < giocatori.length;
-        i++
-    ) {
+    giocatori.forEach(
+        function(nome, indice) {
 
-        if (
-            setVinti[i] >
-            setVinti[leader]
-        ) {
+            const valore = {
 
-            leader = i;
+                set:
+                    setVinti[indice],
 
-        } else if (
-            setVinti[i] ===
-            setVinti[leader] &&
-            gameVinti[i] >
-            gameVinti[leader]
-        ) {
+                game:
+                    gameVinti[indice],
 
-            leader = i;
+                punti:
+                    puntiGame[indice]
+            };
 
-        } else if (
-            setVinti[i] ===
-            setVinti[leader] &&
-            gameVinti[i] ===
-            gameVinti[leader] &&
-            puntiGame[i] >
-            puntiGame[leader]
-        ) {
 
-            leader = i;
+            if (
+                migliore === null
+            ) {
+
+                migliore = {
+
+                    indice:
+                        indice,
+
+                    valore:
+                        valore,
+
+                    pari:
+                        false
+                };
+
+                return;
+            }
+
+
+            const confronto =
+                confrontaGiocatori(
+                    valore,
+                    migliore.valore
+                );
+
+
+            if (
+                confronto > 0
+            ) {
+
+                migliore = {
+
+                    indice:
+                        indice,
+
+                    valore:
+                        valore,
+
+                    pari:
+                        false
+                };
+
+            } else if (
+                confronto === 0
+            ) {
+
+                migliore.pari =
+                    true;
+            }
         }
-    }
+    );
 
 
     giocatori.forEach(
@@ -1072,8 +1020,13 @@ function creaTabelloneGameSet() {
                 "score-row match-row";
 
 
+            // Evidenziamo solo se
+            // esiste un vero leader
+
             if (
-                indice === leader
+                migliore !== null &&
+                !migliore.pari &&
+                migliore.indice === indice
             ) {
 
                 riga.classList.add(
@@ -1087,7 +1040,6 @@ function creaTabelloneGameSet() {
                     "strong"
                 );
 
-
             nomeElemento.textContent =
                 nome;
 
@@ -1096,7 +1048,6 @@ function creaTabelloneGameSet() {
                 document.createElement(
                     "span"
                 );
-
 
             puntiElemento.textContent =
                 puntiGame[indice];
@@ -1107,7 +1058,6 @@ function creaTabelloneGameSet() {
                     "span"
                 );
 
-
             gameElemento.textContent =
                 gameVinti[indice];
 
@@ -1117,7 +1067,6 @@ function creaTabelloneGameSet() {
                     "span"
                 );
 
-
             setElemento.textContent =
                 setVinti[indice];
 
@@ -1126,16 +1075,13 @@ function creaTabelloneGameSet() {
                 nomeElemento
             );
 
-
             riga.appendChild(
                 puntiElemento
             );
 
-
             riga.appendChild(
                 gameElemento
             );
-
 
             riga.appendChild(
                 setElemento
@@ -1157,12 +1103,78 @@ function creaTabelloneGameSet() {
 
     if (stato) {
 
-        stato.textContent =
-            "Game " +
-            (gameVinti[leader] + 1) +
-            "  •  Set " +
-            (setVinti[leader] + 1);
+        if (
+            migliore === null
+        ) {
+
+            stato.textContent =
+                "Match in corso";
+
+        } else if (
+            migliore.pari
+        ) {
+
+            stato.textContent =
+                "Situazione di parità";
+
+        } else {
+
+            stato.textContent =
+                "In vantaggio: " +
+                giocatori[
+                    migliore.indice
+                ];
+        }
     }
+}
+
+
+// ========================================
+// CONFRONTO GIOCATORI
+// ========================================
+
+function confrontaGiocatori(a, b) {
+
+    if (
+        a.set > b.set
+    ) {
+        return 1;
+    }
+
+    if (
+        a.set < b.set
+    ) {
+        return -1;
+    }
+
+
+    if (
+        a.game > b.game
+    ) {
+        return 1;
+    }
+
+    if (
+        a.game < b.game
+    ) {
+        return -1;
+    }
+
+
+    if (
+        a.punti > b.punti
+    ) {
+        return 1;
+    }
+
+    if (
+        a.punti < b.punti
+    ) {
+        return -1;
+    }
+
+
+    return 0;
 }
 
 
@@ -1177,12 +1189,10 @@ function aggiungiMano() {
             "giocatore-vincitore"
         );
 
-
     const input =
         document.getElementById(
             "punti"
         );
-
 
     const indice =
         Number(
@@ -1221,9 +1231,7 @@ function aggiungiMano() {
     }
 
 
-    // ====================================
     // SEMPLICE
-    // ====================================
 
     if (
         sistemaPunteggio ===
@@ -1232,7 +1240,6 @@ function aggiungiMano() {
 
         punteggi[indice] +=
             punti;
-
 
         storico.push({
 
@@ -1248,22 +1255,19 @@ function aggiungiMano() {
 
 
         controllaVittoria();
+
     }
 
 
-    // ====================================
     // GAME / SET / MATCH
-    // ====================================
 
     else {
 
         puntiGame[indice] +=
             punti;
 
-
         punteggi[indice] +=
             punti;
-
 
         storico.push({
 
@@ -1287,7 +1291,6 @@ function aggiungiMano() {
 
     input.value =
         "";
-
 
     selettore.selectedIndex =
         0;
@@ -1324,7 +1327,7 @@ function controllaGame(indice) {
     );
 
 
-    // Azzera il Game
+    // Azzera i punti del Game
 
     puntiGame =
         new Array(
@@ -1333,7 +1336,7 @@ function controllaGame(indice) {
 
 
     // ====================================
-    // CONTROLLA SET
+    // SET
     // ====================================
 
     if (
@@ -1351,8 +1354,6 @@ function controllaGame(indice) {
         );
 
 
-        // Azzera i Game
-
         gameVinti =
             new Array(
                 giocatori.length
@@ -1360,7 +1361,7 @@ function controllaGame(indice) {
 
 
         // ====================================
-        // CONTROLLA MATCH
+        // MATCH
         // ====================================
 
         if (
@@ -1384,7 +1385,7 @@ function controllaGame(indice) {
 
 
 // ========================================
-// CONTROLLO VITTORIA SEMPLICE
+// VITTORIA SEMPLICE
 // ========================================
 
 function controllaVittoria() {
