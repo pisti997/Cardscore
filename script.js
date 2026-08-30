@@ -17,7 +17,8 @@ let setPerMatch = 2;
 let puntiGame = [];
 let gameVinti = [];
 let setVinti = [];
-
+let storicoGame = [];
+let storicoSet = [];
 
 /* ========================================
    ANIMAZIONI
@@ -99,16 +100,25 @@ function mostraMessaggioPartita(tipo, giocatore) {
     }
 
     messaggioTimeout =
-        setTimeout(
-            function() {
+    setTimeout(
+        function() {
 
-                messaggio.classList.remove(
-                    "visibile"
+            messaggio.classList.remove(
+                "visibile"
+            );
+
+            if (
+                tipo === "match"
+            ) {
+
+                mostraRecapPartita(
+                    giocatore
                 );
+            }
 
-            },
-            5000
-        );
+        },
+        5000
+    );
 }
 
 
@@ -361,6 +371,9 @@ function nuovaPartita() {
 
     setVinti = [];
 
+storicoGame = [];
+storicoSet = [];
+   
     numeroTurno = 1;
 
     sistemaPunteggio =
@@ -450,6 +463,9 @@ function scegliGioco(gioco) {
 
     setVinti = [];
 
+storicoGame = [];
+storicoSet = [];
+   
     numeroTurno = 1;
 
     precedenteLeader = null;
@@ -843,6 +859,9 @@ function iniziaPartita() {
         ).fill(0);
 
     storico = [];
+
+   storicoGame = [];
+storicoSet = [];
 
     numeroTurno = 1;
 
@@ -1498,6 +1517,10 @@ function controllaGame(indice) {
 
     gameVinti[indice]++;
 
+   storicoGame.push({
+    vincitore: indice,
+    punti: puntiGame[indice]
+});
 
     animazioneGame = {
         indice: indice
@@ -1528,6 +1551,10 @@ function controllaGame(indice) {
 
         setVinti[indice]++;
 
+       storicoSet.push({
+    vincitore: indice,
+    game: gameVinti[indice]
+});
         animazioneSet = {
             indice: indice
         };
@@ -1776,7 +1803,126 @@ lanciaConfetti();
         }
     }
 }
+/* ========================================
+   RECAP PARTITA
+======================================== */
 
+function mostraRecapPartita(vincitore) {
+
+    let recap =
+        document.getElementById(
+            "recap-partita"
+        );
+
+    if (!recap) {
+
+        recap =
+            document.createElement("div");
+
+        recap.id =
+            "recap-partita";
+
+        document.body.appendChild(
+            recap
+        );
+    }
+
+    let html =
+        "<div class='recap-box'>";
+
+    html +=
+        "<div class='recap-titolo'>" +
+        "🏆 RISULTATO FINALE" +
+        "</div>";
+
+    html +=
+        "<div class='recap-vincitore'>" +
+        vincitore +
+        "</div>";
+
+    html +=
+        "<div class='recap-punteggi'>";
+
+    giocatori.forEach(
+        function(nome, indice) {
+
+            html +=
+                "<div class='recap-giocatore'>" +
+
+                "<strong>" +
+                nome +
+                "</strong>" +
+
+                "<span>" +
+                punteggi[indice] +
+                " punti</span>" +
+
+                "</div>";
+        }
+    );
+
+    html +=
+        "</div>";
+
+    /* ------------------------------
+       RIEPILOGO SET
+    ------------------------------ */
+
+    if (
+        storicoSet.length > 0
+    ) {
+
+        html +=
+            "<div class='recap-set-lista'>";
+
+        storicoSet.forEach(
+            function(set, indiceSet) {
+
+                html +=
+                    "<div class='recap-set'>" +
+
+                    "<strong>Set " +
+                    (indiceSet + 1) +
+                    "</strong>" +
+
+                    "<span>" +
+                    giocatori[set.vincitore] +
+                    " • " +
+                    set.game +
+                    " Game</span>" +
+
+                    "</div>";
+            }
+        );
+
+        html +=
+            "</div>";
+    }
+
+    html +=
+        "<div class='recap-pulsanti'>" +
+
+        "<button " +
+        "onclick='nuovaPartita()'>" +
+        "NUOVA PARTITA" +
+        "</button>" +
+
+        "<button " +
+        "onclick='tornaHome()'>" +
+        "TORNA ALLA HOME" +
+        "</button>" +
+
+        "</div>";
+
+    html +=
+        "</div>";
+
+    recap.innerHTML =
+        html;
+
+    recap.style.display =
+        "flex";
+}
 
 /* ========================================
    APPLICA ANIMAZIONI
