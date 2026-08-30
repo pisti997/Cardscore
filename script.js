@@ -1307,29 +1307,10 @@ function creaTabelloneGameSet() {
 
     if (stato) {
 
-        if (
-            migliore === null
-        ) {
-
-            stato.textContent =
-                "Match in corso";
-
-        } else if (
-            migliore.pari
-        ) {
-
-            stato.textContent =
-                "Situazione di parità";
-
-        } else {
-
-            stato.textContent =
-                "In vantaggio: " +
-                giocatori[
-                    migliore.indice
-                ];
-        }
-    }
+    stato.textContent =
+        "Turno " +
+        numeroTurno;
+}
 }
 
 
