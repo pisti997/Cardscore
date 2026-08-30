@@ -1843,44 +1843,76 @@ function mostraRecapPartita(vincitore) {
     let html =
         "<div class='recap-box'>";
 
+
+    /* ==============================
+       TITOLO
+    ============================== */
+
     html +=
         "<div class='recap-titolo'>" +
         "RISULTATO FINALE" +
         "</div>";
 
+
     html +=
         "<div class='recap-vincitore'>" +
         vincitore +
+        " ha vinto" +
         "</div>";
 
 
     /* ==============================
-       PUNTEGGIO FINALE
+       RISULTATO MATCH
     ============================== */
 
-    html +=
-        "<div class='recap-punteggi'>";
+    if (
+        storicoSet.length > 0
+    ) {
 
-    giocatori.forEach(
-        function(nome, indice) {
+        const setFinali =
+            new Array(
+                giocatori.length
+            ).fill(0);
 
-            html +=
-                "<div class='recap-giocatore'>" +
+        storicoSet.forEach(
+            function(set) {
 
-                "<strong>" +
-                nome +
-                "</strong>" +
+                if (
+                    set.vincitore !== undefined
+                ) {
 
-                "<span>" +
-                punteggi[indice] +
-                " punti</span>" +
+                    setFinali[
+                        set.vincitore
+                    ]++;
+                }
+            }
+        );
 
-                "</div>";
-        }
-    );
 
-    html +=
-        "</div>";
+        html +=
+            "<div class='recap-match'>";
+
+        giocatori.forEach(
+            function(nome, indice) {
+
+                html +=
+                    "<div class='recap-match-giocatore'>" +
+
+                    "<strong>" +
+                    nome +
+                    "</strong>" +
+
+                    "<b>" +
+                    setFinali[indice] +
+                    "</b>" +
+
+                    "</div>";
+            }
+        );
+
+        html +=
+            "</div>";
+    }
 
 
     /* ==============================
@@ -1901,15 +1933,19 @@ function mostraRecapPartita(vincitore) {
                     "<div class='recap-set'>";
 
                 html +=
-                    "<strong>SET " +
+                    "<div class='recap-set-titolo'>" +
+                    "SET " +
                     (indiceSet + 1) +
-                    "</strong>";
+                    "</div>";
 
                 html +=
-                    "<div class='recap-set-punteggi'>";
+                    "<div class='recap-set-risultato'>";
 
                 giocatori.forEach(
                     function(nome, indice) {
+
+                        const game =
+                            set.game[indice] || 0;
 
                         html +=
                             "<div class='recap-set-giocatore'>" +
@@ -1919,11 +1955,7 @@ function mostraRecapPartita(vincitore) {
                             "</span>" +
 
                             "<b>" +
-                            (
-                                set.game[indice] ||
-                                0
-                            ) +
-
+                            game +
                             "</b>" +
 
                             "</div>";
@@ -1952,12 +1984,12 @@ function mostraRecapPartita(vincitore) {
 
         "<button " +
         "onclick='document.getElementById(\"recap-partita\").style.display=\"none\"; nuovaPartita()'>" +
-"NUOVA PARTITA" +
+        "NUOVA PARTITA" +
         "</button>" +
 
         "<button " +
         "onclick='document.getElementById(\"recap-partita\").style.display=\"none\"; tornaHome()'>" +
-"TORNA ALLA HOME" +
+        "TORNA ALLA HOME" +
         "</button>" +
 
         "</div>";
