@@ -698,10 +698,15 @@ font-size:18px
     margin-bottom: 8px;
 
     display: grid;
-    grid-template-columns: 1fr auto auto;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        100px
+        75px;
+
     align-items: center;
 
-    column-gap: 14px;
+    column-gap: 10px;
 
     box-shadow: 0 3px 10px rgba(20, 50, 40, .06);
 }
@@ -713,26 +718,31 @@ font-size:18px
     color: var(--verde);
     font-size: 14px;
     font-weight: 800;
-
     text-align: left;
 }
 
 
-/* NOME */
+/* NOME - POSIZIONE FISSA */
 
 .storico-riga span {
+    width: 100px;
+
     color: var(--testo);
     font-size: 14px;
     font-weight: 700;
 
     text-align: right;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 
-/* PUNTEGGIO */
+/* PUNTEGGIO - POSIZIONE FISSA */
 
 .storico-riga b {
+    width: 75px;
+
     color: var(--verde);
     font-size: 15px;
     font-weight: 900;
