@@ -1301,3 +1301,176 @@ animation: fadeIn .35s ease;
 
     box-sizing: border-box;
 }
+/* ========================================
+   RECAP FINALE PARTITA
+======================================== */
+
+#recap-partita {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(20, 50, 40, .55);
+
+    z-index: 999999;
+
+    overflow-y: auto;
+}
+
+.recap-box {
+    width: min(420px, 100%);
+
+    max-height: 90vh;
+    overflow-y: auto;
+
+    background: var(--bianco);
+
+    border-radius: 22px;
+
+    padding: 26px 20px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, .20);
+
+    text-align: center;
+}
+
+
+/* TITOLO */
+
+.recap-titolo {
+    color: var(--verde);
+
+    font-size: 22px;
+    font-weight: 900;
+
+    margin-bottom: 8px;
+}
+
+
+/* VINCITORE */
+
+.recap-vincitore {
+    color: var(--oro);
+
+    font-size: 20px;
+    font-weight: 900;
+
+    margin-bottom: 22px;
+}
+
+
+/* PUNTEGGI FINALI */
+
+.recap-punteggi {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 20px;
+}
+
+.recap-giocatore {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 11px 14px;
+
+    background: #f7f9f7;
+
+    border-radius: 12px;
+}
+
+.recap-giocatore strong {
+    color: var(--testo);
+
+    font-size: 15px;
+}
+
+.recap-giocatore span {
+    color: var(--verde);
+
+    font-size: 15px;
+    font-weight: 900;
+}
+
+
+/* SET */
+
+.recap-set-lista {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-bottom: 22px;
+}
+
+.recap-set {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 14px;
+
+    border: 1px solid rgba(20, 50, 40, .10);
+
+    border-radius: 11px;
+}
+
+.recap-set strong {
+    color: var(--verde);
+
+    font-size: 14px;
+}
+
+.recap-set span {
+    color: var(--testo);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* PULSANTI */
+
+.recap-pulsanti {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.recap-pulsanti button {
+    width: 100%;
+
+    min-height: 48px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: var(--verde);
+    color: white;
+
+    font-size: 14px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.recap-pulsanti button:last-child {
+    background: transparent;
+
+    color: var(--verde);
+
+    border: 2px solid var(--verde);
+}
