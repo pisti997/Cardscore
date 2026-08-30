@@ -1620,7 +1620,7 @@ animation: fadeIn .35s ease;
 #partita #obiettivo-display {
     display: none !important;
 }
-/* ========================================
+   /* ========================================
    TESTATA PARTITA
 ======================================== */
 
@@ -1628,46 +1628,29 @@ animation: fadeIn .35s ease;
     position: relative;
 }
 
-#partita .back-button {
+#partita > .back-button {
     position: absolute;
     top: 20px;
     left: 16px;
-
-    margin: 0;
-    padding: 8px 0;
-
     z-index: 10;
 }
 
-#partita .page-header {
-    position: static;
-
-    height: 0;
-    margin: 0;
+#partita > .page-header {
+    position: relative;
+    height: 52px;
+    margin: 0 0 18px 0;
     padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#partita .page-header h1 {
-    position: absolute;
-
-    top: 25px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
+#partita > .page-header h1 {
     margin: 0;
-
     font-size: 30px;
     line-height: 1;
-    white-space: nowrap;
-
-    z-index: 10;
 }
 
-#partita .page-header .subtitle {
-    display: none;
-}
-
-#partita #numero-mano {
+#partita > .page-header .subtitle {
     display: none;
 }
