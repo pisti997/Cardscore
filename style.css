@@ -701,38 +701,209 @@ animation:fadeIn .25s ease
 
 /* POPUP */
 
+/* ========================================
+   POPUP VITTORIA
+======================================== */
+
 #messaggio-partita{
-position:fixed;
-top:50%;
-left:50%;
-width:calc(100vw - 40px);
-max-width:440px;
-min-height:150px;
-padding:28px 24px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:8px;
-text-align:center;
-background:rgba(9,47,39,.97);
-color:white;
-border:2px solid rgba(214,173,82,.8);
-border-radius:24px;
-box-shadow:0 18px 50px rgba(0,0,0,.35);
-backdrop-filter:blur(14px);
-opacity:0;
-visibility:hidden;
-pointer-events:none;
-z-index:999999;
-transform:translate(-50%,-50%) scale(.85);
-transition:opacity .3s ease,visibility .3s ease,transform .3s ease
+    position:fixed;
+    top:50%;
+    left:50%;
+
+    width:calc(100vw - 32px);
+    max-width:430px;
+
+    min-height:230px;
+
+    padding:35px 25px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    background:linear-gradient(
+        145deg,
+        #092f27,
+        #12483c
+    );
+
+    color:white;
+
+    border:2px solid var(--oro);
+
+    border-radius:28px;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.45),
+        0 0 0 6px rgba(214,173,82,.10);
+
+    backdrop-filter:blur(18px);
+
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+
+    z-index:999999;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.75);
+
+    transition:
+        opacity .3s ease,
+        visibility .3s ease,
+        transform .4s cubic-bezier(.2,.8,.2,1);
 }
 
+
+/* APERTURA */
+
 #messaggio-partita.visibile{
-opacity:1;
-visibility:visible;
-transform:translate(-50%,-50%) scale(1)
+    opacity:1;
+    visibility:visible;
+
+    transform:
+        translate(-50%,-50%)
+        scale(1);
+
+    animation:
+        vittoriaEntrata .55s ease;
+}
+
+
+/* ICONA / TITOLO */
+
+#messaggio-partita strong{
+    display:block;
+
+    width:100%;
+
+    color:#f0d486;
+
+    font-size:30px;
+
+    font-weight:900;
+
+    line-height:1.15;
+
+    text-align:center;
+
+    animation:
+        titoloVittoria .7s ease;
+}
+
+
+/* NOME VINCITORE */
+
+#messaggio-partita span{
+    display:block;
+
+    width:100%;
+
+    margin-top:12px;
+
+    color:white;
+
+    font-size:23px;
+
+    font-weight:800;
+
+    line-height:1.35;
+
+    text-align:center;
+
+    animation:
+        nomeVittoria .7s ease;
+}
+
+
+/* ANIMAZIONE ENTRATA */
+
+@keyframes vittoriaEntrata{
+
+    0%{
+        transform:
+            translate(-50%,-50%)
+            scale(.65);
+        opacity:0;
+    }
+
+    60%{
+        transform:
+            translate(-50%,-50%)
+            scale(1.05);
+        opacity:1;
+    }
+
+    100%{
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+    }
+}
+
+
+/* TITOLO */
+
+@keyframes titoloVittoria{
+
+    0%{
+        opacity:0;
+        transform:translateY(-15px) scale(.8);
+    }
+
+    60%{
+        opacity:1;
+        transform:translateY(3px) scale(1.08);
+    }
+
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+
+/* NOME */
+
+@keyframes nomeVittoria{
+
+    0%{
+        opacity:0;
+        transform:translateY(15px);
+    }
+
+    100%{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* MOBILE */
+
+@media(max-width:430px){
+
+    #messaggio-partita{
+        width:calc(100vw - 28px);
+
+        min-height:220px;
+
+        padding:32px 20px;
+
+        border-radius:25px;
+    }
+
+    #messaggio-partita strong{
+        font-size:27px;
+    }
+
+    #messaggio-partita span{
+        font-size:21px;
+    }
 }
 
 #messaggio-partita strong{
