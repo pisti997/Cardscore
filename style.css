@@ -2147,3 +2147,87 @@ button:active {
         font-size: 18px !important;
     }
 }
+/* ========================================
+   ALLINEAMENTO DEFINITIVO TABELLA
+======================================== */
+
+.match-header,
+.match-row {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+
+/* GIOCATORE */
+
+.match-header div:nth-child(1),
+.match-row strong {
+    position: absolute !important;
+    left: 4% !important;
+    width: 42% !important;
+    text-align: left !important;
+}
+
+
+/* PUNTI */
+
+.match-header div:nth-child(2),
+.match-row span:nth-of-type(1) {
+    position: absolute !important;
+    left: 50% !important;
+    width: 16% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+}
+
+
+/* GAME */
+
+.match-header div:nth-child(3),
+.match-row span:nth-of-type(2) {
+    position: absolute !important;
+    left: 67% !important;
+    width: 16% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+}
+
+
+/* SET */
+
+.match-header div:nth-child(4),
+.match-row span:nth-of-type(3) {
+    position: absolute !important;
+    left: 84% !important;
+    width: 16% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+}
+
+
+/* Altezza righe */
+
+.match-header {
+    height: 35px !important;
+}
+
+.match-row {
+    height: 80px !important;
+}
+
+
+/* Allineamento verticale */
+
+.match-row strong,
+.match-row span {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.match-row span:nth-of-type(1),
+.match-row span:nth-of-type(2),
+.match-row span:nth-of-type(3) {
+    transform: translate(-50%, -50%) !important;
+}
