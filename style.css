@@ -1613,13 +1613,6 @@ animation: fadeIn .35s ease;
     font-weight: 900;
     color: var(--verde);
 }
-/* ========================================
-   NASCONDI OBIETTIVO GAME / SET / MATCH
-======================================== */
-
-#partita #obiettivo-display {
-    display: none !important;
-}
    /* ========================================
    TESTATA PARTITA
 ======================================== */
