@@ -1555,6 +1555,7 @@ mostraMessaggioPartita(
             animazioneMatch = {
                 indice: indice
             };
+           lanciaConfetti();
 mostraMessaggioPartita(
     "match",
     giocatori[indice]
@@ -1582,14 +1583,26 @@ function lanciaConfetti() {
 
     document.body.appendChild(canvas);
 
+    canvas.style.position = "fixed";
+    canvas.style.inset = "0";
+    canvas.style.width = "100vw";
+    canvas.style.height = "100vh";
+    canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = "1000000";
+
     const ctx =
         canvas.getContext("2d");
 
-    canvas.width =
-        window.innerWidth;
+    function ridimensiona() {
 
-    canvas.height =
-        window.innerHeight;
+        canvas.width =
+            window.innerWidth;
+
+        canvas.height =
+            window.innerHeight;
+    }
+
+    ridimensiona();
 
     const colori = [
         "#1f6f5b",
@@ -1602,34 +1615,42 @@ function lanciaConfetti() {
 
     const pezzi = [];
 
-    for (let i = 0; i < 160; i++) {
+    for (let i = 0; i < 220; i++) {
 
         pezzi.push({
-            x: Math.random() *
+
+            x:
+                Math.random() *
                 canvas.width,
 
-            y: -20 -
+            y:
+                -20 -
                 Math.random() *
-                canvas.height,
+                150,
 
-            w: 7 +
+            w:
+                6 +
                 Math.random() * 7,
 
-            h: 8 +
+            h:
+                8 +
                 Math.random() * 10,
 
             velocitaY:
-                2 + Math.random() * 4,
+                2 +
+                Math.random() * 4,
 
             velocitaX:
-                -2 + Math.random() * 4,
+                -2 +
+                Math.random() * 4,
 
             rotazione:
-                Math.random() * Math.PI,
+                Math.random() *
+                Math.PI * 2,
 
             velocitaRotazione:
-                -0.15 +
-                Math.random() * 0.3,
+                -0.18 +
+                Math.random() * 0.36,
 
             colore:
                 colori[
@@ -1666,7 +1687,7 @@ function lanciaConfetti() {
                     pezzo.velocitaY;
 
                 pezzo.velocitaY +=
-                    0.04;
+                    0.045;
 
                 pezzo.rotazione +=
                     pezzo.velocitaRotazione;
@@ -1696,7 +1717,9 @@ function lanciaConfetti() {
             }
         );
 
-        if (trascorso < 5000) {
+        if (
+            trascorso < 5000
+        ) {
 
             requestAnimationFrame(
                 anima
@@ -1705,8 +1728,18 @@ function lanciaConfetti() {
         } else {
 
             canvas.remove();
+
+            window.removeEventListener(
+                "resize",
+                ridimensiona
+            );
         }
     }
+
+    window.addEventListener(
+        "resize",
+        ridimensiona
+    );
 
     requestAnimationFrame(
         anima
@@ -1733,12 +1766,6 @@ function controllaVittoria() {
                 indice: i
             };
 lanciaConfetti();
-
-            alert(
-                "🏆 " +
-                giocatori[i] +
-                " ha vinto la partita!"
-            );
 
 
             localStorage.removeItem(
