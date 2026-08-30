@@ -1247,35 +1247,41 @@ transition-duration:.01ms!important
     white-space: nowrap !important;
 }
 /* ========================================
-   PULSANTI NUOVO TURNO
+   AZIONI NUOVO TURNO
 ======================================== */
 
-.turno-card .primary-button {
-    width: calc(100% - 60px);
-    display: inline-flex;
+.turno-azioni {
+    width: 100%;
+    display: flex;
     align-items: center;
-    justify-content: center;
-    vertical-align: middle;
-    box-sizing: border-box;
+    gap: 8px;
+    margin-top: 9px;
 }
 
-.turno-card .undo-button {
+.turno-azioni .primary-button {
+    flex: 1;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+.turno-azioni .undo-button {
+    flex: 0 0 52px;
+
     width: 52px !important;
     height: 52px !important;
     min-height: 52px !important;
 
     padding: 0 !important;
-    margin: 9px 0 0 8px !important;
+    margin: 0 !important;
 
     border-radius: 50% !important;
 
-    display: inline-flex !important;
+    display: flex !important;
     align-items: center;
     justify-content: center;
 
-    vertical-align: middle;
-    box-sizing: border-box;
-
     font-size: 22px !important;
     font-weight: 800 !important;
+
+    box-sizing: border-box;
 }
