@@ -1504,3 +1504,72 @@ animation: fadeIn .35s ease;
 
     text-align: right;
 }
+.recap-match {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+
+    margin: 10px 0 22px;
+}
+
+.recap-match-giocatore {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.recap-match-giocatore strong {
+    font-size: 15px;
+    color: var(--testo);
+}
+
+.recap-match-giocatore b {
+    font-size: 30px;
+    color: var(--verde);
+}
+
+.recap-set-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-bottom: 22px;
+}
+
+.recap-set {
+    padding: 13px 15px;
+
+    border: 1px solid rgba(20, 50, 40, .10);
+    border-radius: 12px;
+}
+
+.recap-set-titolo {
+    color: var(--verde);
+    font-size: 13px;
+    font-weight: 900;
+
+    margin-bottom: 8px;
+}
+
+.recap-set-risultato {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+}
+
+.recap-set-giocatore {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recap-set-giocatore span {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.recap-set-giocatore b {
+    font-size: 20px;
+    color: var(--verde);
+}
