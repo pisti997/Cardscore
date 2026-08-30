@@ -107,7 +107,7 @@ function mostraMessaggioPartita(tipo, giocatore) {
                 );
 
             },
-            3000
+            5000
         );
 }
 
