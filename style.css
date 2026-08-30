@@ -56,7 +56,7 @@ body {
 
 
 /* ========================================
-   ANIMAZIONI GENERALI
+   ANIMAZIONI
 ======================================== */
 
 @keyframes fadeIn {
@@ -178,7 +178,7 @@ body {
 
 
 /* ========================================
-   LOGO
+   LOGO CARD SCORE
 ======================================== */
 
 .cardscore-logo {
@@ -353,6 +353,7 @@ h2 {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     overflow: hidden;
@@ -516,7 +517,7 @@ h2 {
 
 
 /* ========================================
-   BACK BUTTON
+   PULSANTE INDIETRO
 ======================================== */
 
 .back-button {
@@ -569,7 +570,7 @@ h2 {
 
 
 /* ========================================
-   INPUT
+   INPUT E SELECT
 ======================================== */
 
 input,
@@ -677,7 +678,7 @@ button:active {
 
 
 /* ========================================
-   PRIMARY
+   PULSANTE PRINCIPALE
 ======================================== */
 
 .primary-button {
@@ -711,7 +712,7 @@ button:active {
 
 
 /* ========================================
-   SECONDARY
+   PULSANTE SECONDARIO
 ======================================== */
 
 .secondary-button {
@@ -831,19 +832,21 @@ button:active {
 
 
 /* ========================================
-   HEADER TABELLA
+   INTESTAZIONE TABELLA
 ======================================== */
 
 .match-header {
     display: grid;
 
     grid-template-columns:
-        minmax(120px, 1fr)
+        minmax(0, 1fr)
         55px
         55px
         55px;
 
-    gap: 5px;
+    align-items: center;
+
+    gap: 0;
 
     padding: 10px 12px 7px;
 
@@ -859,27 +862,40 @@ button:active {
 }
 
 
+.match-header div {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+}
+
+
 .match-header div:first-child {
+    justify-content: flex-start;
+
     text-align: left;
 }
 
 
 /* ========================================
-   RIGHE MATCH
+   RIGHE PUNTEGGIO
 ======================================== */
 
 .match-row {
     display: grid;
 
     grid-template-columns:
-        minmax(120px, 1fr)
+        minmax(0, 1fr)
         55px
         55px
         55px;
 
     align-items: center;
 
-    gap: 5px;
+    gap: 0;
 
     min-height: 66px;
 
@@ -906,19 +922,36 @@ button:active {
 
 
 .match-row strong {
+    min-width: 0;
+
     text-align: left;
 
     font-size: 15px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
 }
 
 
 .match-row span {
+    width: 100%;
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
     font-size: 18px;
 
     font-weight: 850;
 
-    transition:
-        transform 0.2s ease;
+    text-align: center;
 }
 
 
@@ -954,7 +987,7 @@ button:active {
 
 
 /* ========================================
-   ANIMAZIONE PUNTEGGIO
+   ANIMAZIONI PUNTEGGIO
 ======================================== */
 
 .score-pop {
@@ -1057,6 +1090,119 @@ button:active {
 
 
 /* ========================================
+   MESSAGGIO GAME / SET / MATCH
+======================================== */
+
+#messaggio-partita {
+    position: fixed !important;
+
+    top: 50vh !important;
+    left: 50vw !important;
+
+    right: auto !important;
+    bottom: auto !important;
+
+    width: calc(100vw - 40px);
+
+    max-width: 440px;
+
+    min-height: 150px;
+
+    padding: 28px 24px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    gap: 8px;
+
+    background:
+        rgba(9, 47, 39, 0.97);
+
+    color: white;
+
+    border: 2px solid
+        rgba(214, 173, 82, 0.8);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 18px 50px
+        rgba(0, 0, 0, 0.35);
+
+    backdrop-filter: blur(14px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    z-index: 999999;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.85);
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+#messaggio-partita.visibile {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+}
+
+
+#messaggio-partita strong {
+    display: block;
+
+    width: 100%;
+
+    color: #f0d486;
+
+    font-size: 29px;
+
+    font-weight: 900;
+
+    line-height: 1.15;
+
+    text-align: center;
+}
+
+
+#messaggio-partita span {
+    display: block;
+
+    width: 100%;
+
+    color: white;
+
+    font-size: 19px;
+
+    font-weight: 650;
+
+    line-height: 1.35;
+
+    text-align: center;
+}
+
+
+/* ========================================
    MOBILE
 ======================================== */
 
@@ -1108,29 +1254,98 @@ button:active {
     }
 
 
+    /* ==============================
+       TABELLA MOBILE
+    ============================== */
+
     .match-header,
     .match-row {
         grid-template-columns:
-            minmax(105px, 1fr)
-            50px
-            50px
-            50px;
+            minmax(0, 1fr)
+            52px
+            52px
+            52px;
+
+        gap: 0;
+    }
+
+
+    .match-header {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
 
     .match-row {
-        padding-left: 9px;
-        padding-right: 9px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+    .match-header div {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        width: 100%;
+    }
+
+
+    .match-header div:first-child {
+        justify-content: flex-start;
+
+        text-align: left;
     }
 
 
     .match-row strong {
+        min-width: 0;
+
+        text-align: left;
+
         font-size: 14px;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
     }
 
 
     .match-row span {
-        font-size: 16px;
+        width: 100%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 17px;
+
+        text-align: center;
+    }
+
+
+    #messaggio-partita {
+        width: calc(100vw - 32px);
+
+        min-height: 155px;
+
+        padding: 28px 20px;
+    }
+
+
+    #messaggio-partita strong {
+        font-size: 27px;
+    }
+
+
+    #messaggio-partita span {
+        font-size: 18px;
     }
 }
 
@@ -1150,99 +1365,4 @@ button:active {
 
         transition-duration: 0.01ms !important;
     }
-}
-/* ========================================
-   MESSAGGIO GAME / SET / MATCH
-======================================== */
-
-#messaggio-partita {
-    position: fixed;
-
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%) scale(0.85);
-
-    width: calc(100% - 40px);
-    max-width: 440px;
-
-    min-height: 150px;
-
-    padding: 28px 24px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    gap: 8px;
-
-    background: rgba(9, 47, 39, 0.97);
-
-    color: white;
-
-    border: 2px solid rgba(214, 173, 82, 0.8);
-
-    border-radius: 24px;
-
-    box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.35);
-
-    backdrop-filter: blur(14px);
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    z-index: 9999;
-
-    transition:
-        opacity 0.3s ease,
-        transform 0.3s ease;
-}
-
-
-#messaggio-partita.visibile {
-    opacity: 1;
-
-    transform:
-        translate(-50%, -50%) scale(1);
-}
-
-
-#messaggio-partita strong {
-    display: block;
-
-    width: 100%;
-
-    color: #f0d486;
-
-    font-size: 27px;
-
-    font-weight: 900;
-
-    line-height: 1.15;
-
-    text-align: center;
-}
-
-
-#messaggio-partita span {
-    display: block;
-
-    width: 100%;
-
-    color: white;
-
-    font-size: 18px;
-
-    font-weight: 650;
-
-    line-height: 1.35;
-
-    text-align: center;
 }
