@@ -1246,3 +1246,39 @@ transition-duration:.01ms!important
 
     white-space: nowrap !important;
 }
+/* ========================================
+   PULSANTE ANNULLA CIRCOLARE
+======================================== */
+
+.turno-card {
+    position: relative;
+}
+
+.turno-card .primary-button {
+    width: calc(100% - 62px);
+    margin-right: 62px;
+}
+
+.undo-button {
+    width: 52px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+
+    padding: 0 !important;
+    margin: 9px 0 0 0 !important;
+
+    border-radius: 50% !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    font-size: 22px !important;
+    font-weight: 800 !important;
+
+    cursor: pointer;
+}
