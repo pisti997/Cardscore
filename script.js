@@ -1832,7 +1832,7 @@ function mostraRecapPartita(vincitore) {
 
     html +=
         "<div class='recap-titolo'>" +
-        "🏆 RISULTATO FINALE 🏆" +
+        "🏆 RISULTATO FINALE" +
         "</div>";
 
     html +=
@@ -1840,7 +1840,10 @@ function mostraRecapPartita(vincitore) {
         vincitore +
         "</div>";
 
-    /* PUNTEGGIO FINALE */
+
+    /* ==============================
+       PUNTEGGIO FINALE
+    ============================== */
 
     html +=
         "<div class='recap-punteggi'>";
@@ -1867,7 +1870,9 @@ function mostraRecapPartita(vincitore) {
         "</div>";
 
 
-    /* RISULTATO SET */
+    /* ==============================
+       RISULTATO DEI SET
+    ============================== */
 
     if (
         storicoSet.length > 0
@@ -1880,12 +1885,14 @@ function mostraRecapPartita(vincitore) {
             function(set, indiceSet) {
 
                 html +=
-                    "<div class='recap-set'>" +
+                    "<div class='recap-set'>";
 
-                    "<strong>Set " +
+                html +=
+                    "<strong>SET " +
                     (indiceSet + 1) +
-                    "</strong>" +
+                    "</strong>";
 
+                html +=
                     "<div class='recap-set-punteggi'>";
 
                 giocatori.forEach(
@@ -1899,7 +1906,11 @@ function mostraRecapPartita(vincitore) {
                             "</span>" +
 
                             "<b>" +
-                            set.game[indice] +
+                            (
+                                set.game[indice] ||
+                                0
+                            ) +
+
                             "</b>" +
 
                             "</div>";
@@ -1907,8 +1918,9 @@ function mostraRecapPartita(vincitore) {
                 );
 
                 html +=
-                    "</div>" +
+                    "</div>";
 
+                html +=
                     "</div>";
             }
         );
@@ -1918,7 +1930,9 @@ function mostraRecapPartita(vincitore) {
     }
 
 
-    /* PULSANTI */
+    /* ==============================
+       PULSANTI
+    ============================== */
 
     html +=
         "<div class='recap-pulsanti'>" +
@@ -1935,8 +1949,10 @@ function mostraRecapPartita(vincitore) {
 
         "</div>";
 
+
     html +=
         "</div>";
+
 
     recap.innerHTML =
         html;
