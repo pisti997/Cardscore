@@ -1568,7 +1568,150 @@ mostraMessaggioPartita(
     }
 }
 
+/* ========================================
+   CONFETTI VITTORIA
+======================================== */
 
+function lanciaConfetti() {
+
+    const canvas =
+        document.createElement("canvas");
+
+    canvas.id =
+        "confetti-canvas";
+
+    document.body.appendChild(canvas);
+
+    const ctx =
+        canvas.getContext("2d");
+
+    canvas.width =
+        window.innerWidth;
+
+    canvas.height =
+        window.innerHeight;
+
+    const colori = [
+        "#1f6f5b",
+        "#d4af37",
+        "#e63946",
+        "#457b9d",
+        "#f4a261",
+        "#2a9d8f"
+    ];
+
+    const pezzi = [];
+
+    for (let i = 0; i < 160; i++) {
+
+        pezzi.push({
+            x: Math.random() *
+                canvas.width,
+
+            y: -20 -
+                Math.random() *
+                canvas.height,
+
+            w: 7 +
+                Math.random() * 7,
+
+            h: 8 +
+                Math.random() * 10,
+
+            velocitaY:
+                2 + Math.random() * 4,
+
+            velocitaX:
+                -2 + Math.random() * 4,
+
+            rotazione:
+                Math.random() * Math.PI,
+
+            velocitaRotazione:
+                -0.15 +
+                Math.random() * 0.3,
+
+            colore:
+                colori[
+                    Math.floor(
+                        Math.random() *
+                        colori.length
+                    )
+                ]
+        });
+    }
+
+    const inizio =
+        performance.now();
+
+    function anima(tempo) {
+
+        const trascorso =
+            tempo - inizio;
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        pezzi.forEach(
+            function(pezzo) {
+
+                pezzo.x +=
+                    pezzo.velocitaX;
+
+                pezzo.y +=
+                    pezzo.velocitaY;
+
+                pezzo.velocitaY +=
+                    0.04;
+
+                pezzo.rotazione +=
+                    pezzo.velocitaRotazione;
+
+                ctx.save();
+
+                ctx.translate(
+                    pezzo.x,
+                    pezzo.y
+                );
+
+                ctx.rotate(
+                    pezzo.rotazione
+                );
+
+                ctx.fillStyle =
+                    pezzo.colore;
+
+                ctx.fillRect(
+                    -pezzo.w / 2,
+                    -pezzo.h / 2,
+                    pezzo.w,
+                    pezzo.h
+                );
+
+                ctx.restore();
+            }
+        );
+
+        if (trascorso < 5000) {
+
+            requestAnimationFrame(
+                anima
+            );
+
+        } else {
+
+            canvas.remove();
+        }
+    }
+
+    requestAnimationFrame(
+        anima
+    );
+}
 /* ========================================
    VITTORIA SEMPLICE
 ======================================== */
@@ -1589,7 +1732,7 @@ function controllaVittoria() {
             animazioneMatch = {
                 indice: i
             };
-
+lanciaConfetti();
 
             alert(
                 "🏆 " +
