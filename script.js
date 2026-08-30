@@ -1787,10 +1787,6 @@ function mostraStorico() {
     const elemento =
         document.getElementById("storico");
 
-    if (!elemento) {
-        return;
-    }
-
     elemento.innerHTML =
         "<h2>📋 Storico turni</h2>";
 
@@ -1814,7 +1810,9 @@ function mostraStorico() {
                     "storico-riga";
 
                 const nome =
-                    giocatori[turno.vincitore];
+                    giocatori[
+                        turno.vincitore
+                    ];
 
                 riga.innerHTML =
                     "<strong>Turno " +
