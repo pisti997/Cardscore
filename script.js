@@ -1951,13 +1951,13 @@ function mostraRecapPartita(vincitore) {
         "<div class='recap-pulsanti'>" +
 
         "<button " +
-        "onclick='nuovaPartita()'>" +
-        "NUOVA PARTITA" +
+        "onclick='document.getElementById(\"recap-partita\").style.display=\"none\"; nuovaPartita()'>" +
+"NUOVA PARTITA" +
         "</button>" +
 
         "<button " +
-        "onclick='tornaHome()'>" +
-        "TORNA ALLA HOME" +
+        "onclick='document.getElementById(\"recap-partita\").style.display=\"none\"; tornaHome()'>" +
+"TORNA ALLA HOME" +
         "</button>" +
 
         "</div>";
