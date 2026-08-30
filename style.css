@@ -534,28 +534,38 @@ font-size:13px;
 animation:crownIn .45s ease
 }
 
-/* ANIMAZIONI PUNTEGGIO */
+/* ANIMAZIONE PUNTEGGIO */
 
 .score-pop{
-    animation: scorePop .45s ease;
+    animation: scorePop .6s cubic-bezier(.2,.8,.2,1);
 }
 
 @keyframes scorePop{
+
     0%{
         transform:scale(1);
+        box-shadow:0 4px 14px rgba(20,50,40,.05);
     }
 
-    35%{
+    30%{
         transform:scale(1.035);
+        box-shadow:
+            0 0 0 3px rgba(214,173,82,.18),
+            0 8px 22px rgba(184,143,54,.20);
     }
 
-    65%{
-        transform:scale(.99);
+    60%{
+        transform:scale(1.012);
+        box-shadow:
+            0 0 0 2px rgba(214,173,82,.10),
+            0 5px 16px rgba(184,143,54,.12);
     }
 
     100%{
         transform:scale(1);
+        box-shadow:0 4px 14px rgba(20,50,40,.05);
     }
+}
 }
 
 .game-won{
