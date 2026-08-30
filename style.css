@@ -522,16 +522,22 @@ grid-column:4
 /* LEADER */
 
 .match-row.leader{
-border-color:var(--oro);
-background:linear-gradient(90deg,#fffdf6,#fff);
-box-shadow:0 6px 18px rgba(184,143,54,.14)
+    border-color:var(--oro);
+    background:linear-gradient(90deg,#fffdf6,#fff);
+    box-shadow:
+        0 0 0 2px rgba(214,173,82,.10),
+        0 6px 18px rgba(184,143,54,.14);
+
+    transform:scale(1.01);
 }
 
-.match-row.leader strong::before{
-content:"👑 ";
-display:inline-block;
-font-size:13px;
-animation:crownIn .45s ease
+.match-row.leader strong{
+    color:var(--verde);
+    font-weight:900;
+}
+
+.match-row.leader span{
+    font-weight:900;
 }
 
 /* ANIMAZIONE PUNTEGGIO */
