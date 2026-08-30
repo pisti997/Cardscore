@@ -12,6 +12,11 @@
     --sfondo: #f4f7f5;
 }
 
+
+/* ========================================
+   BASE
+======================================== */
+
 body {
     margin: 0;
     min-height: 100vh;
@@ -34,6 +39,11 @@ body {
     color: var(--testo);
 }
 
+
+/* ========================================
+   APP
+======================================== */
+
 .app {
     width: 100%;
     max-width: 520px;
@@ -46,12 +56,119 @@ body {
 
 
 /* ========================================
+   ANIMAZIONI GENERALI
+======================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+@keyframes glow {
+    0% {
+        box-shadow:
+            0 4px 14px rgba(20,50,40,0.06);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 4px rgba(214,173,82,0.12),
+            0 8px 24px rgba(184,143,54,0.20);
+    }
+
+    100% {
+        box-shadow:
+            0 4px 14px rgba(20,50,40,0.06);
+    }
+}
+
+
+@keyframes crownIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(-20deg);
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale(1.2) rotate(5deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+
+@keyframes winner {
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.03);
+    }
+
+    60% {
+        transform: scale(0.99);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+/* ========================================
    HOME
 ======================================== */
 
 #home {
     color: white;
+
+    animation:
+        fadeIn 0.4s ease;
 }
+
 
 .home-header {
     text-align: center;
@@ -61,7 +178,7 @@ body {
 
 
 /* ========================================
-   LOGO PRINCIPALE
+   LOGO
 ======================================== */
 
 .cardscore-logo {
@@ -82,7 +199,11 @@ body {
     box-shadow: none;
 
     overflow: hidden;
+
+    animation:
+        fadeIn 0.6s ease;
 }
+
 
 .cardscore-logo img {
     width: 100%;
@@ -107,6 +228,7 @@ body {
 
     letter-spacing: -1px;
 }
+
 
 .home-header .subtitle {
     margin-top: 7px;
@@ -133,11 +255,13 @@ body {
     letter-spacing: 1.2px;
 }
 
+
 h1 {
     margin: 8px 0;
 
     font-size: 30px;
 }
+
 
 h2 {
     margin: 24px 0 12px;
@@ -147,16 +271,18 @@ h2 {
 
 
 /* ========================================
-   CARD DEI GIOCHI
+   CARD GIOCHI
 ======================================== */
 
 .games {
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
 
     gap: 12px;
 }
+
 
 .game-card {
     position: relative;
@@ -196,12 +322,22 @@ h2 {
     cursor: pointer;
 
     transition:
-        transform 0.15s,
-        background 0.15s;
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
 }
 
+
+.game-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 14px 30px rgba(0,0,0,0.24);
+}
+
+
 .game-card:active {
-    transform: scale(0.96);
+    transform: scale(0.95);
 }
 
 
@@ -217,7 +353,6 @@ h2 {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     overflow: hidden;
@@ -225,7 +360,16 @@ h2 {
     border-radius: 14px;
 
     background: white;
+
+    transition:
+        transform 0.2s ease;
 }
+
+
+.game-card:hover .game-logo {
+    transform: scale(1.02);
+}
+
 
 .game-logo img {
     width: 100%;
@@ -257,11 +401,13 @@ h2 {
     gap: 2px;
 }
 
+
 .game-info strong {
     font-size: 16px;
 
     font-weight: 800;
 }
+
 
 .game-info span {
     color: #aebfba;
@@ -292,7 +438,11 @@ h2 {
 
     box-shadow:
         0 12px 30px rgba(0,0,0,0.18);
+
+    animation:
+        fadeIn 0.35s ease;
 }
+
 
 .saved-title {
     display: flex;
@@ -302,11 +452,13 @@ h2 {
     gap: 9px;
 }
 
+
 .saved-title h2 {
     margin: 0;
 
     font-size: 18px;
 }
+
 
 #partita-salvata {
     margin: 15px 0;
@@ -338,7 +490,11 @@ h2 {
     padding: 20px 16px 45px;
 
     min-height: 100vh;
+
+    animation:
+        fadeIn 0.3s ease;
 }
+
 
 .page-header {
     text-align: center;
@@ -346,11 +502,13 @@ h2 {
     margin-bottom: 20px;
 }
 
+
 .page-header h1 {
     font-size: 30px;
 
     font-weight: 850;
 }
+
 
 .page-header .subtitle {
     color: var(--grigio);
@@ -358,7 +516,7 @@ h2 {
 
 
 /* ========================================
-   PULSANTE INDIETRO
+   BACK BUTTON
 ======================================== */
 
 .back-button {
@@ -381,7 +539,7 @@ h2 {
 
 
 /* ========================================
-   SCHEDE IMPOSTAZIONI
+   SCHEDE
 ======================================== */
 
 .settings-card,
@@ -398,7 +556,11 @@ h2 {
 
     box-shadow:
         0 6px 20px rgba(20,50,40,0.07);
+
+    animation:
+        fadeIn 0.35s ease;
 }
+
 
 .settings-card h2,
 .turno-card h2 {
@@ -407,7 +569,7 @@ h2 {
 
 
 /* ========================================
-   INPUT E SELECT
+   INPUT
 ======================================== */
 
 input,
@@ -431,11 +593,19 @@ select {
     font-size: 16px;
 
     outline: none;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
 }
+
 
 input:focus,
 select:focus {
     border-color: var(--verde);
+
+    box-shadow:
+        0 0 0 3px rgba(18,72,60,0.10);
 }
 
 
@@ -487,19 +657,27 @@ button {
         0 5px 12px rgba(8,47,39,0.14);
 
     transition:
-        transform 0.15s,
-        opacity 0.15s;
+        transform 0.15s ease,
+        opacity 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
+
+button:hover {
+    box-shadow:
+        0 7px 16px rgba(8,47,39,0.20);
+}
+
+
 button:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
 
     opacity: 0.9;
 }
 
 
 /* ========================================
-   PULSANTE PRINCIPALE
+   PRIMARY
 ======================================== */
 
 .primary-button {
@@ -516,6 +694,13 @@ button:active {
         0 7px 18px rgba(177,132,45,0.25);
 }
 
+
+.primary-button:active {
+    animation:
+        pop 0.25s ease;
+}
+
+
 .start-button {
     margin-top: 18px;
 
@@ -526,7 +711,7 @@ button:active {
 
 
 /* ========================================
-   PULSANTE SECONDARIO
+   SECONDARY
 ======================================== */
 
 .secondary-button {
@@ -546,6 +731,7 @@ button:active {
     margin-top: 10px;
 }
 
+
 #lista-giocatori p {
     display: flex;
 
@@ -564,6 +750,9 @@ button:active {
     color: var(--testo);
 
     font-weight: 650;
+
+    animation:
+        fadeIn 0.25s ease;
 }
 
 
@@ -589,6 +778,9 @@ button:active {
     font-size: 13px;
 
     font-weight: 750;
+
+    animation:
+        fadeIn 0.3s ease;
 }
 
 
@@ -616,13 +808,18 @@ button:active {
 
     box-shadow:
         0 7px 20px rgba(8,47,39,0.18);
+
+    animation:
+        fadeIn 0.35s ease;
 }
+
 
 .match-title h2 {
     margin: 0 0 5px;
 
     font-size: 19px;
 }
+
 
 .match-title p {
     margin: 0;
@@ -634,7 +831,7 @@ button:active {
 
 
 /* ========================================
-   INTESTAZIONE TABELLA
+   HEADER TABELLA
 ======================================== */
 
 .match-header {
@@ -660,6 +857,7 @@ button:active {
 
     text-align: center;
 }
+
 
 .match-header div:first-child {
     text-align: left;
@@ -699,7 +897,13 @@ button:active {
         0 4px 14px rgba(20,50,40,0.06);
 
     text-align: center;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
 }
+
 
 .match-row strong {
     text-align: left;
@@ -707,10 +911,14 @@ button:active {
     font-size: 15px;
 }
 
+
 .match-row span {
     font-size: 18px;
 
     font-weight: 850;
+
+    transition:
+        transform 0.2s ease;
 }
 
 
@@ -732,10 +940,38 @@ button:active {
         0 6px 18px rgba(184,143,54,0.14);
 }
 
+
 .match-row.leader strong::before {
     content: "👑 ";
 
     font-size: 13px;
+
+    display: inline-block;
+
+    animation:
+        crownIn 0.45s ease;
+}
+
+
+/* ========================================
+   ANIMAZIONE PUNTEGGIO
+======================================== */
+
+.score-pop {
+    animation:
+        pop 0.35s ease;
+}
+
+
+.game-won {
+    animation:
+        glow 0.7s ease;
+}
+
+
+.set-won {
+    animation:
+        winner 0.7s ease;
 }
 
 
@@ -764,13 +1000,19 @@ button:active {
 
     box-shadow:
         0 4px 14px rgba(20,50,40,0.05);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
+
 
 .score-row strong {
     flex: 1;
 
     font-size: 16px;
 }
+
 
 .score-row span {
     font-weight: 850;
@@ -783,11 +1025,16 @@ button:active {
 
 #storico {
     margin-top: 28px;
+
+    animation:
+        fadeIn 0.3s ease;
 }
+
 
 #storico h2 {
     font-size: 18px;
 }
+
 
 .storico-riga {
     padding: 13px 15px;
@@ -803,6 +1050,9 @@ button:active {
     color: #5e6c67;
 
     font-size: 13px;
+
+    animation:
+        fadeIn 0.25s ease;
 }
 
 
@@ -817,24 +1067,29 @@ button:active {
         padding-right: 12px;
     }
 
+
     #nuova-partita,
     #partita {
         margin-left: -12px;
         margin-right: -12px;
     }
 
+
     .cardscore-logo {
         width: 135px;
         height: 135px;
     }
 
+
     .home-header h1 {
         font-size: 34px;
     }
 
+
     .games {
         gap: 9px;
     }
+
 
     .game-card {
         min-height: 150px;
@@ -842,13 +1097,16 @@ button:active {
         border-radius: 18px;
     }
 
+
     .game-logo {
         height: 90px;
     }
 
+
     .game-info strong {
         font-size: 15px;
     }
+
 
     .match-header,
     .match-row {
@@ -859,16 +1117,37 @@ button:active {
             50px;
     }
 
+
     .match-row {
         padding-left: 9px;
         padding-right: 9px;
     }
 
+
     .match-row strong {
         font-size: 14px;
     }
 
+
     .match-row span {
         font-size: 16px;
+    }
+}
+
+
+/* ========================================
+   ACCESSIBILITÀ
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
     }
 }
