@@ -352,6 +352,12 @@ function continuaPartita() {
 ======================================== */
 
 function nuovaPartita() {
+       const recap =
+        document.getElementById("recap-partita");
+
+    if (recap) {
+        recap.style.display = "none";
+    }
 
     localStorage.removeItem(
         "cardscore_partita"
@@ -705,6 +711,13 @@ function mostraGiocatori() {
 ======================================== */
 
 function tornaHome() {
+
+       const recap =
+        document.getElementById("recap-partita");
+
+    if (recap) {
+        recap.style.display = "none";
+    }
 
     document.getElementById(
         "home"
@@ -1832,7 +1845,7 @@ function mostraRecapPartita(vincitore) {
 
     html +=
         "<div class='recap-titolo'>" +
-        "🏆 RISULTATO FINALE" +
+        "RISULTATO FINALE" +
         "</div>";
 
     html +=
