@@ -1758,7 +1758,7 @@ function applicaAnimazioni() {
                     void elemento.offsetWidth;
 
                     elemento.classList.add(
-                        "set-won"
+                        "match-won"
                     );
                 }
             }
