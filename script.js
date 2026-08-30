@@ -29,6 +29,87 @@ let animazioneSet = null;
 let animazioneMatch = null;
 
 let precedenteLeader = null;
+let messaggioTimeout = null;
+
+function mostraMessaggioPartita(tipo, giocatore) {
+
+    let messaggio =
+        document.getElementById("messaggio-partita");
+
+    if (!messaggio) {
+
+        messaggio =
+            document.createElement("div");
+
+        messaggio.id =
+            "messaggio-partita";
+
+        messaggio.setAttribute(
+            "role",
+            "status"
+        );
+
+        messaggio.setAttribute(
+            "aria-live",
+            "polite"
+        );
+
+        const contenitore =
+            document.getElementById("partita") ||
+            document.body;
+
+        contenitore.appendChild(
+            messaggio
+        );
+    }
+
+    const testi = {
+        game: "🎉 GAME!",
+        set: "🏆 SET!",
+        match: "🏆 PARTITA VINTA!"
+    };
+
+    messaggio.innerHTML =
+        "<strong>" +
+        testi[tipo] +
+        "</strong>" +
+        "<span>" +
+        giocatore +
+        (
+            tipo === "match"
+                ? " ha vinto la partita"
+                : " ha vinto il " + tipo
+        ) +
+        "</span>";
+
+    messaggio.classList.remove(
+        "visibile"
+    );
+
+    void messaggio.offsetWidth;
+
+    messaggio.classList.add(
+        "visibile"
+    );
+
+    if (messaggioTimeout) {
+        clearTimeout(
+            messaggioTimeout
+        );
+    }
+
+    messaggioTimeout =
+        setTimeout(
+            function() {
+
+                messaggio.classList.remove(
+                    "visibile"
+                );
+
+            },
+            3000
+        );
+}
 
 
 /* ========================================
@@ -1421,6 +1502,10 @@ function controllaGame(indice) {
     animazioneGame = {
         indice: indice
     };
+   mostraMessaggioPartita(
+    "game",
+    giocatori[indice]
+);
 
 
     alert(
@@ -1452,7 +1537,10 @@ function controllaGame(indice) {
         animazioneSet = {
             indice: indice
         };
-
+mostraMessaggioPartita(
+    "set",
+    giocatori[indice]
+);
 
         alert(
             "🏆 " +
@@ -1479,7 +1567,10 @@ function controllaGame(indice) {
             animazioneMatch = {
                 indice: indice
             };
-
+mostraMessaggioPartita(
+    "match",
+    giocatori[indice]
+);
 
             alert(
                 "🏆🏆🏆 " +
