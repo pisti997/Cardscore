@@ -559,7 +559,29 @@ animation:crownIn .45s ease
 }
 
 .game-won{
-animation:glow .7s ease
+    animation:gameWon .8s ease;
+}
+
+@keyframes gameWon{
+    0%{
+        transform:scale(1);
+    }
+
+    25%{
+        transform:scale(1.035);
+    }
+
+    50%{
+        transform:scale(1);
+    }
+
+    70%{
+        transform:scale(1.02);
+    }
+
+    100%{
+        transform:scale(1);
+    }
 }
 
 .set-won{
