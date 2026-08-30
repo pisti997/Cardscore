@@ -19,17 +19,34 @@ let gameVinti = [];
 let setVinti = [];
 
 
-// ========================================
-// SALVA PARTITA
-// ========================================
+/* ========================================
+   ANIMAZIONI
+======================================== */
+
+let animazionePunteggio = null;
+let animazioneGame = null;
+let animazioneSet = null;
+let animazioneMatch = null;
+
+let precedenteLeader = null;
+
+
+/* ========================================
+   SALVA PARTITA
+======================================== */
 
 function salvaPartita() {
 
     const partita = {
+
         gioco: giocoScelto,
+
         giocatori: giocatori,
+
         punteggi: punteggi,
+
         storico: storico,
+
         turno: numeroTurno,
 
         sistema: sistemaPunteggio,
@@ -37,12 +54,15 @@ function salvaPartita() {
         obiettivo: obiettivoPartita,
 
         puntiGame: puntiPerGame,
+
         gameSet: gamePerSet,
+
         setMatch: setPerMatch,
 
         puntiAttualiGame: puntiGame,
 
         gameVinti: gameVinti,
+
         setVinti: setVinti
     };
 
@@ -53,9 +73,9 @@ function salvaPartita() {
 }
 
 
-// ========================================
-// MOSTRA PARTITA SALVATA
-// ========================================
+/* ========================================
+   MOSTRA PARTITA SALVATA
+======================================== */
 
 function aggiornaPartitaSalvata() {
 
@@ -137,9 +157,9 @@ function aggiornaPartitaSalvata() {
 }
 
 
-// ========================================
-// CONTINUA PARTITA
-// ========================================
+/* ========================================
+   CONTINUA PARTITA
+======================================== */
 
 function continuaPartita() {
 
@@ -236,9 +256,9 @@ function continuaPartita() {
 }
 
 
-// ========================================
-// NUOVA PARTITA
-// ========================================
+/* ========================================
+   NUOVA PARTITA
+======================================== */
 
 function nuovaPartita() {
 
@@ -276,6 +296,13 @@ function nuovaPartita() {
 
     setPerMatch =
         2;
+
+    animazionePunteggio = null;
+    animazioneGame = null;
+    animazioneSet = null;
+    animazioneMatch = null;
+
+    precedenteLeader = null;
 
     document.getElementById(
         "partita-in-corso"
@@ -316,12 +343,14 @@ function nuovaPartita() {
         "impostazioni-semplici"
     ).style.display =
         "block";
+
+    controllaObiettivo();
 }
 
 
-// ========================================
-// SCELTA GIOCO
-// ========================================
+/* ========================================
+   SCELTA GIOCO
+======================================== */
 
 function scegliGioco(gioco) {
 
@@ -341,6 +370,8 @@ function scegliGioco(gioco) {
     setVinti = [];
 
     numeroTurno = 1;
+
+    precedenteLeader = null;
 
     document.getElementById(
         "home"
@@ -369,9 +400,9 @@ function scegliGioco(gioco) {
 }
 
 
-// ========================================
-// CAMBIO SISTEMA
-// ========================================
+/* ========================================
+   CAMBIO SISTEMA
+======================================== */
 
 function cambiaSistemaPunteggio() {
 
@@ -411,9 +442,9 @@ function cambiaSistemaPunteggio() {
 }
 
 
-// ========================================
-// OBIETTIVO PERSONALIZZATO
-// ========================================
+/* ========================================
+   OBIETTIVO PERSONALIZZATO
+======================================== */
 
 function controllaObiettivo() {
 
@@ -426,6 +457,10 @@ function controllaObiettivo() {
         document.getElementById(
             "campo-personalizzato"
         );
+
+    if (!selettore || !campo) {
+        return;
+    }
 
     if (
         selettore.value ===
@@ -440,17 +475,21 @@ function controllaObiettivo() {
         campo.style.display =
             "none";
 
-        document.getElementById(
-            "obiettivo-personalizzato"
-        ).value =
-            "";
+        const input =
+            document.getElementById(
+                "obiettivo-personalizzato"
+            );
+
+        if (input) {
+            input.value = "";
+        }
     }
 }
 
 
-// ========================================
-// AVVIO
-// ========================================
+/* ========================================
+   AVVIO
+======================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -487,9 +526,9 @@ document.addEventListener(
 );
 
 
-// ========================================
-// AGGIUNGI GIOCATORE
-// ========================================
+/* ========================================
+   AGGIUNGI GIOCATORE
+======================================== */
 
 function aggiungiGiocatore() {
 
@@ -529,9 +568,9 @@ function aggiungiGiocatore() {
 }
 
 
-// ========================================
-// MOSTRA GIOCATORI
-// ========================================
+/* ========================================
+   MOSTRA GIOCATORI
+======================================== */
 
 function mostraGiocatori() {
 
@@ -564,9 +603,9 @@ function mostraGiocatori() {
 }
 
 
-// ========================================
-// TORNA HOME
-// ========================================
+/* ========================================
+   TORNA HOME
+======================================== */
 
 function tornaHome() {
 
@@ -589,9 +628,9 @@ function tornaHome() {
 }
 
 
-// ========================================
-// INIZIA PARTITA
-// ========================================
+/* ========================================
+   INIZIA PARTITA
+======================================== */
 
 function iniziaPartita() {
 
@@ -612,7 +651,7 @@ function iniziaPartita() {
         ).value;
 
 
-    // SEMPLICE
+    /* SEMPLICE */
 
     if (
         sistemaPunteggio ===
@@ -661,7 +700,7 @@ function iniziaPartita() {
     }
 
 
-    // GAME / SET / MATCH
+    /* GAME / SET / MATCH */
 
     if (
         sistemaPunteggio ===
@@ -726,6 +765,7 @@ function iniziaPartita() {
 
     numeroTurno = 1;
 
+    precedenteLeader = null;
 
     document.getElementById(
         "nuova-partita"
@@ -737,16 +777,15 @@ function iniziaPartita() {
     ).style.display =
         "block";
 
-
     aggiornaSchermataPartita();
 
     salvaPartita();
 }
 
 
-// ========================================
-// CONTROLLO VALORI
-// ========================================
+/* ========================================
+   CONTROLLO VALORI
+======================================== */
 
 function pontosInvalidos() {
 
@@ -763,22 +802,32 @@ function pontosInvalidos() {
 }
 
 
-// ========================================
-// AGGIORNA SCHERMATA
-// ========================================
+/* ========================================
+   AGGIORNA SCHERMATA
+======================================== */
 
 function aggiornaSchermataPartita() {
 
-    document.getElementById(
-        "titolo-partita"
-    ).textContent =
-        giocoScelto;
+    const titolo =
+        document.getElementById(
+            "titolo-partita"
+        );
 
-    document.getElementById(
-        "numero-mano"
-    ).textContent =
-        "Turno " +
-        numeroTurno;
+    const turno =
+        document.getElementById(
+            "numero-mano"
+        );
+
+    if (titolo) {
+        titolo.textContent =
+            giocoScelto;
+    }
+
+    if (turno) {
+        turno.textContent =
+            "Turno " +
+            numeroTurno;
+    }
 
     creaSelettoreVincitore();
 
@@ -833,12 +882,14 @@ function aggiornaSchermataPartita() {
     }
 
     mostraStorico();
+
+    applicaAnimazioni();
 }
 
 
-// ========================================
-// SELETTORE
-// ========================================
+/* ========================================
+   SELETTORE
+======================================== */
 
 function creaSelettoreVincitore() {
 
@@ -846,6 +897,10 @@ function creaSelettoreVincitore() {
         document.getElementById(
             "giocatore-vincitore"
         );
+
+    if (!selettore) {
+        return;
+    }
 
     selettore.innerHTML =
         "";
@@ -872,9 +927,9 @@ function creaSelettoreVincitore() {
 }
 
 
-// ========================================
-// TABELLONE SEMPLICE
-// ========================================
+/* ========================================
+   TABELLONE SEMPLICE
+======================================== */
 
 function creaTabellone() {
 
@@ -882,6 +937,10 @@ function creaTabellone() {
         document.getElementById(
             "tabellone"
         );
+
+    if (!tabellone) {
+        return;
+    }
 
     tabellone.innerHTML =
         "";
@@ -896,6 +955,9 @@ function creaTabellone() {
 
             riga.className =
                 "score-row";
+
+            riga.dataset.indice =
+                indice;
 
             riga.innerHTML =
                 "<strong>" +
@@ -915,9 +977,9 @@ function creaTabellone() {
 }
 
 
-// ========================================
-// TABELLONE GAME / SET / MATCH
-// ========================================
+/* ========================================
+   TABELLONE GAME / SET / MATCH
+======================================== */
 
 function creaTabelloneGameSet() {
 
@@ -926,16 +988,18 @@ function creaTabelloneGameSet() {
             "tabellone-game-set"
         );
 
+    if (!tabellone) {
+        return;
+    }
+
     tabellone.innerHTML =
         "";
-
-
-    // Troviamo il valore migliore
-    // senza favorire il primo giocatore
 
     let migliore =
         null;
 
+
+    /* TROVA LEADER */
 
     giocatori.forEach(
         function(nome, indice) {
@@ -1007,6 +1071,31 @@ function creaTabelloneGameSet() {
     );
 
 
+    /* CONTROLLA CAMBIO LEADER */
+
+    const nuovoLeader =
+        migliore &&
+        !migliore.pari
+            ? migliore.indice
+            : null;
+
+    if (
+        precedenteLeader !== null &&
+        nuovoLeader !== null &&
+        precedenteLeader !== nuovoLeader
+    ) {
+
+        animazionePunteggio = {
+            indice: nuovoLeader
+        };
+    }
+
+    precedenteLeader =
+        nuovoLeader;
+
+
+    /* CREA RIGHE */
+
     giocatori.forEach(
         function(nome, indice) {
 
@@ -1015,13 +1104,12 @@ function creaTabelloneGameSet() {
                     "div"
                 );
 
-
             riga.className =
                 "score-row match-row";
 
+            riga.dataset.indice =
+                indice;
 
-            // Evidenziamo solo se
-            // esiste un vero leader
 
             if (
                 migliore !== null &&
@@ -1087,7 +1175,6 @@ function creaTabelloneGameSet() {
                 setElemento
             );
 
-
             tabellone.appendChild(
                 riga
             );
@@ -1099,7 +1186,6 @@ function creaTabelloneGameSet() {
         document.getElementById(
             "stato-match"
         );
-
 
     if (stato) {
 
@@ -1129,9 +1215,9 @@ function creaTabelloneGameSet() {
 }
 
 
-// ========================================
-// CONFRONTO GIOCATORI
-// ========================================
+/* ========================================
+   CONFRONTO GIOCATORI
+======================================== */
 
 function confrontaGiocatori(a, b) {
 
@@ -1178,9 +1264,9 @@ function confrontaGiocatori(a, b) {
 }
 
 
-// ========================================
-// NUOVO TURNO
-// ========================================
+/* ========================================
+   NUOVO TURNO
+======================================== */
 
 function aggiungiMano() {
 
@@ -1231,7 +1317,9 @@ function aggiungiMano() {
     }
 
 
-    // SEMPLICE
+    /* ====================================
+       SEMPLICE
+    ==================================== */
 
     if (
         sistemaPunteggio ===
@@ -1254,12 +1342,18 @@ function aggiungiMano() {
         });
 
 
+        animazionePunteggio = {
+            indice: indice
+        };
+
         controllaVittoria();
 
     }
 
 
-    // GAME / SET / MATCH
+    /* ====================================
+       GAME / SET / MATCH
+    ==================================== */
 
     else {
 
@@ -1282,6 +1376,10 @@ function aggiungiMano() {
         });
 
 
+        animazionePunteggio = {
+            indice: indice
+        };
+
         controllaGame(indice);
     }
 
@@ -1302,9 +1400,9 @@ function aggiungiMano() {
 }
 
 
-// ========================================
-// CONTROLLA GAME
-// ========================================
+/* ========================================
+   CONTROLLA GAME
+======================================== */
 
 function controllaGame(indice) {
 
@@ -1320,6 +1418,11 @@ function controllaGame(indice) {
     gameVinti[indice]++;
 
 
+    animazioneGame = {
+        indice: indice
+    };
+
+
     alert(
         "🎉 " +
         giocatori[indice] +
@@ -1327,7 +1430,7 @@ function controllaGame(indice) {
     );
 
 
-    // Azzera i punti del Game
+    /* AZZERA PUNTI GAME */
 
     puntiGame =
         new Array(
@@ -1335,9 +1438,9 @@ function controllaGame(indice) {
         ).fill(0);
 
 
-    // ====================================
-    // SET
-    // ====================================
+    /* ====================================
+       SET
+    ==================================== */
 
     if (
         gameVinti[indice] >=
@@ -1345,6 +1448,10 @@ function controllaGame(indice) {
     ) {
 
         setVinti[indice]++;
+
+        animazioneSet = {
+            indice: indice
+        };
 
 
         alert(
@@ -1360,14 +1467,19 @@ function controllaGame(indice) {
             ).fill(0);
 
 
-        // ====================================
-        // MATCH
-        // ====================================
+        /* ====================================
+           MATCH
+        ==================================== */
 
         if (
             setVinti[indice] >=
             setPerMatch
         ) {
+
+            animazioneMatch = {
+                indice: indice
+            };
+
 
             alert(
                 "🏆🏆🏆 " +
@@ -1384,9 +1496,9 @@ function controllaGame(indice) {
 }
 
 
-// ========================================
-// VITTORIA SEMPLICE
-// ========================================
+/* ========================================
+   VITTORIA SEMPLICE
+======================================== */
 
 function controllaVittoria() {
 
@@ -1400,6 +1512,11 @@ function controllaVittoria() {
             punteggi[i] >=
             obiettivoPartita
         ) {
+
+            animazioneMatch = {
+                indice: i
+            };
+
 
             alert(
                 "🏆 " +
@@ -1418,9 +1535,179 @@ function controllaVittoria() {
 }
 
 
-// ========================================
-// STORICO
-// ========================================
+/* ========================================
+   APPLICA ANIMAZIONI
+======================================== */
+
+function applicaAnimazioni() {
+
+    /* ------------------------------
+       PUNTEGGIO
+    ------------------------------ */
+
+    if (
+        animazionePunteggio !== null
+    ) {
+
+        const elementi =
+            document.querySelectorAll(
+                ".score-row"
+            );
+
+        elementi.forEach(
+            function(elemento) {
+
+                if (
+                    Number(
+                        elemento.dataset.indice
+                    ) ===
+                    animazionePunteggio.indice
+                ) {
+
+                    elemento.classList.remove(
+                        "score-pop"
+                    );
+
+                    void elemento.offsetWidth;
+
+                    elemento.classList.add(
+                        "score-pop"
+                    );
+                }
+            }
+        );
+    }
+
+
+    /* ------------------------------
+       GAME
+    ------------------------------ */
+
+    if (
+        animazioneGame !== null
+    ) {
+
+        const elementi =
+            document.querySelectorAll(
+                ".match-row"
+            );
+
+        elementi.forEach(
+            function(elemento) {
+
+                if (
+                    Number(
+                        elemento.dataset.indice
+                    ) ===
+                    animazioneGame.indice
+                ) {
+
+                    elemento.classList.remove(
+                        "game-won"
+                    );
+
+                    void elemento.offsetWidth;
+
+                    elemento.classList.add(
+                        "game-won"
+                    );
+                }
+            }
+        );
+    }
+
+
+    /* ------------------------------
+       SET
+    ------------------------------ */
+
+    if (
+        animazioneSet !== null
+    ) {
+
+        const elementi =
+            document.querySelectorAll(
+                ".match-row"
+            );
+
+        elementi.forEach(
+            function(elemento) {
+
+                if (
+                    Number(
+                        elemento.dataset.indice
+                    ) ===
+                    animazioneSet.indice
+                ) {
+
+                    elemento.classList.remove(
+                        "set-won"
+                    );
+
+                    void elemento.offsetWidth;
+
+                    elemento.classList.add(
+                        "set-won"
+                    );
+                }
+            }
+        );
+    }
+
+
+    /* ------------------------------
+       MATCH
+    ------------------------------ */
+
+    if (
+        animazioneMatch !== null
+    ) {
+
+        const elementi =
+            document.querySelectorAll(
+                ".score-row"
+            );
+
+        elementi.forEach(
+            function(elemento) {
+
+                if (
+                    Number(
+                        elemento.dataset.indice
+                    ) ===
+                    animazioneMatch.indice
+                ) {
+
+                    elemento.classList.remove(
+                        "set-won"
+                    );
+
+                    void elemento.offsetWidth;
+
+                    elemento.classList.add(
+                        "set-won"
+                    );
+                }
+            }
+        );
+    }
+
+
+    /* RESET */
+
+    animazionePunteggio = null;
+
+    animazioneGame = null;
+
+    animazioneSet = null;
+
+    animazioneMatch = null;
+}
+
+
+/* ========================================
+   STORICO
+======================================== */
 
 function mostraStorico() {
 
@@ -1429,6 +1716,9 @@ function mostraStorico() {
             "storico"
         );
 
+    if (!elemento) {
+        return;
+    }
 
     elemento.innerHTML =
         "<h2>📋 Storico turni</h2>";
@@ -1452,7 +1742,6 @@ function mostraStorico() {
                 document.createElement(
                     "div"
                 );
-
 
             riga.className =
                 "storico-riga";
@@ -1485,9 +1774,9 @@ function mostraStorico() {
 }
 
 
-// ========================================
-// ANNULLA ULTIMO TURNO
-// ========================================
+/* ========================================
+   ANNULLA ULTIMO TURNO
+======================================== */
 
 function annullaUltimoTurno() {
 
@@ -1513,9 +1802,9 @@ function annullaUltimoTurno() {
 }
 
 
-// ========================================
-// RICALCOLA PARTITA
-// ========================================
+/* ========================================
+   RICALCOLA PARTITA
+======================================== */
 
 function ricalcolaPartita() {
 
@@ -1524,18 +1813,15 @@ function ricalcolaPartita() {
             giocatori.length
         ).fill(0);
 
-
     puntiGame =
         new Array(
             giocatori.length
         ).fill(0);
 
-
     gameVinti =
         new Array(
             giocatori.length
         ).fill(0);
-
 
     setVinti =
         new Array(
@@ -1548,7 +1834,6 @@ function ricalcolaPartita() {
 
             const indice =
                 turno.vincitore;
-
 
             const punti =
                 Number(
@@ -1577,7 +1862,6 @@ function ricalcolaPartita() {
                     puntiGame[indice] -=
                         puntiPerGame;
 
-
                     gameVinti[indice]++;
 
 
@@ -1599,6 +1883,8 @@ function ricalcolaPartita() {
     numeroTurno =
         storico.length + 1;
 
+
+    precedenteLeader = null;
 
     aggiornaSchermataPartita();
 }
