@@ -1649,11 +1649,10 @@ animation: fadeIn .35s ease;
 #partita .page-header h1 {
     position: absolute;
 
-    top: 50%;
+    top: 20px;
     left: 50%;
 
-    transform:
-        translate(-50%, -50%);
+    transform: translateX(-50%);
 
     margin: 0;
 
