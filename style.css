@@ -68,41 +68,54 @@ body {
 
 
 /* ========================================
-   HEADER
+   HEADER HOME
 ======================================== */
 
 .home-header {
     text-align: center;
 
-    padding: 15px 0 25px;
+    padding: 5px 0 25px;
 }
 
-.cardscore-logo {
-    width: 82px;
-    height: 82px;
 
-    margin: 5px auto 12px;
+/* ========================================
+   LOGO CARD SCORE
+======================================== */
+
+.cardscore-logo {
+    width: 150px;
+    height: 150px;
+
+    margin: 0 auto 5px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #e9eee9
-        );
+    background: transparent;
 
-    border-radius: 26px;
+    border-radius: 0;
 
-    font-size: 44px;
+    box-shadow: none;
 
-    box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
 }
 
+
+.cardscore-logo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* ========================================
+   TITOLO CARD SCORE
+======================================== */
 
 .home-header h1 {
     margin: 0;
@@ -147,6 +160,7 @@ h1 {
     font-size: 30px;
 }
 
+
 h2 {
     margin: 24px 0 12px;
 
@@ -155,7 +169,7 @@ h2 {
 
 
 /* ========================================
-   GIOCHI
+   CARD DEI GIOCHI
 ======================================== */
 
 .games {
@@ -215,6 +229,10 @@ h2 {
 }
 
 
+/* ========================================
+   LOGHI GIOCHI
+======================================== */
+
 .game-logo {
     width: 100%;
 
@@ -240,8 +258,14 @@ h2 {
     object-fit: contain;
 
     padding: 8px;
+
+    display: block;
 }
 
+
+/* ========================================
+   NOME GIOCO
+======================================== */
 
 .game-info {
     display: flex;
@@ -269,7 +293,7 @@ h2 {
 
 
 /* ========================================
-   PARTITA SALVATA
+   PARTITA IN CORSO
 ======================================== */
 
 #partita-in-corso {
@@ -362,7 +386,7 @@ h2 {
 
 
 /* ========================================
-   BACK BUTTON
+   PULSANTE INDIETRO
 ======================================== */
 
 .back-button {
@@ -385,7 +409,7 @@ h2 {
 
 
 /* ========================================
-   SETTINGS CARD
+   SCHEDE IMPOSTAZIONI
 ======================================== */
 
 .settings-card,
@@ -412,7 +436,7 @@ h2 {
 
 
 /* ========================================
-   INPUT
+   INPUT E SELECT
 ======================================== */
 
 input,
@@ -506,7 +530,7 @@ button:active {
 
 
 /* ========================================
-   PRIMARY BUTTON
+   PULSANTE PRINCIPALE
 ======================================== */
 
 .primary-button {
@@ -534,7 +558,7 @@ button:active {
 
 
 /* ========================================
-   SECONDARY BUTTON
+   PULSANTE SECONDARIO
 ======================================== */
 
 .secondary-button {
@@ -645,7 +669,7 @@ button:active {
 
 
 /* ========================================
-   HEADER TABELLA
+   INTESTAZIONE TABELLA
 ======================================== */
 
 .match-header {
@@ -679,7 +703,7 @@ button:active {
 
 
 /* ========================================
-   RIGHE
+   RIGHE MATCH
 ======================================== */
 
 .match-row {
@@ -836,15 +860,29 @@ button:active {
         padding-right: 12px;
     }
 
+
     #nuova-partita,
     #partita {
         margin-left: -12px;
         margin-right: -12px;
     }
 
+
+    .cardscore-logo {
+        width: 135px;
+        height: 135px;
+    }
+
+
+    .home-header h1 {
+        font-size: 34px;
+    }
+
+
     .games {
         gap: 9px;
     }
+
 
     .game-card {
         min-height: 155px;
@@ -852,13 +890,16 @@ button:active {
         border-radius: 18px;
     }
 
+
     .game-logo {
         height: 92px;
     }
 
+
     .game-info strong {
         font-size: 15px;
     }
+
 
     .match-header,
     .match-row {
@@ -869,14 +910,17 @@ button:active {
             50px;
     }
 
+
     .match-row {
         padding-left: 9px;
         padding-right: 9px;
     }
 
+
     .match-row strong {
         font-size: 14px;
     }
+
 
     .match-row span {
         font-size: 16px;
