@@ -83,35 +83,29 @@ body {
 ======================================== */
 
 .cardscore-logo {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
 
-    margin: 0 auto 5px;
+    margin: 0 auto 4px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     background: transparent;
-
     border-radius: 0;
-
     box-shadow: none;
 
     overflow: hidden;
 }
-
 
 .cardscore-logo img {
     width: 100%;
     height: 100%;
 
     object-fit: contain;
-
     display: block;
 }
-
 
 /* ========================================
    TITOLO CARD SCORE
@@ -865,12 +859,6 @@ button:active {
     #partita {
         margin-left: -12px;
         margin-right: -12px;
-    }
-
-
-    .cardscore-logo {
-        width: 135px;
-        height: 135px;
     }
 
 
