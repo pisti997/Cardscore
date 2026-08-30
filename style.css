@@ -1613,3 +1613,58 @@ animation: fadeIn .35s ease;
     font-weight: 900;
     color: var(--verde);
 }
+/* ========================================
+   NASCONDI OBIETTIVO GAME / SET / MATCH
+======================================== */
+
+#partita #obiettivo-display {
+    display: none !important;
+}
+/* ========================================
+   TESTATA PARTITA
+======================================== */
+
+#partita {
+    position: relative;
+}
+
+#partita .back-button {
+    position: absolute;
+    top: 20px;
+    left: 16px;
+    z-index: 10;
+}
+
+#partita .page-header {
+    position: relative;
+
+    margin-top: 0;
+    margin-bottom: 18px;
+
+    height: 52px;
+
+    display: block;
+}
+
+#partita .page-header h1 {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    margin: 0;
+
+    font-size: 30px;
+    line-height: 1;
+}
+
+#partita .page-header .subtitle {
+    display: none;
+}
+
+#partita #numero-mano {
+    display: none;
+}
