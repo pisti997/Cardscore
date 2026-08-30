@@ -688,15 +688,43 @@ animation:fadeIn .3s ease
 font-size:18px
 }
 
-.storico-riga{
-padding:13px 15px;
-margin-bottom:7px;
-background:white;
-border:1px solid #e2e9e5;
-border-radius:12px;
-color:#5e6c67;
-font-size:13px;
-animation:fadeIn .25s ease
+.storico-riga {
+    background: var(--bianco);
+    border: 1px solid rgba(20, 50, 40, .10);
+    border-radius: 14px;
+
+    padding: 12px 15px;
+    margin-bottom: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-shadow: 0 3px 10px rgba(20, 50, 40, .06);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.storico-riga:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(20, 50, 40, .10);
+}
+
+.storico-riga strong {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--verde);
+}
+
+.storico-riga {
+    font-size: 14px;
+    color: var(--testo);
+}
+
+.storico-riga strong + br + * {
+    font-weight: 700;
 }
 
 /* POPUP */
