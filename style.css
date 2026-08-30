@@ -1573,3 +1573,43 @@ animation: fadeIn .35s ease;
     font-size: 20px;
     color: var(--verde);
 }
+/* ========================================
+   CORREZIONE RECAP SET
+======================================== */
+
+.recap-set {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.recap-set-risultato {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+}
+
+.recap-set-giocatore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 90px;
+}
+
+.recap-set-giocatore span {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--testo);
+    white-space: nowrap;
+}
+
+.recap-set-giocatore b {
+    width: 28px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--verde);
+}
