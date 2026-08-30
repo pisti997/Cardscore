@@ -1151,3 +1151,76 @@ button:active {
         transition-duration: 0.01ms !important;
     }
 }
+/* ========================================
+   MESSAGGIO GAME / SET / MATCH
+======================================== */
+
+#messaggio-partita {
+    position: fixed;
+
+    left: 50%;
+    bottom: 28px;
+
+    transform: translate(-50%, 20px);
+
+    width: calc(100% - 32px);
+    max-width: 420px;
+
+    padding: 16px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+
+    background: rgba(9, 47, 39, 0.96);
+
+    color: white;
+
+    border: 1px solid rgba(214, 173, 82, 0.7);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.28);
+
+    backdrop-filter: blur(12px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 9999;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+#messaggio-partita.visibile {
+    opacity: 1;
+
+    transform:
+        translate(-50%, 0);
+}
+
+#messaggio-partita strong {
+    color: #f0d486;
+
+    font-size: 20px;
+
+    font-weight: 850;
+}
+
+#messaggio-partita span {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-align: center;
+}
