@@ -419,6 +419,11 @@ storicoSet = [];
     ).style.display =
         "block";
 
+   document.getElementById(
+    "partita"
+).style.display =
+    "none";
+
     document.getElementById(
         "lista-giocatori"
     ).innerHTML =
