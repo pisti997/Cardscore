@@ -613,6 +613,44 @@ animation:crownIn .45s ease
         box-shadow:0 4px 14px rgba(20,50,40,.06);
     }
 }
+/* ========================================
+   MATCH VINCENTE
+======================================== */
+
+.match-won{
+    animation:matchWon 1.2s ease;
+    border-color:var(--oro) !important;
+    box-shadow:
+        0 0 0 5px rgba(214,173,82,.18),
+        0 12px 32px rgba(184,143,54,.28) !important;
+}
+
+@keyframes matchWon{
+
+    0%{
+        transform:scale(1);
+    }
+
+    20%{
+        transform:scale(1.06);
+    }
+
+    40%{
+        transform:scale(.98);
+    }
+
+    60%{
+        transform:scale(1.04);
+    }
+
+    80%{
+        transform:scale(.995);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
 
 /* PUNTEGGIO SEMPLICE */
 
