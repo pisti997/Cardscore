@@ -1632,24 +1632,25 @@ animation: fadeIn .35s ease;
     position: absolute;
     top: 20px;
     left: 16px;
+
+    margin: 0;
+    padding: 8px 0;
+
     z-index: 10;
 }
 
 #partita .page-header {
-    position: relative;
+    position: static;
 
-    margin-top: 0;
-    margin-bottom: 18px;
-
-    height: 52px;
-
-    display: block;
+    height: 0;
+    margin: 0;
+    padding: 0;
 }
 
 #partita .page-header h1 {
     position: absolute;
 
-    top: 20px;
+    top: 25px;
     left: 50%;
 
     transform: translateX(-50%);
@@ -1658,6 +1659,9 @@ animation: fadeIn .35s ease;
 
     font-size: 30px;
     line-height: 1;
+    white-space: nowrap;
+
+    z-index: 10;
 }
 
 #partita .page-header .subtitle {
