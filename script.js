@@ -1508,12 +1508,6 @@ function controllaGame(indice) {
 );
 
 
-    alert(
-        "🎉 " +
-        giocatori[indice] +
-        " vince il Game!"
-    );
-
 
     /* AZZERA PUNTI GAME */
 
@@ -1542,12 +1536,6 @@ mostraMessaggioPartita(
     giocatori[indice]
 );
 
-        alert(
-            "🏆 " +
-            giocatori[indice] +
-            " vince il Set!"
-        );
-
 
         gameVinti =
             new Array(
@@ -1571,12 +1559,6 @@ mostraMessaggioPartita(
     "match",
     giocatori[indice]
 );
-
-            alert(
-                "🏆🏆🏆 " +
-                giocatori[indice] +
-                " VINCE LA PARTITA!"
-            );
 
 
             localStorage.removeItem(
