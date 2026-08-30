@@ -1197,7 +1197,7 @@ transition-duration:.01ms!important
     display: grid !important;
     grid-template-columns: 1fr 110px 80px !important;
     align-items: center !important;
-
+animation: fadeIn .35s ease;
     min-height: 54px !important;
     padding: 10px 15px !important;
     margin-bottom: 8px !important;
