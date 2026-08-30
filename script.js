@@ -1549,11 +1549,11 @@ function controllaGame(indice) {
         gamePerSet
     ) {
 
-        setVinti[indice]++;
+      setVinti[indice]++;
 
-       storicoSet.push({
+storicoSet.push({
     vincitore: indice,
-    game: gameVinti[indice]
+    game: [...gameVinti]
 });
         animazioneSet = {
             indice: indice
@@ -1832,13 +1832,15 @@ function mostraRecapPartita(vincitore) {
 
     html +=
         "<div class='recap-titolo'>" +
-        "🏆 RISULTATO FINALE" +
+        "🏆 RISULTATO FINALE 🏆" +
         "</div>";
 
     html +=
         "<div class='recap-vincitore'>" +
         vincitore +
         "</div>";
+
+    /* PUNTEGGIO FINALE */
 
     html +=
         "<div class='recap-punteggi'>";
@@ -1864,9 +1866,8 @@ function mostraRecapPartita(vincitore) {
     html +=
         "</div>";
 
-    /* ------------------------------
-       RIEPILOGO SET
-    ------------------------------ */
+
+    /* RISULTATO SET */
 
     if (
         storicoSet.length > 0
@@ -1885,11 +1886,28 @@ function mostraRecapPartita(vincitore) {
                     (indiceSet + 1) +
                     "</strong>" +
 
-                    "<span>" +
-                    giocatori[set.vincitore] +
-                    " • " +
-                    set.game +
-                    " Game</span>" +
+                    "<div class='recap-set-punteggi'>";
+
+                giocatori.forEach(
+                    function(nome, indice) {
+
+                        html +=
+                            "<div class='recap-set-giocatore'>" +
+
+                            "<span>" +
+                            nome +
+                            "</span>" +
+
+                            "<b>" +
+                            set.game[indice] +
+                            "</b>" +
+
+                            "</div>";
+                    }
+                );
+
+                html +=
+                    "</div>" +
 
                     "</div>";
             }
@@ -1898,6 +1916,9 @@ function mostraRecapPartita(vincitore) {
         html +=
             "</div>";
     }
+
+
+    /* PULSANTI */
 
     html +=
         "<div class='recap-pulsanti'>" +
