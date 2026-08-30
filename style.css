@@ -1474,3 +1474,33 @@ animation: fadeIn .35s ease;
 
     border: 2px solid var(--verde);
 }
+.recap-set-punteggi {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 8px;
+}
+
+.recap-set-giocatore {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-width: 130px;
+}
+
+.recap-set-giocatore span {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--testo);
+}
+
+.recap-set-giocatore b {
+    min-width: 25px;
+
+    font-size: 17px;
+    font-weight: 900;
+    color: var(--verde);
+
+    text-align: right;
+}
