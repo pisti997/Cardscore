@@ -64,9 +64,9 @@ function mostraMessaggioPartita(tipo, giocatore) {
     }
 
     const testi = {
-        game: "🎉 GAME!",
-        set: "🏆 SET!",
-        match: "🏆 PARTITA VINTA!"
+        game: "🎖️GAME!🎖️",
+        set: "🥇SET!🥇",
+        match: "🏆PARTITA VINTA!🏆"
     };
 
     messaggio.innerHTML =
