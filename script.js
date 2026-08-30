@@ -1785,9 +1785,7 @@ function applicaAnimazioni() {
 function mostraStorico() {
 
     const elemento =
-        document.getElementById(
-            "storico"
-        );
+        document.getElementById("storico");
 
     if (!elemento) {
         return;
@@ -1796,10 +1794,7 @@ function mostraStorico() {
     elemento.innerHTML =
         "<h2>📋 Storico turni</h2>";
 
-
-    if (
-        storico.length === 0
-    ) {
+    if (storico.length === 0) {
 
         elemento.innerHTML +=
             "<p>Nessun turno ancora registrato.</p>";
@@ -1807,43 +1802,36 @@ function mostraStorico() {
         return;
     }
 
+    [...storico]
+        .reverse()
+        .forEach(
+            function(turno) {
 
-    storico.forEach(
-        function(turno) {
+                const riga =
+                    document.createElement("div");
 
-            const riga =
-                document.createElement(
-                    "div"
-                );
+                riga.className =
+                    "storico-riga";
 
-            riga.className =
-                "storico-riga";
+                const nome =
+                    giocatori[turno.vincitore];
 
+                riga.innerHTML =
+                    "<strong>Turno " +
+                    turno.numero +
+                    "</strong>" +
 
-            const nome =
-                giocatori[
-                    turno.vincitore
-                ];
+                    "<span>" +
+                    nome +
+                    "</span>" +
 
+                    "<b>+" +
+                    turno.punti +
+                    " punti</b>";
 
-            riga.innerHTML =
-                "<strong>" +
-                "Turno " +
-                turno.numero +
-                "</strong><br>" +
-
-                "🏆 " +
-                nome +
-                " +" +
-                turno.punti +
-                " punti";
-
-
-            elemento.appendChild(
-                riga
-            );
-        }
-    );
+                elemento.appendChild(riga);
+            }
+        );
 }
 
 
