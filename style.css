@@ -1158,38 +1158,41 @@ button:active {
 #messaggio-partita {
     position: fixed;
 
+    top: 50%;
     left: 50%;
-    bottom: 28px;
 
-    transform: translate(-50%, 20px);
+    transform: translate(-50%, -50%) scale(0.85);
 
-    width: calc(100% - 32px);
-    max-width: 420px;
+    width: calc(100% - 40px);
+    max-width: 440px;
 
-    padding: 16px 20px;
+    min-height: 150px;
+
+    padding: 28px 24px;
 
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
-    gap: 4px;
+    text-align: center;
 
-    background: rgba(9, 47, 39, 0.96);
+    gap: 8px;
+
+    background: rgba(9, 47, 39, 0.97);
 
     color: white;
 
-    border: 1px solid rgba(214, 173, 82, 0.7);
+    border: 2px solid rgba(214, 173, 82, 0.8);
 
-    border-radius: 18px;
+    border-radius: 24px;
 
     box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.28);
+        0 18px 50px rgba(0, 0, 0, 0.35);
 
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(14px);
 
     opacity: 0;
 
@@ -1198,29 +1201,48 @@ button:active {
     z-index: 9999;
 
     transition:
-        opacity 0.25s ease,
-        transform 0.25s ease;
+        opacity 0.3s ease,
+        transform 0.3s ease;
 }
+
 
 #messaggio-partita.visibile {
     opacity: 1;
 
     transform:
-        translate(-50%, 0);
+        translate(-50%, -50%) scale(1);
 }
+
 
 #messaggio-partita strong {
+    display: block;
+
+    width: 100%;
+
     color: #f0d486;
 
-    font-size: 20px;
+    font-size: 27px;
 
-    font-weight: 850;
+    font-weight: 900;
+
+    line-height: 1.15;
+
+    text-align: center;
 }
 
-#messaggio-partita span {
-    font-size: 14px;
 
-    font-weight: 600;
+#messaggio-partita span {
+    display: block;
+
+    width: 100%;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 650;
+
+    line-height: 1.35;
 
     text-align: center;
 }
