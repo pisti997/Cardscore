@@ -26,7 +26,9 @@ margin:0 auto;
 padding:20px 16px 45px
 }
 
-/* ANIMAZIONI */
+/* ========================================
+   ANIMAZIONI GENERICHE
+======================================== */
 
 @keyframes fadeIn{
 from{opacity:0;transform:translateY(8px)}
@@ -64,7 +66,9 @@ to{opacity:1;transform:translateY(0)}
 100%{transform:scale(1)}
 }
 
-/* HOME */
+/* ========================================
+   HOME
+======================================== */
 
 #home{
 color:white;
@@ -128,7 +132,9 @@ margin:24px 0 12px;
 font-size:20px
 }
 
-/* CARD GIOCHI */
+/* ========================================
+   CARD GIOCHI
+======================================== */
 
 .games{
 display:grid;
@@ -207,7 +213,9 @@ color:#aebfba;
 font-size:10px
 }
 
-/* PARTITA IN CORSO */
+/* ========================================
+   PARTITA IN CORSO (HOME)
+======================================== */
 
 #partita-in-corso{
 margin-top:24px;
@@ -239,7 +247,9 @@ font-size:14px;
 line-height:1.6
 }
 
-/* PAGINE */
+/* ========================================
+   PAGINE (NUOVA PARTITA / PARTITA)
+======================================== */
 
 #nuova-partita,
 #partita{
@@ -265,7 +275,41 @@ font-weight:850
 color:var(--grigio)
 }
 
-/* INDIETRO */
+/* Intestazione fissa della schermata di partita, con pulsante "Esci" flottante */
+#partita{
+position:relative
+}
+
+#partita > .back-button{
+position:absolute;
+top:20px;
+left:16px;
+z-index:10
+}
+
+#partita > .page-header{
+position:relative;
+height:52px;
+margin:0 0 18px 0;
+padding:0;
+display:flex;
+align-items:center;
+justify-content:center
+}
+
+#partita > .page-header h1{
+margin:0;
+font-size:30px;
+line-height:1
+}
+
+#partita > .page-header .subtitle{
+display:none
+}
+
+/* ========================================
+   INDIETRO
+======================================== */
 
 .back-button{
 width:auto;
@@ -278,7 +322,9 @@ font-size:15px;
 box-shadow:none
 }
 
-/* SCHEDE */
+/* ========================================
+   SCHEDE
+======================================== */
 
 .settings-card,
 .turno-card{
@@ -296,7 +342,9 @@ animation:fadeIn .35s ease
 margin-top:0
 }
 
-/* INPUT */
+/* ========================================
+   INPUT / BOTTONI
+======================================== */
 
 input,
 select{
@@ -319,6 +367,13 @@ border-color:var(--verde);
 box-shadow:0 0 0 3px rgba(18,72,60,.1)
 }
 
+input:disabled,
+select:disabled{
+opacity:.55;
+cursor:not-allowed;
+background:#eef1ef
+}
+
 label{
 display:block;
 margin:13px 0 5px;
@@ -326,8 +381,6 @@ color:#60716b;
 font-size:13px;
 font-weight:750
 }
-
-/* BOTTONI */
 
 button{
 width:100%;
@@ -354,6 +407,13 @@ transform:scale(.97);
 opacity:.9
 }
 
+button:disabled{
+opacity:.5;
+cursor:not-allowed;
+box-shadow:none;
+transform:none
+}
+
 .primary-button{
 background:linear-gradient(135deg,var(--oro),#bd9138);
 color:#172c26;
@@ -376,7 +436,9 @@ color:var(--verde);
 box-shadow:none
 }
 
-/* GIOCATORI */
+/* ========================================
+   GIOCATORI
+======================================== */
 
 #lista-giocatori{
 margin-top:10px
@@ -395,7 +457,9 @@ font-weight:650;
 animation:fadeIn .25s ease
 }
 
-/* OBIETTIVO */
+/* ========================================
+   OBIETTIVO
+======================================== */
 
 #obiettivo-display{
 margin:14px 0;
@@ -410,7 +474,9 @@ font-weight:750;
 animation:fadeIn .3s ease
 }
 
-/* GAME SET MATCH */
+/* ========================================
+   GAME / SET / MATCH - INTESTAZIONE
+======================================== */
 
 .match-title{
 margin-top:15px;
@@ -435,16 +501,17 @@ font-size:13px
 }
 
 /* ========================================
-   TABELLA
+   TABELLA GAME / SET / MATCH
 ======================================== */
 
 .match-header{
 display:grid;
-grid-template-columns:minmax(0,1fr) 60px 60px 60px;
+grid-template-columns:minmax(0,1fr) 72px 72px 72px;
 align-items:center;
 width:100%;
 padding:10px 12px 7px;
 margin:0;
+gap:0;
 color:#8b9893;
 font-size:10px;
 font-weight:800;
@@ -465,28 +532,30 @@ justify-content:flex-start;
 text-align:left
 }
 
-.match-row{
+.score-row.match-row{
 display:grid;
-grid-template-columns:minmax(0,1fr) 60px 60px 60px;
+grid-template-columns:minmax(0,1fr) 72px 72px 72px;
 align-items:center;
 width:100%;
 min-height:66px;
 padding:11px 12px;
 margin-bottom:8px;
+gap:0;
 background:white;
 border:2px solid transparent;
 border-radius:16px;
 box-shadow:0 4px 14px rgba(20,50,40,.06);
-gap:0;
 text-align:center;
 transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease
 }
 
-.match-row strong{
+.score-row.match-row strong{
+display:block;
 grid-column:1;
 width:100%;
 min-width:0;
 text-align:left;
+color:var(--testo);
 font-size:15px;
 font-weight:800;
 overflow:hidden;
@@ -494,12 +563,12 @@ text-overflow:ellipsis;
 white-space:nowrap
 }
 
-.match-row span{
-width:100%;
-min-width:0;
+.score-row.match-row span{
 display:flex;
 align-items:center;
 justify-content:center;
+width:100%;
+min-width:0;
 margin:0;
 padding:0;
 text-align:center;
@@ -507,168 +576,89 @@ font-size:18px;
 font-weight:850
 }
 
-.match-row span:nth-of-type(1){
-grid-column:2
-}
-
-.match-row span:nth-of-type(2){
-grid-column:3
-}
-
-.match-row span:nth-of-type(3){
-grid-column:4
-}
+.score-row.match-row span:nth-of-type(1){grid-column:2}
+.score-row.match-row span:nth-of-type(2){grid-column:3}
+.score-row.match-row span:nth-of-type(3){grid-column:4}
 
 /* LEADER */
 
 .match-row.leader{
-    border-color:var(--oro);
-    background:linear-gradient(90deg,#fffdf6,#fff);
-    box-shadow:
-        0 0 0 2px rgba(214,173,82,.10),
-        0 6px 18px rgba(184,143,54,.14);
-
-    transform:scale(1.01);
+border-color:var(--oro);
+background:linear-gradient(90deg,#fffdf6,#fff);
+box-shadow:
+0 0 0 2px rgba(214,173,82,.10),
+0 6px 18px rgba(184,143,54,.14);
+transform:scale(1.01)
 }
 
 .match-row.leader strong{
-    color:var(--verde);
-    font-weight:900;
+color:var(--verde);
+font-weight:900
 }
 
 .match-row.leader span{
-    font-weight:900;
+font-weight:900
 }
 
-/* ANIMAZIONE PUNTEGGIO */
+/* ========================================
+   ANIMAZIONI DI PUNTEGGIO
+======================================== */
 
 .score-pop{
-    animation: scorePop .6s cubic-bezier(.2,.8,.2,1);
+animation:scorePop .6s cubic-bezier(.2,.8,.2,1)
 }
 
 @keyframes scorePop{
-
-    0%{
-        transform:scale(1);
-        box-shadow:0 4px 14px rgba(20,50,40,.05);
-    }
-
-    30%{
-        transform:scale(1.035);
-        box-shadow:
-            0 0 0 3px rgba(214,173,82,.18),
-            0 8px 22px rgba(184,143,54,.20);
-    }
-
-    60%{
-        transform:scale(1.012);
-        box-shadow:
-            0 0 0 2px rgba(214,173,82,.10),
-            0 5px 16px rgba(184,143,54,.12);
-    }
-
-    100%{
-        transform:scale(1);
-        box-shadow:0 4px 14px rgba(20,50,40,.05);
-    }
-}
+0%{transform:scale(1);box-shadow:0 4px 14px rgba(20,50,40,.05)}
+30%{transform:scale(1.035);box-shadow:0 0 0 3px rgba(214,173,82,.18),0 8px 22px rgba(184,143,54,.20)}
+60%{transform:scale(1.012);box-shadow:0 0 0 2px rgba(214,173,82,.10),0 5px 16px rgba(184,143,54,.12)}
+100%{transform:scale(1);box-shadow:0 4px 14px rgba(20,50,40,.05)}
 }
 
 .game-won{
-    animation:gameWon .8s ease;
+animation:gameWon .8s ease
 }
 
 @keyframes gameWon{
-    0%{
-        transform:scale(1);
-    }
-
-    25%{
-        transform:scale(1.035);
-    }
-
-    50%{
-        transform:scale(1);
-    }
-
-    70%{
-        transform:scale(1.02);
-    }
-
-    100%{
-        transform:scale(1);
-    }
+0%{transform:scale(1)}
+25%{transform:scale(1.035)}
+50%{transform:scale(1)}
+70%{transform:scale(1.02)}
+100%{transform:scale(1)}
 }
 
 .set-won{
-    animation:setWon .95s ease;
+animation:setWon .95s ease
 }
 
 @keyframes setWon{
-    0%{
-        transform:scale(1);
-        box-shadow:0 4px 14px rgba(20,50,40,.06);
-    }
-
-    25%{
-        transform:scale(1.045);
-        box-shadow:0 0 0 4px rgba(214,173,82,.16),
-                   0 10px 28px rgba(184,143,54,.22);
-    }
-
-    50%{
-        transform:scale(1.015);
-    }
-
-    75%{
-        transform:scale(1.03);
-    }
-
-    100%{
-        transform:scale(1);
-        box-shadow:0 4px 14px rgba(20,50,40,.06);
-    }
+0%{transform:scale(1);box-shadow:0 4px 14px rgba(20,50,40,.06)}
+25%{transform:scale(1.045);box-shadow:0 0 0 4px rgba(214,173,82,.16),0 10px 28px rgba(184,143,54,.22)}
+50%{transform:scale(1.015)}
+75%{transform:scale(1.03)}
+100%{transform:scale(1);box-shadow:0 4px 14px rgba(20,50,40,.06)}
 }
-/* ========================================
-   MATCH VINCENTE
-======================================== */
 
 .match-won{
-    animation:matchWon 1.2s ease;
-    border-color:var(--oro) !important;
-    box-shadow:
-        0 0 0 5px rgba(214,173,82,.18),
-        0 12px 32px rgba(184,143,54,.28) !important;
+animation:matchWon 1.2s ease;
+border-color:var(--oro) !important;
+box-shadow:
+0 0 0 5px rgba(214,173,82,.18),
+0 12px 32px rgba(184,143,54,.28) !important
 }
 
 @keyframes matchWon{
-
-    0%{
-        transform:scale(1);
-    }
-
-    20%{
-        transform:scale(1.06);
-    }
-
-    40%{
-        transform:scale(.98);
-    }
-
-    60%{
-        transform:scale(1.04);
-    }
-
-    80%{
-        transform:scale(.995);
-    }
-
-    100%{
-        transform:scale(1);
-    }
+0%{transform:scale(1)}
+20%{transform:scale(1.06)}
+40%{transform:scale(.98)}
+60%{transform:scale(1.04)}
+80%{transform:scale(.995)}
+100%{transform:scale(1)}
 }
 
-/* PUNTEGGIO SEMPLICE */
+/* ========================================
+   PUNTEGGIO SEMPLICE
+======================================== */
 
 .score-row{
 display:flex;
@@ -693,7 +683,9 @@ font-size:16px
 font-weight:850
 }
 
-/* STORICO */
+/* ========================================
+   STORICO
+======================================== */
 
 #storico{
 margin-top:28px;
@@ -704,297 +696,364 @@ animation:fadeIn .3s ease
 font-size:18px
 }
 
-.storico-riga {
-    background: var(--bianco);
-    border: 1px solid rgba(20, 50, 40, .10);
-    border-radius: 14px;
-
-    min-height: 54px;
-    padding: 10px 15px;
-    margin-bottom: 8px;
-
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1fr)
-        100px
-        75px;
-
-    align-items: center;
-
-    column-gap: 10px;
-
-    box-shadow: 0 3px 10px rgba(20, 50, 40, .06);
+.storico-riga{
+display:grid;
+grid-template-columns:1fr 110px 80px;
+align-items:center;
+column-gap:8px;
+min-height:54px;
+padding:10px 15px;
+margin-bottom:8px;
+background:var(--bianco);
+border:1px solid rgba(20,50,40,.10);
+border-radius:14px;
+box-shadow:0 3px 10px rgba(20,50,40,.06);
+animation:fadeIn .35s ease
 }
 
-
-/* TURNO */
-
-.storico-riga strong {
-    color: var(--verde);
-    font-size: 14px;
-    font-weight: 800;
-    text-align: left;
+.storico-riga strong{
+grid-column:1;
+color:var(--verde);
+font-size:14px;
+font-weight:800;
+text-align:left;
+align-self:center
 }
 
-
-/* NOME - POSIZIONE FISSA */
-
-.storico-riga span {
-    width: 100px;
-
-    color: var(--testo);
-    font-size: 14px;
-    font-weight: 700;
-
-    text-align: right;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.storico-riga span{
+grid-column:2;
+width:110px;
+color:var(--testo);
+font-size:14px;
+font-weight:700;
+text-align:center;
+align-self:center;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
 }
 
-
-/* PUNTEGGIO - POSIZIONE FISSA */
-
-.storico-riga b {
-    width: 75px;
-
-    color: var(--verde);
-    font-size: 15px;
-    font-weight: 900;
-
-    text-align: right;
-    white-space: nowrap;
+.storico-riga b{
+grid-column:3;
+width:80px;
+color:var(--verde);
+font-size:15px;
+font-weight:900;
+text-align:center;
+align-self:center;
+white-space:nowrap
 }
-
-/* POPUP */
 
 /* ========================================
-   POPUP VITTORIA
+   POPUP VITTORIA GAME / SET / MATCH
 ======================================== */
 
 #messaggio-partita{
-    position:fixed;
-    top:50%;
-    left:50%;
-
-    width:calc(100vw - 32px);
-    max-width:430px;
-
-    min-height:230px;
-
-    padding:35px 25px;
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-
-    background:linear-gradient(
-        145deg,
-        #092f27,
-        #12483c
-    );
-
-    color:white;
-
-    border:2px solid var(--oro);
-
-    border-radius:28px;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.45),
-        0 0 0 6px rgba(214,173,82,.10);
-
-    backdrop-filter:blur(18px);
-
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-
-    z-index:999999;
-
-    transform:
-        translate(-50%,-50%)
-        scale(.75);
-
-    transition:
-        opacity .3s ease,
-        visibility .3s ease,
-        transform .4s cubic-bezier(.2,.8,.2,1);
+position:fixed;
+top:50%;
+left:50%;
+width:calc(100vw - 32px);
+max-width:430px;
+min-height:230px;
+padding:35px 25px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+background:linear-gradient(145deg,#092f27,#12483c);
+color:white;
+border:2px solid var(--oro);
+border-radius:28px;
+box-shadow:
+0 25px 70px rgba(0,0,0,.45),
+0 0 0 6px rgba(214,173,82,.10);
+backdrop-filter:blur(18px);
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+z-index:999999;
+transform:translate(-50%,-50%) scale(.75);
+transition:
+opacity .3s ease,
+visibility .3s ease,
+transform .4s cubic-bezier(.2,.8,.2,1)
 }
-
-
-/* APERTURA */
 
 #messaggio-partita.visibile{
-    opacity:1;
-    visibility:visible;
-
-    transform:
-        translate(-50%,-50%)
-        scale(1);
-
-    animation:
-        vittoriaEntrata .55s ease;
-}
-
-
-/* ICONA / TITOLO */
-
-#messaggio-partita strong{
-    display:block;
-
-    width:100%;
-
-    color:#f0d486;
-
-    font-size:30px;
-
-    font-weight:900;
-
-    line-height:1.15;
-
-    text-align:center;
-
-    animation:
-        titoloVittoria .7s ease;
-}
-
-
-/* NOME VINCITORE */
-
-#messaggio-partita span{
-    display:block;
-
-    width:100%;
-
-    margin-top:12px;
-
-    color:white;
-
-    font-size:23px;
-
-    font-weight:800;
-
-    line-height:1.35;
-
-    text-align:center;
-
-    animation:
-        nomeVittoria .7s ease;
-}
-
-
-/* ANIMAZIONE ENTRATA */
-
-@keyframes vittoriaEntrata{
-
-    0%{
-        transform:
-            translate(-50%,-50%)
-            scale(.65);
-        opacity:0;
-    }
-
-    60%{
-        transform:
-            translate(-50%,-50%)
-            scale(1.05);
-        opacity:1;
-    }
-
-    100%{
-        transform:
-            translate(-50%,-50%)
-            scale(1);
-    }
-}
-
-
-/* TITOLO */
-
-@keyframes titoloVittoria{
-
-    0%{
-        opacity:0;
-        transform:translateY(-15px) scale(.8);
-    }
-
-    60%{
-        opacity:1;
-        transform:translateY(3px) scale(1.08);
-    }
-
-    100%{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-}
-
-
-/* NOME */
-
-@keyframes nomeVittoria{
-
-    0%{
-        opacity:0;
-        transform:translateY(15px);
-    }
-
-    100%{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-
-/* MOBILE */
-
-@media(max-width:430px){
-
-    #messaggio-partita{
-        width:calc(100vw - 28px);
-
-        min-height:220px;
-
-        padding:32px 20px;
-
-        border-radius:25px;
-    }
-
-    #messaggio-partita strong{
-        font-size:27px;
-    }
-
-    #messaggio-partita span{
-        font-size:21px;
-    }
+opacity:1;
+visibility:visible;
+transform:translate(-50%,-50%) scale(1);
+animation:vittoriaEntrata .55s ease
 }
 
 #messaggio-partita strong{
 display:block;
 width:100%;
+margin:0;
 color:#f0d486;
 font-size:29px;
 font-weight:900;
 line-height:1.15;
-text-align:center
+text-align:center;
+animation:titoloVittoria .7s ease
 }
 
 #messaggio-partita span{
 display:block;
 width:100%;
+margin-top:12px;
 color:white;
 font-size:19px;
 font-weight:650;
 line-height:1.35;
+text-align:center;
+animation:nomeVittoria .7s ease
+}
+
+@keyframes vittoriaEntrata{
+0%{transform:translate(-50%,-50%) scale(.65);opacity:0}
+60%{transform:translate(-50%,-50%) scale(1.05);opacity:1}
+100%{transform:translate(-50%,-50%) scale(1)}
+}
+
+@keyframes titoloVittoria{
+0%{opacity:0;transform:translateY(-15px) scale(.8)}
+60%{opacity:1;transform:translateY(3px) scale(1.08)}
+100%{opacity:1;transform:translateY(0) scale(1)}
+}
+
+@keyframes nomeVittoria{
+0%{opacity:0;transform:translateY(15px)}
+100%{opacity:1;transform:translateY(0)}
+}
+
+/* ========================================
+   AZIONI NUOVO TURNO
+======================================== */
+
+.turno-azioni{
+width:100%;
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:9px
+}
+
+.turno-azioni .primary-button{
+flex:1;
+width:auto;
+margin:0
+}
+
+.turno-azioni .undo-button{
+flex:0 0 52px;
+width:52px;
+height:52px;
+min-height:52px;
+padding:0;
+margin:0;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:800;
+box-sizing:border-box
+}
+
+/* ========================================
+   RECAP FINALE PARTITA
+======================================== */
+
+#recap-partita{
+position:fixed;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:rgba(20,50,40,.55);
+z-index:999999;
+overflow-y:auto
+}
+
+.recap-box{
+width:min(420px,100%);
+max-height:90vh;
+overflow-y:auto;
+background:var(--bianco);
+border-radius:22px;
+padding:26px 20px;
+box-shadow:0 20px 60px rgba(0,0,0,.20);
 text-align:center
 }
 
-/* MOBILE */
+.recap-titolo{
+color:var(--verde);
+font-size:22px;
+font-weight:900;
+margin-bottom:8px
+}
+
+.recap-vincitore{
+color:var(--oro);
+font-size:20px;
+font-weight:900;
+margin-bottom:22px
+}
+
+/* Classifica finale per punti totali (modalità Punteggio semplice) */
+
+.recap-punteggi{
+display:flex;
+flex-direction:column;
+gap:8px;
+margin-bottom:20px
+}
+
+.recap-giocatore{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:11px 14px;
+background:#f7f9f7;
+border-radius:12px;
+border:1px solid transparent
+}
+
+.recap-giocatore strong{
+color:var(--testo);
+font-size:15px
+}
+
+.recap-giocatore span{
+color:var(--verde);
+font-size:15px;
+font-weight:900
+}
+
+.recap-giocatore.vincitore{
+background:linear-gradient(90deg,#fffdf6,#fff8ea);
+border-color:var(--oro)
+}
+
+.recap-giocatore.vincitore strong,
+.recap-giocatore.vincitore span{
+color:#8a6415
+}
+
+/* Risultato Set del match (modalità Game/Set/Match) */
+
+.recap-match{
+display:flex;
+justify-content:center;
+gap:30px;
+margin:10px 0 22px
+}
+
+.recap-match-giocatore{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px
+}
+
+.recap-match-giocatore strong{
+font-size:15px;
+color:var(--testo)
+}
+
+.recap-match-giocatore b{
+font-size:30px;
+color:var(--verde)
+}
+
+/* Dettaglio dei singoli Set */
+
+.recap-set-lista{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-bottom:22px
+}
+
+.recap-set{
+display:block;
+width:100%;
+box-sizing:border-box;
+padding:13px 15px;
+border:1px solid rgba(20,50,40,.10);
+border-radius:12px
+}
+
+.recap-set-titolo{
+color:var(--verde);
+font-size:13px;
+font-weight:900;
+margin-bottom:8px
+}
+
+.recap-set-risultato{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:40px;
+width:100%
+}
+
+.recap-set-giocatore{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+min-width:90px
+}
+
+.recap-set-giocatore span{
+font-size:15px;
+font-weight:700;
+color:var(--testo);
+white-space:nowrap
+}
+
+.recap-set-giocatore b{
+width:28px;
+text-align:center;
+font-size:22px;
+font-weight:900;
+color:var(--verde)
+}
+
+/* Pulsanti recap */
+
+.recap-pulsanti{
+display:flex;
+flex-direction:column;
+gap:10px
+}
+
+.recap-pulsanti button{
+width:100%;
+min-height:48px;
+border:none;
+border-radius:12px;
+background:var(--verde);
+color:white;
+font-size:14px;
+font-weight:900;
+cursor:pointer
+}
+
+.recap-pulsanti button:last-child{
+background:transparent;
+color:var(--verde);
+border:2px solid var(--verde)
+}
+
+/* ========================================
+   MOBILE (≤430px)
+======================================== */
 
 @media(max-width:430px){
 
@@ -1036,32 +1095,25 @@ font-size:15px
 }
 
 .match-header,
-.match-row{
-grid-template-columns:minmax(0,1fr) 58px 58px 58px
-}
-
-.match-header{
+.score-row.match-row{
+grid-template-columns:minmax(0,1fr) 72px 72px 72px;
 padding-left:10px;
 padding-right:10px
 }
 
-.match-row{
-padding-left:10px;
-padding-right:10px
-}
-
-.match-row strong{
+.score-row.match-row strong{
 font-size:15px
 }
 
-.match-row span{
+.score-row.match-row span{
 font-size:18px
 }
 
 #messaggio-partita{
 width:calc(100vw - 32px);
 min-height:155px;
-padding:28px 20px
+padding:28px 20px;
+border-radius:25px
 }
 
 #messaggio-partita strong{
@@ -1074,7 +1126,9 @@ font-size:18px
 
 }
 
-/* ACCESSIBILITÀ */
+/* ========================================
+   ACCESSIBILITÀ
+======================================== */
 
 @media(prefers-reduced-motion:reduce){
 
@@ -1086,564 +1140,4 @@ animation-iteration-count:1!important;
 transition-duration:.01ms!important
 }
 
-}
-/* ========================================
-   TABELLA GAME / SET / MATCH - DEFINITIVA
-======================================== */
-
-.score-row.match-row {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) 72px 72px 72px !important;
-    align-items: center;
-    width: 100%;
-    min-height: 66px;
-    padding: 11px 12px !important;
-    margin-bottom: 8px;
-    gap: 0 !important;
-    text-align: center;
-}
-
-/* NOME */
-.score-row.match-row strong {
-    display: block !important;
-    grid-column: 1 !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    text-align: left !important;
-    color: var(--testo) !important;
-    font-size: 15px !important;
-    font-weight: 800 !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* PUNTI */
-.score-row.match-row span:nth-of-type(1) {
-    grid-column: 2 !important;
-}
-
-/* GAME */
-.score-row.match-row span:nth-of-type(2) {
-    grid-column: 3 !important;
-}
-
-/* SET */
-.score-row.match-row span:nth-of-type(3) {
-    grid-column: 4 !important;
-}
-
-/* NUMERI */
-.score-row.match-row span {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    text-align: center !important;
-    font-size: 18px !important;
-    font-weight: 850 !important;
-}
-
-/* INTESTAZIONE */
-.match-header {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) 72px 72px 72px !important;
-    align-items: center;
-    width: 100%;
-    padding: 10px 12px 7px !important;
-    gap: 0 !important;
-}
-
-.match-header div {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    text-align: center !important;
-}
-
-.match-header div:first-child {
-    justify-content: flex-start !important;
-    text-align: left !important;
-}
-
-/* MOBILE */
-@media (max-width: 430px) {
-
-    .score-row.match-row,
-    .match-header {
-        grid-template-columns:
-            minmax(0, 1fr)
-            72px
-            72px
-            72px !important;
-    }
-
-    .score-row.match-row {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-    }
-
-    .match-header {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-    }
-}
-/* STORICO DEFINITIVO */
-
-.storico-riga {
-    display: grid !important;
-    grid-template-columns: 1fr 110px 80px !important;
-    align-items: center !important;
-animation: fadeIn .35s ease;
-    min-height: 54px !important;
-    padding: 10px 15px !important;
-    margin-bottom: 8px !important;
-
-    column-gap: 8px !important;
-
-    background: var(--bianco) !important;
-    border: 1px solid rgba(20, 50, 40, .10) !important;
-    border-radius: 14px !important;
-
-    box-shadow: 0 3px 10px rgba(20, 50, 40, .06) !important;
-}
-
-
-/* TURNO */
-
-.storico-riga strong {
-    grid-column: 1 !important;
-
-    color: var(--verde) !important;
-    font-size: 14px !important;
-    font-weight: 800 !important;
-
-    text-align: left !important;
-    align-self: center !important;
-}
-
-
-/* NOME FISSO */
-
-.storico-riga span {
-    grid-column: 2 !important;
-
-    width: 110px !important;
-
-    color: var(--testo) !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-
-    text-align: center !important;
-    align-self: center !important;
-
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
-
-
-/* PUNTEGGIO FISSO */
-
-.storico-riga b {
-    grid-column: 3 !important;
-
-    width: 80px !important;
-
-    color: var(--verde) !important;
-    font-size: 15px !important;
-    font-weight: 900 !important;
-
-    text-align: center !important;
-    align-self: center !important;
-
-    white-space: nowrap !important;
-}
-/* ========================================
-   AZIONI NUOVO TURNO
-======================================== */
-
-.turno-azioni {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 9px;
-}
-
-.turno-azioni .primary-button {
-    flex: 1;
-    width: auto !important;
-    margin: 0 !important;
-}
-
-.turno-azioni .undo-button {
-    flex: 0 0 52px;
-
-    width: 52px !important;
-    height: 52px !important;
-    min-height: 52px !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    border-radius: 50% !important;
-
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 22px !important;
-    font-weight: 800 !important;
-
-    box-sizing: border-box;
-}
-/* ========================================
-   RECAP FINALE PARTITA
-======================================== */
-
-#recap-partita {
-    position: fixed;
-    inset: 0;
-
-    display: none;
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    background: rgba(20, 50, 40, .55);
-
-    z-index: 999999;
-
-    overflow-y: auto;
-}
-
-.recap-box {
-    width: min(420px, 100%);
-
-    max-height: 90vh;
-    overflow-y: auto;
-
-    background: var(--bianco);
-
-    border-radius: 22px;
-
-    padding: 26px 20px;
-
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, .20);
-
-    text-align: center;
-}
-
-
-/* TITOLO */
-
-.recap-titolo {
-    color: var(--verde);
-
-    font-size: 22px;
-    font-weight: 900;
-
-    margin-bottom: 8px;
-}
-
-
-/* VINCITORE */
-
-.recap-vincitore {
-    color: var(--oro);
-
-    font-size: 20px;
-    font-weight: 900;
-
-    margin-bottom: 22px;
-}
-
-
-/* PUNTEGGI FINALI */
-
-.recap-punteggi {
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-
-    margin-bottom: 20px;
-}
-
-.recap-giocatore {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 11px 14px;
-
-    background: #f7f9f7;
-
-    border-radius: 12px;
-}
-
-.recap-giocatore strong {
-    color: var(--testo);
-
-    font-size: 15px;
-}
-
-.recap-giocatore span {
-    color: var(--verde);
-
-    font-size: 15px;
-    font-weight: 900;
-}
-
-
-/* SET */
-
-.recap-set-lista {
-    display: flex;
-    flex-direction: column;
-
-    gap: 7px;
-
-    margin-bottom: 22px;
-}
-
-.recap-set {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 10px 14px;
-
-    border: 1px solid rgba(20, 50, 40, .10);
-
-    border-radius: 11px;
-}
-
-.recap-set strong {
-    color: var(--verde);
-
-    font-size: 14px;
-}
-
-.recap-set span {
-    color: var(--testo);
-
-    font-size: 14px;
-    font-weight: 700;
-}
-
-
-/* PULSANTI */
-
-.recap-pulsanti {
-    display: flex;
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-.recap-pulsanti button {
-    width: 100%;
-
-    min-height: 48px;
-
-    border: none;
-    border-radius: 12px;
-
-    background: var(--verde);
-    color: white;
-
-    font-size: 14px;
-    font-weight: 900;
-
-    cursor: pointer;
-}
-
-.recap-pulsanti button:last-child {
-    background: transparent;
-
-    color: var(--verde);
-
-    border: 2px solid var(--verde);
-}
-.recap-set-punteggi {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-top: 8px;
-}
-
-.recap-set-giocatore {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    min-width: 130px;
-}
-
-.recap-set-giocatore span {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--testo);
-}
-
-.recap-set-giocatore b {
-    min-width: 25px;
-
-    font-size: 17px;
-    font-weight: 900;
-    color: var(--verde);
-
-    text-align: right;
-}
-.recap-match {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-
-    margin: 10px 0 22px;
-}
-
-.recap-match-giocatore {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
-
-.recap-match-giocatore strong {
-    font-size: 15px;
-    color: var(--testo);
-}
-
-.recap-match-giocatore b {
-    font-size: 30px;
-    color: var(--verde);
-}
-
-.recap-set-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    margin-bottom: 22px;
-}
-
-.recap-set {
-    padding: 13px 15px;
-
-    border: 1px solid rgba(20, 50, 40, .10);
-    border-radius: 12px;
-}
-
-.recap-set-titolo {
-    color: var(--verde);
-    font-size: 13px;
-    font-weight: 900;
-
-    margin-bottom: 8px;
-}
-
-.recap-set-risultato {
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-}
-
-.recap-set-giocatore {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.recap-set-giocatore span {
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.recap-set-giocatore b {
-    font-size: 20px;
-    color: var(--verde);
-}
-/* ========================================
-   CORREZIONE RECAP SET
-======================================== */
-
-.recap-set {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.recap-set-risultato {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    width: 100%;
-}
-
-.recap-set-giocatore {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    min-width: 90px;
-}
-
-.recap-set-giocatore span {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--testo);
-    white-space: nowrap;
-}
-
-.recap-set-giocatore b {
-    width: 28px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--verde);
-}
-   /* ========================================
-   TESTATA PARTITA
-======================================== */
-
-#partita {
-    position: relative;
-}
-
-#partita > .back-button {
-    position: absolute;
-    top: 20px;
-    left: 16px;
-    z-index: 10;
-}
-
-#partita > .page-header {
-    position: relative;
-    height: 52px;
-    margin: 0 0 18px 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#partita > .page-header h1 {
-    margin: 0;
-    font-size: 30px;
-    line-height: 1;
-}
-
-#partita > .page-header .subtitle {
-    display: none;
 }
