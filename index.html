@@ -66,10 +66,11 @@
 
 <div class="settings-card">
 <h2>⚙️ Sistema di punteggio</h2>
-<select id="sistema-punteggio" onchange="cambiaSistemaPunteggio()">
-<option value="semplice">Punteggio semplice</option>
-<option value="game-set">Game / Set / Match</option>
-</select>
+
+<div class="segmented" id="sistema-punteggio-toggle">
+<button type="button" class="segmented-option active" data-valore="semplice" onclick="impostaSistemaPunteggio('semplice')">Punteggio semplice</button>
+<button type="button" class="segmented-option" data-valore="game-set" onclick="impostaSistemaPunteggio('game-set')">Game / Set / Match</button>
+</div>
 
 <div id="impostazioni-game-set" style="display:none">
 <label for="punti-game">Punti per vincere un Game</label>
@@ -81,15 +82,15 @@
 </div>
 
 <div id="impostazioni-semplici">
-<label for="obiettivo">🎯 Obiettivo partita</label>
-<select id="obiettivo">
-<option value="100">100 punti</option>
-<option value="200">200 punti</option>
-<option value="300">300 punti</option>
-<option value="500" selected>500 punti</option>
-<option value="1000">1000 punti</option>
-<option value="personalizzato">Personalizzato</option>
-</select>
+<label>🎯 Obiettivo partita</label>
+<div class="chip-row" id="obiettivo-chip-row">
+<button type="button" class="chip" data-valore="100" onclick="impostaObiettivo('100')">100</button>
+<button type="button" class="chip" data-valore="200" onclick="impostaObiettivo('200')">200</button>
+<button type="button" class="chip" data-valore="300" onclick="impostaObiettivo('300')">300</button>
+<button type="button" class="chip active" data-valore="500" onclick="impostaObiettivo('500')">500</button>
+<button type="button" class="chip" data-valore="1000" onclick="impostaObiettivo('1000')">1000</button>
+<button type="button" class="chip" data-valore="personalizzato" onclick="impostaObiettivo('personalizzato')">Altro</button>
+</div>
 <div id="campo-personalizzato" style="display:none">
 <input id="obiettivo-personalizzato" type="number" min="1" placeholder="Inserisci obiettivo">
 </div>
@@ -125,13 +126,13 @@
 </section>
 
 <section class="turno-card">
-<h2>➕ Nuovo turno</h2>
-<label for="giocatore-vincitore">Giocatore</label>
-<select id="giocatore-vincitore"></select>
+<h2>🎯 Nuovo turno</h2>
+<label>Chi segna i punti?</label>
+<div class="chip-row" id="giocatore-vincitore-chips"></div>
 <label for="punti">Punti ottenuti</label>
-<input id="punti" type="number" min="0" placeholder="Inserisci punti">
+<input id="punti" type="number" min="0" inputmode="numeric" placeholder="Inserisci punti" autocomplete="off">
 <div class="turno-azioni">
-<button class="primary-button" onclick="aggiungiMano()">➕ Aggiungi Punti</button>
+<button class="primary-button" onclick="aggiungiMano()">➕ Aggiungi punti</button>
 <button class="undo-button" onclick="annullaUltimoTurno()" aria-label="Annulla ultimo turno" title="Annulla ultimo turno">↩</button>
 </div>
 </section>
