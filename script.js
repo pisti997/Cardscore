@@ -1120,30 +1120,18 @@ function controllaVittoria() {
 
 function terminaMatch(indiceVincitore) {
 
-    matchVinti =
-        giocatori.map(() => 0);
-
+    matchVinti = giocatori.map(() => 0);
     matchVinti[indiceVincitore] = 1;
 
+    localStorage.removeItem(STORAGE_KEY);
 
-    localStorage.removeItem(
-        STORAGE_KEY
-    );
-
-
+    /* CONFETTI */
     lanciaConfetti();
 
-
-    setTimeout(
-        () => {
-
-            mostraSchermataVittoria(
-                indiceVincitore
-            );
-
-        },
-        350
-    );
+    /* SCHERMATA VITTORIA */
+    setTimeout(() => {
+        mostraSchermataVittoria(indiceVincitore);
+    }, 350);
 }
 
 
