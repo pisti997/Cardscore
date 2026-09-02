@@ -2072,3 +2072,105 @@ button {
     margin-bottom: 5px !important;
     font-size: 25px !important;
 }
+/* =========================================================
+   CARD SCORE — RIQUADRI PIÙ COMPATTI
+   ========================================================= */
+
+/* Banner GAME / SET / MATCH */
+.match-title {
+    padding: 34px 14px 11px !important;
+    min-height: 92px !important;
+    margin-top: 28px !important;
+    margin-bottom: 12px !important;
+    border-radius: 16px !important;
+}
+
+.match-title-icon {
+    width: 54px !important;
+    height: 54px !important;
+    top: -19px !important;
+    font-size: 25px !important;
+}
+
+.match-title span {
+    font-size: 8px !important;
+}
+
+.match-title strong {
+    font-size: 18px !important;
+}
+
+.match-title::after {
+    margin-top: 5px !important;
+    font-size: 12px !important;
+}
+
+
+/* Contenitore giocatori */
+.game-set-scoreboard {
+    gap: 9px !important;
+}
+
+
+/* Card giocatore */
+.match-row {
+    min-height: 125px !important;
+    padding: 16px 16px 13px !important;
+    border-radius: 15px !important;
+}
+
+
+/* Nome giocatore */
+.match-row strong {
+    font-size: 20px !important;
+}
+
+
+/* Piccole caselle GAME / SET / MATCH */
+.match-row span {
+    width: 31px !important;
+    height: 31px !important;
+    border-radius: 7px !important;
+    font-size: 14px !important;
+}
+
+
+/* Punteggio grande */
+.match-row .score-big {
+    width: 62px !important;
+    font-size: 27px !important;
+}
+
+
+/* Pulsanti rapidi */
+.quick-buttons {
+    gap: 7px !important;
+    margin-bottom: 8px !important;
+}
+
+.quick-button {
+    min-height: 58px !important;
+    padding: 7px 8px !important;
+    border-radius: 13px !important;
+    font-size: 16px !important;
+}
+
+
+/* Annulla ultimo turno */
+.undo-button {
+    min-height: 58px !important;
+    border-radius: 13px !important;
+    font-size: 10px !important;
+}
+
+.undo-button span {
+    font-size: 22px !important;
+    margin-bottom: 3px !important;
+}
+
+
+/* Storico */
+.turn-section {
+    margin-top: 10px !important;
+    gap: 6px !important;
+}
