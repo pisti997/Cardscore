@@ -337,11 +337,87 @@ button {
 
 
 /* =========================================================
-   NASCONDI OBIETTIVO
+   OBIETTIVO (sistema punteggio semplice)
 ========================================================= */
 
-#obiettivo-container {
-    display: none !important;
+.objective-text {
+    width: 100%;
+
+    margin: 18px 0 14px;
+
+    padding: 14px 18px;
+
+    border-radius: 16px;
+
+    background: var(--green-soft);
+
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-align: center;
+}
+
+.objective-text strong {
+    color: var(--green-dark);
+    font-size: 17px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   TABELLONE PUNTEGGIO SEMPLICE
+========================================================= */
+
+.simple-scoreboard {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-bottom: 6px;
+}
+
+.simple-score-row {
+    width: 100%;
+
+    padding: 16px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+}
+
+.simple-score-row.leader {
+    background: var(--green-card);
+    border-color: rgba(35, 104, 68, 0.18);
+}
+
+.simple-player-name {
+    color: var(--text);
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.simple-player-score {
+    color: var(--green-dark);
+
+    font-size: 26px;
+    font-weight: 850;
+
+    font-variant-numeric: tabular-nums;
 }
 
 
@@ -783,43 +859,6 @@ button {
 
 .undo-button:active {
     transform: scale(0.97);
-}
-
-
-/* =========================================================
-   STORICO
-========================================================= */
-
-.history-section {
-    width: 100%;
-
-    margin-top: 26px;
-}
-
-.history-heading {
-    margin-bottom: 10px;
-}
-
-.history-heading .small-label {
-    display: none;
-}
-
-.history-heading h2 {
-    color: var(--green-dark);
-
-    font-size: 21px;
-
-    font-weight: 750;
-}
-
-.history-link {
-    color: var(--green);
-
-    background: transparent;
-
-    font-size: 12px;
-
-    font-weight: 650;
 }
 
 
@@ -1804,6 +1843,22 @@ button {
 
 
 /* =========================================================
+   PAGINA STORICO COMPLETO
+========================================================= */
+
+.history-page-content {
+    width: 100%;
+    max-width: 520px;
+
+    margin: 0 auto;
+
+    padding:
+        17px 20px
+        calc(30px + env(safe-area-inset-bottom));
+}
+
+
+/* =========================================================
    STORICO
 ========================================================= */
 
@@ -1815,6 +1870,18 @@ button {
 
 .history-heading {
     margin-bottom: 10px;
+}
+
+.history-heading .small-label {
+    display: none;
+}
+
+.history-heading h2 {
+    color: var(--green-dark);
+
+    font-size: 21px;
+
+    font-weight: 750;
 }
 
 .history-link {
@@ -1963,60 +2030,75 @@ button {
     }
 
 }
-/* RIQUADRI PIU' COMPATTI */
+/* =========================================================
+   RIQUADRI COMPATTI (versione consolidata)
+   Nota: qui prima esistevano 3 blocchi quasi identici che si
+   sovrascrivevano a vicenda con !important. Sono stati uniti
+   in un unico blocco con i valori finali effettivamente
+   applicati, per evitare confusione e regole morte.
+========================================================= */
 
+/* Banner GAME / SET / MATCH */
 .match-title {
-    min-height: 105px !important;
-    margin-top: 32px !important;
-    margin-bottom: 14px !important;
-    padding: 43px 15px 13px !important;
+    padding: 34px 14px 11px !important;
+    min-height: 92px !important;
+    margin-top: 28px !important;
+    margin-bottom: 12px !important;
+    border-radius: 16px !important;
 }
 
 .match-title-icon {
-    top: -21px !important;
-    width: 60px !important;
-    height: 60px !important;
-    font-size: 28px !important;
+    width: 54px !important;
+    height: 54px !important;
+    top: -19px !important;
+    font-size: 25px !important;
 }
 
-.match-title-text strong {
-    font-size: 21px !important;
+.match-title strong {
+    font-size: 18px !important;
 }
 
 .match-title::after {
-    margin-top: 7px !important;
+    margin-top: 5px !important;
+    font-size: 12px !important;
+}
+
+
+/* Contenitore giocatori */
+.game-set-scoreboard {
+    gap: 9px !important;
+}
+
+
+/* Card giocatore */
+.match-row {
+    min-height: 125px !important;
+    padding: 16px 16px 13px !important;
+    border-radius: 15px !important;
+}
+
+/* Nasconde i tre puntini del menu card */
+.match-row::after {
+    display: none !important;
+}
+
+/* Nome giocatore */
+.match-row strong {
+    font-size: 20px !important;
+}
+
+/* Piccole caselle GAME / SET / MATCH */
+.match-row span {
+    width: 31px !important;
+    height: 31px !important;
+    border-radius: 7px !important;
     font-size: 14px !important;
 }
-
-
-/* CARD DEI GIOCATORI */
-
-.match-row {
-    min-height: 145px !important;
-    padding: 19px 20px 15px !important;
-    border-radius: 17px !important;
-}
-
-.game-set-scoreboard {
-    gap: 11px !important;
-}
-
-
-/* PUNTEGGIO */
 
 .score-big {
     top: 43px !important;
     right: 20px !important;
-    font-size: 51px !important;
 }
-
-.match-row .score-big::after {
-    margin-top: 7px !important;
-    font-size: 14px !important;
-}
-
-
-/* GAMES / SETS / MATCH */
 
 .match-row::before {
     left: 20px !important;
@@ -2046,103 +2128,27 @@ button {
     bottom: 14px !important;
 }
 
-
-/* PULSANTI IN BASSO */
-
-.turn-section {
-    margin-top: 13px !important;
-    gap: 7px !important;
+/* Punteggio grande (valori finali) */
+.match-row .score-big {
+    width: 115px !important;
+    font-size: 52px !important;
+    font-weight: 900 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -3px !important;
 }
 
-.quick-button,
-.undo-button {
-    min-height: 76px !important;
-    border-radius: 15px !important;
-}
-
-.quick-button {
-    font-size: 18px !important;
-}
-
-.undo-button {
-    font-size: 11px !important;
-}
-
-.undo-button span {
-    margin-bottom: 5px !important;
-    font-size: 25px !important;
-}
-/* =========================================================
-   CARD SCORE — RIQUADRI PIÙ COMPATTI
-   ========================================================= */
-
-/* Banner GAME / SET / MATCH */
-.match-title {
-    padding: 34px 14px 11px !important;
-    min-height: 92px !important;
-    margin-top: 28px !important;
-    margin-bottom: 12px !important;
-    border-radius: 16px !important;
-}
-
-.match-title-icon {
-    width: 54px !important;
-    height: 54px !important;
-    top: -19px !important;
-    font-size: 25px !important;
-}
-
-.match-title span {
-    font-size: 8px !important;
-}
-
-.match-title strong {
-    font-size: 18px !important;
-}
-
-.match-title::after {
-    margin-top: 5px !important;
-    font-size: 12px !important;
-}
-
-
-/* Contenitore giocatori */
-.game-set-scoreboard {
-    gap: 9px !important;
-}
-
-
-/* Card giocatore */
-.match-row {
-    min-height: 125px !important;
-    padding: 16px 16px 13px !important;
-    border-radius: 15px !important;
-}
-
-
-/* Nome giocatore */
-.match-row strong {
-    font-size: 20px !important;
-}
-
-
-/* Piccole caselle GAME / SET / MATCH */
-.match-row span {
-    width: 31px !important;
-    height: 31px !important;
-    border-radius: 7px !important;
+.match-row .score-big::after {
+    margin-top: 7px !important;
     font-size: 14px !important;
 }
 
 
-/* Punteggio grande */
-.match-row .score-big {
-    width: 62px !important;
-    font-size: 27px !important;
+/* Pulsanti rapidi + annulla */
+.turn-section {
+    margin-top: 10px !important;
+    gap: 6px !important;
 }
 
-
-/* Pulsanti rapidi */
 .quick-buttons {
     gap: 7px !important;
     margin-bottom: 8px !important;
@@ -2155,8 +2161,6 @@ button {
     font-size: 16px !important;
 }
 
-
-/* Annulla ultimo turno */
 .undo-button {
     min-height: 58px !important;
     border-radius: 13px !important;
@@ -2169,158 +2173,151 @@ button {
 }
 
 
-/* Storico */
-.turn-section {
-    margin-top: 10px !important;
-    gap: 6px !important;
-}
-/* PUNTEGGIO GRANDE COME NEL RENDER */
-.match-row .score-big {
-    width: 115px !important;
-    font-size: 52px !important;
-    font-weight: 900 !important;
-    line-height: 0.9 !important;
-    letter-spacing: -3px !important;
-}
-/* NASCONDE I TRE PUNTINI */
-.match-row::after {
-    display: none !important;
-}
 /* =========================================================
-   MESSAGGI VITTORIA GAME / SET / MATCH
-   ========================================================= */
+   OVERLAY DI SFONDO (usato da popup GAME/SET e VITTORIA)
+========================================================= */
 
 .cardscore-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(20, 35, 27, 0.28);
-    z-index: 9998;
+
+    background: rgba(15, 30, 20, 0.55);
+
+    z-index: 900;
+
+    animation: cardscoreFadeIn 0.2s ease;
 }
+
+
+/* =========================================================
+   POPUP GAME / SET (toast centrale temporaneo)
+========================================================= */
 
 .match-message {
     position: fixed;
-    left: 50%;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    
-    width: calc(100% - 48px);
-    max-width: 360px;
-    
-    padding: 28px 24px;
-    
-    background: #fffdf7;
-    border-radius: 22px;
-    
+
+    width: min(320px, 84vw);
+
+    padding: 32px 24px 26px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     text-align: center;
-    
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
-    
-    z-index: 9999;
-    
-    animation: cardscoreMessageIn 0.25s ease-out;
+
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    box-shadow: 0 20px 45px rgba(20, 40, 25, 0.25);
+
+    z-index: 950;
+
+    animation: cardscoreMessagePopIn 0.25s ease;
 }
 
 .match-message-icon {
-    width: 62px;
-    height: 62px;
-    
-    margin: 0 auto 12px;
-    
+    width: 56px;
+    height: 56px;
+
+    margin-bottom: 12px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     border-radius: 50%;
-    
-    background: #dcefe2;
-    
-    font-size: 30px;
+
+    background: var(--green-soft);
+
+    font-size: 28px;
 }
 
 .match-message-label {
     margin-bottom: 6px;
-    
+
+    color: var(--text-soft);
+
     font-size: 11px;
     font-weight: 800;
-    letter-spacing: 2px;
-    
-    color: #1f6043;
+
+    letter-spacing: 1.3px;
 }
 
 .match-message h2 {
     margin: 0;
-    
-    font-size: 25px;
-    line-height: 1.15;
-    
-    color: #20251f;
+
+    color: var(--green-dark);
+
+    font-size: 21px;
+    font-weight: 800;
 }
 
 .match-message p {
-    margin: 10px 0 0;
-    
-    font-size: 14px;
-    
-    color: #77796f;
+    margin: 8px 0 0;
+
+    color: var(--text-soft);
+
+    font-size: 13px;
+    font-weight: 500;
 }
 
-@keyframes cardscoreMessageIn {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -46%) scale(0.94);
-    }
 
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
 /* =========================================================
-   SCHERMATA VITTORIA MATCH
-   ========================================================= */
+   SCHERMATA DI VITTORIA (fine partita)
+========================================================= */
 
 .victory-screen {
     position: fixed;
     inset: 0;
-    z-index: 99999;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 24px;
+    padding: 20px;
 
-    background: rgba(20, 35, 27, 0.42);
+    background: rgba(15, 30, 20, 0.6);
 
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
 
-    animation: victoryFadeIn 0.3s ease-out;
+    overflow-y: auto;
+
+    animation: cardscoreFadeIn 0.25s ease;
 }
 
 .victory-content {
     width: 100%;
     max-width: 380px;
 
-    padding: 34px 26px 28px;
+    margin: auto;
 
-    background: #fffdf7;
+    padding: 36px 26px 28px;
 
-    border-radius: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     text-align: center;
 
-    box-shadow:
-        0 25px 80px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
 
-    animation: victoryCardIn 0.35s ease-out;
+    background: #ffffff;
+
+    box-shadow: 0 25px 60px rgba(15, 30, 20, 0.35);
+
+    animation: cardscorePopIn 0.3s ease;
 }
 
 .victory-trophy {
-    width: 82px;
-    height: 82px;
+    width: 74px;
+    height: 74px;
 
-    margin: 0 auto 16px;
+    margin-bottom: 14px;
 
     display: flex;
     align-items: center;
@@ -2328,90 +2325,80 @@ button {
 
     border-radius: 50%;
 
-    background: #dcefe2;
+    background: var(--green-soft);
 
-    font-size: 42px;
-
-    box-shadow:
-        0 8px 24px rgba(31, 96, 67, 0.15);
+    font-size: 36px;
 }
 
 .victory-label {
-    margin-bottom: 6px;
+    color: var(--text-soft);
 
     font-size: 11px;
     font-weight: 800;
 
-    letter-spacing: 3px;
-
-    color: #1f6043;
+    letter-spacing: 1.5px;
 }
 
 .victory-content h1 {
-    margin: 0 0 12px;
+    margin: 6px 0 0;
 
-    font-size: 30px;
-    line-height: 1.05;
+    color: var(--green-dark);
 
-    color: #20251f;
+    font-size: 24px;
+    font-weight: 850;
+
+    letter-spacing: -0.5px;
 }
 
 .victory-winner {
-    margin-bottom: 18px;
+    margin-top: 10px;
 
-    font-size: 24px;
+    color: var(--green);
+
+    font-size: 22px;
     font-weight: 800;
-
-    color: #1f6043;
 }
 
 .victory-score {
-    padding: 14px;
+    margin-top: 6px;
 
-    margin-bottom: 18px;
-
-    border-radius: 16px;
-
-    background: #f3f5ef;
+    color: var(--text-soft);
 
     font-size: 13px;
-
-    color: #77796f;
+    font-weight: 600;
 }
 
 .victory-score strong {
-    display: block;
-
-    margin-top: 3px;
-
-    font-size: 28px;
-
-    color: #20251f;
+    color: var(--text);
+    font-size: 15px;
 }
 
 .victory-stats {
+    width: 100%;
+
+    margin-top: 18px;
+
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
-    gap: 10px;
-
-    margin-bottom: 20px;
+    gap: 8px;
 }
 
 .victory-stat {
-    padding: 12px 8px;
+    padding: 12px 6px;
 
     border-radius: 14px;
 
-    background: #f7f7f2;
+    background: var(--green-box);
 }
 
 .victory-stat strong {
     display: block;
 
-    font-size: 20px;
+    color: var(--green-dark);
 
-    color: #20251f;
+    font-size: 18px;
+    font-weight: 800;
 }
 
 .victory-stat span {
@@ -2419,90 +2406,127 @@ button {
 
     margin-top: 3px;
 
+    color: var(--text-soft);
+
     font-size: 9px;
-    font-weight: 800;
+    font-weight: 700;
 
-    letter-spacing: 1.5px;
-
-    color: #888b81;
+    letter-spacing: 0.8px;
 }
 
 .recap-title {
-    margin: 18px 0 8px;
+    width: 100%;
+
+    margin-top: 18px;
+    margin-bottom: 8px;
+
+    color: var(--text-soft);
 
     font-size: 10px;
     font-weight: 800;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
 
-    color: #1f6043;
+    text-align: left;
 }
 
 .recap-set {
-    padding: 8px 10px;
+    width: 100%;
 
-    margin-top: 6px;
+    padding: 8px 12px;
+
+    margin-bottom: 6px;
 
     border-radius: 10px;
 
-    background: #f7f7f2;
+    background: #f7f8f5;
+
+    color: var(--text);
 
     font-size: 11px;
+    font-weight: 600;
 
-    color: #66695f;
+    text-align: left;
 }
 
 .victory-actions {
+    width: 100%;
+
+    margin-top: 22px;
+
     display: flex;
     flex-direction: column;
 
     gap: 10px;
-
-    margin-top: 22px;
 }
 
-.victory-actions button {
+.victory-home-button,
+.victory-new-button {
     width: 100%;
 
-    min-height: 48px;
+    min-height: 50px;
 
-    border: 0;
-    border-radius: 14px;
+    border-radius: 15px;
 
-    font-size: 15px;
-    font-weight: 700;
-
-    cursor: pointer;
-}
-
-.victory-new-button {
-    background: #1f6043;
-    color: white;
+    font-size: 14px;
+    font-weight: 750;
 }
 
 .victory-home-button {
-    background: #eef1eb;
-    color: #1f6043;
+    background: #f0f2ee;
+    color: var(--text);
 }
 
-@keyframes victoryFadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+.victory-new-button {
+    background: var(--green);
+    color: #ffffff;
 }
 
-@keyframes victoryCardIn {
+
+/* =========================================================
+   CANVAS CORIANDOLI
+========================================================= */
+
+#confetti-canvas {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 980;
+}
+
+
+/* =========================================================
+   ANIMAZIONI POPUP
+========================================================= */
+
+@keyframes cardscoreFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes cardscorePopIn {
     from {
         opacity: 0;
-        transform: translateY(18px) scale(0.96);
+        transform: translateY(10px) scale(0.96);
     }
-
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes cardscoreMessagePopIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
     }
 }
