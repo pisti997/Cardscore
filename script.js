@@ -1155,112 +1155,77 @@ function aggiungiMano() {
 
 function controllaGame(indice) {
 
-    if (
-        puntiGame[indice] <
-        puntiPerGame
-    ) {
-
+    if (sistemaPunteggio !== "game-set") {
         return;
     }
 
+    const puntiAttuali = Number(puntiGame[indice]);
+    const limiteGame = Number(puntiPerGame);
+
+    if (!Number.isFinite(puntiAttuali) ||
+        !Number.isFinite(limiteGame) ||
+        puntiAttuali < limiteGame) {
+        return;
+    }
+
+    /* =========================
+       GAME VINTO
+       ========================= */
 
     gameVinti[indice]++;
 
-
     storicoGame.push({
-
-        vincitore:
-            indice,
-
-        nome:
-            giocatori[indice],
-
-        punti:
-            puntiGame[indice],
-
-        game:
-            [...gameVinti]
-
+        vincitore: indice,
+        nome: giocatori[indice],
+        punti: puntiAttuali,
+        game: [...gameVinti]
     });
-
 
     mostraMessaggioPartita(
         "game",
         `${giocatori[indice]} vince il Game!`
     );
 
-
-    /* AZZERA PUNTI GAME */
-
-    puntiGame =
-        giocatori.map(
-            (_, i) =>
-                i === indice
-                    ? 0
-                    : puntiGame[i]
-        );
+    /* Azzera i punti del Game */
+    puntiGame[indice] = 0;
 
 
-    /* CONTROLLO SET */
+    /* =========================
+       CONTROLLO SET
+       ========================= */
 
-    if (
-        gameVinti[indice] >=
-        gamePerSet
-    ) {
+    if (gameVinti[indice] >= Number(gamePerSet)) {
 
         setVinti[indice]++;
 
-
         storicoSet.push({
-
-            vincitore:
-                indice,
-
-            nome:
-                giocatori[indice],
-
-            game:
-                [...gameVinti]
-
+            vincitore: indice,
+            nome: giocatori[indice],
+            game: [...gameVinti]
         });
-
 
         mostraMessaggioPartita(
             "set",
             `${giocatori[indice]} vince il Set!`
         );
 
-
-        /* RESET GAME */
-
-        gameVinti =
-            giocatori.map(
-                () => 0
-            );
-
-        puntiGame =
-            giocatori.map(
-                () => 0
-            );
+        /* Nuovo Set */
+        gameVinti = giocatori.map(() => 0);
+        puntiGame = giocatori.map(() => 0);
 
 
-        /* CONTROLLO MATCH */
+        /* =========================
+           CONTROLLO MATCH
+           ========================= */
 
-        if (
-            setVinti[indice] >=
-            setPerMatch
-        ) {
+        if (setVinti[indice] >= Number(setPerMatch)) {
 
-            terminaMatch(
-                indice
-            );
+            terminaMatch(indice);
 
             return;
         }
     }
 }
-
-
 /* =========================================================
    CONTROLLO VITTORIA SEMPLICE
 ========================================================= */
