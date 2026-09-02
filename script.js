@@ -40,18 +40,18 @@ let animazioneMatch = null;
 let precedenteLeader = null;
 let messaggioTimeout = null;
 
+// Chip "Obiettivo partita" attualmente selezionata (valore numerico oppure "personalizzato")
+let obiettivoChipSelezionato = "500";
+
+// Indice del giocatore attualmente selezionato nella chip-row del turno
+let giocatoreSelezionato = 0;
+
 
 /* ========================================================
    AVVIO
 ======================================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
-
-    const sistema = document.getElementById("sistema-punteggio");
-    if (sistema) sistema.addEventListener("change", cambiaSistemaPunteggio);
-
-    const obiettivo = document.getElementById("obiettivo");
-    if (obiettivo) obiettivo.addEventListener("change", controllaObiettivo);
 
     // Invio per aggiungere più velocemente giocatori e punti
     const nomeGiocatore = document.getElementById("nome-giocatore");
@@ -134,11 +134,13 @@ function bloccaInputPartita() {
 
     const bottone = document.querySelector(".turno-card .primary-button");
     const input = document.getElementById("punti");
-    const selettore = document.getElementById("giocatore-vincitore");
 
     if (bottone) bottone.disabled = true;
     if (input) input.disabled = true;
-    if (selettore) selettore.disabled = true;
+
+    document.querySelectorAll("#giocatore-vincitore-chips .chip").forEach(function (chip) {
+        chip.disabled = true;
+    });
 }
 
 function riabilitaInput() {
@@ -146,11 +148,13 @@ function riabilitaInput() {
 
     const bottone = document.querySelector(".turno-card .primary-button");
     const input = document.getElementById("punti");
-    const selettore = document.getElementById("giocatore-vincitore");
 
     if (bottone) bottone.disabled = false;
     if (input) input.disabled = false;
-    if (selettore) selettore.disabled = false;
+
+    document.querySelectorAll("#giocatore-vincitore-chips .chip").forEach(function (chip) {
+        chip.disabled = false;
+    });
 }
 
 
@@ -245,6 +249,7 @@ function continuaPartita() {
         setVinti = partita.setVinti || new Array(giocatori.length).fill(0);
         storicoGame = partita.storicoGame || [];
         storicoSet = partita.storicoSet || [];
+        giocatoreSelezionato = 0;
 
         document.getElementById("home").style.display = "none";
         document.getElementById("nuova-partita").style.display = "none";
@@ -277,6 +282,7 @@ function resettaStatoPartita() {
 
     numeroTurno = 1;
     precedenteLeader = null;
+    giocatoreSelezionato = 0;
 
     animazionePunteggio = null;
     animazioneGame = null;
@@ -308,11 +314,9 @@ function nuovaPartita() {
 
     document.getElementById("lista-giocatori").innerHTML = "";
     document.getElementById("nome-giocatore").value = "";
-    document.getElementById("sistema-punteggio").value = "semplice";
-    document.getElementById("impostazioni-game-set").style.display = "none";
-    document.getElementById("impostazioni-semplici").style.display = "block";
 
-    controllaObiettivo();
+    impostaSistemaPunteggio("semplice");
+    impostaObiettivo("500");
 }
 
 function scegliGioco(gioco) {
@@ -328,27 +332,34 @@ function scegliGioco(gioco) {
     document.getElementById("nome-giocatore").value = "";
 }
 
-function cambiaSistemaPunteggio() {
+function impostaSistemaPunteggio(valore) {
 
-    const sistema = document.getElementById("sistema-punteggio").value;
-    const impostazioni = document.getElementById("impostazioni-game-set");
-    const semplici = document.getElementById("impostazioni-semplici");
+    sistemaPunteggio = valore;
 
-    const usaGameSet = sistema === "game-set";
+    document.querySelectorAll("#sistema-punteggio-toggle .segmented-option").forEach(function (bottone) {
+        bottone.classList.toggle("active", bottone.dataset.valore === valore);
+    });
 
-    impostazioni.style.display = usaGameSet ? "block" : "none";
-    semplici.style.display = usaGameSet ? "none" : "block";
+    const usaGameSet = valore === "game-set";
+
+    document.getElementById("impostazioni-game-set").style.display = usaGameSet ? "block" : "none";
+    document.getElementById("impostazioni-semplici").style.display = usaGameSet ? "none" : "block";
 }
 
-function controllaObiettivo() {
+function impostaObiettivo(valore) {
 
-    const selettore = document.getElementById("obiettivo");
+    obiettivoChipSelezionato = valore;
+
+    document.querySelectorAll("#obiettivo-chip-row .chip").forEach(function (chip) {
+        chip.classList.toggle("active", chip.dataset.valore === valore);
+    });
+
     const campo = document.getElementById("campo-personalizzato");
 
-    if (!selettore || !campo) return;
-
-    if (selettore.value === "personalizzato") {
+    if (valore === "personalizzato") {
         campo.style.display = "block";
+        const input = document.getElementById("obiettivo-personalizzato");
+        if (input) input.focus();
         return;
     }
 
@@ -433,14 +444,12 @@ function iniziaPartita() {
         return;
     }
 
-    sistemaPunteggio = document.getElementById("sistema-punteggio").value;
+    /* sistemaPunteggio è già aggiornato da impostaSistemaPunteggio() al tocco del toggle */
 
     /* --- SEMPLICE --- */
     if (sistemaPunteggio === "semplice") {
 
-        const selettore = document.getElementById("obiettivo");
-
-        if (selettore.value === "personalizzato") {
+        if (obiettivoChipSelezionato === "personalizzato") {
             const valore = Number(document.getElementById("obiettivo-personalizzato").value);
 
             if (!valore || valore <= 0) {
@@ -450,7 +459,7 @@ function iniziaPartita() {
 
             obiettivoPartita = valore;
         } else {
-            obiettivoPartita = Number(selettore.value);
+            obiettivoPartita = Number(obiettivoChipSelezionato);
         }
     }
 
@@ -478,6 +487,7 @@ function iniziaPartita() {
 
     numeroTurno = 1;
     precedenteLeader = null;
+    giocatoreSelezionato = 0;
 
     riabilitaInput();
 
@@ -537,16 +547,31 @@ function aggiornaSchermataPartita() {
 
 function creaSelettoreVincitore() {
 
-    const selettore = document.getElementById("giocatore-vincitore");
-    if (!selettore) return;
+    const contenitore = document.getElementById("giocatore-vincitore-chips");
+    if (!contenitore) return;
 
-    selettore.innerHTML = "";
+    if (giocatoreSelezionato >= giocatori.length) {
+        giocatoreSelezionato = 0;
+    }
+
+    contenitore.innerHTML = "";
 
     giocatori.forEach(function (nome, indice) {
-        const opzione = document.createElement("option");
-        opzione.value = indice;
-        opzione.textContent = nome;
-        selettore.appendChild(opzione);
+
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "chip giocatore-chip" + (indice === giocatoreSelezionato ? " active" : "");
+        chip.textContent = nome;
+
+        chip.onclick = function () {
+            giocatoreSelezionato = indice;
+            creaSelettoreVincitore();
+
+            const input = document.getElementById("punti");
+            if (input && !input.disabled) input.focus();
+        };
+
+        contenitore.appendChild(chip);
     });
 }
 
@@ -569,7 +594,7 @@ function creaTabellone() {
 
         riga.innerHTML =
             "<strong>" + nome + "</strong>" +
-            "<span>Totale: " + punteggi[indice] + "</span>";
+            "<span><small>Totale</small><b>" + punteggi[indice] + "</b></span>";
 
         tabellone.appendChild(riga);
     });
@@ -679,9 +704,10 @@ function aggiungiMano() {
         return;
     }
 
-    const selettore = document.getElementById("giocatore-vincitore");
+    if (giocatori.length === 0) return;
+
     const input = document.getElementById("punti");
-    const indice = Number(selettore.value);
+    const indice = giocatoreSelezionato;
 
     if (input.value === "") {
         alert("Inserisci il punteggio.");
@@ -720,10 +746,16 @@ function aggiungiMano() {
     numeroTurno++;
 
     input.value = "";
-    selettore.selectedIndex = 0;
+
+    // Passa automaticamente al giocatore successivo, comodo quando si gioca a turni
+    if (giocatori.length > 0) {
+        giocatoreSelezionato = (indice + 1) % giocatori.length;
+    }
 
     aggiornaSchermataPartita();
     salvaPartita();
+
+    if (!partitaFinita) input.focus();
 }
 
 
