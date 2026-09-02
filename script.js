@@ -706,7 +706,7 @@ function creaTabelloneGameSet() {
             "score-big";
 
         punti.textContent =
-            punteggi[indice];
+            puntiGame[indice];
 
 
         riga.appendChild(player);
