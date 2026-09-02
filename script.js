@@ -554,7 +554,14 @@ function aggiornaSchermataPartita() {
             `Turno ${numeroTurno + 1}`;
 
     }
+const banner = elemento("banner-game-set");
 
+if (banner) {
+    banner.setAttribute(
+        "data-turn",
+        numeroTurno + 1
+    );
+}
 
     if (
         sistemaPunteggio ===
