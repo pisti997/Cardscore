@@ -1963,3 +1963,112 @@ button {
     }
 
 }
+/* RIQUADRI PIU' COMPATTI */
+
+.match-title {
+    min-height: 105px !important;
+    margin-top: 32px !important;
+    margin-bottom: 14px !important;
+    padding: 43px 15px 13px !important;
+}
+
+.match-title-icon {
+    top: -21px !important;
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 28px !important;
+}
+
+.match-title-text strong {
+    font-size: 21px !important;
+}
+
+.match-title::after {
+    margin-top: 7px !important;
+    font-size: 14px !important;
+}
+
+
+/* CARD DEI GIOCATORI */
+
+.match-row {
+    min-height: 145px !important;
+    padding: 19px 20px 15px !important;
+    border-radius: 17px !important;
+}
+
+.game-set-scoreboard {
+    gap: 11px !important;
+}
+
+
+/* PUNTEGGIO */
+
+.score-big {
+    top: 43px !important;
+    right: 20px !important;
+    font-size: 51px !important;
+}
+
+.match-row .score-big::after {
+    margin-top: 7px !important;
+    font-size: 14px !important;
+}
+
+
+/* GAMES / SETS / MATCH */
+
+.match-row::before {
+    left: 20px !important;
+    bottom: 57px !important;
+    font-size: 9px !important;
+}
+
+.match-stat {
+    width: 39px !important;
+    height: 39px !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+}
+
+.match-row > .match-stat:nth-child(2) {
+    left: 20px !important;
+    bottom: 14px !important;
+}
+
+.match-row > .match-stat:nth-child(3) {
+    left: 65px !important;
+    bottom: 14px !important;
+}
+
+.match-row > .match-stat:nth-child(4) {
+    left: 110px !important;
+    bottom: 14px !important;
+}
+
+
+/* PULSANTI IN BASSO */
+
+.turn-section {
+    margin-top: 13px !important;
+    gap: 7px !important;
+}
+
+.quick-button,
+.undo-button {
+    min-height: 76px !important;
+    border-radius: 15px !important;
+}
+
+.quick-button {
+    font-size: 18px !important;
+}
+
+.undo-button {
+    font-size: 11px !important;
+}
+
+.undo-button span {
+    margin-bottom: 5px !important;
+    font-size: 25px !important;
+}
