@@ -2,121 +2,268 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#f7f8f4">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f7f8f4"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="default"
+    >
 
     <title>CardScore</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
-    <!-- =========================================================
+
+    <!-- =====================================================
          HOME
-    ========================================================== -->
-    <section id="home" class="page active">
+    ====================================================== -->
+
+    <section
+        id="home"
+        class="page active"
+    >
 
         <header class="home-header">
+
             <div class="brand">
-                <div class="brand-icon">🃏</div>
-                <div>
-                    <h1>CardScore</h1>
-                    <p>Il tuo punteggio, sempre con te</p>
+
+                <div class="brand-icon">
+                    🃏
                 </div>
+
+                <div class="brand-text">
+
+                    <h1>
+                        CardScore
+                    </h1>
+
+                    <p>
+                        Il tuo punteggio, sempre con te
+                    </p>
+
+                </div>
+
             </div>
+
         </header>
 
 
         <main class="home-content">
 
-            <h2 class="section-title">SCEGLI IL GIOCO</h2>
 
-            <!-- GIOCHI -->
-            <div class="games-grid">
+            <!-- TITOLO -->
 
-                <button
-                    class="game-card game-uno"
-                    onclick="scegliGioco('UNO')"
-                    type="button"
-                >
-                    <div class="game-card-image">
-                        <img
-                            src="immagini/uno.png"
-                            alt="UNO"
-                        >
-                    </div>
+            <div class="section-heading home-section-heading">
 
-                    <div class="game-card-info">
-                        <h3>UNO</h3>
-                        <span>Carte • 2–10 giocatori</span>
-                    </div>
-                </button>
+                <div>
 
+                    <span class="small-label">
+                        CARDSCORE
+                    </span>
 
-                <button
-                    class="game-card game-pili-pili"
-                    onclick="scegliGioco('Pili Pili')"
-                    type="button"
-                >
-                    <div class="game-card-image">
-                        <img
-                            src="immagini/pili-pili.png"
-                            alt="Pili Pili"
-                        >
-                    </div>
+                    <h2>
+                        Scegli il gioco
+                    </h2>
 
-                    <div class="game-card-info">
-                        <h3>Pili Pili</h3>
-                        <span>Carte • 2–6 giocatori</span>
-                    </div>
-                </button>
-
-
-                <button
-                    class="game-card game-scala"
-                    onclick="scegliGioco('Scala 40')"
-                    type="button"
-                >
-                    <div class="game-card-image">
-                        <img
-                            src="immagini/scala40.png"
-                            alt="Scala 40"
-                        >
-                    </div>
-
-                    <div class="game-card-info">
-                        <h3>Scala 40</h3>
-                        <span>Carte • 2–6 giocatori</span>
-                    </div>
-                </button>
-
-
-                <button
-                    class="game-card game-scopa"
-                    onclick="scegliGioco('Scopa')"
-                    type="button"
-                >
-                    <div class="game-card-image">
-                        <img
-                            src="immagini/scopa.png"
-                            alt="Scopa"
-                        >
-                    </div>
-
-                    <div class="game-card-info">
-                        <h3>Scopa</h3>
-                        <span>Carte • 2–6 giocatori</span>
-                    </div>
-                </button>
+                </div>
 
             </div>
 
 
             <!-- =================================================
-                 PARTITA SALVATA
+                 GIOCHI
+            ================================================== -->
+
+            <div class="games-grid">
+
+
+                <!-- UNO -->
+
+                <button
+                    class="game-card game-uno"
+                    type="button"
+                    onclick="scegliGioco('UNO')"
+                >
+
+                    <div class="game-card-image">
+
+                        <img
+                            src="immagini/uno.png"
+                            alt="UNO"
+                        >
+
+                    </div>
+
+
+                    <div class="game-card-info">
+
+                        <div>
+
+                            <h3>
+                                UNO
+                            </h3>
+
+                            <span>
+                                2–10 giocatori
+                            </span>
+
+                        </div>
+
+                        <div class="game-card-arrow">
+                            →
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <!-- PILI PILI -->
+
+                <button
+                    class="game-card game-pili-pili"
+                    type="button"
+                    onclick="scegliGioco('Pili Pili')"
+                >
+
+                    <div class="game-card-image">
+
+                        <img
+                            src="immagini/pili-pili.png"
+                            alt="Pili Pili"
+                        >
+
+                    </div>
+
+
+                    <div class="game-card-info">
+
+                        <div>
+
+                            <h3>
+                                Pili Pili
+                            </h3>
+
+                            <span>
+                                2–6 giocatori
+                            </span>
+
+                        </div>
+
+                        <div class="game-card-arrow">
+                            →
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <!-- SCALA 40 -->
+
+                <button
+                    class="game-card game-scala"
+                    type="button"
+                    onclick="scegliGioco('Scala 40')"
+                >
+
+                    <div class="game-card-image">
+
+                        <img
+                            src="immagini/scala40.png"
+                            alt="Scala 40"
+                        >
+
+                    </div>
+
+
+                    <div class="game-card-info">
+
+                        <div>
+
+                            <h3>
+                                Scala 40
+                            </h3>
+
+                            <span>
+                                2–6 giocatori
+                            </span>
+
+                        </div>
+
+                        <div class="game-card-arrow">
+                            →
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <!-- SCOPA -->
+
+                <button
+                    class="game-card game-scopa"
+                    type="button"
+                    onclick="scegliGioco('Scopa')"
+                >
+
+                    <div class="game-card-image">
+
+                        <img
+                            src="immagini/scopa.png"
+                            alt="Scopa"
+                        >
+
+                    </div>
+
+
+                    <div class="game-card-info">
+
+                        <div>
+
+                            <h3>
+                                Scopa
+                            </h3>
+
+                            <span>
+                                2–6 giocatori
+                            </span>
+
+                        </div>
+
+                        <div class="game-card-arrow">
+                            →
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 PARTITA IN CORSO
             ================================================== -->
 
             <div
@@ -124,22 +271,34 @@
                 class="saved-game-card hidden"
             >
 
-                <div class="saved-game-header">
-                    <div>
-                        <span class="saved-label">PARTITA IN CORSO</span>
-                        <h3 id="partita-salvata-titolo">
-                            Partita
-                        </h3>
-                    </div>
+                <div class="saved-game-top">
 
                     <div class="saved-game-icon">
                         ▶
                     </div>
+
+                    <div class="saved-game-title">
+
+                        <span class="saved-label">
+                            PARTITA IN CORSO
+                        </span>
+
+                        <h3 id="partita-salvata-titolo">
+                            Partita
+                        </h3>
+
+                    </div>
+
                 </div>
 
-                <p id="partita-salvata-info">
+
+                <div
+                    id="partita-salvata-info"
+                    class="saved-game-info"
+                >
                     Hai una partita da continuare
-                </p>
+                </div>
+
 
                 <button
                     id="continua-partita-btn"
@@ -153,13 +312,22 @@
             </div>
 
 
-            <!-- NUOVA PARTITA -->
+            <!-- =================================================
+                 NUOVA PARTITA
+            ================================================== -->
+
             <button
                 class="secondary-button new-game-button"
                 type="button"
                 onclick="nuovaPartita()"
             >
-                + Nuova partita
+
+                <span class="button-plus">
+                    +
+                </span>
+
+                Nuova partita
+
             </button>
 
 
@@ -167,17 +335,22 @@
                 🔒 I tuoi dati restano sul dispositivo
             </p>
 
+
         </main>
 
     </section>
 
 
 
-    <!-- =========================================================
+    <!-- =====================================================
          NUOVA PARTITA
-    ========================================================== -->
+    ====================================================== -->
 
-    <section id="nuova-partita" class="page">
+    <section
+        id="nuova-partita"
+        class="page"
+    >
+
 
         <header class="topbar">
 
@@ -186,11 +359,22 @@
                 type="button"
                 onclick="tornaHome()"
             >
-                ←
-                <span>Indietro</span>
+
+                <span class="back-arrow">
+                    ‹
+                </span>
+
+                <span>
+                    Indietro
+                </span>
+
             </button>
 
-            <h1>Nuova partita</h1>
+
+            <h1>
+                Nuova partita
+            </h1>
+
 
             <div class="topbar-spacer"></div>
 
@@ -199,7 +383,9 @@
 
         <main class="setup-content">
 
-            <!-- GIOCO SCELTO -->
+
+            <!-- GIOCO SELEZIONATO -->
+
             <div class="selected-game-card">
 
                 <div class="selected-game-icon">
@@ -207,6 +393,7 @@
                 </div>
 
                 <div>
+
                     <span class="small-label">
                         GIOCO
                     </span>
@@ -214,22 +401,32 @@
                     <h2 id="gioco-selezionato">
                         —
                     </h2>
+
                 </div>
 
             </div>
 
 
-            <!-- GIOCATORI -->
+            <!-- =================================================
+                 GIOCATORI
+            ================================================== -->
+
             <div class="setup-card">
 
                 <div class="setup-card-title">
+
                     <div>
+
                         <span class="small-label">
                             GIOCATORI
                         </span>
 
-                        <h2>Chi gioca?</h2>
+                        <h2>
+                            Chi gioca?
+                        </h2>
+
                     </div>
+
 
                     <span
                         id="numero-giocatori"
@@ -237,11 +434,14 @@
                     >
                         0
                     </span>
+
                 </div>
 
 
-                <div id="lista-giocatori" class="players-list">
-                    <!-- Generato da JavaScript -->
+                <div
+                    id="lista-giocatori"
+                    class="players-list"
+                >
                 </div>
 
 
@@ -256,7 +456,10 @@
             </div>
 
 
-            <!-- SISTEMA PUNTEGGIO -->
+            <!-- =================================================
+                 SISTEMA PUNTEGGIO
+            ================================================== -->
+
             <div class="setup-card">
 
                 <label
@@ -266,11 +469,13 @@
                     SISTEMA DI PUNTEGGIO
                 </label>
 
+
                 <select
                     id="sistema-punteggio"
                     class="select-field"
                     onchange="cambiaSistemaPunteggio()"
                 >
+
                     <option value="semplice">
                         Punteggio semplice
                     </option>
@@ -278,12 +483,16 @@
                     <option value="game-set">
                         Game / Set / Match
                     </option>
+
                 </select>
 
             </div>
 
 
-            <!-- PUNTEGGIO SEMPLICE -->
+            <!-- =================================================
+                 PUNTEGGIO SEMPLICE
+            ================================================== -->
+
             <div
                 id="impostazioni-semplice"
                 class="setup-card"
@@ -296,6 +505,7 @@
                     OBIETTIVO PARTITA
                 </label>
 
+
                 <div class="number-field">
 
                     <input
@@ -304,16 +514,22 @@
                         value="500"
                         min="1"
                         step="1"
+                        inputmode="numeric"
                     >
 
-                    <span>punti</span>
+                    <span>
+                        punti
+                    </span>
 
                 </div>
 
             </div>
 
 
-            <!-- GAME / SET / MATCH -->
+            <!-- =================================================
+                 GAME / SET / MATCH
+            ================================================== -->
+
             <div
                 id="impostazioni-game-set"
                 class="setup-card hidden"
@@ -326,6 +542,7 @@
 
                 <div class="settings-row">
 
+
                     <div class="setting-item">
 
                         <span>
@@ -337,6 +554,7 @@
                             type="number"
                             value="21"
                             min="1"
+                            inputmode="numeric"
                         >
 
                     </div>
@@ -353,6 +571,7 @@
                             type="number"
                             value="3"
                             min="1"
+                            inputmode="numeric"
                         >
 
                     </div>
@@ -369,16 +588,21 @@
                             type="number"
                             value="2"
                             min="1"
+                            inputmode="numeric"
                         >
 
                     </div>
+
 
                 </div>
 
             </div>
 
 
-            <!-- INIZIA -->
+            <!-- =================================================
+                 INIZIA PARTITA
+            ================================================== -->
+
             <button
                 id="inizia-partita"
                 class="primary-button start-button"
@@ -388,28 +612,42 @@
                 Inizia partita
             </button>
 
+
         </main>
 
     </section>
 
 
 
-    <!-- =========================================================
+    <!-- =====================================================
          PARTITA
-    ========================================================== -->
+    ====================================================== -->
 
-    <section id="partita" class="page">
+    <section
+        id="partita"
+        class="page"
+    >
+
 
         <header class="topbar match-topbar">
+
 
             <button
                 class="back-button"
                 type="button"
                 onclick="esciPartita()"
             >
-                ←
-                <span>Esci</span>
+
+                <span class="back-arrow">
+                    ‹
+                </span>
+
+                <span>
+                    Esci
+                </span>
+
             </button>
+
 
             <div class="match-heading">
 
@@ -423,12 +661,15 @@
 
             </div>
 
+
             <div class="topbar-spacer"></div>
+
 
         </header>
 
 
         <main class="match-content">
+
 
             <!-- =================================================
                  BANNER GAME / SET / MATCH
@@ -443,37 +684,39 @@
                     🏆
                 </div>
 
-                <div>
+
+                <div class="match-title-text">
+
                     <span>
-                        PUNTEGGIO
+                        SISTEMA DI PUNTEGGIO
                     </span>
 
                     <strong>
                         GAME / SET / MATCH
                     </strong>
+
                 </div>
 
             </div>
 
 
-            <!-- OBIETTIVO -->
+            <!-- =================================================
+                 OBIETTIVO
+            ================================================== -->
+
             <div
                 id="obiettivo-container"
                 class="objective-text"
             >
-                Obiettivo: <strong id="obiettivo-testo">500</strong> punti
-            </div>
 
+                Obiettivo:
 
-            <!-- =================================================
-                 TABELLONE GAME / SET / MATCH
-            ================================================== -->
+                <strong id="obiettivo-testo">
+                    500
+                </strong>
 
-            <div
-                id="tabellone-game-set"
-                class="scoreboard hidden"
-            >
-                <!-- Generato da JavaScript -->
+                punti
+
             </div>
 
 
@@ -485,7 +728,23 @@
                 id="tabellone-semplice"
                 class="scoreboard simple-scoreboard"
             >
-                <!-- Generato da JavaScript -->
+            </div>
+
+
+            <!-- =================================================
+                 TABELLONE GAME / SET / MATCH
+            ================================================== -->
+
+            <div
+                id="tabellone-game-set"
+                class="scoreboard game-set-scoreboard hidden"
+            >
+
+                <!--
+                    Il contenuto viene generato
+                    dinamicamente da JavaScript.
+                -->
+
             </div>
 
 
@@ -495,9 +754,11 @@
 
             <section class="turn-section">
 
+
                 <div class="section-heading">
 
                     <div>
+
                         <span class="small-label">
                             NUOVO TURNO
                         </span>
@@ -505,79 +766,103 @@
                         <h2>
                             Inserisci punti
                         </h2>
+
                     </div>
 
                 </div>
 
 
                 <!-- BOTTONI RAPIDI -->
+
                 <div
                     id="quick-buttons"
                     class="quick-buttons"
                 >
-                    <!-- Generati da JavaScript -->
                 </div>
 
 
                 <!-- INSERIMENTO MANUALE -->
+
                 <div class="manual-score-card">
 
-                    <label
-                        for="giocatore-vincitore"
-                        class="field-label"
-                    >
-                        GIOCATORE
-                    </label>
 
-                    <select
-                        id="giocatore-vincitore"
-                        class="select-field"
-                    >
-                        <!-- Generato da JavaScript -->
-                    </select>
+                    <div class="manual-field">
 
-
-                    <label
-                        for="punti-mano"
-                        class="field-label"
-                    >
-                        PUNTI
-                    </label>
-
-                    <div class="manual-score-row">
-
-                        <input
-                            id="punti-mano"
-                            type="number"
-                            value="1"
-                            min="0"
-                            step="1"
-                            inputmode="numeric"
+                        <label
+                            for="giocatore-vincitore"
+                            class="field-label"
                         >
+                            GIOCATORE
+                        </label>
 
-                        <button
-                            id="aggiungi-punti"
-                            class="primary-button"
-                            type="button"
-                            onclick="aggiungiMano()"
+
+                        <select
+                            id="giocatore-vincitore"
+                            class="select-field"
                         >
-                            Aggiungi punti
-                        </button>
+                        </select>
 
                     </div>
+
+
+                    <div class="manual-field">
+
+                        <label
+                            for="punti-mano"
+                            class="field-label"
+                        >
+                            PUNTI
+                        </label>
+
+
+                        <div class="manual-score-row">
+
+
+                            <input
+                                id="punti-mano"
+                                type="number"
+                                value="1"
+                                min="1"
+                                step="1"
+                                inputmode="numeric"
+                            >
+
+
+                            <button
+                                id="aggiungi-punti"
+                                class="primary-button"
+                                type="button"
+                                onclick="aggiungiMano()"
+                            >
+                                Aggiungi punti
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
 
                 </div>
 
 
                 <!-- ANNULLA -->
+
                 <button
                     id="annulla-ultimo-turno"
                     class="undo-button"
                     type="button"
                     onclick="annullaUltimoTurno()"
                 >
-                    ↶ Annulla ultimo turno
+
+                    <span>
+                        ↶
+                    </span>
+
+                    Annulla ultimo turno
+
                 </button>
+
 
             </section>
 
@@ -588,9 +873,12 @@
 
             <section class="history-section">
 
+
                 <div class="section-heading history-heading">
 
+
                     <div>
+
                         <span class="small-label">
                             CRONOLOGIA
                         </span>
@@ -598,7 +886,9 @@
                         <h2>
                             Storico turni
                         </h2>
+
                     </div>
+
 
                     <button
                         class="history-link"
@@ -608,6 +898,7 @@
                         Vedi tutto →
                     </button>
 
+
                 </div>
 
 
@@ -615,10 +906,11 @@
                     id="storico-turni"
                     class="history-list"
                 >
-                    <!-- Generato da JavaScript -->
                 </div>
 
+
             </section>
+
 
         </main>
 
@@ -626,43 +918,56 @@
 
 
 
-    <!-- =========================================================
+    <!-- =====================================================
          STORICO COMPLETO
-    ========================================================== -->
+    ====================================================== -->
 
     <section
         id="storico-completo"
         class="page"
     >
 
+
         <header class="topbar">
+
 
             <button
                 class="back-button"
                 type="button"
                 onclick="chiudiStorico()"
             >
-                ←
-                <span>Indietro</span>
+
+                <span class="back-arrow">
+                    ‹
+                </span>
+
+                <span>
+                    Indietro
+                </span>
+
             </button>
+
 
             <h1>
                 Storico turni
             </h1>
 
+
             <div class="topbar-spacer"></div>
+
 
         </header>
 
 
         <main class="history-page-content">
 
+
             <div
                 id="storico-completo-lista"
                 class="history-full-list"
             >
-                <!-- Generato da JavaScript -->
             </div>
+
 
         </main>
 
@@ -670,11 +975,12 @@
 
 
 
-    <!-- =========================================================
-         SCRIPT
-    ========================================================== -->
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
 
     <script src="script.js"></script>
+
 
 </body>
 </html>
