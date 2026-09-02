@@ -2174,3 +2174,11 @@ button {
     margin-top: 10px !important;
     gap: 6px !important;
 }
+/* PUNTEGGIO GRANDE COME NEL RENDER */
+.match-row .score-big {
+    width: 115px !important;
+    font-size: 52px !important;
+    font-weight: 900 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -3px !important;
+}
