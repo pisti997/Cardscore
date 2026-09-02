@@ -1,11 +1,12 @@
 /* =========================================================
-   CARDSCORE — SCRIPT
-   ========================================================= */
+   CARDSCORE
+   SCRIPT COMPLETO
+========================================================= */
 
 
 /* =========================================================
    STATO DELLA PARTITA
-   ========================================================= */
+========================================================= */
 
 let giocoScelto = "";
 
@@ -26,9 +27,12 @@ let setPerMatch = 2;
 let puntiGame = [];
 let gameVinti = [];
 let setVinti = [];
+let matchVinti = [];
 
 let storicoGame = [];
 let storicoSet = [];
+
+let partitaIniziata = null;
 
 let messaggioTimeout = null;
 
@@ -36,8 +40,8 @@ const STORAGE_KEY = "cardscore_partita";
 
 
 /* =========================================================
-   ELEMENTI UTILI
-   ========================================================= */
+   ELEMENTI
+========================================================= */
 
 function elemento(id) {
     return document.getElementById(id);
@@ -46,7 +50,7 @@ function elemento(id) {
 
 /* =========================================================
    CAMBIO PAGINA
-   ========================================================= */
+========================================================= */
 
 function mostraPagina(id) {
 
@@ -62,14 +66,14 @@ function mostraPagina(id) {
 
     window.scrollTo({
         top: 0,
-        behavior: "instant"
+        behavior: "auto"
     });
 }
 
 
 /* =========================================================
    HOME
-   ========================================================= */
+========================================================= */
 
 function tornaHome() {
 
@@ -81,14 +85,16 @@ function tornaHome() {
 
 /* =========================================================
    NUOVA PARTITA
-   ========================================================= */
+========================================================= */
 
 function nuovaPartita() {
 
     giocoScelto = "";
 
     giocatori = [];
+
     punteggi = [];
+
     storico = [];
 
     numeroTurno = 0;
@@ -98,15 +104,25 @@ function nuovaPartita() {
     obiettivoPartita = 500;
 
     puntiPerGame = 21;
+
     gamePerSet = 3;
+
     setPerMatch = 2;
 
     puntiGame = [];
+
     gameVinti = [];
+
     setVinti = [];
 
+    matchVinti = [];
+
     storicoGame = [];
+
     storicoSet = [];
+
+    partitaIniziata = null;
+
 
     elemento("gioco-selezionato").textContent = "—";
 
@@ -115,8 +131,11 @@ function nuovaPartita() {
     elemento("obiettivo-partita").value = 500;
 
     elemento("punti-per-game").value = 21;
+
     elemento("game-per-set").value = 3;
+
     elemento("set-per-match").value = 2;
+
 
     aggiornaListaGiocatori();
 
@@ -128,7 +147,7 @@ function nuovaPartita() {
 
 /* =========================================================
    SCELTA GIOCO
-   ========================================================= */
+========================================================= */
 
 function scegliGioco(gioco) {
 
@@ -144,96 +163,136 @@ function scegliGioco(gioco) {
 
 /* =========================================================
    GIOCATORI
-   ========================================================= */
+========================================================= */
 
 function aggiornaListaGiocatori() {
 
     const lista = elemento("lista-giocatori");
 
-    if (!lista) return;
+    if (!lista) {
+        return;
+    }
 
     lista.innerHTML = "";
+
 
     giocatori.forEach((nome, indice) => {
 
         const riga = document.createElement("div");
 
-        riga.className = "player-input-row";
+        riga.className = "player-row";
 
-        riga.innerHTML = `
-            <input
-                class="player-input"
-                type="text"
-                placeholder="Nome giocatore ${indice + 1}"
-                value="${escapeHTML(nome)}"
-                maxlength="20"
-                autocomplete="off"
-            >
 
-            ${
-                giocatori.length > 2
-                ? `
-                    <button
-                        class="remove-player"
-                        type="button"
-                        aria-label="Rimuovi giocatore"
-                    >
-                        ×
-                    </button>
-                `
-                : ""
-            }
-        `;
+        const input = document.createElement("input");
 
-        const input = riga.querySelector(".player-input");
+        input.type = "text";
+
+        input.className = "player-input";
+
+        input.placeholder =
+            `Nome giocatore ${indice + 1}`;
+
+        input.value = nome;
+
+        input.maxLength = 20;
+
+        input.autocomplete = "off";
+
 
         input.addEventListener("input", function () {
-            giocatori[indice] = this.value;
+
+            giocatori[indice] =
+                this.value;
+
         });
 
-        const removeButton = riga.querySelector(".remove-player");
 
-        if (removeButton) {
+        riga.appendChild(input);
 
-            removeButton.addEventListener("click", function () {
 
-                giocatori.splice(indice, 1);
+        if (giocatori.length > 2) {
 
-                aggiornaListaGiocatori();
-            });
+            const removeButton =
+                document.createElement("button");
+
+            removeButton.type = "button";
+
+            removeButton.className =
+                "remove-player";
+
+            removeButton.setAttribute(
+                "aria-label",
+                "Rimuovi giocatore"
+            );
+
+            removeButton.textContent = "×";
+
+
+            removeButton.addEventListener(
+                "click",
+                function () {
+
+                    giocatori.splice(indice, 1);
+
+                    aggiornaListaGiocatori();
+
+                }
+            );
+
+
+            riga.appendChild(removeButton);
         }
 
+
         lista.appendChild(riga);
+
     });
 
-    elemento("numero-giocatori").textContent = giocatori.length;
+
+    const counter =
+        elemento("numero-giocatori");
+
+    if (counter) {
+        counter.textContent =
+            giocatori.length;
+    }
 }
 
 
 /* =========================================================
    AGGIUNGI GIOCATORE
-   ========================================================= */
+========================================================= */
 
 function aggiungiGiocatore() {
 
     if (giocatori.length >= 6) {
 
-        alert("Puoi inserire massimo 6 giocatori.");
+        alert(
+            "Puoi inserire massimo 6 giocatori."
+        );
 
         return;
     }
+
 
     giocatori.push("");
 
     aggiornaListaGiocatori();
 
+
     setTimeout(() => {
 
         const inputs =
-            document.querySelectorAll(".player-input");
+            document.querySelectorAll(
+                ".player-input"
+            );
 
-        if (inputs.length > 0) {
-            inputs[inputs.length - 1].focus();
+        if (inputs.length) {
+
+            inputs[
+                inputs.length - 1
+            ].focus();
+
         }
 
     }, 50);
@@ -242,96 +301,102 @@ function aggiungiGiocatore() {
 
 /* =========================================================
    SISTEMA PUNTEGGIO
-   ========================================================= */
+========================================================= */
 
 function cambiaSistemaPunteggio() {
 
-    const select = elemento("sistema-punteggio");
+    const select =
+        elemento("sistema-punteggio");
 
-    if (!select) return;
+    if (!select) {
+        return;
+    }
 
-    sistemaPunteggio = select.value;
 
-    const semplice = elemento("impostazioni-semplice");
-    const gameSet = elemento("impostazioni-game-set");
+    sistemaPunteggio =
+        select.value;
 
-    const tabelloneSemplice =
-        elemento("tabellone-semplice");
 
-    const tabelloneGameSet =
-        elemento("tabellone-game-set");
+    const semplice =
+        elemento("impostazioni-semplice");
 
-    const banner =
-        elemento("banner-game-set");
+    const gameSet =
+        elemento("impostazioni-game-set");
 
-    if (sistemaPunteggio === "semplice") {
 
-        semplice.classList.remove("hidden");
-        gameSet.classList.add("hidden");
+    if (
+        sistemaPunteggio ===
+        "semplice"
+    ) {
 
-        if (tabelloneSemplice) {
-            tabelloneSemplice.classList.remove("hidden");
-        }
+        semplice.classList.remove(
+            "hidden"
+        );
 
-        if (tabelloneGameSet) {
-            tabelloneGameSet.classList.add("hidden");
-        }
-
-        if (banner) {
-            banner.classList.add("hidden");
-        }
+        gameSet.classList.add(
+            "hidden"
+        );
 
     } else {
 
-        semplice.classList.add("hidden");
-        gameSet.classList.remove("hidden");
+        semplice.classList.add(
+            "hidden"
+        );
 
-        if (tabelloneSemplice) {
-            tabelloneSemplice.classList.add("hidden");
-        }
-
-        if (tabelloneGameSet) {
-            tabelloneGameSet.classList.remove("hidden");
-        }
-
-        if (banner) {
-            banner.classList.remove("hidden");
-        }
+        gameSet.classList.remove(
+            "hidden"
+        );
     }
 }
 
 
 /* =========================================================
    INIZIA PARTITA
-   ========================================================= */
+========================================================= */
 
 function iniziaPartita() {
 
-    // Legge i nomi direttamente dagli input
     const inputs =
-        document.querySelectorAll(".player-input");
+        document.querySelectorAll(
+            ".player-input"
+        );
 
-    giocatori = Array.from(inputs)
-        .map(input => input.value.trim())
-        .filter(nome => nome.length > 0);
+
+    giocatori =
+        Array.from(inputs)
+            .map(input =>
+                input.value.trim()
+            )
+            .filter(nome =>
+                nome.length > 0
+            );
+
 
     if (giocatori.length < 2) {
 
-        alert("Inserisci almeno 2 giocatori.");
+        alert(
+            "Inserisci almeno 2 giocatori."
+        );
 
         return;
     }
+
 
     if (giocatori.length > 6) {
 
-        alert("Puoi inserire massimo 6 giocatori.");
+        alert(
+            "Puoi inserire massimo 6 giocatori."
+        );
 
         return;
     }
 
+
     if (!giocoScelto) {
 
-        alert("Seleziona prima un gioco.");
+        alert(
+            "Seleziona prima un gioco."
+        );
 
         return;
     }
@@ -341,20 +406,30 @@ function iniziaPartita() {
         elemento("sistema-punteggio").value;
 
 
-    if (sistemaPunteggio === "semplice") {
+    if (
+        sistemaPunteggio ===
+        "semplice"
+    ) {
 
         obiettivoPartita =
             parseInt(
-                elemento("obiettivo-partita").value,
+                elemento(
+                    "obiettivo-partita"
+                ).value,
                 10
             );
 
+
         if (
-            !Number.isFinite(obiettivoPartita) ||
+            !Number.isFinite(
+                obiettivoPartita
+            ) ||
             obiettivoPartita <= 0
         ) {
 
-            alert("Inserisci un obiettivo valido.");
+            alert(
+                "Inserisci un obiettivo valido."
+            );
 
             return;
         }
@@ -363,54 +438,83 @@ function iniziaPartita() {
 
         puntiPerGame =
             parseInt(
-                elemento("punti-per-game").value,
+                elemento(
+                    "punti-per-game"
+                ).value,
                 10
             );
 
         gamePerSet =
             parseInt(
-                elemento("game-per-set").value,
+                elemento(
+                    "game-per-set"
+                ).value,
                 10
             );
 
         setPerMatch =
             parseInt(
-                elemento("set-per-match").value,
+                elemento(
+                    "set-per-match"
+                ).value,
                 10
             );
 
+
         if (
-            !Number.isFinite(puntiPerGame) ||
+            !Number.isFinite(
+                puntiPerGame
+            ) ||
             puntiPerGame <= 0 ||
-            !Number.isFinite(gamePerSet) ||
+            !Number.isFinite(
+                gamePerSet
+            ) ||
             gamePerSet <= 0 ||
-            !Number.isFinite(setPerMatch) ||
+            !Number.isFinite(
+                setPerMatch
+            ) ||
             setPerMatch <= 0
         ) {
 
-            alert("Controlla le impostazioni del match.");
+            alert(
+                "Controlla le impostazioni del match."
+            );
 
             return;
         }
     }
 
 
-    // Reset partita
-    punteggi = giocatori.map(() => 0);
+    /* RESET */
 
-    puntiGame = giocatori.map(() => 0);
+    punteggi =
+        giocatori.map(() => 0);
 
-    gameVinti = giocatori.map(() => 0);
+    puntiGame =
+        giocatori.map(() => 0);
 
-    setVinti = giocatori.map(() => 0);
+    gameVinti =
+        giocatori.map(() => 0);
+
+    setVinti =
+        giocatori.map(() => 0);
+
+    matchVinti =
+        giocatori.map(() => 0);
 
     storico = [];
-
-    numeroTurno = 0;
 
     storicoGame = [];
 
     storicoSet = [];
+
+    numeroTurno = 0;
+
+
+    /* TIMER */
+
+    partitaIniziata =
+        Date.now();
 
 
     mostraPagina("partita");
@@ -418,54 +522,103 @@ function iniziaPartita() {
     aggiornaSchermataPartita();
 
     salvaPartita();
+
+    aggiornaPartitaSalvata();
 }
 
 
 /* =========================================================
    AGGIORNA SCHERMATA PARTITA
-   ========================================================= */
+========================================================= */
 
 function aggiornaSchermataPartita() {
 
-    elemento("titolo-partita").textContent =
-        giocoScelto || "Partita";
+    const titolo =
+        elemento("titolo-partita");
 
-    elemento("numero-mano").textContent =
-        `Turno ${numeroTurno + 1}`;
+    const turno =
+        elemento("numero-mano");
 
 
-    if (sistemaPunteggio === "semplice") {
+    if (titolo) {
 
-        elemento("obiettivo-container")
-            .classList.remove("hidden");
+        titolo.textContent =
+            giocoScelto || "Partita";
 
-        elemento("obiettivo-testo")
-            .textContent = obiettivoPartita;
+    }
 
-        elemento("tabellone-semplice")
-            .classList.remove("hidden");
 
-        elemento("tabellone-game-set")
-            .classList.add("hidden");
+    if (turno) {
 
-        elemento("banner-game-set")
-            .classList.add("hidden");
+        turno.textContent =
+            `Turno ${numeroTurno + 1}`;
+
+    }
+
+
+    if (
+        sistemaPunteggio ===
+        "semplice"
+    ) {
+
+        elemento(
+            "obiettivo-container"
+        ).classList.remove(
+            "hidden"
+        );
+
+        elemento(
+            "obiettivo-testo"
+        ).textContent =
+            obiettivoPartita;
+
+        elemento(
+            "tabellone-semplice"
+        ).classList.remove(
+            "hidden"
+        );
+
+        elemento(
+            "tabellone-game-set"
+        ).classList.add(
+            "hidden"
+        );
+
+        elemento(
+            "banner-game-set"
+        ).classList.add(
+            "hidden"
+        );
+
 
         creaTabelloneSemplice();
 
     } else {
 
-        elemento("obiettivo-container")
-            .classList.add("hidden");
+        elemento(
+            "obiettivo-container"
+        ).classList.add(
+            "hidden"
+        );
 
-        elemento("tabellone-semplice")
-            .classList.add("hidden");
+        elemento(
+            "tabellone-semplice"
+        ).classList.add(
+            "hidden"
+        );
 
-        elemento("tabellone-game-set")
-            .classList.remove("hidden");
+        elemento(
+            "tabellone-game-set"
+        ).classList.remove(
+            "hidden"
+        );
 
-        elemento("banner-game-set")
-            .classList.remove("hidden");
+        elemento(
+            "banner-game-set"
+        ).classList.remove(
+            "hidden"
+        );
+
 
         creaTabelloneGameSet();
     }
@@ -481,228 +634,433 @@ function aggiornaSchermataPartita() {
 
 /* =========================================================
    TABELLONE SEMPLICE
-   ========================================================= */
+========================================================= */
 
 function creaTabelloneSemplice() {
 
     const tabellone =
         elemento("tabellone-semplice");
 
+    if (!tabellone) {
+        return;
+    }
+
     tabellone.innerHTML = "";
 
-    if (!giocatori.length) return;
+
+    giocatori.forEach(
+        (nome, indice) => {
+
+            const riga =
+                document.createElement(
+                    "div"
+                );
+
+            riga.className =
+                "simple-score-row";
 
 
-    const punteggioMassimo =
-        Math.max(...punteggi);
+            const nomeElement =
+                document.createElement(
+                    "strong"
+                );
+
+            nomeElement.className =
+                "simple-player-name";
+
+            nomeElement.textContent =
+                nome;
 
 
-    giocatori.forEach((nome, indice) => {
+            const score =
+                document.createElement(
+                    "span"
+                );
 
-        const riga =
-            document.createElement("div");
+            score.className =
+                "simple-player-score";
 
-        riga.className =
-            "simple-score-row";
+            score.textContent =
+                punteggi[indice];
 
-        if (
-            punteggi[indice] === punteggioMassimo &&
-            punteggioMassimo > 0
-        ) {
-            riga.classList.add("leader");
+
+            riga.appendChild(
+                nomeElement
+            );
+
+            riga.appendChild(
+                score
+            );
+
+
+            if (
+                punteggi[indice] ===
+                Math.max(...punteggi) &&
+                punteggi[indice] > 0
+            ) {
+
+                riga.classList.add(
+                    "leader"
+                );
+            }
+
+
+            tabellone.appendChild(
+                riga
+            );
         }
-
-
-        const nomeElement =
-            document.createElement("strong");
-
-        nomeElement.textContent = nome;
-
-
-        const score =
-            document.createElement("span");
-
-        score.className =
-            "simple-score-value";
-
-        score.textContent =
-            punteggi[indice];
-
-
-        riga.appendChild(nomeElement);
-        riga.appendChild(score);
-
-        tabellone.appendChild(riga);
-    });
+    );
 }
 
 
 /* =========================================================
    TABELLONE GAME / SET / MATCH
-   ========================================================= */
+========================================================= */
 
 function creaTabelloneGameSet() {
 
     const tabellone =
         elemento("tabellone-game-set");
 
+    if (!tabellone) {
+        return;
+    }
+
     tabellone.innerHTML = "";
 
-    if (!giocatori.length) return;
+
+    /* INTESTAZIONI */
+
+    const labels =
+        document.createElement(
+            "div"
+        );
+
+    labels.className =
+        "scoreboard-labels";
 
 
-    const punteggioMassimo =
-        Math.max(...puntiGame);
+    labels.innerHTML = `
+        <span></span>
+        <span>GAMES</span>
+        <span>SETS</span>
+        <span>MATCH</span>
+        <span>PUNTI</span>
+    `;
 
 
-    giocatori.forEach((nome, indice) => {
-
-        const riga =
-            document.createElement("div");
-
-        riga.className =
-            "match-row";
+    tabellone.appendChild(
+        labels
+    );
 
 
-        if (
-            puntiGame[indice] === punteggioMassimo &&
-            punteggioMassimo > 0
-        ) {
-            riga.classList.add("leader");
+    /* GIOCATORI */
+
+    giocatori.forEach(
+        (nome, indice) => {
+
+            const riga =
+                document.createElement(
+                    "div"
+                );
+
+            riga.className =
+                "match-row";
+
+
+            /* NOME */
+
+            const player =
+                document.createElement(
+                    "div"
+                );
+
+            player.className =
+                "match-player";
+
+
+            const strong =
+                document.createElement(
+                    "strong"
+                );
+
+            strong.textContent =
+                nome;
+
+
+            const sub =
+                document.createElement(
+                    "span"
+                );
+
+            sub.textContent =
+                `Game ${puntiGame[indice]} / ${puntiPerGame}`;
+
+
+            player.appendChild(
+                strong
+            );
+
+            player.appendChild(
+                sub
+            );
+
+
+            /* GAMES */
+
+            const games =
+                document.createElement(
+                    "span"
+                );
+
+            games.className =
+                "match-stat";
+
+            games.textContent =
+                gameVinti[indice];
+
+
+            if (
+                gameVinti[indice] > 0
+            ) {
+
+                games.classList.add(
+                    "active"
+                );
+            }
+
+
+            /* SETS */
+
+            const sets =
+                document.createElement(
+                    "span"
+                );
+
+            sets.className =
+                "match-stat";
+
+            sets.textContent =
+                setVinti[indice];
+
+
+            if (
+                setVinti[indice] > 0
+            ) {
+
+                sets.classList.add(
+                    "active"
+                );
+            }
+
+
+            /* MATCH */
+
+            const match =
+                document.createElement(
+                    "span"
+                );
+
+            match.className =
+                "match-stat";
+
+            match.textContent =
+                matchVinti[indice];
+
+
+            if (
+                matchVinti[indice] > 0
+            ) {
+
+                match.classList.add(
+                    "won"
+                );
+            }
+
+
+            /* PUNTEGGIO TOTALE */
+
+            const punti =
+                document.createElement(
+                    "span"
+                );
+
+            punti.className =
+                "score-big";
+
+            punti.textContent =
+                punteggi[indice];
+
+
+            riga.appendChild(
+                player
+            );
+
+            riga.appendChild(
+                games
+            );
+
+            riga.appendChild(
+                sets
+            );
+
+            riga.appendChild(
+                match
+            );
+
+            riga.appendChild(
+                punti
+            );
+
+
+            tabellone.appendChild(
+                riga
+            );
         }
-
-
-        const nomeElement =
-            document.createElement("strong");
-
-        nomeElement.textContent = nome;
-
-
-        const game =
-            document.createElement("span");
-
-        game.textContent =
-            puntiGame[indice];
-
-
-        const games =
-            document.createElement("span");
-
-        games.textContent =
-            gameVinti[indice];
-
-
-        const sets =
-            document.createElement("span");
-
-        sets.textContent =
-            setVinti[indice];
-
-
-        const punti =
-            document.createElement("span");
-
-        punti.className =
-            "score-big";
-
-        punti.textContent =
-            puntiGame[indice];
-
-
-        riga.appendChild(nomeElement);
-        riga.appendChild(game);
-        riga.appendChild(games);
-        riga.appendChild(sets);
-        riga.appendChild(punti);
-
-
-        tabellone.appendChild(riga);
-    });
+    );
 }
 
 
 /* =========================================================
    SELETTORE GIOCATORE
-   ========================================================== */
+========================================================= */
 
 function creaSelettoreGiocatore() {
 
     const select =
-        elemento("giocatore-vincitore");
+        elemento(
+            "giocatore-vincitore"
+        );
+
+    if (!select) {
+        return;
+    }
+
+
+    const valorePrecedente =
+        select.value;
+
 
     select.innerHTML = "";
 
-    giocatori.forEach((nome, indice) => {
 
-        const option =
-            document.createElement("option");
+    giocatori.forEach(
+        (nome, indice) => {
 
-        option.value = indice;
+            const option =
+                document.createElement(
+                    "option"
+                );
 
-        option.textContent = nome;
+            option.value =
+                indice;
 
-        select.appendChild(option);
-    });
+            option.textContent =
+                nome;
+
+            select.appendChild(
+                option
+            );
+        }
+    );
+
+
+    if (
+        valorePrecedente !== "" &&
+        giocatori[
+            parseInt(
+                valorePrecedente,
+                10
+            )
+        ]
+    ) {
+
+        select.value =
+            valorePrecedente;
+    }
 }
 
 
 /* =========================================================
    BOTTONI RAPIDI
-   ========================================================== */
+========================================================= */
 
 function creaQuickButtons() {
 
     const container =
         elemento("quick-buttons");
 
+    if (!container) {
+        return;
+    }
+
     container.innerHTML = "";
 
-    if (!giocatori.length) return;
+
+    giocatori.forEach(
+        (nome, indice) => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.type =
+                "button";
+
+            button.className =
+                "quick-button";
+
+            button.textContent =
+                `+1 ${nome}`;
 
 
-    giocatori.forEach((nome, indice) => {
+            button.addEventListener(
+                "click",
+                () => {
 
-        const button =
-            document.createElement("button");
+                    elemento(
+                        "giocatore-vincitore"
+                    ).value =
+                        indice;
 
-        button.type = "button";
+                    elemento(
+                        "punti-mano"
+                    ).value = 1;
 
-        button.className =
-            "quick-button";
+                    aggiungiMano();
+                }
+            );
 
-        button.textContent =
-            `+1 ${nome}`;
 
-        button.addEventListener("click", () => {
-
-            elemento("giocatore-vincitore").value =
-                indice;
-
-            elemento("punti-mano").value = 1;
-
-            aggiungiMano();
-        });
-
-        container.appendChild(button);
-    });
+            container.appendChild(
+                button
+            );
+        }
+    );
 }
 
 
 /* =========================================================
-   AGGIUNGI MANO
-   ========================================================== */
+   AGGIUNGI TURNO
+========================================================= */
 
 function aggiungiMano() {
 
     const indice =
         parseInt(
-            elemento("giocatore-vincitore").value,
+            elemento(
+                "giocatore-vincitore"
+            ).value,
             10
         );
 
+
     const punti =
         parseInt(
-            elemento("punti-mano").value,
+            elemento(
+                "punti-mano"
+            ).value,
             10
         );
 
@@ -713,7 +1071,9 @@ function aggiungiMano() {
         indice >= giocatori.length
     ) {
 
-        alert("Seleziona un giocatore.");
+        alert(
+            "Seleziona un giocatore."
+        );
 
         return;
     }
@@ -724,7 +1084,9 @@ function aggiungiMano() {
         punti <= 0
     ) {
 
-        alert("Inserisci un numero di punti valido.");
+        alert(
+            "Inserisci un numero di punti valido."
+        );
 
         return;
     }
@@ -734,19 +1096,32 @@ function aggiungiMano() {
 
 
     storico.push({
-        turno: numeroTurno,
-        giocatore: indice,
-        nome: giocatori[indice],
-        punti: punti
+
+        turno:
+            numeroTurno,
+
+        giocatore:
+            indice,
+
+        nome:
+            giocatori[indice],
+
+        punti:
+            punti
+
     });
 
 
     punteggi[indice] += punti;
 
 
-    if (sistemaPunteggio === "game-set") {
+    if (
+        sistemaPunteggio ===
+        "game-set"
+    ) {
 
-        puntiGame[indice] += punti;
+        puntiGame[indice] +=
+            punti;
 
         controllaGame(indice);
 
@@ -756,7 +1131,10 @@ function aggiungiMano() {
     }
 
 
-    elemento("punti-mano").value = 1;
+    elemento(
+        "punti-mano"
+    ).value = 1;
+
 
     aggiornaSchermataPartita();
 
@@ -766,23 +1144,36 @@ function aggiungiMano() {
 
 /* =========================================================
    CONTROLLO GAME
-   ========================================================== */
+========================================================= */
 
 function controllaGame(indice) {
 
     if (
-        puntiGame[indice] < puntiPerGame
+        puntiGame[indice] <
+        puntiPerGame
     ) {
+
         return;
     }
 
 
     gameVinti[indice]++;
 
+
     storicoGame.push({
-        vincitore: indice,
-        nome: giocatori[indice],
-        punti: puntiGame[indice]
+
+        vincitore:
+            indice,
+
+        nome:
+            giocatori[indice],
+
+        punti:
+            puntiGame[indice],
+
+        game:
+            [...gameVinti]
+
     });
 
 
@@ -792,22 +1183,38 @@ function controllaGame(indice) {
     );
 
 
+    /* AZZERA PUNTI GAME */
+
     puntiGame =
-        giocatori.map((_, i) =>
-            i === indice ? 0 : puntiGame[i]
+        giocatori.map(
+            (_, i) =>
+                i === indice
+                    ? 0
+                    : puntiGame[i]
         );
 
 
+    /* CONTROLLO SET */
+
     if (
-        gameVinti[indice] >= gamePerSet
+        gameVinti[indice] >=
+        gamePerSet
     ) {
 
         setVinti[indice]++;
 
+
         storicoSet.push({
-            vincitore: indice,
-            nome: giocatori[indice],
-            game: [...gameVinti]
+
+            vincitore:
+                indice,
+
+            nome:
+                giocatori[indice],
+
+            game:
+                [...gameVinti]
+
         });
 
 
@@ -817,37 +1224,31 @@ function controllaGame(indice) {
         );
 
 
-        gameVinti =
-            giocatori.map(() => 0);
+        /* RESET GAME */
 
+        gameVinti =
+            giocatori.map(
+                () => 0
+            );
 
         puntiGame =
-            giocatori.map(() => 0);
+            giocatori.map(
+                () => 0
+            );
 
+
+        /* CONTROLLO MATCH */
 
         if (
-            setVinti[indice] >= setPerMatch
+            setVinti[indice] >=
+            setPerMatch
         ) {
 
-            setTimeout(() => {
+            terminaMatch(
+                indice
+            );
 
-                lanciaConfetti();
-
-                mostraMessaggioPartita(
-                    "match",
-                    `${giocatori[indice]} VINCE LA PARTITA!`
-                );
-
-                setTimeout(() => {
-
-                    mostraRecapPartita(indice);
-
-                }, 900);
-
-            }, 500);
-
-
-            localStorage.removeItem(STORAGE_KEY);
+            return;
         }
     }
 }
@@ -855,54 +1256,86 @@ function controllaGame(indice) {
 
 /* =========================================================
    CONTROLLO VITTORIA SEMPLICE
-   ========================================================== */
+========================================================= */
 
 function controllaVittoria() {
 
     const indiceVincitore =
         punteggi.findIndex(
             punteggio =>
-                punteggio >= obiettivoPartita
+                punteggio >=
+                obiettivoPartita
         );
 
 
-    if (indiceVincitore === -1) {
+    if (
+        indiceVincitore === -1
+    ) {
+
         return;
     }
+
+
+    terminaMatch(
+        indiceVincitore
+    );
+}
+
+
+/* =========================================================
+   TERMINA MATCH
+========================================================= */
+
+function terminaMatch(
+    indiceVincitore
+) {
+
+    matchVinti =
+        giocatori.map(
+            () => 0
+        );
+
+
+    matchVinti[
+        indiceVincitore
+    ] = 1;
+
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
 
 
     lanciaConfetti();
 
 
-    localStorage.removeItem(STORAGE_KEY);
+    setTimeout(
+        () => {
 
+            mostraSchermataVittoria(
+                indiceVincitore
+            );
 
-    setTimeout(() => {
-
-        mostraMessaggioPartita(
-            "match",
-            `${giocatori[indiceVincitore]} VINCE LA PARTITA!`
-        );
-
-    }, 150);
-
-
-    setTimeout(() => {
-
-        mostraRecapPartita(indiceVincitore);
-
-    }, 1000);
+        },
+        350
+    );
 }
 
 
 /* =========================================================
-   MESSAGGIO GAME / SET / MATCH
-   ========================================================== */
+   MESSAGGIO GAME / SET
+========================================================= */
 
-function mostraMessaggioPartita(tipo, testo) {
+function mostraMessaggioPartita(
+    tipo,
+    testo
+) {
 
     const precedente =
-        document.querySelector(".match-message");
+        document.querySelector(
+            ".match-message"
+        );
+
 
     if (precedente) {
         precedente.remove();
@@ -910,38 +1343,61 @@ function mostraMessaggioPartita(tipo, testo) {
 
 
     if (messaggioTimeout) {
-        clearTimeout(messaggioTimeout);
+
+        clearTimeout(
+            messaggioTimeout
+        );
     }
 
 
+    const overlay =
+        document.createElement(
+            "div"
+        );
+
+    overlay.className =
+        "cardscore-overlay";
+
+
     const messaggio =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     messaggio.className =
         "match-message";
 
 
-    let etichetta = "PARTITA";
+    let etichetta =
+        "MATCH";
 
-    let icona = "🏆";
+    let icona =
+        "🏆";
+
 
     if (tipo === "game") {
-        etichetta = "GAME";
-        icona = "🎯";
+
+        etichetta =
+            "GAME";
+
+        icona =
+            "🎯";
+
     }
+
 
     if (tipo === "set") {
-        etichetta = "SET";
-        icona = "🏆";
-    }
 
-    if (tipo === "match") {
-        etichetta = "MATCH";
-        icona = "🏆";
+        etichetta =
+            "SET";
+
+        icona =
+            "🏆";
     }
 
 
     messaggio.innerHTML = `
+
         <div class="match-message-icon">
             ${icona}
         </div>
@@ -950,36 +1406,509 @@ function mostraMessaggioPartita(tipo, testo) {
             ${etichetta}
         </div>
 
-        <h2>${escapeHTML(testo)}</h2>
+        <h2>
+            ${escapeHTML(testo)}
+        </h2>
 
         <p>
             Continua a giocare!
         </p>
+
     `;
 
 
-    document.body.appendChild(messaggio);
+    document.body.appendChild(
+        overlay
+    );
+
+    document.body.appendChild(
+        messaggio
+    );
 
 
     messaggioTimeout =
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            messaggio.remove();
+                messaggio.remove();
 
-        }, tipo === "match" ? 2600 : 1600);
+                overlay.remove();
+
+            },
+            tipo === "set"
+                ? 1500
+                : 1200
+        );
+}
+
+
+/* =========================================================
+   SCHERMATA VITTORIA
+========================================================= */
+
+function mostraSchermataVittoria(
+    indiceVincitore
+) {
+
+    const precedente =
+        document.querySelector(
+            ".victory-screen"
+        );
+
+
+    if (precedente) {
+        precedente.remove();
+    }
+
+
+    const durata =
+        calcolaDurataPartita();
+
+
+    const durataTesto =
+        formattaDurata(
+            durata
+        );
+
+
+    const vittorieGame =
+        gameVinti[
+            indiceVincitore
+        ] || 0;
+
+
+    const vittorieSet =
+        setVinti[
+            indiceVincitore
+        ] || 0;
+
+
+    const screen =
+        document.createElement(
+            "div"
+        );
+
+    screen.className =
+        "victory-screen";
+
+
+    let recapHTML = "";
+
+
+    if (
+        storicoSet.length
+    ) {
+
+        recapHTML = `
+
+            <div class="recap-title">
+                RISULTATO DEI SET
+            </div>
+
+        `;
+
+
+        storicoSet.forEach(
+            (set, indice) => {
+
+                const risultati =
+                    set.game
+                        .map(
+                            (valore, i) =>
+                                `${giocatori[i]} ${valore}`
+                        )
+                        .join(
+                            " · "
+                        );
+
+
+                recapHTML += `
+
+                    <div class="recap-set">
+                        Set ${indice + 1}
+                        ·
+                        ${escapeHTML(
+                            set.nome
+                        )}
+                        ·
+                        ${escapeHTML(
+                            risultati
+                        )}
+                    </div>
+
+                `;
+            }
+        );
+    }
+
+
+    screen.innerHTML = `
+
+        <div class="victory-content">
+
+            <div class="victory-trophy">
+                🏆
+            </div>
+
+            <div class="victory-label">
+                PARTITA
+            </div>
+
+            <h1>
+                PARTITA VINTA!
+            </h1>
+
+            <div class="victory-winner">
+                ${escapeHTML(
+                    giocatori[
+                        indiceVincitore
+                    ]
+                )}
+            </div>
+
+            <div class="victory-score">
+                Punteggio finale:
+                <strong>
+                    ${punteggi[
+                        indiceVincitore
+                    ]}
+                </strong>
+            </div>
+
+
+            <div class="victory-stats">
+
+                <div class="victory-stat">
+
+                    <strong>
+                        ${durataTesto}
+                    </strong>
+
+                    <span>
+                        DURATA
+                    </span>
+
+                </div>
+
+
+                <div class="victory-stat">
+
+                    <strong>
+                        ${numeroTurno}
+                    </strong>
+
+                    <span>
+                        TURNI
+                    </span>
+
+                </div>
+
+
+                <div class="victory-stat">
+
+                    <strong>
+                        ${vittorieGame}
+                    </strong>
+
+                    <span>
+                        GAMES
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="victory-stats">
+
+                <div class="victory-stat">
+
+                    <strong>
+                        ${vittorieSet}
+                    </strong>
+
+                    <span>
+                        SETS
+                    </span>
+
+                </div>
+
+
+                <div class="victory-stat">
+
+                    <strong>
+                        ${matchVinti[
+                            indiceVincitore
+                        ]}
+                    </strong>
+
+                    <span>
+                        MATCH
+                    </span>
+
+                </div>
+
+
+                <div class="victory-stat">
+
+                    <strong>
+                        ${punteggi[
+                            indiceVincitore
+                        ]}
+                    </strong>
+
+                    <span>
+                        PUNTI
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            ${recapHTML}
+
+
+            <div class="victory-actions">
+
+                <button
+                    type="button"
+                    class="victory-home-button"
+                    onclick="chiudiVittoriaEHome()"
+                >
+                    Torna alla home
+                </button>
+
+
+                <button
+                    type="button"
+                    class="victory-new-button"
+                    onclick="chiudiVittoriaENuova()"
+                >
+                    Nuova partita
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(
+        screen
+    );
+}
+
+
+/* =========================================================
+   CHIUDI VITTORIA
+========================================================= */
+
+function chiudiVittoriaEHome() {
+
+    const screen =
+        document.querySelector(
+            ".victory-screen"
+        );
+
+
+    if (screen) {
+        screen.remove();
+    }
+
+
+    tornaHome();
+}
+
+
+function chiudiVittoriaENuova() {
+
+    const screen =
+        document.querySelector(
+            ".victory-screen"
+        );
+
+
+    if (screen) {
+        screen.remove();
+    }
+
+
+    nuovaPartita();
+}
+
+
+/* =========================================================
+   DURATA PARTITA
+========================================================= */
+
+function calcolaDurataPartita() {
+
+    if (!partitaIniziata) {
+        return 0;
+    }
+
+
+    return Math.max(
+        0,
+        Date.now() -
+        partitaIniziata
+    );
+}
+
+
+function formattaDurata(
+    millisecondi
+) {
+
+    const secondi =
+        Math.floor(
+            millisecondi / 1000
+        );
+
+
+    const minuti =
+        Math.floor(
+            secondi / 60
+        );
+
+
+    const ore =
+        Math.floor(
+            minuti / 60
+        );
+
+
+    if (ore > 0) {
+
+        return `${ore}h ${
+            minuti % 60
+        }m`;
+
+    }
+
+
+    if (minuti > 0) {
+
+        return `${minuti} min`;
+
+    }
+
+
+    return `${secondi} sec`;
 }
 
 
 /* =========================================================
    STORICO
-   ========================================================== */
+========================================================= */
+
+function creaRigaStorico(
+    elementoStorico
+) {
+
+    const riga =
+        document.createElement(
+            "div"
+        );
+
+    riga.className =
+        "history-row";
+
+
+    const turno =
+        document.createElement(
+            "div"
+        );
+
+    turno.className =
+        "history-turn";
+
+    turno.textContent =
+        `Turno ${elementoStorico.turno}`;
+
+
+    const dettagli =
+        document.createElement(
+            "div"
+        );
+
+    dettagli.className =
+        "history-details";
+
+
+    const nome =
+        document.createElement(
+            "span"
+        );
+
+    nome.className =
+        "history-player";
+
+    nome.textContent =
+        elementoStorico.nome;
+
+
+    const punti =
+        document.createElement(
+            "span"
+        );
+
+    punti.className =
+        "history-points";
+
+    punti.textContent =
+        `+${elementoStorico.punti} punti`;
+
+
+    dettagli.appendChild(
+        nome
+    );
+
+    dettagli.appendChild(
+        punti
+    );
+
+
+    const freccia =
+        document.createElement(
+            "span"
+        );
+
+    freccia.className =
+        "history-arrow";
+
+    freccia.textContent =
+        "›";
+
+
+    riga.appendChild(
+        turno
+    );
+
+    riga.appendChild(
+        dettagli
+    );
+
+    riga.appendChild(
+        freccia
+    );
+
+
+    return riga;
+}
+
 
 function mostraStorico() {
 
     const container =
         elemento("storico-turni");
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
+
 
     container.innerHTML = "";
 
@@ -987,64 +1916,50 @@ function mostraStorico() {
     if (!storico.length) {
 
         container.innerHTML = `
+
             <div class="history-empty">
                 Nessun turno ancora registrato
             </div>
+
         `;
 
         return;
     }
 
 
-    const ultimi =
-        storico.slice(-5).reverse();
+    storico
+        .slice(-5)
+        .reverse()
+        .forEach(
+            turno => {
 
+                container.appendChild(
+                    creaRigaStorico(
+                        turno
+                    )
+                );
 
-    ultimi.forEach(turno => {
-
-        const riga =
-            document.createElement("div");
-
-        riga.className =
-            "history-row";
-
-
-        const numero =
-            document.createElement("span");
-
-        numero.className =
-            "history-turn";
-
-        numero.textContent =
-            `Turno ${turno.turno}`;
-
-
-        const risultato =
-            document.createElement("span");
-
-        risultato.className =
-            "history-result";
-
-        risultato.textContent =
-            `${turno.nome} +${turno.punti}`;
-
-
-        riga.appendChild(numero);
-        riga.appendChild(risultato);
-
-        container.appendChild(riga);
-    });
+            }
+        );
 }
 
 
 /* =========================================================
    STORICO COMPLETO
-   ========================================================== */
+========================================================= */
 
 function mostraStoricoCompleto() {
 
     const container =
-        elemento("storico-completo-lista");
+        elemento(
+            "storico-completo-lista"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
 
     container.innerHTML = "";
 
@@ -1052,76 +1967,63 @@ function mostraStoricoCompleto() {
     if (!storico.length) {
 
         container.innerHTML = `
+
             <div class="history-empty">
                 Nessun turno ancora registrato
             </div>
+
         `;
 
-        mostraPagina("storico-completo");
+    } else {
 
-        return;
+        storico
+            .slice()
+            .reverse()
+            .forEach(
+                turno => {
+
+                    container.appendChild(
+                        creaRigaStorico(
+                            turno
+                        )
+                    );
+
+                }
+            );
     }
 
 
-    [...storico].reverse().forEach(turno => {
-
-        const riga =
-            document.createElement("div");
-
-        riga.className =
-            "history-row";
-
-
-        const numero =
-            document.createElement("span");
-
-        numero.className =
-            "history-turn";
-
-        numero.textContent =
-            `Turno ${turno.turno}`;
-
-
-        const risultato =
-            document.createElement("span");
-
-        risultato.className =
-            "history-result";
-
-        risultato.textContent =
-            `${turno.nome} +${turno.punti}`;
-
-
-        riga.appendChild(numero);
-        riga.appendChild(risultato);
-
-        container.appendChild(riga);
-    });
-
-
-    mostraPagina("storico-completo");
+    mostraPagina(
+        "storico-completo"
+    );
 }
 
 
 /* =========================================================
    CHIUDI STORICO
-   ========================================================== */
+========================================================= */
 
 function chiudiStorico() {
 
-    mostraPagina("partita");
+    mostraPagina(
+        "partita"
+    );
+
+    aggiornaSchermataPartita();
 }
 
 
 /* =========================================================
    ANNULLA ULTIMO TURNO
-   ========================================================== */
+========================================================= */
 
 function annullaUltimoTurno() {
 
     if (!storico.length) {
 
-        alert("Non ci sono turni da annullare.");
+        alert(
+            "Non ci sono turni da annullare."
+        );
 
         return;
     }
@@ -1130,7 +2032,12 @@ function annullaUltimoTurno() {
     storico.pop();
 
 
+    numeroTurno =
+        storico.length;
+
+
     ricalcolaPartita();
+
 
     aggiornaSchermataPartita();
 
@@ -1140,103 +2047,117 @@ function annullaUltimoTurno() {
 
 /* =========================================================
    RICALCOLA PARTITA
-   ========================================================== */
+========================================================= */
 
 function ricalcolaPartita() {
 
     punteggi =
-        giocatori.map(() => 0);
+        giocatori.map(
+            () => 0
+        );
 
     puntiGame =
-        giocatori.map(() => 0);
+        giocatori.map(
+            () => 0
+        );
 
     gameVinti =
-        giocatori.map(() => 0);
+        giocatori.map(
+            () => 0
+        );
 
     setVinti =
-        giocatori.map(() => 0);
+        giocatori.map(
+            () => 0
+        );
+
+    matchVinti =
+        giocatori.map(
+            () => 0
+        );
 
     storicoGame = [];
+
     storicoSet = [];
 
 
-    storico.forEach(turno => {
+    storico.forEach(
+        turno => {
 
-        if (
-            turno.giocatore < 0 ||
-            turno.giocatore >= giocatori.length
-        ) {
-            return;
-        }
+            const indice =
+                turno.giocatore;
 
 
-        punteggi[turno.giocatore] +=
-            turno.punti;
-
-
-        if (sistemaPunteggio === "game-set") {
-
-            puntiGame[turno.giocatore] +=
+            punteggi[indice] +=
                 turno.punti;
 
 
             if (
-                puntiGame[turno.giocatore] >=
-                puntiPerGame
+                sistemaPunteggio ===
+                "game-set"
             ) {
 
-                gameVinti[turno.giocatore]++;
+                puntiGame[indice] +=
+                    turno.punti;
 
 
-                storicoGame.push({
-                    vincitore: turno.giocatore,
-                    nome: giocatori[turno.giocatore],
-                    punti:
-                        puntiGame[turno.giocatore]
-                });
-
-
-                puntiGame[turno.giocatore] = 0;
-
-
-                if (
-                    gameVinti[turno.giocatore] >=
-                    gamePerSet
+                while (
+                    puntiGame[indice] >=
+                    puntiPerGame
                 ) {
 
-                    setVinti[turno.giocatore]++;
+                    puntiGame[indice] -=
+                        puntiPerGame;
+
+                    gameVinti[indice]++;
 
 
-                    storicoSet.push({
-                        vincitore: turno.giocatore,
-                        nome: giocatori[turno.giocatore],
-                        game: [...gameVinti]
-                    });
+                    if (
+                        gameVinti[indice] >=
+                        gamePerSet
+                    ) {
+
+                        gameVinti =
+                            giocatori.map(
+                                () => 0
+                            );
+
+                        setVinti[indice]++;
 
 
-                    gameVinti =
-                        giocatori.map(() => 0);
+                        if (
+                            setVinti[indice] >=
+                            setPerMatch
+                        ) {
 
-                    puntiGame =
-                        giocatori.map(() => 0);
+                            matchVinti =
+                                giocatori.map(
+                                    () => 0
+                                );
+
+                            matchVinti[indice] =
+                                1;
+
+                        }
+                    }
                 }
             }
         }
-    });
-
-
-    numeroTurno =
-        storico.length;
+    );
 }
 
 
 /* =========================================================
    SALVATAGGIO
-   ========================================================== */
+========================================================= */
 
 function salvaPartita() {
 
-    if (!giocatori.length) {
+    if (
+        !giocoScelto ||
+        !giocatori.length
+    ) {
+
         return;
     }
 
@@ -1269,745 +2190,622 @@ function salvaPartita() {
 
         setVinti,
 
+        matchVinti,
+
         storicoGame,
 
-        storicoSet
+        storicoSet,
+
+        partitaIniziata
+
     };
 
 
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(dati)
-    );
+    try {
 
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(dati)
+        );
 
-    aggiornaPartitaSalvata();
+    } catch (errore) {
+
+        console.error(
+            "Errore salvataggio:",
+            errore
+        );
+    }
 }
 
 
 /* =========================================================
-   CONTROLLA PARTITA SALVATA
-   ========================================================== */
+   AGGIORNA PARTITA SALVATA
+========================================================= */
 
 function aggiornaPartitaSalvata() {
 
-    const container =
-        elemento("partita-in-corso");
-
-    if (!container) return;
-
-
-    const salvata =
-        localStorage.getItem(STORAGE_KEY);
+    const card =
+        elemento(
+            "partita-in-corso"
+        );
 
 
-    if (!salvata) {
+    const titolo =
+        elemento(
+            "partita-salvata-titolo"
+        );
 
-        container.classList.add("hidden");
+
+    const info =
+        elemento(
+            "partita-salvata-info"
+        );
+
+
+    if (!card) {
+        return;
+    }
+
+
+    let dati = null;
+
+
+    try {
+
+        const salvata =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+
+        if (salvata) {
+
+            dati =
+                JSON.parse(
+                    salvata
+                );
+        }
+
+    } catch (errore) {
+
+        console.error(
+            "Errore lettura partita:",
+            errore
+        );
+    }
+
+
+    if (
+        !dati ||
+        !dati.giocatori ||
+        !dati.giocatori.length
+    ) {
+
+        card.classList.add(
+            "hidden"
+        );
 
         return;
     }
 
 
-    try {
-
-        const dati =
-            JSON.parse(salvata);
-
-
-        if (
-            !dati ||
-            !Array.isArray(dati.giocatori) ||
-            dati.giocatori.length < 2
-        ) {
-
-            container.classList.add("hidden");
-
-            return;
-        }
+    card.classList.remove(
+        "hidden"
+    );
 
 
-        container.classList.remove("hidden");
+    if (titolo) {
+
+        titolo.textContent =
+            dati.giocoScelto ||
+            "Partita";
+
+    }
 
 
-        elemento("partita-salvata-titolo")
-            .textContent =
-            dati.giocoScelto || "Partita";
+    if (info) {
 
-
-        elemento("partita-salvata-info")
-            .textContent =
-            `${dati.giocatori.length} giocatori • Turno ${dati.numeroTurno || 0}`;
-
-    } catch (errore) {
-
-        console.error(
-            "Errore lettura partita salvata:",
-            errore
-        );
-
-        container.classList.add("hidden");
+        info.textContent =
+            `${dati.giocatori.length} giocatori · Turno ${
+                dati.numeroTurno
+            }`;
     }
 }
 
 
 /* =========================================================
    CONTINUA PARTITA
-   ========================================================== */
+========================================================= */
 
 function continuaPartita() {
 
-    const salvata =
-        localStorage.getItem(STORAGE_KEY);
+    let dati = null;
 
 
-    if (!salvata) {
+    try {
 
-        alert("Non è presente una partita salvata.");
+        const salvata =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+
+        if (!salvata) {
+
+            alert(
+                "Non c'è nessuna partita salvata."
+            );
+
+            return;
+        }
+
+
+        dati =
+            JSON.parse(
+                salvata
+            );
+
+    } catch (errore) {
+
+        console.error(
+            "Errore caricamento:",
+            errore
+        );
+
+        alert(
+            "Impossibile caricare la partita."
+        );
 
         return;
     }
 
 
-    try {
-
-        const dati =
-            JSON.parse(salvata);
+    giocoScelto =
+        dati.giocoScelto || "";
 
 
-        giocoScelto =
-            dati.giocoScelto || "";
-
-
-        giocatori =
-            Array.isArray(dati.giocatori)
+    giocatori =
+        Array.isArray(
+            dati.giocatori
+        )
             ? dati.giocatori
             : [];
 
 
-        punteggi =
-            Array.isArray(dati.punteggi)
+    punteggi =
+        Array.isArray(
+            dati.punteggi
+        )
             ? dati.punteggi
-            : giocatori.map(() => 0);
+            : giocatori.map(
+                () => 0
+            );
 
 
-        storico =
-            Array.isArray(dati.storico)
+    storico =
+        Array.isArray(
+            dati.storico
+        )
             ? dati.storico
             : [];
 
 
-        numeroTurno =
-            Number.isFinite(dati.numeroTurno)
-            ? dati.numeroTurno
-            : storico.length;
+    numeroTurno =
+        dati.numeroTurno ||
+        storico.length;
 
 
-        sistemaPunteggio =
-            dati.sistemaPunteggio || "semplice";
+    sistemaPunteggio =
+        dati.sistemaPunteggio ||
+        "semplice";
 
 
-        obiettivoPartita =
-            dati.obiettivoPartita || 500;
+    obiettivoPartita =
+        dati.obiettivoPartita ||
+        500;
 
 
-        puntiPerGame =
-            dati.puntiPerGame || 21;
+    puntiPerGame =
+        dati.puntiPerGame ||
+        21;
 
 
-        gamePerSet =
-            dati.gamePerSet || 3;
+    gamePerSet =
+        dati.gamePerSet ||
+        3;
 
 
-        setPerMatch =
-            dati.setPerMatch || 2;
+    setPerMatch =
+        dati.setPerMatch ||
+        2;
 
 
-        puntiGame =
-            Array.isArray(dati.puntiGame)
+    puntiGame =
+        Array.isArray(
+            dati.puntiGame
+        )
             ? dati.puntiGame
-            : giocatori.map(() => 0);
+            : giocatori.map(
+                () => 0
+            );
 
 
-        gameVinti =
-            Array.isArray(dati.gameVinti)
+    gameVinti =
+        Array.isArray(
+            dati.gameVinti
+        )
             ? dati.gameVinti
-            : giocatori.map(() => 0);
+            : giocatori.map(
+                () => 0
+            );
 
 
-        setVinti =
-            Array.isArray(dati.setVinti)
+    setVinti =
+        Array.isArray(
+            dati.setVinti
+        )
             ? dati.setVinti
-            : giocatori.map(() => 0);
+            : giocatori.map(
+                () => 0
+            );
 
 
-        storicoGame =
-            Array.isArray(dati.storicoGame)
+    matchVinti =
+        Array.isArray(
+            dati.matchVinti
+        )
+            ? dati.matchVinti
+            : giocatori.map(
+                () => 0
+            );
+
+
+    storicoGame =
+        Array.isArray(
+            dati.storicoGame
+        )
             ? dati.storicoGame
             : [];
 
 
-        storicoSet =
-            Array.isArray(dati.storicoSet)
+    storicoSet =
+        Array.isArray(
+            dati.storicoSet
+        )
             ? dati.storicoSet
             : [];
 
 
-        elemento("sistema-punteggio").value =
-            sistemaPunteggio;
+    partitaIniziata =
+        dati.partitaIniziata ||
+        Date.now();
 
 
-        elemento("obiettivo-partita").value =
-            obiettivoPartita;
+    mostraPagina(
+        "partita"
+    );
 
 
-        elemento("punti-per-game").value =
-            puntiPerGame;
-
-
-        elemento("game-per-set").value =
-            gamePerSet;
-
-
-        elemento("set-per-match").value =
-            setPerMatch;
-
-
-        mostraPagina("partita");
-
-        cambiaSistemaPunteggio();
-
-        aggiornaSchermataPartita();
-
-
-    } catch (errore) {
-
-        console.error(
-            "Errore caricamento partita:",
-            errore
-        );
-
-        alert(
-            "Non è stato possibile recuperare la partita."
-        );
-    }
+    aggiornaSchermataPartita();
 }
 
 
 /* =========================================================
    ESCI DALLA PARTITA
-   ========================================================== */
+========================================================= */
 
 function esciPartita() {
 
     salvaPartita();
 
-    mostraPagina("home");
-}
-
-
-/* =========================================================
-   RECAP PARTITA
-   ========================================================== */
-
-function mostraRecapPartita(indiceVincitore) {
-
-    const precedente =
-        document.querySelector(".recap-overlay");
-
-    if (precedente) {
-        precedente.remove();
-    }
-
-
-    const overlay =
-        document.createElement("div");
-
-    overlay.className =
-        "recap-overlay";
-
-
-    const card =
-        document.createElement("div");
-
-    card.className =
-        "recap-card";
-
-
-    const vincitore =
-        giocatori[indiceVincitore] || "Vincitore";
-
-
-    let html = `
-        <div class="recap-top">
-
-            <div class="recap-trophy">
-                🏆
-            </div>
-
-            <span>
-                PARTITA VINTA!
-            </span>
-
-            <h2>
-                ${escapeHTML(vincitore)}
-            </h2>
-
-            <p class="recap-winner">
-                Complimenti!
-            </p>
-
-        </div>
-    `;
-
-
-    // ---------------------------------------------
-    // PUNTEGGIO FINALE
-    // ---------------------------------------------
-
-    html += `
-        <div class="recap-score">
-    `;
-
-
-    giocatori.forEach((nome, indice) => {
-
-        html += `
-            <div class="recap-score-player">
-
-                <strong>
-                    ${escapeHTML(nome)}
-                </strong>
-
-                <span>
-                    ${punteggi[indice]}
-                </span>
-
-            </div>
-        `;
-
-        if (indice < giocatori.length - 1) {
-
-            html += `
-                <div class="recap-score-separator">
-                    •
-                </div>
-            `;
-        }
-    });
-
-
-    html += `
-        </div>
-    `;
-
-
-    // ---------------------------------------------
-    // INFORMAZIONI
-    // ---------------------------------------------
-
-    html += `
-        <div class="recap-info">
-
-            <div class="recap-info-item">
-
-                <span>
-                    TURNI
-                </span>
-
-                <strong>
-                    ${numeroTurno}
-                </strong>
-
-            </div>
-
-            <div class="recap-info-item">
-
-                <span>
-                    GIOCHI
-                </span>
-
-                <strong>
-                    ${sistemaPunteggio === "game-set"
-                        ? gameVinti[indiceVincitore] || 0
-                        : "—"
-                    }
-                </strong>
-
-            </div>
-
-            <div class="recap-info-item">
-
-                <span>
-                    SET
-                </span>
-
-                <strong>
-                    ${sistemaPunteggio === "game-set"
-                        ? setVinti[indiceVincitore] || 0
-                        : "—"
-                    }
-                </strong>
-
-            </div>
-
-        </div>
-    `;
-
-
-    // ---------------------------------------------
-    // SET
-    // ---------------------------------------------
-
-    if (
-        sistemaPunteggio === "game-set" &&
-        storicoSet.length
-    ) {
-
-        html += `
-            <div class="recap-sets">
-
-                <div class="recap-sets-title">
-                    RISULTATO DEI SET
-                </div>
-        `;
-
-
-        storicoSet.forEach((set, indiceSet) => {
-
-            const risultati =
-                Array.isArray(set.game)
-                    ? set.game
-                    : [];
-
-
-            html += `
-                <div class="recap-set">
-
-                    <span class="recap-set-name">
-                        Set ${indiceSet + 1}
-                    </span>
-
-                    <span class="recap-set-score">
-                        ${risultati.join(" - ")}
-                    </span>
-
-                </div>
-            `;
-        });
-
-
-        html += `
-            </div>
-        `;
-    }
-
-
-    // ---------------------------------------------
-    // BOTTONI
-    // ---------------------------------------------
-
-    html += `
-        <div class="recap-buttons">
-
-            <button
-                class="primary-button"
-                type="button"
-                id="recap-home"
-            >
-                Torna alla home
-            </button>
-
-            <button
-                class="secondary-button"
-                type="button"
-                id="recap-new"
-            >
-                Nuova partita
-            </button>
-
-        </div>
-    `;
-
-
-    card.innerHTML = html;
-
-    overlay.appendChild(card);
-
-    document.body.appendChild(overlay);
-
-
-    elemento("recap-home")
-        .addEventListener("click", () => {
-
-            overlay.remove();
-
-            localStorage.removeItem(STORAGE_KEY);
-
-            nuovaPartita();
-
-            mostraPagina("home");
-
-        });
-
-
-    elemento("recap-new")
-        .addEventListener("click", () => {
-
-            overlay.remove();
-
-            localStorage.removeItem(STORAGE_KEY);
-
-            nuovaPartita();
-
-        });
+    mostraPagina(
+        "home"
+    );
+
+    aggiornaPartitaSalvata();
 }
 
 
 /* =========================================================
    CONFETTI
-   ========================================================== */
+========================================================= */
 
 function lanciaConfetti() {
 
-    const canvas =
-        document.createElement("canvas");
+    let canvas =
+        elemento(
+            "confetti-canvas"
+        );
 
-    canvas.className =
-        "confetti-canvas";
 
-    document.body.appendChild(canvas);
+    if (!canvas) {
+
+        canvas =
+            document.createElement(
+                "canvas"
+            );
+
+        canvas.id =
+            "confetti-canvas";
+
+        document.body.appendChild(
+            canvas
+        );
+    }
 
 
     const ctx =
         canvas.getContext("2d");
 
 
+    const dpr =
+        window.devicePixelRatio ||
+        1;
+
+
     canvas.width =
-        window.innerWidth *
-        window.devicePixelRatio;
+        window.innerWidth * dpr;
 
     canvas.height =
-        window.innerHeight *
-        window.devicePixelRatio;
+        window.innerHeight * dpr;
+
+    canvas.style.width =
+        `${window.innerWidth}px`;
+
+    canvas.style.height =
+        `${window.innerHeight}px`;
+
 
     ctx.scale(
-        window.devicePixelRatio,
-        window.devicePixelRatio
+        dpr,
+        dpr
     );
-
-
-    const larghezza =
-        window.innerWidth;
-
-    const altezza =
-        window.innerHeight;
 
 
     const pezzi = [];
 
 
-    const simboli = [
-        "#1f6043",
-        "#f9dfa0",
-        "#d1ebf3",
-        "#e7d9ee",
-        "#ffffff"
-    ];
-
-
-    for (let i = 0; i < 100; i++) {
+    for (
+        let i = 0;
+        i < 140;
+        i++
+    ) {
 
         pezzi.push({
 
-            x: Math.random() * larghezza,
+            x:
+                Math.random() *
+                window.innerWidth,
 
             y:
                 -20 -
-                Math.random() * altezza,
+                Math.random() *
+                200,
 
-            width:
+            size:
                 5 +
-                Math.random() * 6,
-
-            height:
-                7 +
-                Math.random() * 10,
+                Math.random() *
+                7,
 
             speed:
                 2 +
-                Math.random() * 4,
+                Math.random() *
+                4,
+
+            angle:
+                Math.random() *
+                Math.PI *
+                2,
 
             rotation:
-                Math.random() * Math.PI * 2,
+                Math.random() *
+                0.2 -
+                0.1,
 
-            rotationSpeed:
-                -0.08 +
-                Math.random() * 0.16,
+            gravity:
+                0.08 +
+                Math.random() *
+                0.08,
 
-            color:
-                simboli[
-                    Math.floor(
-                        Math.random() *
-                        simboli.length
-                    )
-                ]
+            opacity: 1
+
         });
     }
 
 
-    let frame = 0;
+    let frame;
 
 
-    function anima() {
+    function animazione() {
 
         ctx.clearRect(
             0,
             0,
-            larghezza,
-            altezza
+            window.innerWidth,
+            window.innerHeight
         );
 
 
-        pezzi.forEach(pezzo => {
-
-            pezzo.y += pezzo.speed;
-
-            pezzo.rotation +=
-                pezzo.rotationSpeed;
+        let ancora = false;
 
 
-            ctx.save();
+        pezzi.forEach(
+            pezzo => {
+
+                pezzo.y +=
+                    pezzo.speed;
+
+                pezzo.speed +=
+                    pezzo.gravity;
+
+                pezzo.x +=
+                    Math.sin(
+                        pezzo.angle
+                    ) * 1.2;
+
+                pezzo.angle +=
+                    pezzo.rotation;
+
+                pezzo.opacity -=
+                    0.003;
 
 
-            ctx.translate(
-                pezzo.x,
-                pezzo.y
-            );
+                if (
+                    pezzo.y <
+                        window.innerHeight +
+                        30 &&
+                    pezzo.opacity > 0
+                ) {
+
+                    ancora = true;
+
+                    ctx.save();
+
+                    ctx.globalAlpha =
+                        pezzo.opacity;
+
+                    ctx.translate(
+                        pezzo.x,
+                        pezzo.y
+                    );
+
+                    ctx.rotate(
+                        pezzo.angle
+                    );
 
 
-            ctx.rotate(
-                pezzo.rotation
-            );
+                    const colori = [
+                        "#1f6043",
+                        "#f9dfa0",
+                        "#d1ebf3",
+                        "#e7d9ee",
+                        "#ffffff"
+                    ];
 
 
-            ctx.fillStyle =
-                pezzo.color;
+                    ctx.fillStyle =
+                        colori[
+                            Math.floor(
+                                Math.random() *
+                                colori.length
+                            )
+                        ];
 
 
-            ctx.fillRect(
-                -pezzo.width / 2,
-                -pezzo.height / 2,
-                pezzo.width,
-                pezzo.height
-            );
+                    ctx.fillRect(
+                        -pezzo.size / 2,
+                        -pezzo.size / 2,
+                        pezzo.size,
+                        pezzo.size * 1.5
+                    );
 
 
-            ctx.restore();
-
-        });
-
-
-        frame++;
+                    ctx.restore();
+                }
+            }
+        );
 
 
-        if (
-            frame < 180
-        ) {
+        if (ancora) {
 
-            requestAnimationFrame(
-                anima
-            );
+            frame =
+                requestAnimationFrame(
+                    animazione
+                );
 
         } else {
 
-            canvas.remove();
+            cancelAnimationFrame(
+                frame
+            );
+
+            ctx.clearRect(
+                0,
+                0,
+                window.innerWidth,
+                window.innerHeight
+            );
         }
     }
 
 
-    anima();
+    animazione();
 }
 
 
 /* =========================================================
    ESCAPE HTML
-   ========================================================== */
+========================================================= */
 
-function escapeHTML(testo) {
+function escapeHTML(
+    testo
+) {
 
     return String(testo)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
 
 
 /* =========================================================
    INIZIALIZZAZIONE
-   ========================================================== */
+========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
     function () {
 
-        // Due giocatori iniziali
-        if (giocatori.length === 0) {
-
-            giocatori = [
-                "",
-                ""
-            ];
-        }
+        const addButton =
+            elemento(
+                "aggiungi-giocatore"
+            );
 
 
-        aggiornaListaGiocatori();
+        if (addButton) {
 
-        cambiaSistemaPunteggio();
-
-        aggiornaPartitaSalvata();
-
-
-        // Pulsante aggiungi giocatore
-        const aggiungi =
-            elemento("aggiungi-giocatore");
-
-        if (aggiungi) {
-
-            aggiungi.addEventListener(
+            addButton.addEventListener(
                 "click",
                 aggiungiGiocatore
             );
         }
 
 
-        // Tasto invio nell'inserimento punti
-        const puntiInput =
-            elemento("punti-mano");
+        /* Due giocatori iniziali */
 
-        if (puntiInput) {
+        if (
+            giocatori.length === 0
+        ) {
 
-            puntiInput.addEventListener(
-                "keydown",
-                function (evento) {
+            giocatori = [
+                "",
+                ""
+            ];
 
-                    if (
-                        evento.key === "Enter"
-                    ) {
-
-                        aggiungiMano();
-                    }
-                }
-            );
+            aggiornaListaGiocatori();
         }
 
 
-        // Mantiene aggiornata la partita salvata
-        window.addEventListener(
-            "pageshow",
-            aggiornaPartitaSalvata
-        );
+        cambiaSistemaPunteggio();
+
+        aggiornaPartitaSalvata();
+
     }
 );
