@@ -2182,3 +2182,7 @@ button {
     line-height: 0.9 !important;
     letter-spacing: -3px !important;
 }
+/* NASCONDE I TRE PUNTINI */
+.match-row::after {
+    display: none !important;
+}
