@@ -25,6 +25,7 @@ let storicoSet = [];
 
 let partitaIniziata = null;
 let messaggioTimeout = null;
+let partitaTerminata = false;
 
 const STORAGE_KEY = "cardscore_partita";
 
@@ -106,6 +107,7 @@ function nuovaPartita() {
     storicoSet = [];
 
     partitaIniziata = null;
+    partitaTerminata = false;
 
     const gioco = elemento("gioco-selezionato");
     const sistema = elemento("sistema-punteggio");
@@ -400,6 +402,7 @@ function iniziaPartita() {
     numeroTurno = 0;
 
     partitaIniziata = Date.now();
+    partitaTerminata = false;
 
 
     mostraPagina("partita");
@@ -820,6 +823,10 @@ function creaQuickButtons() {
 
 function aggiungiMano() {
 
+    if (partitaTerminata) {
+        return;
+    }
+
     /*
        IMPORTANTISSIMO:
        leggiamo il sistema direttamente dal select ogni volta.
@@ -927,7 +934,9 @@ function aggiungiMano() {
 
     aggiornaSchermataPartita();
 
-    salvaPartita();
+    if (!partitaTerminata) {
+        salvaPartita();
+    }
 }
 
 
@@ -1120,18 +1129,32 @@ function controllaVittoria() {
 
 function terminaMatch(indiceVincitore) {
 
-    matchVinti = giocatori.map(() => 0);
+    partitaTerminata = true;
+
+    matchVinti =
+        giocatori.map(() => 0);
+
     matchVinti[indiceVincitore] = 1;
 
-    localStorage.removeItem(STORAGE_KEY);
 
-    /* CONFETTI */
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+
     lanciaConfetti();
 
-    /* SCHERMATA VITTORIA */
-    setTimeout(() => {
-        mostraSchermataVittoria(indiceVincitore);
-    }, 350);
+
+    setTimeout(
+        () => {
+
+            mostraSchermataVittoria(
+                indiceVincitore
+            );
+
+        },
+        350
+    );
 }
 
 
@@ -2080,6 +2103,8 @@ function continuaPartita() {
     partitaIniziata =
         dati.partitaIniziata ||
         Date.now();
+
+    partitaTerminata = false;
 
 
     /*
