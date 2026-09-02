@@ -2275,3 +2275,234 @@ button {
         transform: translate(-50%, -50%) scale(1);
     }
 }
+/* =========================================================
+   SCHERMATA VITTORIA MATCH
+   ========================================================= */
+
+.victory-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(20, 35, 27, 0.42);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    animation: victoryFadeIn 0.3s ease-out;
+}
+
+.victory-content {
+    width: 100%;
+    max-width: 380px;
+
+    padding: 34px 26px 28px;
+
+    background: #fffdf7;
+
+    border-radius: 28px;
+
+    text-align: center;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.25);
+
+    animation: victoryCardIn 0.35s ease-out;
+}
+
+.victory-trophy {
+    width: 82px;
+    height: 82px;
+
+    margin: 0 auto 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #dcefe2;
+
+    font-size: 42px;
+
+    box-shadow:
+        0 8px 24px rgba(31, 96, 67, 0.15);
+}
+
+.victory-label {
+    margin-bottom: 6px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 3px;
+
+    color: #1f6043;
+}
+
+.victory-content h1 {
+    margin: 0 0 12px;
+
+    font-size: 30px;
+    line-height: 1.05;
+
+    color: #20251f;
+}
+
+.victory-winner {
+    margin-bottom: 18px;
+
+    font-size: 24px;
+    font-weight: 800;
+
+    color: #1f6043;
+}
+
+.victory-score {
+    padding: 14px;
+
+    margin-bottom: 18px;
+
+    border-radius: 16px;
+
+    background: #f3f5ef;
+
+    font-size: 13px;
+
+    color: #77796f;
+}
+
+.victory-score strong {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 28px;
+
+    color: #20251f;
+}
+
+.victory-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+.victory-stat {
+    padding: 12px 8px;
+
+    border-radius: 14px;
+
+    background: #f7f7f2;
+}
+
+.victory-stat strong {
+    display: block;
+
+    font-size: 20px;
+
+    color: #20251f;
+}
+
+.victory-stat span {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    color: #888b81;
+}
+
+.recap-title {
+    margin: 18px 0 8px;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    color: #1f6043;
+}
+
+.recap-set {
+    padding: 8px 10px;
+
+    margin-top: 6px;
+
+    border-radius: 10px;
+
+    background: #f7f7f2;
+
+    font-size: 11px;
+
+    color: #66695f;
+}
+
+.victory-actions {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+.victory-actions button {
+    width: 100%;
+
+    min-height: 48px;
+
+    border: 0;
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.victory-new-button {
+    background: #1f6043;
+    color: white;
+}
+
+.victory-home-button {
+    background: #eef1eb;
+    color: #1f6043;
+}
+
+@keyframes victoryFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes victoryCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
