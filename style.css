@@ -1,47 +1,30 @@
 /* =========================================================
-   CARDSCORE
-   Design system
+   CARDSCORE — MATCH SCREEN
+   Replica stile schermata di riferimento
 ========================================================= */
 
 :root {
-    --green: #1f6043;
-    --green-dark: #173f31;
-    --green-light: #dcefd5;
-    --green-lighter: #edf6e9;
-
-    --bg: #f7f8f4;
+    --bg: #f8f8f4;
     --white: #ffffff;
 
-    --text: #20251f;
-    --text-soft: #747a72;
-    --text-light: #9ca19a;
+    --green: #236844;
+    --green-dark: #185537;
+    --green-soft: #d5e9ce;
 
-    --border: #e5e8e2;
+    --green-card: #edf7e9;
+    --yellow-card: #fff7df;
 
-    --yellow: #f9dfa0;
-    --yellow-dark: #d9ad4c;
+    --green-box: #e4f1dc;
+    --yellow-box: #faedc8;
 
-    --blue: #d1ebf3;
-    --blue-dark: #5e9fb2;
+    --text: #183e2b;
+    --text-soft: #657166;
+    --border: rgba(40, 65, 48, 0.08);
 
-    --lilac: #e7d9ee;
-    --lilac-dark: #9c7bad;
+    --shadow:
+        0 5px 16px rgba(37, 55, 42, 0.07);
 
-    --danger: #b84e4e;
-
-    --radius-small: 12px;
-    --radius-medium: 18px;
-    --radius-large: 24px;
-    --radius-xl: 30px;
-
-    --shadow-soft:
-        0 8px 30px rgba(28, 42, 32, 0.06);
-
-    --shadow-card:
-        0 10px 30px rgba(28, 42, 32, 0.08);
-
-    --shadow-button:
-        0 8px 20px rgba(31, 96, 67, 0.18);
+    --radius-card: 20px;
 }
 
 
@@ -54,20 +37,18 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-html {
-    width: 100%;
-    min-height: 100%;
-    background: var(--bg);
-}
-
+html,
 body {
     margin: 0;
     padding: 0;
 
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
 
     background: var(--bg);
+}
+
+body {
     color: var(--text);
 
     font-family:
@@ -76,13 +57,9 @@ body {
         "SF Pro Display",
         "SF Pro Text",
         "Segoe UI",
-        Roboto,
-        Helvetica,
-        Arial,
         sans-serif;
 
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
 }
 
 button,
@@ -93,12 +70,7 @@ select {
 
 button {
     border: 0;
-    cursor: pointer;
-}
-
-img {
-    display: block;
-    max-width: 100%;
+    outline: none;
 }
 
 .hidden {
@@ -111,953 +83,85 @@ img {
 ========================================================= */
 
 .page {
+    display: none;
+
     width: 100%;
     min-height: 100vh;
 
-    display: none;
+    background: var(--bg);
 }
 
 .page.active {
     display: block;
 }
 
-#home,
-#nuova-partita,
-#partita,
-#storico-completo {
-    width: 100%;
-    min-height: 100vh;
-}
-
 
 /* =========================================================
-   HOME
+   MATCH TOPBAR
 ========================================================= */
 
-.home-header {
-    width: 100%;
-    padding:
-        calc(env(safe-area-inset-top) + 24px)
-        20px
-        10px;
-}
-
-.brand {
-    max-width: 520px;
-    margin: 0 auto;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.brand-icon {
-    width: 46px;
-    height: 46px;
-
-    border-radius: 14px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: var(--green);
-    color: white;
-
-    font-size: 23px;
-
-    box-shadow: var(--shadow-button);
-}
-
-.brand-text h1 {
-    margin: 0;
-
-    color: var(--green-dark);
-
-    font-size: 25px;
-    line-height: 1;
-    font-weight: 800;
-
-    letter-spacing: -0.7px;
-}
-
-.brand-text p {
-    margin: 5px 0 0;
-
-    color: var(--text-soft);
-
-    font-size: 12px;
-    line-height: 1.2;
-    font-weight: 500;
-}
-
-
-/* =========================================================
-   HOME CONTENT
-========================================================= */
-
-.home-content {
-    width: 100%;
-    max-width: 520px;
-
-    margin: 0 auto;
-
-    padding:
-        14px
-        20px
-        calc(30px + env(safe-area-inset-bottom));
-}
-
-.home-section-heading {
-    margin-bottom: 17px;
-}
-
-
-/* =========================================================
-   TITOLI SEZIONE
-========================================================= */
-
-.section-heading {
-    width: 100%;
-
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 15px;
-}
-
-.small-label {
-    display: block;
-
-    margin-bottom: 5px;
-
-    color: var(--text-light);
-
-    font-size: 10px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: 1.3px;
-}
-
-.section-heading h2 {
-    margin: 0;
-
-    color: var(--text);
-
-    font-size: 22px;
-    line-height: 1.1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.45px;
-}
-
-
-/* =========================================================
-   GIOCHI
-========================================================= */
-
-.games-grid {
-    width: 100%;
-
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 13px;
-}
-
-.game-card {
+.match-topbar {
     position: relative;
 
     width: 100%;
-    min-width: 0;
+
+    min-height: 105px;
+
+    padding:
+        calc(env(safe-area-inset-top) + 18px)
+        27px
+        8px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        auto
+        1fr;
+
+    align-items: start;
+
+    background: var(--bg);
+
+    border: 0;
+}
+
+
+/* Esci */
+
+.match-topbar .back-button {
+    justify-self: start;
+
+    margin-top: 8px;
 
     padding: 0;
 
-    overflow: hidden;
-
-    border-radius: var(--radius-large);
-
-    text-align: left;
-
-    box-shadow: var(--shadow-soft);
-
-    transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease;
-}
-
-.game-card:active {
-    transform: scale(0.97);
-    box-shadow: none;
-}
-
-.game-card-image {
-    width: 100%;
-    height: 125px;
-
     display: flex;
     align-items: center;
-    justify-content: center;
 
-    overflow: hidden;
-}
+    gap: 7px;
 
-.game-card-image img {
-    width: 100%;
-    height: 100%;
+    background: transparent;
 
-    object-fit: cover;
+    color: #17251d;
 
-    transition: transform 0.25s ease;
-}
-
-.game-card:active .game-card-image img {
-    transform: scale(0.98);
-}
-
-
-/* Colori card */
-
-.game-uno {
-    background: #dcefd5;
-}
-
-.game-pili-pili {
-    background: #fae3aa;
-}
-
-.game-scala {
-    background: #d5ebf1;
-}
-
-.game-scopa {
-    background: #e8daef;
-}
-
-
-/* Informazioni gioco */
-
-.game-card-info {
-    min-height: 67px;
-
-    padding: 12px 13px 13px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.game-card-info h3 {
-    margin: 0;
-
-    color: var(--text);
-
-    font-size: 17px;
-    line-height: 1.1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.3px;
-}
-
-.game-card-info span {
-    display: block;
-
-    margin-top: 4px;
-
-    color: rgba(32, 37, 31, 0.58);
-
-    font-size: 10px;
-    line-height: 1.2;
+    font-size: 16px;
 
     font-weight: 600;
 }
 
-.game-card-arrow {
-    flex-shrink: 0;
+.match-topbar .back-arrow {
+    margin-top: -2px;
 
-    width: 28px;
-    height: 28px;
+    font-size: 34px;
 
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(255, 255, 255, 0.65);
-
-    color: var(--text);
-
-    font-size: 17px;
-    font-weight: 700;
-}
-
-
-/* =========================================================
-   PARTITA SALVATA
-========================================================= */
-
-.saved-game-card {
-    width: 100%;
-
-    margin-top: 18px;
-    padding: 17px;
-
-    border-radius: var(--radius-medium);
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    box-shadow: var(--shadow-soft);
-}
-
-.saved-game-top {
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-}
-
-.saved-game-icon {
-    width: 42px;
-    height: 42px;
-
-    flex-shrink: 0;
-
-    border-radius: 13px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: var(--green-light);
-
-    color: var(--green);
-
-    font-size: 17px;
-    font-weight: 800;
-}
-
-.saved-label {
-    display: block;
-
-    margin-bottom: 4px;
-
-    color: var(--green);
-
-    font-size: 9px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: 1.2px;
-}
-
-.saved-game-title h3 {
-    margin: 0;
-
-    font-size: 18px;
-    line-height: 1.1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.25px;
-}
-
-.saved-game-info {
-    margin-top: 11px;
-
-    color: var(--text-soft);
-
-    font-size: 12px;
-    line-height: 1.4;
-
-    font-weight: 500;
-}
-
-
-/* =========================================================
-   BOTTONI PRINCIPALI
-========================================================= */
-
-.primary-button {
-    width: 100%;
-    min-height: 52px;
-
-    padding: 14px 18px;
-
-    border-radius: 16px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: var(--green);
-
-    color: white;
-
-    font-size: 15px;
-    line-height: 1;
-
-    font-weight: 750;
-
-    box-shadow: var(--shadow-button);
-
-    transition:
-        transform 0.15s ease,
-        opacity 0.15s ease;
-}
-
-.primary-button:active {
-    transform: scale(0.98);
-    opacity: 0.9;
-}
-
-.saved-game-card .primary-button {
-    margin-top: 14px;
-}
-
-
-/* =========================================================
-   BOTTONE SECONDARIO
-========================================================= */
-
-.secondary-button {
-    width: 100%;
-    min-height: 52px;
-
-    padding: 14px 18px;
-
-    border-radius: 16px;
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    color: var(--green-dark);
-
-    font-size: 15px;
-    line-height: 1;
-
-    font-weight: 750;
-
-    box-shadow: var(--shadow-soft);
-
-    transition:
-        transform 0.15s ease,
-        background 0.15s ease;
-}
-
-.secondary-button:active {
-    transform: scale(0.98);
-    background: #f0f2ed;
-}
-
-.new-game-button {
-    margin-top: 13px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.button-plus {
-    font-size: 21px;
-    line-height: 1;
-    font-weight: 400;
-}
-
-
-/* =========================================================
-   PRIVACY
-========================================================= */
-
-.privacy-note {
-    margin: 17px 0 0;
-
-    text-align: center;
-
-    color: var(--text-light);
-
-    font-size: 10px;
-    line-height: 1.4;
-
-    font-weight: 500;
-}
-
-
-/* =========================================================
-   TOPBAR
-========================================================= */
-
-.topbar {
-    position: relative;
-
-    width: 100%;
-    min-height: 68px;
-
-    padding:
-        calc(env(safe-area-inset-top) + 10px)
-        18px
-        10px;
-
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-
-    align-items: center;
-
-    background: var(--bg);
-
-    border-bottom: 1px solid rgba(229, 232, 226, 0.65);
-
-    z-index: 10;
-}
-
-.topbar h1 {
-    margin: 0;
-
-    text-align: center;
-
-    color: var(--text);
-
-    font-size: 17px;
-    line-height: 1.1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.2px;
-}
-
-.topbar-spacer {
-    width: 100%;
-}
-
-.back-button {
-    justify-self: start;
-
-    padding: 8px 4px;
-
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-
-    background: transparent;
-
-    color: var(--green);
-
-    font-size: 14px;
-    line-height: 1;
-
-    font-weight: 650;
-}
-
-.back-arrow {
-    margin-top: -1px;
-
-    font-size: 27px;
-    line-height: 14px;
+    line-height: 20px;
 
     font-weight: 300;
 }
 
 
-/* =========================================================
-   NUOVA PARTITA
-========================================================= */
-
-.setup-content {
-    width: 100%;
-    max-width: 520px;
-
-    margin: 0 auto;
-
-    padding:
-        17px
-        20px
-        calc(35px + env(safe-area-inset-bottom));
-}
-
-
-/* =========================================================
-   GIOCO SELEZIONATO
-========================================================= */
-
-.selected-game-card {
-    width: 100%;
-
-    margin-bottom: 14px;
-    padding: 17px;
-
-    display: flex;
-    align-items: center;
-    gap: 13px;
-
-    border-radius: var(--radius-medium);
-
-    background: var(--green-light);
-
-    border: 1px solid rgba(31, 96, 67, 0.06);
-}
-
-.selected-game-icon {
-    width: 48px;
-    height: 48px;
-
-    flex-shrink: 0;
-
-    border-radius: 15px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(255, 255, 255, 0.68);
-
-    font-size: 23px;
-}
-
-.selected-game-card h2 {
-    margin: 0;
-
-    color: var(--green-dark);
-
-    font-size: 21px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.4px;
-}
-
-
-/* =========================================================
-   SETUP CARD
-========================================================= */
-
-.setup-card {
-    width: 100%;
-
-    margin-bottom: 13px;
-    padding: 17px;
-
-    border-radius: var(--radius-medium);
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    box-shadow: var(--shadow-soft);
-}
-
-.setup-card-title {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-
-    gap: 10px;
-
-    margin-bottom: 14px;
-}
-
-.setup-card-title h2 {
-    margin: 0;
-
-    font-size: 19px;
-    line-height: 1.1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.35px;
-}
-
-.counter {
-    min-width: 30px;
-    height: 30px;
-
-    padding: 0 8px;
-
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: var(--green-light);
-
-    color: var(--green);
-
-    font-size: 12px;
-    font-weight: 800;
-}
-
-
-/* =========================================================
-   GIOCATORI
-========================================================= */
-
-.players-list {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-}
-
-.player-row {
-    width: 100%;
-
-    min-height: 48px;
-
-    padding: 7px 7px 7px 13px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    border-radius: 13px;
-
-    background: #f7f8f5;
-
-    border: 1px solid var(--border);
-}
-
-.player-row input {
-    width: 100%;
-    min-width: 0;
-
-    padding: 5px 0;
-
-    border: 0;
-    outline: 0;
-
-    background: transparent;
-
-    color: var(--text);
-
-    font-size: 14px;
-    font-weight: 650;
-}
-
-.player-row input::placeholder {
-    color: var(--text-light);
-}
-
-.remove-player {
-    width: 32px;
-    height: 32px;
-
-    flex-shrink: 0;
-
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: transparent;
-
-    color: var(--text-light);
-
-    font-size: 18px;
-    font-weight: 400;
-}
-
-.remove-player:active {
-    background: #eeeeeb;
-    color: var(--danger);
-}
-
-.add-player-button {
-    width: 100%;
-
-    min-height: 45px;
-
-    margin-top: 10px;
-
-    border-radius: 13px;
-
-    background: var(--green-lighter);
-
-    color: var(--green);
-
-    font-size: 13px;
-    font-weight: 750;
-}
-
-.add-player-button:active {
-    background: var(--green-light);
-}
-
-
-/* =========================================================
-   FORM
-========================================================= */
-
-.field-label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: var(--text-light);
-
-    font-size: 9px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: 1.15px;
-}
-
-.select-field,
-.number-field,
-.setting-item input,
-.manual-score-row input {
-    min-height: 48px;
-
-    border-radius: 13px;
-
-    border: 1px solid var(--border);
-
-    background: #f8f9f6;
-
-    color: var(--text);
-
-    outline: none;
-}
-
-.select-field {
-    width: 100%;
-
-    padding: 0 13px;
-
-    appearance: auto;
-
-    font-size: 14px;
-    font-weight: 650;
-}
-
-.select-field:focus,
-.setting-item input:focus,
-.manual-score-row input:focus,
-.number-field input:focus {
-    border-color: rgba(31, 96, 67, 0.45);
-
-    box-shadow:
-        0 0 0 3px rgba(31, 96, 67, 0.08);
-}
-
-
-/* =========================================================
-   NUMBER FIELD
-========================================================= */
-
-.number-field {
-    width: 100%;
-
-    padding: 0 13px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-}
-
-.number-field input {
-    width: 100%;
-    min-width: 0;
-
-    height: 45px;
-
-    padding: 0;
-
-    border: 0;
-    outline: 0;
-
-    background: transparent;
-
-    color: var(--text);
-
-    font-size: 17px;
-    font-weight: 750;
-}
-
-.number-field span {
-    color: var(--text-soft);
-
-    font-size: 12px;
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   SETTINGS GAME / SET / MATCH
-========================================================= */
-
-.settings-row {
-    width: 100%;
-
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    gap: 8px;
-}
-
-.setting-item {
-    min-width: 0;
-}
-
-.setting-item > span {
-    display: block;
-
-    min-height: 28px;
-
-    color: var(--text-soft);
-
-    font-size: 10px;
-    line-height: 1.2;
-
-    font-weight: 600;
-}
-
-.setting-item input {
-    width: 100%;
-
-    padding: 0 9px;
-
-    text-align: center;
-
-    font-size: 15px;
-    font-weight: 750;
-}
-
-
-/* =========================================================
-   START BUTTON
-========================================================= */
-
-.start-button {
-    margin-top: 4px;
-}
-
-
-/* =========================================================
-   MATCH HEADER
-========================================================= */
-
-.match-topbar {
-    grid-template-columns: 1fr auto 1fr;
-
-    min-height: 73px;
-}
+/* Titolo centrale */
 
 .match-heading {
     min-width: 120px;
@@ -1068,27 +172,31 @@ img {
 .match-heading h1 {
     margin: 0;
 
-    color: var(--green-dark);
+    color: var(--green);
 
-    font-size: 19px;
-    line-height: 1.05;
+    font-size: 25px;
 
-    font-weight: 850;
+    line-height: 1;
 
-    letter-spacing: -0.4px;
+    font-weight: 800;
+
+    letter-spacing: -0.7px;
 }
 
 .match-heading span {
     display: block;
 
-    margin-top: 4px;
+    margin-top: 11px;
 
-    color: var(--text-soft);
+    color: #183e2b;
 
-    font-size: 10px;
+    font-size: 18px;
+
     line-height: 1;
 
     font-weight: 650;
+
+    letter-spacing: -0.2px;
 }
 
 
@@ -1103,101 +211,137 @@ img {
     margin: 0 auto;
 
     padding:
-        12px
-        20px
-        calc(35px + env(safe-area-inset-bottom));
+        0 27px
+        calc(28px + env(safe-area-inset-bottom));
 }
 
 
 /* =========================================================
-   GAME / SET / MATCH BANNER
+   BANNER GAME / SET / MATCH
 ========================================================= */
 
 .match-title {
+    position: relative;
+
     width: 100%;
 
-    min-height: 63px;
+    min-height: 155px;
 
-    margin-bottom: 12px;
-    padding: 11px 14px;
+    margin-top: 45px;
+    margin-bottom: 18px;
+
+    padding:
+        65px 20px
+        20px;
 
     display: flex;
+
+    flex-direction: column;
+
     align-items: center;
 
-    gap: 11px;
+    justify-content: center;
 
-    border-radius: 18px;
+    overflow: visible;
 
-    background: var(--green-light);
+    border-radius: 21px;
+
+    background: #cfe5c7;
+
+    box-shadow:
+        0 5px 14px rgba(45, 75, 48, 0.08);
+
+    text-align: center;
 }
 
+
+/* Trofeo sovrapposto */
+
 .match-title-icon {
-    width: 40px;
-    height: 40px;
+    position: absolute;
 
-    flex-shrink: 0;
+    top: -25px;
+    left: 50%;
 
-    border-radius: 13px;
+    transform: translateX(-50%);
+
+    width: 73px;
+    height: 73px;
+
+    border-radius: 50%;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    background: rgba(255, 255, 255, 0.7);
+    background: #4b9258;
 
-    font-size: 19px;
+    color: #fff5d8;
+
+    font-size: 34px;
+
+    box-shadow:
+        0 6px 13px rgba(31, 83, 48, 0.13);
+
+    z-index: 3;
+}
+
+
+/* Testo banner */
+
+.match-title-text {
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
 }
 
 .match-title-text span {
-    display: block;
-
-    margin-bottom: 3px;
-
-    color: rgba(31, 96, 67, 0.65);
-
-    font-size: 8px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: 1px;
+    display: none;
 }
 
 .match-title-text strong {
     display: block;
 
-    color: var(--green-dark);
+    color: #175537;
 
-    font-size: 14px;
-    line-height: 1.1;
+    font-size: 26px;
 
-    font-weight: 850;
+    line-height: 1.05;
 
-    letter-spacing: 0.1px;
+    font-weight: 750;
+
+    letter-spacing: -0.6px;
+}
+
+
+/* Turno dentro il banner */
+
+.match-title::after {
+    content: "Turno " attr(data-turn);
+
+    display: block;
+
+    margin-top: 12px;
+
+    color: #1d5338;
+
+    font-size: 17px;
+
+    font-weight: 500;
 }
 
 
 /* =========================================================
-   OBIETTIVO
+   NASCONDI OBIETTIVO
 ========================================================= */
 
-.objective-text {
-    margin: 3px 0 11px;
-
-    text-align: center;
-
-    color: var(--text-soft);
-
-    font-size: 11px;
-    line-height: 1.2;
-
-    font-weight: 550;
-}
-
-.objective-text strong {
-    color: var(--green);
-
-    font-weight: 800;
+#obiettivo-container {
+    display: none !important;
 }
 
 
@@ -1205,223 +349,245 @@ img {
    SCOREBOARD
 ========================================================= */
 
-.scoreboard {
+.game-set-scoreboard {
     width: 100%;
 
+    margin: 0;
+
     display: flex;
+
     flex-direction: column;
 
-    gap: 8px;
+    gap: 18px;
 }
 
 
 /* =========================================================
-   SIMPLE SCORE
+   INTESTAZIONI
 ========================================================= */
-
-.simple-scoreboard {
-    margin-bottom: 17px;
-}
-
-.simple-score-row {
-    width: 100%;
-
-    min-height: 70px;
-
-    padding: 10px 13px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 12px;
-
-    border-radius: 18px;
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    box-shadow: var(--shadow-soft);
-}
-
-.simple-player-name {
-    min-width: 0;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    color: var(--text);
-
-    font-size: 15px;
-    font-weight: 750;
-}
-
-.simple-player-score {
-    flex-shrink: 0;
-
-    color: var(--green-dark);
-
-    font-size: 28px;
-    line-height: 1;
-
-    font-weight: 850;
-
-    letter-spacing: -1px;
-}
-
-
-/* =========================================================
-   GAME / SET / MATCH SCOREBOARD
-========================================================= */
-
-.game-set-scoreboard {
-    margin-bottom: 17px;
-}
 
 .scoreboard-labels {
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1fr)
-        36px
-        36px
-        36px
-        78px;
-
-    align-items: center;
-
-    padding:
-        0
-        10px
-        1px;
-
-    gap: 4px;
-}
-
-.scoreboard-labels span {
-    text-align: center;
-
-    color: var(--text-light);
-
-    font-size: 7px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: 0.7px;
-}
-
-.scoreboard-labels span:first-child {
-    text-align: left;
+    display: none;
 }
 
 
 /* =========================================================
-   MATCH ROW
+   PLAYER CARD
 ========================================================= */
 
 .match-row {
+    position: relative;
+
     width: 100%;
 
-    min-height: 76px;
+    min-height: 190px;
 
-    padding: 10px;
+    padding:
+        27px
+        24px
+        18px;
 
     display: grid;
 
     grid-template-columns:
         minmax(0, 1fr)
-        36px
-        36px
-        36px
-        78px;
+        110px;
 
-    align-items: center;
+    grid-template-rows:
+        auto
+        1fr;
 
-    gap: 4px;
+    column-gap: 12px;
 
-    border-radius: 18px;
+    align-items: start;
 
-    background: var(--white);
+    border-radius: var(--radius-card);
 
     border: 1px solid var(--border);
 
-    box-shadow: var(--shadow-soft);
-}
-
-.match-player {
-    min-width: 0;
+    box-shadow: var(--shadow);
 
     overflow: hidden;
+}
+
+
+/* Prima card */
+
+.match-row:nth-child(2) {
+    background: var(--green-card);
+}
+
+
+/* Seconda card */
+
+.match-row:nth-child(3) {
+    background: var(--yellow-card);
+}
+
+
+/* =========================================================
+   NOME
+========================================================= */
+
+.match-player {
+    grid-column: 1;
+
+    grid-row: 1;
+
+    min-width: 0;
 }
 
 .match-player strong {
     display: block;
 
+    max-width: 170px;
+
     overflow: hidden;
+
     text-overflow: ellipsis;
+
     white-space: nowrap;
 
-    color: var(--text);
+    color: var(--green-dark);
 
-    font-size: 14px;
-    line-height: 1.1;
+    font-size: 27px;
 
-    font-weight: 800;
-}
-
-.match-player span {
-    display: block;
-
-    margin-top: 4px;
-
-    color: var(--text-light);
-
-    font-size: 8px;
     line-height: 1;
 
-    font-weight: 600;
+    font-weight: 800;
+
+    letter-spacing: -0.7px;
 }
 
 
 /* =========================================================
-   BOX GAME / SET / MATCH
+   PUNTI GAME CORRENTE
 ========================================================= */
 
-.match-stat {
-    width: 32px;
-    height: 32px;
+.match-player span {
+    display: none;
+}
 
-    justify-self: center;
 
-    border-radius: 9px;
+/* =========================================================
+   MENU ...
+========================================================= */
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.match-row::after {
+    content: "•••";
 
-    background: #f0f2ee;
+    position: absolute;
 
-    color: var(--text);
+    top: 22px;
+    right: 22px;
 
-    font-size: 12px;
+    color: #52715e;
+
+    font-size: 17px;
+
     line-height: 1;
+
+    letter-spacing: 2px;
 
     font-weight: 800;
 }
 
-.match-stat.active {
-    background: var(--green-light);
-    color: var(--green);
+
+/* =========================================================
+   GAMES / SETS / MATCH
+========================================================= */
+
+.match-stat {
+    width: 51px;
+    height: 51px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: var(--green-box);
+
+    color: var(--green-dark);
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    border: 1px solid rgba(47, 106, 63, 0.08);
 }
 
-.match-stat.won {
-    background: var(--green);
-    color: white;
+
+/* GAMES */
+
+.match-row > .match-stat:nth-child(2) {
+    position: absolute;
+
+    left: 24px;
+    bottom: 19px;
+}
+
+
+/* SETS */
+
+.match-row > .match-stat:nth-child(3) {
+    position: absolute;
+
+    left: 82px;
+    bottom: 19px;
+}
+
+
+/* MATCH */
+
+.match-row > .match-stat:nth-child(4) {
+    position: absolute;
+
+    left: 140px;
+    bottom: 19px;
+}
+
+
+/* Giallo per seconda card */
+
+.match-row:nth-child(3) > .match-stat {
+    background: var(--yellow-box);
+
+    color: #b88b17;
+
+    border-color:
+        rgba(184, 139, 23, 0.08);
+}
+
+
+/* =========================================================
+   ETICHETTE SOPRA I BOX
+========================================================= */
+
+.match-row::before {
+    position: absolute;
+
+    left: 24px;
+    bottom: 76px;
+
+    color: #1f4733;
+
+    font-size: 12px;
+
+    line-height: 1;
+
+    font-weight: 500;
+
+    white-space: pre;
+
+    content:
+        "GAMES       SETS       MATCH";
+}
+
+.match-row:nth-child(3)::before {
+    color: #4f5139;
 }
 
 
@@ -1430,20 +596,49 @@ img {
 ========================================================= */
 
 .score-big {
-    min-width: 0;
+    position: absolute;
 
-    text-align: right;
+    right: 25px;
+    top: 58px;
 
-    color: var(--green-dark);
+    color: #146038;
 
-    font-size: 29px;
-    line-height: 1;
+    font-size: 66px;
 
-    font-weight: 900;
+    line-height: 0.9;
 
-    letter-spacing: -1.3px;
+    font-weight: 850;
+
+    letter-spacing: -3px;
 
     font-variant-numeric: tabular-nums;
+
+    text-align: right;
+}
+
+.match-row:nth-child(3) .score-big {
+    color: #176340;
+}
+
+
+/* "punti" sotto il punteggio */
+
+.match-row .score-big::after {
+    content: "punti";
+
+    display: block;
+
+    margin-top: 10px;
+
+    color: #174f36;
+
+    font-size: 17px;
+
+    line-height: 1;
+
+    letter-spacing: 0;
+
+    font-weight: 550;
 }
 
 
@@ -1454,11 +649,25 @@ img {
 .turn-section {
     width: 100%;
 
-    margin-top: 5px;
+    margin-top: 17px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 9px;
+
+    align-items: stretch;
 }
 
+
+/* =========================================================
+   TITOLO NUOVO TURNO
+========================================================= */
+
 .turn-section .section-heading {
-    margin-bottom: 11px;
+    display: none;
 }
 
 
@@ -1467,129 +676,113 @@ img {
 ========================================================= */
 
 .quick-buttons {
-    width: 100%;
-
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 8px;
-
-    margin-bottom: 11px;
+    display: contents;
 }
 
 .quick-button {
-    min-height: 43px;
+    width: 100%;
 
-    padding: 9px 10px;
+    min-height: 105px;
 
-    border-radius: 13px;
+    padding: 14px 6px;
 
-    background: var(--green-lighter);
+    border-radius: 18px;
 
-    color: var(--green);
+    display: flex;
 
-    border: 1px solid rgba(31, 96, 67, 0.06);
+    flex-direction: column;
 
-    font-size: 12px;
-    line-height: 1.1;
+    align-items: center;
+
+    justify-content: center;
+
+    background: #e8f4e2;
+
+    color: #367a49;
+
+    font-size: 24px;
+
+    line-height: 1;
 
     font-weight: 750;
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    box-shadow:
+        0 4px 10px rgba(43, 64, 47, 0.05);
 }
 
 .quick-button:active {
-    transform: scale(0.98);
-    background: var(--green-light);
+    transform: scale(0.97);
+}
+
+.quick-button:nth-child(2) {
+    background: #fff2cd;
+
+    color: #d39d16;
 }
 
 
 /* =========================================================
-   MANUAL SCORE CARD
+   NASCONDI INSERIMENTO MANUALE
 ========================================================= */
 
 .manual-score-card {
-    width: 100%;
-
-    padding: 14px;
-
-    border-radius: 17px;
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    box-shadow: var(--shadow-soft);
-}
-
-.manual-field + .manual-field {
-    margin-top: 12px;
-}
-
-.manual-score-row {
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns: 92px minmax(0, 1fr);
-
-    gap: 8px;
-}
-
-.manual-score-row input {
-    width: 100%;
-
-    padding: 0 10px;
-
-    text-align: center;
-
-    font-size: 17px;
-    font-weight: 800;
-}
-
-.manual-score-row .primary-button {
-    min-height: 48px;
-
-    border-radius: 13px;
-
-    font-size: 13px;
+    display: none !important;
 }
 
 
 /* =========================================================
-   UNDO
+   ANNULLA
 ========================================================= */
 
 .undo-button {
     width: 100%;
 
-    min-height: 42px;
+    min-height: 105px;
 
-    margin-top: 8px;
+    margin: 0;
 
-    border-radius: 13px;
+    padding: 14px 8px;
 
-    background: transparent;
+    border-radius: 18px;
 
-    color: var(--text-soft);
+    display: flex;
 
-    font-size: 11px;
-    line-height: 1;
+    flex-direction: column;
 
-    font-weight: 650;
+    align-items: center;
+
+    justify-content: center;
+
+    background: #ffffff;
+
+    color: #222a24;
+
+    font-size: 13px;
+
+    line-height: 1.25;
+
+    font-weight: 500;
+
+    box-shadow:
+        0 4px 10px rgba(43, 64, 47, 0.06);
 }
 
 .undo-button span {
-    margin-right: 4px;
+    display: block;
 
-    font-size: 16px;
+    margin: 0 0 8px;
+
+    color: #17261d;
+
+    font-size: 31px;
+
+    line-height: 1;
+
+    font-weight: 300;
 }
 
 .undo-button:active {
-    background: #eeeeeb;
-    color: var(--danger);
+    transform: scale(0.97);
 }
 
 
@@ -1600,704 +793,94 @@ img {
 .history-section {
     width: 100%;
 
-    margin-top: 25px;
+    margin-top: 26px;
 }
 
 .history-heading {
     margin-bottom: 10px;
 }
 
+.history-heading .small-label {
+    display: none;
+}
+
+.history-heading h2 {
+    color: var(--green-dark);
+
+    font-size: 21px;
+
+    font-weight: 750;
+}
+
 .history-link {
-    padding: 5px 0;
+    color: var(--green);
 
     background: transparent;
 
-    color: var(--green);
-
-    font-size: 11px;
-    line-height: 1;
-
-    font-weight: 750;
-}
-
-
-/* =========================================================
-   HISTORY LIST
-========================================================= */
-
-.history-list,
-.history-full-list {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 7px;
-}
-
-.history-empty {
-    width: 100%;
-
-    padding: 22px 15px;
-
-    border-radius: 16px;
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    color: var(--text-light);
-
-    text-align: center;
-
-    font-size: 11px;
-    line-height: 1.4;
-}
-
-
-/* =========================================================
-   HISTORY ROW
-========================================================= */
-
-.history-row {
-    width: 100%;
-
-    min-height: 54px;
-
-    padding: 9px 12px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 11px;
-
-    border-radius: 15px;
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-}
-
-.history-turn {
-    width: 40px;
-
-    flex-shrink: 0;
-
-    color: var(--text-light);
-
-    font-size: 9px;
-    line-height: 1.2;
-
-    font-weight: 700;
-}
-
-.history-details {
-    min-width: 0;
-
-    flex: 1;
-}
-
-.history-player {
-    display: block;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    color: var(--text);
-
     font-size: 12px;
-    line-height: 1.1;
 
-    font-weight: 700;
-}
-
-.history-points {
-    display: block;
-
-    margin-top: 3px;
-
-    color: var(--green);
-
-    font-size: 9px;
-    line-height: 1;
-
-    font-weight: 700;
-}
-
-.history-arrow {
-    flex-shrink: 0;
-
-    color: var(--text-light);
-
-    font-size: 14px;
+    font-weight: 650;
 }
 
 
 /* =========================================================
-   PAGINA STORICO COMPLETO
+   RESPONSIVE
 ========================================================= */
 
-.history-page-content {
-    width: 100%;
-    max-width: 520px;
-
-    margin: 0 auto;
-
-    padding:
-        17px
-        20px
-        calc(35px + env(safe-area-inset-bottom));
-}
-
-.history-full-list {
-    gap: 8px;
-}
-
-
-/* =========================================================
-   MESSAGGI GAME / SET
-========================================================= */
-
-.match-message {
-    position: fixed;
-
-    left: 50%;
-    top: 50%;
-
-    z-index: 1000;
-
-    width: calc(100% - 40px);
-    max-width: 380px;
-
-    padding: 24px 20px;
-
-    transform: translate(-50%, -50%);
-
-    border-radius: 26px;
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    box-shadow:
-        0 25px 70px rgba(20, 35, 25, 0.22);
-
-    text-align: center;
-
-    animation: messageIn 0.25s ease;
-}
-
-.match-message-icon {
-    width: 58px;
-    height: 58px;
-
-    margin: 0 auto 12px;
-
-    border-radius: 18px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: var(--green-light);
-
-    font-size: 27px;
-}
-
-.match-message-label {
-    display: block;
-
-    margin-bottom: 5px;
-
-    color: var(--green);
-
-    font-size: 10px;
-    line-height: 1;
-
-    font-weight: 850;
-
-    letter-spacing: 1.2px;
-}
-
-.match-message h2 {
-    margin: 0;
-
-    color: var(--text);
-
-    font-size: 25px;
-    line-height: 1.05;
-
-    font-weight: 900;
-
-    letter-spacing: -0.6px;
-}
-
-.match-message p {
-    margin: 8px 0 0;
-
-    color: var(--text-soft);
-
-    font-size: 12px;
-    line-height: 1.4;
-
-    font-weight: 550;
-}
-
-
-/* =========================================================
-   OVERLAY
-========================================================= */
-
-.cardscore-overlay {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 999;
-
-    background: rgba(20, 30, 24, 0.35);
-
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-
-    animation: overlayIn 0.2s ease;
-}
-
-
-/* =========================================================
-   VICTORY SCREEN
-========================================================= */
-
-.victory-screen {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 2000;
-
-    width: 100%;
-    height: 100%;
-
-    overflow-y: auto;
-
-    background: var(--green);
-
-    color: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding:
-        calc(30px + env(safe-area-inset-top))
-        20px
-        calc(30px + env(safe-area-inset-bottom));
-
-    animation: victoryIn 0.35s ease;
-}
-
-.victory-content {
-    width: 100%;
-    max-width: 400px;
-
-    text-align: center;
-}
-
-.victory-trophy {
-    width: 82px;
-    height: 82px;
-
-    margin: 0 auto 19px;
-
-    border-radius: 28px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(255, 255, 255, 0.14);
-
-    font-size: 42px;
-
-    box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.08);
-
-    animation: trophyPop 0.6s ease;
-}
-
-.victory-label {
-    margin-bottom: 8px;
-
-    color: rgba(255, 255, 255, 0.7);
-
-    font-size: 11px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: 2px;
-}
-
-.victory-content h1 {
-    margin: 0;
-
-    color: white;
-
-    font-size: 34px;
-    line-height: 1;
-
-    font-weight: 900;
-
-    letter-spacing: -1px;
-}
-
-.victory-winner {
-    margin-top: 10px;
-
-    color: white;
-
-    font-size: 21px;
-    line-height: 1.1;
-
-    font-weight: 750;
-}
-
-.victory-score {
-    margin-top: 7px;
-
-    color: rgba(255, 255, 255, 0.75);
-
-    font-size: 13px;
-    line-height: 1.2;
-
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   RECAP
-========================================================= */
-
-.victory-stats {
-    width: 100%;
-
-    margin-top: 27px;
-
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    gap: 8px;
-}
-
-.victory-stat {
-    min-height: 70px;
-
-    padding: 10px 6px;
-
-    border-radius: 17px;
-
-    background: rgba(255, 255, 255, 0.11);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.victory-stat strong {
-    color: white;
-
-    font-size: 19px;
-    line-height: 1;
-
-    font-weight: 850;
-}
-
-.victory-stat span {
-    margin-top: 6px;
-
-    color: rgba(255, 255, 255, 0.65);
-
-    font-size: 8px;
-    line-height: 1;
-
-    font-weight: 700;
-
-    letter-spacing: 0.8px;
-}
-
-
-/* =========================================================
-   RECAP SET
-========================================================= */
-
-.recap-title {
-    margin: 25px 0 9px;
-
-    color: rgba(255, 255, 255, 0.72);
-
-    font-size: 9px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: 1.1px;
-}
-
-.recap-set {
-    width: 100%;
-
-    margin-bottom: 7px;
-    padding: 11px 13px;
-
-    border-radius: 14px;
-
-    background: rgba(255, 255, 255, 0.1);
-
-    color: white;
-
-    font-size: 11px;
-    line-height: 1.4;
-
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   VICTORY BUTTONS
-========================================================= */
-
-.victory-actions {
-    width: 100%;
-
-    margin-top: 23px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 9px;
-}
-
-.victory-actions button {
-    width: 100%;
-
-    min-height: 51px;
-
-    border-radius: 15px;
-
-    font-size: 14px;
-    font-weight: 800;
-}
-
-.victory-home-button {
-    background: white;
-
-    color: var(--green-dark);
-}
-
-.victory-new-button {
-    background: rgba(255, 255, 255, 0.12);
-
-    color: white;
-
-    border: 1px solid rgba(255, 255, 255, 0.16);
-}
-
-
-/* =========================================================
-   ANIMAZIONI
-========================================================= */
-
-@keyframes messageIn {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -46%) scale(0.96);
+@media (max-width: 390px) {
+
+    .match-content {
+        padding-left: 18px;
+        padding-right: 18px;
     }
 
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-@keyframes overlayIn {
-    from {
-        opacity: 0;
+    .match-topbar {
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes victoryIn {
-    from {
-        opacity: 0;
-        transform: scale(1.025);
+    .match-title-text strong {
+        font-size: 22px;
     }
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes trophyPop {
-    0% {
-        transform: scale(0.65) rotate(-8deg);
-        opacity: 0;
+    .match-row {
+        padding-left: 19px;
+        padding-right: 19px;
     }
 
-    60% {
-        transform: scale(1.08) rotate(2deg);
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(1) rotate(0);
-    }
-}
-
-
-/* =========================================================
-   CONFETTI
-========================================================= */
-
-#confetti-canvas {
-    position: fixed;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    pointer-events: none;
-
-    z-index: 3000;
-}
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (min-width: 700px) {
-
-    .home-header {
-        padding-top: 35px;
-    }
-
-    .home-content,
-    .setup-content,
-    .match-content,
-    .history-page-content {
-        max-width: 560px;
-    }
-
-    .games-grid {
-        gap: 16px;
-    }
-
-    .game-card-image {
-        height: 160px;
-    }
-
-    .game-card-info {
-        min-height: 74px;
-
-        padding: 14px 16px;
-    }
-
-    .game-card-info h3 {
-        font-size: 19px;
-    }
-
-    .game-card-info span {
-        font-size: 11px;
-    }
-
-    .section-heading h2 {
+    .match-player strong {
         font-size: 24px;
     }
 
-}
+    .score-big {
+        right: 20px;
 
-
-/* =========================================================
-   IPHONE PICCOLO
-========================================================= */
-
-@media (max-width: 370px) {
-
-    .home-content {
-        padding-left: 15px;
-        padding-right: 15px;
+        font-size: 58px;
     }
 
-    .match-content,
-    .setup-content,
-    .history-page-content {
-        padding-left: 15px;
-        padding-right: 15px;
+    .match-row::before {
+        left: 19px;
+
+        font-size: 10px;
     }
 
-    .games-grid {
-        gap: 9px;
+    .match-row > .match-stat:nth-child(2) {
+        left: 19px;
     }
 
-    .game-card-image {
-        height: 108px;
+    .match-row > .match-stat:nth-child(3) {
+        left: 75px;
     }
 
-    .game-card-info {
-        min-height: 62px;
-
-        padding: 10px;
-    }
-
-    .game-card-info h3 {
-        font-size: 15px;
-    }
-
-    .game-card-info span {
-        font-size: 9px;
-    }
-
-    .game-card-arrow {
-        width: 25px;
-        height: 25px;
-
-        font-size: 15px;
-    }
-
-    .match-row,
-    .scoreboard-labels {
-        grid-template-columns:
-            minmax(0, 1fr)
-            32px
-            32px
-            32px
-            65px;
+    .match-row > .match-stat:nth-child(4) {
+        left: 131px;
     }
 
     .match-stat {
-        width: 29px;
-        height: 29px;
+        width: 48px;
+        height: 48px;
 
-        font-size: 11px;
-    }
-
-    .score-big {
-        font-size: 25px;
-    }
-
-    .scoreboard-labels span {
-        font-size: 6px;
-    }
-
-    .manual-score-row {
-        grid-template-columns: 78px minmax(0, 1fr);
+        font-size: 20px;
     }
 
 }
@@ -2309,44 +892,34 @@ img {
 
 @supports (padding: max(0px)) {
 
-    .home-header {
+    .match-topbar {
         padding-top:
-            max(24px, calc(env(safe-area-inset-top) + 16px));
+            max(
+                18px,
+                calc(env(safe-area-inset-top) + 8px)
+            );
     }
 
-    .topbar {
-        padding-top:
-            max(10px, calc(env(safe-area-inset-top) + 7px));
+    .match-content {
+        padding-bottom:
+            max(
+                28px,
+                calc(env(safe-area-inset-bottom) + 20px)
+            );
     }
 
 }
 
 
 /* =========================================================
-   ACCESSIBILITÀ
+   RIDUZIONE ANIMAZIONI
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    * {
+        animation: none !important;
+        transition: none !important;
     }
 
-}
-
-
-/* =========================================================
-   FOCUS
-========================================================= */
-
-button:focus-visible,
-input:focus-visible,
-select:focus-visible {
-    outline: 3px solid rgba(31, 96, 67, 0.18);
-    outline-offset: 2px;
 }
