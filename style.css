@@ -2186,3 +2186,92 @@ button {
 .match-row::after {
     display: none !important;
 }
+/* =========================================================
+   MESSAGGI VITTORIA GAME / SET / MATCH
+   ========================================================= */
+
+.cardscore-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 35, 27, 0.28);
+    z-index: 9998;
+}
+
+.match-message {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: calc(100% - 48px);
+    max-width: 360px;
+    
+    padding: 28px 24px;
+    
+    background: #fffdf7;
+    border-radius: 22px;
+    
+    text-align: center;
+    
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+    
+    z-index: 9999;
+    
+    animation: cardscoreMessageIn 0.25s ease-out;
+}
+
+.match-message-icon {
+    width: 62px;
+    height: 62px;
+    
+    margin: 0 auto 12px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 50%;
+    
+    background: #dcefe2;
+    
+    font-size: 30px;
+}
+
+.match-message-label {
+    margin-bottom: 6px;
+    
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    
+    color: #1f6043;
+}
+
+.match-message h2 {
+    margin: 0;
+    
+    font-size: 25px;
+    line-height: 1.15;
+    
+    color: #20251f;
+}
+
+.match-message p {
+    margin: 10px 0 0;
+    
+    font-size: 14px;
+    
+    color: #77796f;
+}
+
+@keyframes cardscoreMessageIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -46%) scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
