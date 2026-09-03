@@ -1375,6 +1375,113 @@ function aggiungiMano() {
    CONTROLLO GAME
 ========================================================= */
 
+/* =========================================================
+   VITTORIA DI UN GAME (logica condivisa)
+   Usata sia durante il gioco live (controllaGame) sia nel
+   ricalcolo dello storico (ricalcolaPartita), cosi' che un
+   'game vinto' si comporti sempre allo stesso identico modo.
+========================================================= */
+
+function elaboraVittoriaGame(indice, conMessaggi) {
+
+    gameVinti[indice] =
+        Number(gameVinti[indice] || 0) + 1;
+
+
+    /*
+       BUG RISOLTO: quando un giocatore vince il Game,
+       il punteggio ACCUMULATO DAGLI AVVERSARI in quel Game
+       deve ripartire da zero. Prima veniva azzerato solo il
+       punteggio del vincitore (l'eventuale overflow), lasciando
+       agli avversari un valore "fantasma" residuo del Game
+       appena concluso.
+    */
+
+    giocatori.forEach((nomeGiocatore, i) => {
+
+        if (i !== indice) {
+            puntiGame[i] = 0;
+        }
+    });
+
+
+    storicoGame.push({
+
+        vincitore: indice,
+
+        nome: giocatori[indice],
+
+        punti: puntiPerGame,
+
+        game: [...gameVinti],
+
+        set: [...setVinti]
+    });
+
+
+    if (conMessaggi) {
+
+        mostraMessaggioPartita(
+            "game",
+            `${giocatori[indice]} vince il Game!`
+        );
+    }
+
+
+    let setVinto = false;
+    let matchVinto = false;
+
+
+    if (gameVinti[indice] >= gamePerSet) {
+
+        setVinti[indice] =
+            Number(setVinti[indice] || 0) + 1;
+
+        setVinto = true;
+
+
+        storicoSet.push({
+
+            vincitore: indice,
+
+            nome: giocatori[indice],
+
+            game: [...gameVinti],
+
+            set: [...setVinti]
+        });
+
+
+        if (conMessaggi) {
+
+            mostraMessaggioPartita(
+                "set",
+                `${giocatori[indice]} vince il Set!`
+            );
+        }
+
+
+        if (setVinti[indice] >= setPerMatch) {
+
+            matchVinto = true;
+
+        } else {
+
+            /* NUOVO SET: azzeriamo Game per tutti */
+
+            gameVinti =
+                giocatori.map(() => 0);
+
+            puntiGame =
+                giocatori.map(() => 0);
+        }
+    }
+
+
+    return { setVinto, matchVinto };
+}
+
+
 function controllaGame(indice) {
 
     if (sistemaPunteggio !== "game-set") {
@@ -1389,12 +1496,6 @@ function controllaGame(indice) {
 
     const limiteGame =
         Number(puntiPerGame);
-
-    const limiteSet =
-        Number(gamePerSet);
-
-    const limiteMatch =
-        Number(setPerMatch);
 
 
     if (
@@ -1432,94 +1533,21 @@ function controllaGame(indice) {
         puntiGame[indice] -= limiteGame;
 
 
-        /* Incrementiamo i Game vinti */
-
-        gameVinti[indice] =
-            Number(gameVinti[indice] || 0) + 1;
+        const risultato =
+            elaboraVittoriaGame(indice, true);
 
 
-        /* Salviamo lo storico */
+        if (risultato.matchVinto) {
 
-        storicoGame.push({
+            terminaMatch(indice);
 
-            vincitore: indice,
-
-            nome: giocatori[indice],
-
-            punti: limiteGame,
-
-            game: [...gameVinti],
-
-            set: [...setVinti]
-        });
+            return;
+        }
 
 
-        /* Mostriamo il messaggio */
+        if (risultato.setVinto) {
 
-        mostraMessaggioPartita(
-            "game",
-            `${giocatori[indice]} vince il Game!`
-        );
-
-
-        /* =================================================
-           CONTROLLO SET
-        ================================================= */
-
-        if (
-            gameVinti[indice] >= limiteSet
-        ) {
-
-            setVinti[indice] =
-                Number(setVinti[indice] || 0) + 1;
-
-
-            /*
-               Salviamo il risultato del Set PRIMA
-               di azzerare i Game.
-            */
-
-            storicoSet.push({
-
-                vincitore: indice,
-
-                nome: giocatori[indice],
-
-                game: [...gameVinti],
-
-                set: [...setVinti]
-            });
-
-
-            mostraMessaggioPartita(
-                "set",
-                `${giocatori[indice]} vince il Set!`
-            );
-
-
-            /* =================================================
-               CONTROLLO MATCH
-            ================================================= */
-
-            if (
-                setVinti[indice] >= limiteMatch
-            ) {
-
-                terminaMatch(indice);
-
-                return;
-            }
-
-
-            /*
-               NUOVO SET
-            */
-
-            gameVinti =
-                giocatori.map(() => 0);
-
-            puntiGame =
-                giocatori.map(() => 0);
+            /* Il nuovo set e' gia' stato azzerato */
 
             return;
         }
@@ -2193,60 +2221,25 @@ function ricalcolaPartita() {
 
             puntiGame[indice] -= puntiPerGame;
 
-            gameVinti[indice]++;
+
+            const risultato =
+                elaboraVittoriaGame(indice, false);
 
 
-            storicoGame.push({
+            if (risultato.matchVinto) {
 
-                vincitore: indice,
-
-                nome: giocatori[indice],
-
-                punti: puntiPerGame,
-
-                game: [...gameVinti],
-
-                set: [...setVinti]
-            });
-
-
-            if (
-                gameVinti[indice] >= gamePerSet
-            ) {
-
-                setVinti[indice]++;
-
-
-                storicoSet.push({
-
-                    vincitore: indice,
-
-                    nome: giocatori[indice],
-
-                    game: [...gameVinti],
-
-                    set: [...setVinti]
-                });
-
-
-                if (
-                    setVinti[indice] >= setPerMatch
-                ) {
-
-                    matchVinti =
-                        giocatori.map(() => 0);
-
-                    matchVinti[indice] = 1;
-
-                    return;
-                }
-
-
-                gameVinti =
+                matchVinti =
                     giocatori.map(() => 0);
 
-                puntiGame =
-                    giocatori.map(() => 0);
+                matchVinti[indice] = 1;
+
+                return;
+            }
+
+
+            if (risultato.setVinto) {
+
+                /* Il nuovo set e' gia' stato azzerato */
 
                 break;
             }
