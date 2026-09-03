@@ -1389,20 +1389,14 @@ function elaboraVittoriaGame(indice, conMessaggi) {
 
 
     /*
-       BUG RISOLTO: quando un giocatore vince il Game,
-       il punteggio ACCUMULATO DAGLI AVVERSARI in quel Game
-       deve ripartire da zero. Prima veniva azzerato solo il
-       punteggio del vincitore (l'eventuale overflow), lasciando
-       agli avversari un valore "fantasma" residuo del Game
-       appena concluso.
+       Quando si vince il Game, i punti del Game ripartono
+       SEMPRE da zero per tutti, vincitore compreso: eventuali
+       punti in eccesso rispetto al limite (es. limite 21,
+       arrivati a 24) non si portano dietro nel Game successivo.
     */
 
-    giocatori.forEach((nomeGiocatore, i) => {
-
-        if (i !== indice) {
-            puntiGame[i] = 0;
-        }
-    });
+    puntiGame =
+        giocatori.map(() => 0);
 
 
     storicoGame.push({
@@ -1518,20 +1512,16 @@ function controllaGame(indice) {
 
 
     /*
-       USIAMO WHILE:
-       se vengono assegnati 25 punti con un Game da 21,
-       viene assegnato il Game e i 4 punti restano
-       nel Game successivo.
+       Un solo Game per volta: quando si raggiunge il limite,
+       il Game viene assegnato e i punti ripartono da zero per
+       tutti (vincitore compreso). Eventuali punti in eccesso
+       rispetto al limite vengono semplicemente scartati, non
+       si portano dietro nel Game successivo.
     */
 
-    while (
+    if (
         puntiGame[indice] >= limiteGame
     ) {
-
-        /* Togliamo i punti necessari al Game */
-
-        puntiGame[indice] -= limiteGame;
-
 
         const risultato =
             elaboraVittoriaGame(indice, true);
@@ -1540,14 +1530,6 @@ function controllaGame(indice) {
         if (risultato.matchVinto) {
 
             terminaMatch(indice);
-
-            return;
-        }
-
-
-        if (risultato.setVinto) {
-
-            /* Il nuovo set e' gia' stato azzerato */
 
             return;
         }
@@ -2215,12 +2197,9 @@ function ricalcolaPartita() {
         puntiGame[indice] += punti;
 
 
-        while (
+        if (
             puntiGame[indice] >= puntiPerGame
         ) {
-
-            puntiGame[indice] -= puntiPerGame;
-
 
             const risultato =
                 elaboraVittoriaGame(indice, false);
@@ -2234,14 +2213,6 @@ function ricalcolaPartita() {
                 matchVinti[indice] = 1;
 
                 return;
-            }
-
-
-            if (risultato.setVinto) {
-
-                /* Il nuovo set e' gia' stato azzerato */
-
-                break;
             }
         }
     });
