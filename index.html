@@ -36,290 +36,315 @@
          HOME
     ====================================================== -->
 
-    <section
-        id="home"
-        class="page active"
-    >
+    <!-- =====================================================
+     HOME
+====================================================== -->
 
-        <header class="home-header">
+<section
+    id="home"
+    class="page active"
+>
 
-            <div class="brand">
+    <!-- HEADER -->
+    <header class="home-header">
 
-                <div class="brand-icon">
-                    🃏
-                </div>
+        <div class="brand">
 
-                <div class="brand-text">
+            <div class="brand-icon">
+                <img
+                    src="immagini/cardscore.PNG"
+                    alt="CardScore"
+                >
+            </div>
 
-                    <h1>
-                        CardScore
-                    </h1>
+            <div class="brand-text">
 
-                    <p>
-                        Il tuo punteggio, sempre con te
-                    </p>
+                <h1>
+                    CardScore
+                </h1>
 
-                </div>
+                <p>
+                    Il tuo punteggio, ogni partita.
+                </p>
 
             </div>
 
-        </header>
+        </div>
 
+    </header>
 
-        <main class="home-content">
 
+    <main class="home-content">
 
-            <!-- TITOLO -->
 
-            <div class="section-heading home-section-heading">
+        <!-- =================================================
+             SCEGLI IL GIOCO
+        ================================================== -->
 
-                <div>
+        <div class="home-section-heading">
 
-                    <span class="small-label">
-                        CARDSCORE
-                    </span>
+            <h2>
+                SCEGLI IL GIOCO
+            </h2>
 
-                    <h2>
-                        Scegli il gioco
-                    </h2>
+        </div>
 
-                </div>
 
-            </div>
+        <!-- =================================================
+             GIOCHI
+        ================================================== -->
 
+        <div class="games-grid">
 
-            <!-- =================================================
-                 GIOCHI
-            ================================================== -->
 
-            <div class="games-grid">
+            <!-- UNO -->
 
-
-                <!-- UNO -->
-
-                <button
-                    class="game-card game-uno"
-                    type="button"
-                    onclick="scegliGioco('UNO')"
-                >
-
-                    <div class="game-card-image">
-
-                        <img
-                            src="immagini/uno.png"
-                            alt="UNO"
-                        >
-
-                    </div>
-
-
-                    <div class="game-card-info">
-
-                        <div>
-
-                            <h3>
-                                UNO
-                            </h3>
-
-                            <span>
-                                2–10 giocatori
-                            </span>
-
-                        </div>
-
-                        <div class="game-card-arrow">
-                            →
-                        </div>
-
-                    </div>
-
-                </button>
-
-
-                <!-- PILI PILI -->
-
-                <button
-                    class="game-card game-pili-pili"
-                    type="button"
-                    onclick="scegliGioco('Pili Pili')"
-                >
-
-                    <div class="game-card-image">
-
-                        <img
-                            src="immagini/pili-pili.png"
-                            alt="Pili Pili"
-                        >
-
-                    </div>
-
-
-                    <div class="game-card-info">
-
-                        <div>
-
-                            <h3>
-                                Pili Pili
-                            </h3>
-
-                            <span>
-                                2–6 giocatori
-                            </span>
-
-                        </div>
-
-                        <div class="game-card-arrow">
-                            →
-                        </div>
-
-                    </div>
-
-                </button>
-
-
-                <!-- SCALA 40 -->
-
-                <button
-                    class="game-card game-scala"
-                    type="button"
-                    onclick="scegliGioco('Scala 40')"
-                >
-
-                    <div class="game-card-image">
-
-                        <img
-                            src="immagini/scala40.png"
-                            alt="Scala 40"
-                        >
-
-                    </div>
-
-
-                    <div class="game-card-info">
-
-                        <div>
-
-                            <h3>
-                                Scala 40
-                            </h3>
-
-                            <span>
-                                2–6 giocatori
-                            </span>
-
-                        </div>
-
-                        <div class="game-card-arrow">
-                            →
-                        </div>
-
-                    </div>
-
-                </button>
-
-
-                <!-- SCOPA -->
-
-                <button
-                    class="game-card game-scopa"
-                    type="button"
-                    onclick="scegliGioco('Scopa')"
-                >
-
-                    <div class="game-card-image">
-
-                        <img
-                            src="immagini/scopa.png"
-                            alt="Scopa"
-                        >
-
-                    </div>
-
-
-                    <div class="game-card-info">
-
-                        <div>
-
-                            <h3>
-                                Scopa
-                            </h3>
-
-                            <span>
-                                2–6 giocatori
-                            </span>
-
-                        </div>
-
-                        <div class="game-card-arrow">
-                            →
-                        </div>
-
-                    </div>
-
-                </button>
-
-
-            </div>
-
-
-            <!-- =================================================
-                 PARTITA IN CORSO
-            ================================================== -->
-
-            <div
-                id="partita-in-corso"
-                class="saved-game-card hidden"
+            <button
+                class="game-card game-uno"
+                type="button"
+                onclick="scegliGioco('UNO')"
             >
 
-                <div class="saved-game-top">
+                <div class="game-card-image">
 
-                    <div class="saved-game-icon">
-                        ▶
+                    <img
+                        src="immagini/uno.png"
+                        alt="UNO"
+                    >
+
+                </div>
+
+                <div class="game-card-info">
+
+                    <div>
+
+                        <h3>
+                            UNO
+                        </h3>
+
+                        <span>
+                            Gioco di carte
+                        </span>
+
                     </div>
 
-                    <div class="saved-game-title">
+                </div>
 
-                        <span class="saved-label">
-                            PARTITA IN CORSO
+            </button>
+
+
+            <!-- PILI PILI -->
+
+            <button
+                class="game-card game-pili-pili"
+                type="button"
+                onclick="scegliGioco('Pili Pili')"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="immagini/pili-pili.png"
+                        alt="Pili Pili"
+                    >
+
+                </div>
+
+                <div class="game-card-info">
+
+                    <div>
+
+                        <h3>
+                            PILI PILI
+                        </h3>
+
+                        <span>
+                            Gioco di carte
                         </span>
+
+                    </div>
+
+                </div>
+
+            </button>
+
+
+            <!-- SCALA 40 -->
+
+            <button
+                class="game-card game-scala"
+                type="button"
+                onclick="scegliGioco('Scala 40')"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="immagini/scala40.png"
+                        alt="Scala 40"
+                    >
+
+                </div>
+
+                <div class="game-card-info">
+
+                    <div>
+
+                        <h3>
+                            SCALA 40
+                        </h3>
+
+                        <span>
+                            Gioco di carte
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </button>
+
+
+            <!-- SCOPA -->
+
+            <button
+                class="game-card game-scopa"
+                type="button"
+                onclick="scegliGioco('Scopa')"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="immagini/scopa.png"
+                        alt="Scopa"
+                    >
+
+                </div>
+
+                <div class="game-card-info">
+
+                    <div>
+
+                        <h3>
+                            SCOPA
+                        </h3>
+
+                        <span>
+                            Gioco di carte
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </button>
+
+
+        </div>
+
+
+        <!-- =================================================
+             PARTITA IN CORSO
+        ================================================== -->
+
+        <div
+            id="partita-in-corso"
+            class="saved-game-card hidden"
+        >
+
+            <div class="saved-game-heading">
+
+                <h2>
+                    PARTITA IN CORSO
+                </h2>
+
+            </div>
+
+
+            <div class="saved-game-content">
+
+
+                <!-- ICONA GIOCO -->
+
+                <div class="saved-game-icon">
+
+                    <span>
+                        ▶
+                    </span>
+
+                </div>
+
+
+                <!-- INFORMAZIONI -->
+
+                <div class="saved-game-main">
+
+                    <div class="saved-game-header">
 
                         <h3 id="partita-salvata-titolo">
                             Partita
                         </h3>
 
+                        <span
+                            id="partita-salvata-turno"
+                            class="saved-game-turn"
+                        >
+                            Turno 0
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="partita-salvata-info"
+                        class="saved-game-info"
+                    >
+                        Hai una partita da continuare
                     </div>
 
                 </div>
 
 
-                <div
-                    id="partita-salvata-info"
-                    class="saved-game-info"
-                >
-                    Hai una partita da continuare
+                <!-- FRECCIA -->
+
+                <div class="saved-game-arrow">
+                    ›
                 </div>
-
-
-                <button
-                    id="continua-partita-btn"
-                    class="primary-button"
-                    type="button"
-                    onclick="continuaPartita()"
-                >
-                    Continua partita
-                </button>
 
             </div>
 
 
-            <p class="privacy-note">
-                🔒 I tuoi dati restano sul dispositivo
-            </p>
+            <!-- CONTINUA -->
+
+            <button
+                id="continua-partita-btn"
+                class="primary-button"
+                type="button"
+                onclick="continuaPartita()"
+            >
+
+                <span>
+                    ▶
+                </span>
+
+                Continua partita
+
+            </button>
+
+        </div>
 
 
-        </main>
+        <!-- PRIVACY -->
 
-    </section>
+        <p class="privacy-note">
+            🔒 I tuoi dati restano sul dispositivo
+        </p>
+
+
+    </main>
+
+</section>
 
 
 
