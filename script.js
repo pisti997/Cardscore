@@ -1143,7 +1143,7 @@ function apriPopupPuntiPersonalizzati(indice) {
 
     // Sposta il popup verso l'alto quando viene aperta la tastiera
     if (popup) {
-        popup.style.top = "25%";
+        popup.style.top = "35%";
     }
 };
 
