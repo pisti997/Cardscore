@@ -660,23 +660,34 @@ button {
 ========================================================= */
 
 .match-row::before {
+    display: none !important;
+}
+
+.match-row > .match-stat:nth-child(2)::before {
+    content: "GAME";
+}
+
+.match-row > .match-stat:nth-child(3)::before {
+    content: "SET";
+}
+
+.match-row > .match-stat:nth-child(4)::before {
+    content: "MATCH";
+}
+
+.match-row > .match-stat:nth-child(2)::before,
+.match-row > .match-stat:nth-child(3)::before,
+.match-row > .match-stat:nth-child(4)::before {
     position: absolute;
-
-    left: 24px;
-    bottom: 76px;
-
-    color: #1f4733;
-
-    font-size: 12px;
-
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+    white-space: nowrap;
+    font-size: 9px;
     line-height: 1;
-
     font-weight: 500;
-
-    white-space: pre;
-
-    content:
-        "GAMES       SETS       MATCH";
+    color: #1f4733;
 }
 
 .match-row:nth-child(3)::before {
