@@ -54,6 +54,9 @@ function escapeHTML(testo) {
 ========================================================= */
 
 function mostraPagina(id) {
+
+    chiudiPopupPuntiPersonalizzati();
+
     document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
     });
@@ -790,9 +793,95 @@ function creaQuickButtons() {
         button.textContent =
             `+1 ${nome}`;
 
+
+        /* =============================================
+           TAP BREVE = +1 PUNTO
+           PRESSIONE PROLUNGATA = PUNTEGGIO PERSONALIZZATO
+        ============================================= */
+
+        let timerPressione = null;
+        let pressioneLunga = false;
+
+        const DURATA_PRESSIONE = 480;
+
+
+        const avviaPressione = function (evento) {
+
+            if (partitaTerminata) return;
+
+            pressioneLunga = false;
+
+            clearTimeout(timerPressione);
+
+            timerPressione = setTimeout(
+                () => {
+
+                    pressioneLunga = true;
+
+                    if (navigator.vibrate) {
+                        navigator.vibrate(15);
+                    }
+
+                    apriPopupPuntiPersonalizzati(indice);
+
+                },
+                DURATA_PRESSIONE
+            );
+        };
+
+
+        const annullaPressione = function () {
+            clearTimeout(timerPressione);
+        };
+
+
+        button.addEventListener(
+            "pointerdown",
+            avviaPressione
+        );
+
+        button.addEventListener(
+            "pointerup",
+            annullaPressione
+        );
+
+        button.addEventListener(
+            "pointerleave",
+            annullaPressione
+        );
+
+        button.addEventListener(
+            "pointercancel",
+            annullaPressione
+        );
+
+        button.addEventListener(
+            "contextmenu",
+            function (evento) {
+                evento.preventDefault();
+            }
+        );
+
+
         button.addEventListener(
             "click",
-            function () {
+            function (evento) {
+
+                /*
+                   Se e' scattata la pressione prolungata,
+                   il tap normale (+1) va ignorato: il popup
+                   personalizzato se ne occupa gia'.
+                */
+
+                if (pressioneLunga) {
+
+                    evento.preventDefault();
+
+                    pressioneLunga = false;
+
+                    return;
+                }
+
 
                 const select =
                     elemento("giocatore-vincitore");
@@ -814,6 +903,247 @@ function creaQuickButtons() {
 
         container.appendChild(button);
     });
+}
+
+
+/* =========================================================
+   POPUP PUNTEGGIO PERSONALIZZATO (pressione prolungata)
+========================================================= */
+
+function apriPopupPuntiPersonalizzati(indice) {
+
+    if (partitaTerminata) return;
+
+    if (
+        !Number.isInteger(indice) ||
+        indice < 0 ||
+        indice >= giocatori.length
+    ) {
+        return;
+    }
+
+
+    chiudiPopupPuntiPersonalizzati();
+
+
+    const overlay =
+        document.createElement("div");
+
+    overlay.className =
+        "cardscore-overlay custom-score-overlay";
+
+    overlay.addEventListener(
+        "click",
+        chiudiPopupPuntiPersonalizzati
+    );
+
+
+    const popup =
+        document.createElement("div");
+
+    popup.className =
+        "custom-score-popup";
+
+    /*
+       Evitiamo che il click dentro al popup
+       chiuda il popup stesso.
+    */
+
+    popup.addEventListener(
+        "click",
+        evento => evento.stopPropagation()
+    );
+
+
+    popup.innerHTML = `
+
+        <div class="custom-score-label">
+            PUNTEGGIO PERSONALIZZATO
+        </div>
+
+        <h2 class="custom-score-name">
+            ${escapeHTML(giocatori[indice])}
+        </h2>
+
+        <div class="custom-score-field">
+
+            <button
+                type="button"
+                class="custom-score-step"
+                data-step="-1"
+            >
+                −
+            </button>
+
+            <input
+                id="custom-score-input"
+                type="number"
+                inputmode="numeric"
+                min="1"
+                step="1"
+                value="1"
+            >
+
+            <button
+                type="button"
+                class="custom-score-step"
+                data-step="1"
+            >
+                +
+            </button>
+
+        </div>
+
+        <div class="custom-score-actions">
+
+            <button
+                type="button"
+                class="custom-score-cancel"
+            >
+                Annulla
+            </button>
+
+            <button
+                type="button"
+                class="custom-score-confirm"
+            >
+                Aggiungi punti
+            </button>
+
+        </div>
+    `;
+
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(popup);
+
+
+    const input =
+        popup.querySelector("#custom-score-input");
+
+    if (input) {
+
+        input.focus();
+        input.select();
+
+        input.addEventListener(
+            "keydown",
+            function (evento) {
+
+                if (evento.key === "Enter") {
+                    confermaPuntiPersonalizzati(indice);
+                }
+
+                if (evento.key === "Escape") {
+                    chiudiPopupPuntiPersonalizzati();
+                }
+            }
+        );
+    }
+
+
+    popup
+        .querySelectorAll(".custom-score-step")
+        .forEach(bottone => {
+
+            bottone.addEventListener(
+                "click",
+                function () {
+
+                    const passo =
+                        parseInt(
+                            bottone.dataset.step,
+                            10
+                        );
+
+                    const valoreAttuale =
+                        parseInt(input.value, 10) || 0;
+
+                    const nuovoValore =
+                        Math.max(
+                            1,
+                            valoreAttuale + passo
+                        );
+
+                    input.value = nuovoValore;
+                }
+            );
+        });
+
+
+    popup
+        .querySelector(".custom-score-cancel")
+        .addEventListener(
+            "click",
+            chiudiPopupPuntiPersonalizzati
+        );
+
+    popup
+        .querySelector(".custom-score-confirm")
+        .addEventListener(
+            "click",
+            () => confermaPuntiPersonalizzati(indice)
+        );
+}
+
+
+function confermaPuntiPersonalizzati(indice) {
+
+    const input =
+        elemento("custom-score-input");
+
+    const valore =
+        parseInt(
+            input ? input.value : "",
+            10
+        );
+
+    if (
+        !Number.isFinite(valore) ||
+        valore <= 0
+    ) {
+
+        alert("Inserisci un numero di punti valido.");
+
+        return;
+    }
+
+
+    const select =
+        elemento("giocatore-vincitore");
+
+    const puntiMano =
+        elemento("punti-mano");
+
+    if (select) {
+        select.value = indice;
+    }
+
+    if (puntiMano) {
+        puntiMano.value = valore;
+    }
+
+
+    chiudiPopupPuntiPersonalizzati();
+
+    aggiungiMano();
+}
+
+
+function chiudiPopupPuntiPersonalizzati() {
+
+    const overlay =
+        document.querySelector(
+            ".custom-score-overlay"
+        );
+
+    const popup =
+        document.querySelector(
+            ".custom-score-popup"
+        );
+
+    if (overlay) overlay.remove();
+    if (popup) popup.remove();
 }
 
 
