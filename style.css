@@ -691,12 +691,12 @@ button {
 .score-big {
     position: absolute;
 
-    right: 30px;
-    top: 16px;
+    right: 30px; !important;
+    top: 16px; !important;
 
     color: #146038;
 
-    font-size: 72px;
+    font-size: 72px; !important;
 
     line-height: 0.9;
 
