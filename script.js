@@ -2423,6 +2423,14 @@ function aggiornaPartitaSalvata() {
     const info =
         elemento("partita-salvata-info");
 
+    const turno =
+        elemento("partita-salvata-turno");
+
+    const icona =
+        document.querySelector(
+            "#partita-in-corso .saved-game-icon"
+        );
+
 
     if (!card) return;
 
@@ -2447,6 +2455,7 @@ function aggiornaPartitaSalvata() {
             "Errore lettura partita:",
             errore
         );
+
     }
 
 
@@ -2459,25 +2468,118 @@ function aggiornaPartitaSalvata() {
         card.classList.add("hidden");
 
         return;
+
     }
 
 
     card.classList.remove("hidden");
 
 
+    /* =====================================================
+       TITOLO
+    ===================================================== */
+
     if (titolo) {
 
         titolo.textContent =
             dati.giocoScelto ||
             "Partita";
+
     }
 
+
+    /* =====================================================
+       TURNO
+    ===================================================== */
+
+    if (turno) {
+
+        turno.textContent =
+            `Turno ${dati.numeroTurno || 0}`;
+
+    }
+
+
+    /* =====================================================
+       ICONA DEL GIOCO
+    ===================================================== */
+
+    if (icona) {
+
+        const immaginiGiochi = {
+
+            "UNO":
+                "immagini/uno.png",
+
+            "Pili Pili":
+                "immagini/pili-pili.png",
+
+            "Scala 40":
+                "immagini/scala40.png",
+
+            "Scopa":
+                "immagini/scopa.png"
+
+        };
+
+
+        const immagine =
+            immaginiGiochi[dati.giocoScelto];
+
+
+        if (immagine) {
+
+            icona.innerHTML = `
+                <img
+                    src="${immagine}"
+                    alt="${dati.giocoScelto || "Gioco"}"
+                >
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       GIOCATORI E PUNTEGGI
+    ===================================================== */
 
     if (info) {
 
-        info.textContent =
-            `${dati.giocatori.length} giocatori · Turno ${dati.numeroTurno || 0}`;
+        const giocatori =
+            dati.giocatori || [];
+
+        const punteggi =
+            Array.isArray(dati.punteggi)
+                ? dati.punteggi
+                : giocatori.map(() => 0);
+
+
+        info.innerHTML =
+            giocatori
+                .map((nome, indice) => {
+
+                    const punteggio =
+                        Number(punteggi[indice]) || 0;
+
+                    return `
+                        <div class="saved-player-score">
+                            <span>
+                                ${nome}
+                            </span>
+
+                            <strong>
+                                ${punteggio} punti
+                            </strong>
+                        </div>
+                    `;
+
+                })
+                .join("");
+
     }
+
 }
 
 
