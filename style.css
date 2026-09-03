@@ -2832,3 +2832,344 @@ button.is-pressed {
 .match-row > .match-stat:nth-child(4) {
     display: none !important;
 }
+/* =========================================================
+   CARDSCORE - NUOVA HOME
+   ========================================================= */
+
+/* ---------- HOME ---------- */
+
+#home {
+    background: #f7f8f4;
+}
+
+#home .home-header {
+    padding:
+        calc(env(safe-area-inset-top) + 22px)
+        20px
+        8px;
+}
+
+#home .brand {
+    max-width: 100%;
+    justify-content: center;
+    gap: 10px;
+}
+
+#home .brand-icon {
+    width: 62px;
+    height: 62px;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+#home .brand-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+#home .brand-text {
+    text-align: left;
+}
+
+#home .brand-text h1 {
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -1.2px;
+    color: #1f6043;
+}
+
+#home .brand-text p {
+    margin-top: 7px;
+    font-size: 13px;
+    color: #6f766f;
+}
+
+
+/* ---------- CONTENUTO ---------- */
+
+#home .home-content {
+    max-width: 430px;
+    padding:
+        25px 20px
+        calc(30px + env(safe-area-inset-bottom));
+}
+
+
+/* ---------- TITOLO ---------- */
+
+#home .home-section-heading {
+    justify-content: center;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+#home .home-section-heading h2 {
+    margin: 0;
+    color: #173f31;
+    font-size: 15px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+}
+
+
+/* ---------- CARTE GIOCHI ---------- */
+
+#home .games-grid {
+    gap: 10px;
+}
+
+#home .game-card {
+    min-height: 177px;
+    border-radius: 18px;
+    box-shadow:
+        0 7px 18px rgba(28, 42, 32, 0.07);
+
+    /* Mantiene l'animazione */
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+#home .game-card-image {
+    height: 116px;
+}
+
+#home .game-card-info {
+    min-height: 61px;
+    padding: 8px 10px 11px;
+    justify-content: center;
+    text-align: center;
+}
+
+#home .game-card-info > div {
+    width: 100%;
+}
+
+#home .game-card-info h3 {
+    font-size: 16px;
+    line-height: 1.1;
+    font-weight: 800;
+    color: #173f31;
+}
+
+#home .game-card-info span {
+    margin-top: 5px;
+    font-size: 10px;
+    color: rgba(32, 37, 31, 0.62);
+    font-weight: 500;
+}
+
+
+/* ---------- COLORI CARTE ---------- */
+
+#home .game-uno {
+    background: #dcefd5;
+}
+
+#home .game-pili-pili {
+    background: #fae3aa;
+}
+
+#home .game-scala {
+    background: #d5ebf1;
+}
+
+#home .game-scopa {
+    background: #e8daef;
+}
+
+
+/* =========================================================
+   PARTITA IN CORSO
+   ========================================================= */
+
+#home .saved-game-card {
+    margin-top: 30px;
+    padding: 18px;
+    border-radius: 20px;
+    background: #edf7e9;
+    border: 1px solid #dcebd7;
+    box-shadow:
+        0 7px 20px rgba(28, 42, 32, 0.06);
+}
+
+
+/* Titolo */
+
+#home .saved-game-heading {
+    margin-bottom: 13px;
+    text-align: center;
+}
+
+#home .saved-game-heading h2 {
+    margin: 0;
+    color: #1f6043;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+
+/* Contenuto partita */
+
+#home .saved-game-content {
+    display: grid;
+    grid-template-columns: 50px minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: 11px;
+}
+
+
+/* Icona */
+
+#home .saved-game-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #4d9963;
+    color: white;
+
+    box-shadow:
+        0 5px 12px rgba(31, 96, 67, 0.14);
+}
+
+#home .saved-game-icon span {
+    font-size: 18px;
+}
+
+
+/* Informazioni */
+
+#home .saved-game-main {
+    min-width: 0;
+}
+
+#home .saved-game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#home .saved-game-header h3 {
+    margin: 0;
+    color: #173f31;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+#home .saved-game-turn {
+    color: #69726b;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+#home .saved-game-info {
+    margin-top: 7px;
+    color: #345746;
+    font-size: 12px;
+    line-height: 1.45;
+    font-weight: 500;
+}
+
+
+/* Freccia */
+
+#home .saved-game-arrow {
+    color: #173f31;
+    font-size: 29px;
+    line-height: 1;
+    text-align: center;
+}
+
+
+/* ---------- CONTINUA PARTITA ---------- */
+
+#home .saved-game-card .primary-button {
+    margin-top: 15px;
+    min-height: 50px;
+    border-radius: 25px;
+
+    background: #3f8a55;
+
+    font-size: 15px;
+    font-weight: 750;
+
+    box-shadow:
+        0 7px 16px rgba(31, 96, 67, 0.18);
+}
+
+#home .saved-game-card .primary-button span {
+    margin-right: 7px;
+    font-size: 13px;
+}
+
+
+/* ---------- PRIVACY ---------- */
+
+#home .privacy-note {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 10px;
+    color: #8b928b;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    #home .home-header {
+        padding-top:
+            calc(env(safe-area-inset-top) + 18px);
+    }
+
+    #home .brand-icon {
+        width: 58px;
+        height: 58px;
+    }
+
+    #home .brand-text h1 {
+        font-size: 31px;
+    }
+
+    #home .brand-text p {
+        font-size: 12px;
+    }
+
+    #home .home-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    #home .game-card {
+        min-height: 175px;
+    }
+
+    #home .game-card-image {
+        height: 112px;
+    }
+
+    #home .game-card-info h3 {
+        font-size: 15px;
+    }
+
+    #home .saved-game-card {
+        padding: 17px;
+    }
+
+}
