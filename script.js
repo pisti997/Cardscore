@@ -2906,3 +2906,52 @@ document.addEventListener(
         aggiornaPartitaSalvata();
     }
 );
+/* =========================================================
+   EFFETTO PRESSIONE 3D UNIVERSALE
+   ========================================================= */
+
+document.addEventListener("pointerdown", function (evento) {
+
+    const bottone = evento.target.closest("button");
+
+    if (!bottone || bottone.disabled) {
+        return;
+    }
+
+    bottone.classList.add("is-pressed");
+});
+
+
+function rimuoviPressione3D(evento) {
+
+    const bottone = evento.target.closest("button");
+
+    if (bottone) {
+        bottone.classList.remove("is-pressed");
+    }
+}
+
+
+document.addEventListener(
+    "pointerup",
+    rimuoviPressione3D
+);
+
+document.addEventListener(
+    "pointercancel",
+    rimuoviPressione3D
+);
+
+window.addEventListener(
+    "blur",
+    function () {
+
+        document
+            .querySelectorAll("button.is-pressed")
+            .forEach(function (bottone) {
+
+                bottone.classList.remove("is-pressed");
+
+            });
+    }
+);
