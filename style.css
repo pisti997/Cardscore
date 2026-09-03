@@ -2778,3 +2778,27 @@ button:active {
     box-shadow:
         0 1px 2px rgba(20, 40, 25, 0.18) !important;
 }
+/* =========================================================
+   EFFETTO PRESSIONE 3D - TUTTI I PULSANTI
+========================================================= */
+
+button {
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        transform 0.08s ease,
+        box-shadow 0.08s ease;
+}
+
+/* Effetto universale */
+button:active {
+    transform: translateY(4px) scale(0.98) !important;
+    box-shadow:
+        0 1px 3px rgba(20, 40, 25, 0.20) !important;
+}
+
+/* Pulsanti trasparenti / senza ombra */
+.back-button:active,
+.remove-player:active {
+    transform: translateY(2px) scale(0.96) !important;
+    box-shadow: none !important;
+}
