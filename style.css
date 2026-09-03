@@ -2116,10 +2116,10 @@ button {
 
 /* Piccole caselle GAME / SET / MATCH */
 .match-row span {
-    width: 45px !important;
-    height: 45px !important;
-    border-radius: 13px !important;
-    font-size: 30px !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 16px !important;
+    font-size: 25px !important;
 }
 
 .score-big {
