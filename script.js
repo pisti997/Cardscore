@@ -26,6 +26,11 @@ let storicoSet = [];
 let partitaIniziata = null;
 let messaggioTimeout = null;
 let partitaTerminata = false;
+let popupPunteggioAttuale = {
+    overlay: null,
+    popup: null,
+    input: null
+};
 
 const STORAGE_KEY = "cardscore_partita";
 
@@ -801,6 +806,7 @@ function creaQuickButtons() {
 
         let timerPressione = null;
         let pressioneLunga = false;
+        let pointerIdAttivo = null;
 
         const DURATA_PRESSIONE = 480;
 
@@ -809,7 +815,28 @@ function creaQuickButtons() {
 
             if (partitaTerminata) return;
 
+            /* Evita di aprire un secondo popup se uno e' gia' attivo */
+            if (document.querySelector(".custom-score-popup")) {
+                return;
+            }
+
             pressioneLunga = false;
+            pointerIdAttivo = evento.pointerId;
+
+            /*
+               setPointerCapture "aggancia" tutti i prossimi eventi
+               di questo tocco al bottone, anche se il popup compare
+               sopra e coprirebbe altrimenti il dito. Senza questo,
+               su Safari il "rilascio del dito" finiva sull'overlay
+               invece che sul bottone, e la tastiera non si apriva
+               in modo affidabile.
+            */
+
+            try {
+                button.setPointerCapture(evento.pointerId);
+            } catch (errore) {
+                /* Non tutti i browser supportano la pointer capture */
+            }
 
             clearTimeout(timerPressione);
 
@@ -830,8 +857,39 @@ function creaQuickButtons() {
         };
 
 
-        const annullaPressione = function () {
+        const annullaPressione = function (evento) {
+
             clearTimeout(timerPressione);
+
+            if (
+                pointerIdAttivo !== null &&
+                button.releasePointerCapture &&
+                button.hasPointerCapture &&
+                button.hasPointerCapture(pointerIdAttivo)
+            ) {
+                try {
+                    button.releasePointerCapture(pointerIdAttivo);
+                } catch (errore) {
+                    /* Ignora se gia' rilasciato */
+                }
+            }
+
+            /*
+               Il rilascio del dito (pointerup) e' un gesto utente
+               "genuino" agli occhi di Safari: se il popup e' gia'
+               aperto, richiamiamo di nuovo il focus proprio qui,
+               in modo sincrono, cosi' la tastiera numerica si apre.
+            */
+
+            if (
+                pressioneLunga &&
+                evento &&
+                evento.type === "pointerup"
+            ) {
+                riattivaFocusPopupPersonalizzato();
+            }
+
+            pointerIdAttivo = null;
         };
 
 
@@ -1022,6 +1080,12 @@ function apriPopupPuntiPersonalizzati(indice) {
     const input =
         popup.querySelector("#custom-score-input");
 
+    popupPunteggioAttuale = {
+        overlay: overlay,
+        popup: popup,
+        input: input
+    };
+
     if (input) {
 
         /*
@@ -1105,10 +1169,20 @@ function apriPopupPuntiPersonalizzati(indice) {
 }
 
 
+function riattivaFocusPopupPersonalizzato() {
+
+    const input = popupPunteggioAttuale.input;
+
+    if (!input) return;
+
+    input.focus({ preventScroll: true });
+    input.select();
+}
+
+
 function confermaPuntiPersonalizzati(indice) {
 
-    const input =
-        elemento("custom-score-input");
+    const input = popupPunteggioAttuale.input;
 
     const valore =
         parseInt(
@@ -1150,18 +1224,27 @@ function confermaPuntiPersonalizzati(indice) {
 
 function chiudiPopupPuntiPersonalizzati() {
 
-    const overlay =
-        document.querySelector(
-            ".custom-score-overlay"
-        );
+    /*
+       Rimuoviamo TUTTI gli elementi corrispondenti, non solo il
+       primo: se per qualche motivo (es. gesture particolari su
+       Safari) fosse rimasto un popup "fantasma" dei tentativi
+       precedenti, non deve mai restare nel DOM ne' interferire
+       con il popup corrente.
+    */
 
-    const popup =
-        document.querySelector(
-            ".custom-score-popup"
-        );
+    document
+        .querySelectorAll(".custom-score-overlay")
+        .forEach(nodo => nodo.remove());
 
-    if (overlay) overlay.remove();
-    if (popup) popup.remove();
+    document
+        .querySelectorAll(".custom-score-popup")
+        .forEach(nodo => nodo.remove());
+
+    popupPunteggioAttuale = {
+        overlay: null,
+        popup: null,
+        input: null
+    };
 }
 
 
