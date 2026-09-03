@@ -784,6 +784,11 @@ button {
 
     box-shadow:
         0 4px 10px rgba(43, 64, 47, 0.05);
+
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .quick-button:active {
@@ -2529,4 +2534,157 @@ button {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
     }
+}
+
+
+/* =========================================================
+   POPUP PUNTEGGIO PERSONALIZZATO (pressione prolungata)
+========================================================= */
+
+.custom-score-overlay {
+    z-index: 960;
+}
+
+.custom-score-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: min(320px, 86vw);
+
+    padding: 28px 24px 24px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    box-shadow: 0 20px 45px rgba(20, 40, 25, 0.25);
+
+    z-index: 970;
+
+    animation: cardscoreMessagePopIn 0.2s ease;
+}
+
+.custom-score-label {
+    color: var(--text-soft);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+}
+
+.custom-score-name {
+    margin: 6px 0 18px;
+
+    color: var(--green-dark);
+
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.custom-score-field {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.custom-score-field input {
+    width: 100%;
+    min-width: 0;
+
+    height: 56px;
+
+    border: 1px solid #e4e7e1;
+    outline: 0;
+
+    border-radius: 14px;
+
+    background: #f8f9f6;
+
+    color: var(--text);
+
+    font-size: 26px;
+    font-weight: 800;
+
+    text-align: center;
+
+    font-variant-numeric: tabular-nums;
+
+    /* Rimuove le frecce dell'input number su alcuni browser */
+    -moz-appearance: textfield;
+}
+
+.custom-score-field input::-webkit-outer-spin-button,
+.custom-score-field input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.custom-score-step {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--green-soft);
+
+    color: var(--green-dark);
+
+    font-size: 22px;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+.custom-score-step:active {
+    transform: scale(0.95);
+}
+
+.custom-score-actions {
+    width: 100%;
+
+    margin-top: 20px;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+.custom-score-cancel,
+.custom-score-confirm {
+    flex: 1;
+
+    min-height: 48px;
+
+    border-radius: 14px;
+
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.custom-score-cancel {
+    background: #f0f2ee;
+    color: var(--text);
+}
+
+.custom-score-confirm {
+    background: var(--green);
+    color: #ffffff;
 }
