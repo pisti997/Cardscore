@@ -982,6 +982,7 @@ function apriPopupPuntiPersonalizzati(indice) {
                 min="1"
                 step="1"
                 value="1"
+                autofocus
             >
 
             <button
@@ -1023,8 +1024,25 @@ function apriPopupPuntiPersonalizzati(indice) {
 
     if (input) {
 
-        input.focus();
-        input.select();
+        /*
+           Su mobile il focus subito dopo l'inserimento nel DOM
+           a volte non basta a far apparire la tastiera: lo
+           richiamiamo anche dopo il rendering del frame
+           successivo, cosi' la tastiera numerica si apre
+           in automatico in modo affidabile.
+        */
+
+        const apriTastiera = function () {
+            input.focus({ preventScroll: true });
+            input.select();
+        };
+
+        apriTastiera();
+
+        requestAnimationFrame(apriTastiera);
+
+        setTimeout(apriTastiera, 120);
+
 
         input.addEventListener(
             "keydown",
