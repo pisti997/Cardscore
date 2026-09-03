@@ -3796,3 +3796,138 @@ button.is-pressed {
     }
 
 }
+/* =========================================================
+   PARTITA IN CORSO - RIFINITURA
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    #home .saved-game-card {
+        margin-top: 17px;
+        padding-bottom: 1px;
+
+        border-radius: 20px;
+        border: 1.5px solid #d8e8d3;
+
+        box-shadow:
+            0 6px 18px rgba(35, 70, 45, 0.06);
+    }
+
+
+    /* TITOLO */
+
+    #home .saved-game-heading {
+        padding: 8px 16px 7px;
+    }
+
+    #home .saved-game-heading h2 {
+        font-size: 12px;
+        letter-spacing: 0.8px;
+    }
+
+
+    /* CONTENUTO */
+
+    #home .saved-game-content {
+        grid-template-columns: 48px minmax(0, 1fr) 18px;
+
+        gap: 10px;
+
+        padding: 0 15px;
+    }
+
+
+    /* ICONA */
+
+    #home .saved-game-icon {
+        width: 48px;
+        height: 48px;
+
+        border-radius: 50%;
+
+        box-shadow:
+            0 4px 10px rgba(31, 96, 67, 0.12);
+    }
+
+
+    /* NOME + TURNO */
+
+    #home .saved-game-header {
+        align-items: center;
+    }
+
+    #home .saved-game-header h3 {
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    #home .saved-game-turn {
+        font-size: 11px;
+    }
+
+
+    /* PUNTEGGI */
+
+    #home .saved-game-info {
+        margin-top: 5px;
+
+        font-size: 11px;
+        line-height: 1.3;
+    }
+
+    #home .saved-player-score {
+        padding: 2px 0;
+
+        border-bottom:
+            1px solid rgba(31, 96, 67, 0.13);
+    }
+
+    #home .saved-player-score span {
+        color: #345746;
+        font-size: 11px;
+    }
+
+    #home .saved-player-score strong {
+        color: #287047;
+        font-size: 11px;
+        font-weight: 750;
+    }
+
+
+    /* FRECCIA */
+
+    #home .saved-game-arrow {
+        font-size: 27px;
+        font-weight: 400;
+
+        transform: translateY(-1px);
+    }
+
+
+    /* PULSANTE */
+
+    #home .saved-game-card .primary-button {
+        width: calc(100% - 30px);
+
+        min-height: 44px;
+
+        margin:
+            11px 15px 13px;
+
+        padding: 9px 14px;
+
+        border-radius: 24px;
+
+        font-size: 14px;
+        font-weight: 750;
+
+        box-shadow:
+            0 5px 13px rgba(31, 96, 67, 0.16);
+    }
+
+    #home .saved-game-card .primary-button span {
+        margin-right: 6px;
+        font-size: 13px;
+    }
+
+}
