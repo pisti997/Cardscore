@@ -1137,10 +1137,15 @@ function apriPopupPuntiPersonalizzati(indice) {
            in automatico in modo affidabile.
         */
 
-        const apriTastiera = function () {
-            input.focus({ preventScroll: true });
-            input.select();
-        };
+       const apriTastiera = function () {
+    input.focus({ preventScroll: true });
+    input.select();
+
+    // Sposta il popup verso l'alto quando viene aperta la tastiera
+    if (popup) {
+        popup.style.top = "25%";
+    }
+};
 
         apriTastiera();
 
