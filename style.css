@@ -2762,3 +2762,19 @@ button {
     box-shadow:
         0 1px 2px rgba(20, 40, 25, 0.18);
 }
+/* =========================================================
+   EFFETTO PRESSIONE 3D - TUTTI I PULSANTI
+========================================================= */
+
+button {
+    transition:
+        transform 0.08s ease,
+        box-shadow 0.08s ease;
+}
+
+button:active {
+    transform: translateY(4px) scale(0.98) !important;
+
+    box-shadow:
+        0 1px 2px rgba(20, 40, 25, 0.18) !important;
+}
