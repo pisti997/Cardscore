@@ -691,12 +691,12 @@ button {
 .score-big {
     position: absolute;
 
-    right: 25px;
-    top: 58px;
+    right: 30px;
+    top: 32px;
 
     color: #146038;
 
-    font-size: 66px;
+    font-size: 68px;
 
     line-height: 0.9;
 
@@ -704,7 +704,7 @@ button {
 
     letter-spacing: -3px;
 
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: Dongle;
 
     text-align: right;
 }
