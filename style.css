@@ -3173,3 +3173,453 @@ button.is-pressed {
     }
 
 }
+/* =========================================================
+   CARD SCORE - HOME FINALE
+   ========================================================= */
+
+/* HOME */
+
+#home {
+    background: #f7f8f4;
+}
+
+#home .home-header {
+    padding:
+        calc(env(safe-area-inset-top) + 18px)
+        20px
+        6px;
+}
+
+#home .brand {
+    max-width: none;
+    justify-content: center;
+    gap: 10px;
+}
+
+#home .brand-icon {
+    width: 58px;
+    height: 58px;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+#home .brand-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+#home .brand-text h1 {
+    font-size: 34px;
+    color: #1f6043;
+    letter-spacing: -1.2px;
+}
+
+#home .brand-text p {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #687168;
+}
+
+
+/* CONTENUTO */
+
+#home .home-content {
+    max-width: 430px;
+    padding:
+        22px 20px
+        calc(30px + env(safe-area-inset-bottom));
+}
+
+
+/* TITOLO */
+
+#home .home-section-heading {
+    display: block;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#home .home-section-heading h2 {
+    margin: 0;
+    color: #173f31;
+    font-size: 15px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   GIOCHI
+   ========================================================= */
+
+#home .games-grid {
+    gap: 10px;
+}
+
+#home .game-card {
+    min-height: 176px;
+    border-radius: 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow:
+        0 7px 18px rgba(28, 42, 32, 0.07);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+/* Mantiene il tuo effetto di pressione */
+
+#home .game-card:active {
+    transform: scale(0.97);
+}
+
+
+/* Immagini */
+
+#home .game-card-image {
+    height: 112px;
+    flex-shrink: 0;
+}
+
+#home .game-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* Testo */
+
+#home .game-card-info {
+    flex: 1;
+    min-height: 64px;
+
+    padding: 7px 8px 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+#home .game-card-info > div {
+    width: 100%;
+}
+
+#home .game-card-info h3 {
+    margin: 0;
+
+    color: #173f31;
+    font-size: 16px;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+#home .game-card-info span {
+    display: block;
+
+    margin-top: 5px;
+
+    color: rgba(32, 37, 31, 0.62);
+    font-size: 10px;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+
+/* Nascondiamo le vecchie frecce */
+
+#home .game-card-arrow {
+    display: none;
+}
+
+
+/* Colori */
+
+#home .game-uno {
+    background: #dcefd5;
+}
+
+#home .game-pili-pili {
+    background: #fae3aa;
+}
+
+#home .game-scala {
+    background: #d5ebf1;
+}
+
+#home .game-scopa {
+    background: #e8daef;
+}
+
+
+/* =========================================================
+   PARTITA IN CORSO
+   ========================================================= */
+
+#home .saved-game-card {
+    width: 100%;
+
+    margin-top: 30px;
+    padding: 0;
+
+    background: #edf7e9;
+
+    border: 1px solid #dcebd7;
+    border-radius: 20px;
+
+    box-shadow:
+        0 7px 20px rgba(28, 42, 32, 0.06);
+
+    overflow: hidden;
+}
+
+
+/* Titolo */
+
+#home .saved-game-heading {
+    padding:
+        0 18px 10px;
+
+    text-align: center;
+}
+
+#home .saved-game-heading h2 {
+    margin: 0;
+
+    color: #1f6043;
+
+    font-size: 14px;
+    line-height: 1.1;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* Contenuto */
+
+#home .saved-game-content {
+    padding: 0 18px;
+
+    display: grid;
+    grid-template-columns: 50px minmax(0, 1fr) 22px;
+
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+/* Icona */
+
+#home .saved-game-icon {
+    width: 50px;
+    height: 50px;
+
+    padding: 0;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #4d9963;
+
+    box-shadow:
+        0 5px 12px rgba(31, 96, 67, 0.14);
+}
+
+#home .saved-game-icon img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* Testata partita */
+
+#home .saved-game-main {
+    min-width: 0;
+}
+
+#home .saved-game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 8px;
+}
+
+#home .saved-game-header h3 {
+    margin: 0;
+
+    color: #173f31;
+
+    font-size: 20px;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+#home .saved-game-turn {
+    color: #69726b;
+
+    font-size: 12px;
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   GIOCATORI
+   ========================================================= */
+
+#home .saved-game-info {
+    margin-top: 8px;
+
+    color: #345746;
+
+    font-size: 12px;
+    line-height: 1.45;
+
+    font-weight: 500;
+}
+
+#home .saved-player-score {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 4px 0;
+
+    border-bottom: 1px solid rgba(31, 96, 67, 0.14);
+}
+
+#home .saved-player-score:last-child {
+    border-bottom: 0;
+}
+
+#home .saved-player-score span {
+    color: #345746;
+}
+
+#home .saved-player-score strong {
+    color: #1f6043;
+    font-weight: 700;
+}
+
+
+/* Freccia */
+
+#home .saved-game-arrow {
+    color: #173f31;
+
+    font-size: 30px;
+    line-height: 1;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   PULSANTE CONTINUA
+   ========================================================= */
+
+#home .saved-game-card .primary-button {
+    width: calc(100% - 36px);
+
+    min-height: 50px;
+
+    margin:
+        15px 18px 18px;
+
+    padding: 13px 18px;
+
+    border-radius: 26px;
+
+    background: #3f8a55;
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 750;
+
+    box-shadow:
+        0 7px 16px rgba(31, 96, 67, 0.18);
+}
+
+#home .saved-game-card .primary-button span {
+    margin-right: 7px;
+}
+
+
+/* =========================================================
+   PRIVACY
+   ========================================================= */
+
+#home .privacy-note {
+    margin-top: 18px;
+
+    text-align: center;
+
+    color: #8b928b;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SCHERMI PICCOLI
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    #home .home-header {
+        padding-top:
+            calc(env(safe-area-inset-top) + 16px);
+    }
+
+    #home .brand-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    #home .brand-text h1 {
+        font-size: 31px;
+    }
+
+    #home .home-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    #home .game-card {
+        min-height: 174px;
+    }
+
+    #home .game-card-image {
+        height: 110px;
+    }
+
+}
