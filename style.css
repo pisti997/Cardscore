@@ -2119,7 +2119,7 @@ button {
     width: 45px !important;
     height: 45px !important;
     border-radius: 13px !important;
-    font-size: 23px !important;
+    font-size: 30px !important;
 }
 
 .score-big {
@@ -2142,17 +2142,17 @@ button {
 
 .match-row > .match-stat:nth-child(2) {
     left: 20px !important;
-    bottom: 12px !important;
+    bottom: 8px !important;
 }
 
 .match-row > .match-stat:nth-child(3) {
     left: 73px !important;
-    bottom: 12px !important;
+    bottom: 8px !important;
 }
 
 .match-row > .match-stat:nth-child(4) {
     left: 126px !important;
-    bottom: 12px !important;
+    bottom: 8px !important;
 }
 
 /* Punteggio grande (valori finali) */
