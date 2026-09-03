@@ -8,7 +8,7 @@ let punteggi = [];
 let storico = [];
 let numeroTurno = 0;
 
-let sistemaPunteggio = "semplice";
+let sistemaPunteggio = "game-set";
 let obiettivoPartita = 500;
 
 let puntiPerGame = 21;
@@ -99,7 +99,7 @@ function nuovaPartita() {
 
     numeroTurno = 0;
 
-    sistemaPunteggio = "semplice";
+    sistemaPunteggio = "game-set";
     obiettivoPartita = 500;
 
     puntiPerGame = 21;
@@ -125,7 +125,11 @@ function nuovaPartita() {
     const sets = elemento("set-per-match");
 
     if (gioco) gioco.textContent = "—";
-    if (sistema) sistema.value = "semplice";
+
+    const iconaGioco = elemento("selected-game-icon");
+    if (iconaGioco) iconaGioco.textContent = "🃏";
+
+    if (sistema) sistema.value = "game-set";
     if (obiettivo) obiettivo.value = 500;
     if (punti) punti.value = 21;
     if (games) games.value = 3;
@@ -142,6 +146,18 @@ function nuovaPartita() {
    SCELTA GIOCO
 ========================================================= */
 
+/* =========================================================
+   LOGHI DEI GIOCHI
+========================================================= */
+
+const LOGHI_GIOCHI = {
+    "UNO": "immagini/uno.png",
+    "Pili Pili": "immagini/pili-pili.png",
+    "Scala 40": "immagini/scala40.png",
+    "Scopa": "immagini/scopa.png"
+};
+
+
 function scegliGioco(gioco) {
 
     nuovaPartita();
@@ -153,6 +169,27 @@ function scegliGioco(gioco) {
     if (elementoGioco) {
         elementoGioco.textContent = gioco;
     }
+
+
+    const iconaGioco = elemento("selected-game-icon");
+
+    if (iconaGioco) {
+
+        const logo = LOGHI_GIOCHI[gioco];
+
+        if (logo) {
+
+            iconaGioco.innerHTML =
+                `<img src="${escapeHTML(logo)}" alt="${escapeHTML(gioco)}">`;
+
+        } else {
+
+            /* Nessun logo disponibile: torniamo all'emoji di riserva */
+
+            iconaGioco.textContent = "🃏";
+        }
+    }
+
 
     mostraPagina("nuova-partita");
 }
@@ -237,16 +274,20 @@ function aggiungiGiocatore() {
 
     aggiornaListaGiocatori();
 
-    setTimeout(() => {
+    /*
+       Il focus va chiamato SUBITO, in modo sincrono, dentro
+       al gestore del click che ha originato l'azione: solo
+       cosi' Safari considera l'apertura della tastiera un
+       gesto genuino dell'utente e la mostra davvero. Un
+       setTimeout, anche breve, spezza questa catena.
+    */
 
-        const inputs =
-            document.querySelectorAll(".player-input");
+    const inputs =
+        document.querySelectorAll(".player-input");
 
-        if (inputs.length) {
-            inputs[inputs.length - 1].focus();
-        }
-
-    }, 50);
+    if (inputs.length) {
+        inputs[inputs.length - 1].focus({ preventScroll: true });
+    }
 }
 
 
@@ -1583,18 +1624,39 @@ function terminaMatch(indiceVincitore) {
     );
 
 
+    mostraMessaggioPartita(
+        "match",
+        `${giocatori[indiceVincitore]} vince il Match!`
+    );
+
     lanciaConfetti();
 
 
     setTimeout(
         () => {
 
+            /*
+               Puliamo l'eventuale popup MATCH ancora a schermo
+               prima di mostrare il recap finale, cosi' non
+               restano elementi residui dietro alla schermata
+               di vittoria.
+            */
+
+            if (messaggioTimeout) {
+                clearTimeout(messaggioTimeout);
+            }
+
+            document
+                .querySelectorAll(".match-message, .cardscore-overlay")
+                .forEach(nodo => nodo.remove());
+
+
             mostraSchermataVittoria(
                 indiceVincitore
             );
 
         },
-        350
+        4000
     );
 }
 
@@ -1644,8 +1706,11 @@ function mostraMessaggioPartita(tipo, testo) {
         "match-message";
 
 
-    let etichetta = "MATCH";
-    let icona = "🏆";
+    let etichetta = "PARTITA";
+    let icona = "🎉";
+
+    let sottotesto =
+        "Continua a giocare!";
 
 
     if (tipo === "game") {
@@ -1657,6 +1722,13 @@ function mostraMessaggioPartita(tipo, testo) {
     if (tipo === "set") {
         etichetta = "SET";
         icona = "🏆";
+    }
+
+
+    if (tipo === "match") {
+        etichetta = "MATCH";
+        icona = "🏆";
+        sottotesto = "Ecco il riepilogo finale...";
     }
 
 
@@ -1675,7 +1747,7 @@ function mostraMessaggioPartita(tipo, testo) {
         </h2>
 
         <p>
-            Continua a giocare!
+            ${escapeHTML(sottotesto)}
         </p>
     `;
 
@@ -1692,9 +1764,9 @@ function mostraMessaggioPartita(tipo, testo) {
                 overlay.remove();
 
             },
-            tipo === "set"
-                ? 1500
-                : 1200
+            tipo === "match"
+                ? 4000
+                : 3000
         );
 }
 
@@ -1909,7 +1981,50 @@ function chiudiVittoriaENuova() {
         screen.remove();
     }
 
+
+    /*
+       Ricordiamo il gioco appena concluso PRIMA che
+       nuovaPartita() lo azzeri, per poterlo riselezionare
+       automaticamente subito dopo.
+    */
+
+    const giocoPrecedente = giocoScelto;
+
+
     nuovaPartita();
+
+
+    if (giocoPrecedente) {
+
+        giocoScelto = giocoPrecedente;
+
+        const elementoGioco =
+            elemento("gioco-selezionato");
+
+        if (elementoGioco) {
+            elementoGioco.textContent = giocoPrecedente;
+        }
+
+
+        const iconaGioco =
+            elemento("selected-game-icon");
+
+        if (iconaGioco) {
+
+            const logo =
+                LOGHI_GIOCHI[giocoPrecedente];
+
+            if (logo) {
+
+                iconaGioco.innerHTML =
+                    `<img src="${escapeHTML(logo)}" alt="${escapeHTML(giocoPrecedente)}">`;
+
+            } else {
+
+                iconaGioco.textContent = "🃏";
+            }
+        }
+    }
 }
 
 
@@ -2056,7 +2171,7 @@ function mostraStorico() {
 
 
     storico
-        .slice(-5)
+        .slice(-1)
         .reverse()
         .forEach(turno => {
 
