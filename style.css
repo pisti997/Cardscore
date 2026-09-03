@@ -35,6 +35,12 @@
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
+
+    touch-action: manipulation;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 html,
@@ -46,6 +52,17 @@ body {
     min-height: 100%;
 
     background: var(--bg);
+
+    overscroll-behavior: none;
+}
+
+/* Riabilita la selezione solo dove serve davvero (campi di input) */
+input,
+textarea,
+select {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
 }
 
 body {
@@ -785,9 +802,6 @@ button {
     box-shadow:
         0 4px 10px rgba(43, 64, 47, 0.05);
 
-    touch-action: manipulation;
-    -webkit-user-select: none;
-    user-select: none;
     -webkit-touch-callout: none;
 }
 
@@ -1393,21 +1407,6 @@ button {
 
     box-shadow:
         0 8px 25px rgba(28,42,32,0.06);
-}
-
-.new-game-button {
-    margin-top: 13px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 8px;
-}
-
-.button-plus {
-    font-size: 21px;
-    line-height: 1;
 }
 
 
