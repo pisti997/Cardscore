@@ -2828,3 +2828,7 @@ button.is-pressed {
     top: 28px !important;
     right: 28px !important;
 }
+/* RIMUOVE CASELLA MATCH */
+.match-row > .match-stat:nth-child(4) {
+    display: none !important;
+}
