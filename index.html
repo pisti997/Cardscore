@@ -369,7 +369,7 @@
 
             <div class="selected-game-card">
 
-                <div class="selected-game-icon">
+                <div class="selected-game-icon" id="selected-game-icon">
                     🃏
                 </div>
 
@@ -438,7 +438,7 @@
 
 
             <!-- =================================================
-                 SISTEMA PUNTEGGIO
+                 SISTEMA PUNTEGGIO + IMPOSTAZIONI (riquadro unico)
             ================================================== -->
 
             <div class="setup-card">
@@ -457,123 +457,119 @@
                     onchange="cambiaSistemaPunteggio()"
                 >
 
+                    <option value="game-set" selected>
+                        Game / Set / Match
+                    </option>
+
                     <option value="semplice">
                         Punteggio semplice
                     </option>
 
-                    <option value="game-set">
-                        Game / Set / Match
-                    </option>
-
                 </select>
 
-            </div>
+
+                <div class="setup-card-divider"></div>
 
 
-            <!-- =================================================
-                 PUNTEGGIO SEMPLICE
-            ================================================== -->
+                <!-- GAME / SET / MATCH -->
 
-            <div
-                id="impostazioni-semplice"
-                class="setup-card"
-            >
+                <div id="impostazioni-game-set">
 
-                <label
-                    class="field-label"
-                    for="obiettivo-partita"
-                >
-                    OBIETTIVO PARTITA
-                </label>
+                    <label class="field-label">
+                        IMPOSTAZIONI MATCH
+                    </label>
 
 
-                <div class="number-field">
+                    <div class="settings-row">
 
-                    <input
-                        id="obiettivo-partita"
-                        type="number"
-                        value="500"
-                        min="1"
-                        step="1"
-                        inputmode="numeric"
-                    >
 
-                    <span>
-                        punti
-                    </span>
+                        <div class="setting-item">
+
+                            <span>
+                                Punti per Game
+                            </span>
+
+                            <input
+                                id="punti-per-game"
+                                type="number"
+                                value="21"
+                                min="1"
+                                inputmode="numeric"
+                            >
+
+                        </div>
+
+
+                        <div class="setting-item">
+
+                            <span>
+                                Game per Set
+                            </span>
+
+                            <input
+                                id="game-per-set"
+                                type="number"
+                                value="3"
+                                min="1"
+                                inputmode="numeric"
+                            >
+
+                        </div>
+
+
+                        <div class="setting-item">
+
+                            <span>
+                                Set per Match
+                            </span>
+
+                            <input
+                                id="set-per-match"
+                                type="number"
+                                value="2"
+                                min="1"
+                                inputmode="numeric"
+                            >
+
+                        </div>
+
+
+                    </div>
 
                 </div>
 
-            </div>
+
+                <!-- PUNTEGGIO SEMPLICE -->
+
+                <div
+                    id="impostazioni-semplice"
+                    class="hidden"
+                >
+
+                    <label
+                        class="field-label"
+                        for="obiettivo-partita"
+                    >
+                        OBIETTIVO PARTITA
+                    </label>
 
 
-            <!-- =================================================
-                 GAME / SET / MATCH
-            ================================================== -->
-
-            <div
-                id="impostazioni-game-set"
-                class="setup-card hidden"
-            >
-
-                <label class="field-label">
-                    IMPOSTAZIONI MATCH
-                </label>
-
-
-                <div class="settings-row">
-
-
-                    <div class="setting-item">
-
-                        <span>
-                            Punti per Game
-                        </span>
+                    <div class="number-field">
 
                         <input
-                            id="punti-per-game"
+                            id="obiettivo-partita"
                             type="number"
-                            value="21"
+                            value="500"
                             min="1"
+                            step="1"
                             inputmode="numeric"
                         >
 
-                    </div>
-
-
-                    <div class="setting-item">
-
                         <span>
-                            Game per Set
+                            punti
                         </span>
 
-                        <input
-                            id="game-per-set"
-                            type="number"
-                            value="3"
-                            min="1"
-                            inputmode="numeric"
-                        >
-
                     </div>
-
-
-                    <div class="setting-item">
-
-                        <span>
-                            Set per Match
-                        </span>
-
-                        <input
-                            id="set-per-match"
-                            type="number"
-                            value="2"
-                            min="1"
-                            inputmode="numeric"
-                        >
-
-                    </div>
-
 
                 </div>
 
@@ -865,7 +861,7 @@
                         </span>
 
                         <h2>
-                            Storico turni
+                            Ultimo turno
                         </h2>
 
                     </div>
