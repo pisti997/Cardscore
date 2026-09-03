@@ -2592,6 +2592,10 @@ button {
     z-index: 970;
 
     animation: cardscoreMessagePopIn 0.2s ease;
+
+    /* Si adatta automaticamente quando compare la tastiera */
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
 }
 
 .custom-score-label {
