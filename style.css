@@ -288,7 +288,8 @@ select {
     text-overflow: ellipsis;
     white-space: nowrap;
     color: var(--green-dark);
-    font-size: 27px;
+    font-family: "Courier New" !important;
+    font-size: 31px;
     line-height: 1;
     font-weight: 800;
     letter-spacing: -0.7px;
