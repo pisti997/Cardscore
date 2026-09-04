@@ -3049,3 +3049,23 @@ window.addEventListener(
             });
     }
 );
+
+
+/* =========================================================
+   PWA - REGISTRAZIONE SERVICE WORKER
+   Permette all'app di funzionare offline e di essere
+   installata sulla schermata Home come app standalone.
+========================================================= */
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", function () {
+
+        navigator.serviceWorker
+            .register("sw.js")
+            .catch(function () {
+                // Se la registrazione fallisce l'app continua
+                // a funzionare normalmente, solo senza offline.
+            });
+    });
+}
