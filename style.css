@@ -2738,3 +2738,38 @@ button.is-pressed {
 #home .brand-text h1 {
     font-family: "SS Safari", sans-serif !important;
 }
+/* =========================================================
+   FONT APP - SS SAFARI SOLO SUL TITOLO
+   ========================================================= */
+
+#home .brand-text h1 {
+    font-family: "SS Safari", sans-serif !important;
+}
+
+/* Tutto il resto torna al font di sistema */
+#home,
+#home button,
+#home input,
+#home select,
+#home textarea,
+#setup,
+#setup button,
+#setup input,
+#setup select,
+#setup textarea,
+#game,
+#game button,
+#game input,
+#game select,
+#game textarea,
+#victory,
+#victory button,
+#victory input,
+#victory select,
+#victory textarea {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif !important;
+}
