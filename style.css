@@ -2838,3 +2838,41 @@ button.is-pressed {
     }
 
 }
+/* =========================================================
+   LOGHI GIOCHI - DIMENSIONI PERSONALIZZATE
+   ========================================================= */
+
+.saved-game-icon img,
+.selected-game-icon img {
+    display: block;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* UNO */
+.saved-game-icon img[src*="uno.png"],
+.selected-game-icon img[src*="uno.png"] {
+    width: 100%;
+    height: 100%;
+}
+
+/* PILI PILI */
+.saved-game-icon img[src*="pili-pili.png"],
+.selected-game-icon img[src*="pili-pili.png"] {
+    width: 82%;
+    height: 82%;
+}
+
+/* SCALA 40 */
+.saved-game-icon img[src*="scala40.png"],
+.selected-game-icon img[src*="scala40.png"] {
+    width: 100%;
+    height: 82%;
+}
+
+/* SCOPA */
+.saved-game-icon img[src*="scopa.png"],
+.selected-game-icon img[src*="scopa.png"] {
+    width: 94%;
+    height: 82%;
+}
