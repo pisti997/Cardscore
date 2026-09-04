@@ -5,7 +5,7 @@
    forzare il refresh della cache sui dispositivi.
 ========================================================= */
 
-const CACHE_NAME = "cardscore-cache-v1";
+const CACHE_NAME = "cardscore-cache-v2";
 
 const FILE_DA_CACHARE = [
     "./",
@@ -35,7 +35,18 @@ self.addEventListener("install", function (evento) {
         caches
             .open(CACHE_NAME)
             .then(function (cache) {
-                return cache.addAll(FILE_DA_CACHARE);
+
+                // Aggiungiamo i file uno per uno: se uno manca (es. un'icona
+                // non ancora caricata) non blocchiamo l'installazione degli
+                // altri, a differenza di cache.addAll() che fallisce in blocco
+                // se anche un solo file da' errore.
+                return Promise.all(
+                    FILE_DA_CACHARE.map(function (file) {
+                        return cache.add(file).catch(function () {
+                            // file non trovato o non raggiungibile: lo si ignora
+                        });
+                    })
+                );
             })
             .then(function () {
                 return self.skipWaiting();
@@ -118,4 +129,3 @@ self.addEventListener("fetch", function (evento) {
             })
     );
 });
-
