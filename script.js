@@ -2426,39 +2426,48 @@ function aggiornaPartitaSalvata() {
 
 
     /* =====================================================
-       NESSUNA PARTITA
-       ===================================================== */
+   NESSUNA PARTITA
+   ===================================================== */
 
-    if (
-        !dati ||
-        !Array.isArray(dati.giocatori) ||
-        !dati.giocatori.length
-    ) {
+if (
+    !dati ||
+    !Array.isArray(dati.giocatori) ||
+    !dati.giocatori.length
+) {
 
-        card.classList.remove("hidden");
+    card.classList.remove("hidden");
+    card.classList.add("empty-state");
 
-        if (titolo) {
-            titolo.textContent = "Nessuna partita in corso";
-        }
+    const intestazione =
+        card.querySelector(".saved-label");
 
-        if (info) {
-            info.innerHTML = "";
-        }
-
-        if (turno) {
-            turno.textContent = "";
-        }
-
-        if (icona) {
-            icona.innerHTML = "▶";
-        }
-
-        if (bottone) {
-            bottone.style.display = "none";
-        }
-
-        return;
+    if (intestazione) {
+        intestazione.textContent =
+            "Nessuna partita in corso";
     }
+
+    if (titolo) {
+        titolo.textContent = "";
+    }
+
+    if (info) {
+        info.innerHTML = "";
+    }
+
+    if (turno) {
+        turno.textContent = "";
+    }
+
+    if (icona) {
+        icona.style.display = "none";
+    }
+
+    if (bottone) {
+        bottone.style.display = "none";
+    }
+
+    return;
+}
 
 
     /* =====================================================
@@ -2482,6 +2491,15 @@ function aggiornaPartitaSalvata() {
             `Turno ${dati.numeroTurno || 0}`;
     }
 
+card.classList.remove("empty-state");
+
+if (icona) {
+    icona.style.display = "";
+}
+
+if (bottone) {
+    bottone.style.display = "";
+}
 
     /* =====================================================
        LOGO DEL GIOCO
