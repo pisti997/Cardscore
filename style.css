@@ -2654,3 +2654,73 @@ button.is-pressed {
     }
 
 }
+/* =========================================================
+   CARD SCORE - HEADER COME FOTO DI RIFERIMENTO
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    #home .home-header {
+        padding:
+            calc(env(safe-area-inset-top) + 8px)
+            16px
+            0;
+    }
+
+    #home .brand {
+        width: 100%;
+        max-width: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 18px;
+    }
+
+    /* ICONA */
+    #home .brand-icon {
+        width: 72px;
+        height: 72px;
+        flex: 0 0 72px;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    #home .brand-icon img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+    }
+
+    /* SCRITTA CARDSCORE */
+    #home .brand-text {
+        text-align: left;
+    }
+
+    #home .brand-text h1 {
+        margin: 0;
+        font-size: 43px;
+        line-height: 0.95;
+        letter-spacing: -2px;
+        font-weight: 800;
+        color: #216b4d;
+    }
+
+    /* SOTTOTITOLO */
+    #home .brand-text p {
+        margin-top: 10px;
+        font-size: 15px;
+        line-height: 1;
+        letter-spacing: 0;
+        color: #777b77;
+        white-space: nowrap;
+    }
+
+    /* SPAZIO SOTTO L'HEADER */
+    #home .home-content {
+        padding-top: 18px;
+    }
+}
