@@ -1,43 +1,31 @@
 /* =========================================================
    CARDSCORE — MATCH SCREEN
    Replica stile schermata di riferimento
-========================================================= */
-
+   ========================================================= */
 :root {
     --bg: #f8f8f4;
     --white: #ffffff;
-
     --green: #236844;
     --green-dark: #185537;
     --green-soft: #d5e9ce;
-
     --green-card: #edf7e9;
     --yellow-card: #fff7df;
-
     --green-box: #e4f1dc;
     --yellow-box: #faedc8;
-
     --text: #183e2b;
     --text-soft: #657166;
     --border: rgba(40, 65, 48, 0.08);
-
-    --shadow:
-        0 5px 16px rgba(37, 55, 42, 0.07);
-
+    --shadow: 0 5px 16px rgba(37, 55, 42, 0.07);
     --radius-card: 20px;
 }
 
-
 /* =========================================================
    RESET
-========================================================= */
-
+   ========================================================= */
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-
     touch-action: manipulation;
-
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
@@ -47,12 +35,9 @@ html,
 body {
     margin: 0;
     padding: 0;
-
     width: 100%;
     min-height: 100%;
-
     background: var(--bg);
-
     overscroll-behavior: none;
 }
 
@@ -67,15 +52,12 @@ select {
 
 body {
     color: var(--text);
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "SF Pro Display",
-        "SF Pro Text",
-        "Segoe UI",
-        sans-serif;
-
+    font-family: -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Segoe UI",
+    sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -85,26 +67,17 @@ select {
     font: inherit;
 }
 
-button {
-    border: 0;
-    outline: none;
-}
-
 .hidden {
     display: none !important;
 }
 
-
 /* =========================================================
    PAGINE
-========================================================= */
-
+   ========================================================= */
 .page {
     display: none;
-
     width: 100%;
     min-height: 100vh;
-
     background: var(--bg);
 }
 
@@ -112,208 +85,91 @@ button {
     display: block;
 }
 
-
 /* =========================================================
    MATCH TOPBAR
-========================================================= */
-
+   ========================================================= */
 .match-topbar {
     position: relative;
-
     width: 100%;
-
     min-height: 105px;
-
-    padding:
-        calc(env(safe-area-inset-top) + 18px)
-        27px
-        8px;
-
+    padding: calc(env(safe-area-inset-top) + 18px)
+    27px
+    8px;
     display: grid;
-
-    grid-template-columns:
-        1fr
-        auto
-        1fr;
-
+    grid-template-columns: 1fr
+    auto
+    1fr;
     align-items: start;
-
     background: var(--bg);
-
     border: 0;
 }
 
-
 /* Esci */
-
 .match-topbar .back-button {
     justify-self: start;
-
     margin-top: 8px;
-
     padding: 0;
-
     display: flex;
     align-items: center;
-
     gap: 7px;
-
     background: transparent;
-
     color: #17251d;
-
     font-size: 16px;
-
     font-weight: 600;
 }
 
 .match-topbar .back-arrow {
     margin-top: -2px;
-
     font-size: 34px;
-
     line-height: 20px;
-
     font-weight: 300;
 }
 
-
 /* Titolo centrale */
-
 .match-heading {
     min-width: 120px;
-
     text-align: center;
 }
 
 .match-heading h1 {
     margin: 0;
-
     color: var(--green);
-
     font-size: 25px;
-
     line-height: 1;
-
     font-weight: 800;
-
     letter-spacing: -0.7px;
 }
 
 .match-heading span {
     display: block;
-
     margin-top: 11px;
-
     color: #183e2b;
-
     font-size: 18px;
-
     line-height: 1;
-
     font-weight: 650;
-
     letter-spacing: -0.2px;
 }
 
-
 /* =========================================================
    MATCH CONTENT
-========================================================= */
-
+   ========================================================= */
 .match-content {
     width: 100%;
     max-width: 520px;
-
     margin: 0 auto;
-
-    padding:
-        0 27px
-        calc(28px + env(safe-area-inset-bottom));
+    padding: 0 27px
+    calc(28px + env(safe-area-inset-bottom));
 }
-
 
 /* =========================================================
    BANNER GAME / SET / MATCH
-========================================================= */
-
-.match-title {
-    position: relative;
-
-    width: 100%;
-
-    min-height: 155px;
-
-    margin-top: 45px;
-    margin-bottom: 18px;
-
-    padding:
-        65px 20px
-        20px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: visible;
-
-    border-radius: 21px;
-
-    background: #cfe5c7;
-
-    box-shadow:
-        0 5px 14px rgba(45, 75, 48, 0.08);
-
-    text-align: center;
-}
-
-
+   ========================================================= */
 /* Trofeo sovrapposto */
-
-.match-title-icon {
-    position: absolute;
-
-    top: -25px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    width: 73px;
-    height: 73px;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: #4b9258;
-
-    color: #fff5d8;
-
-    font-size: 34px;
-
-    box-shadow:
-        0 6px 13px rgba(31, 83, 48, 0.13);
-
-    z-index: 3;
-}
-
-
 /* Testo banner */
-
 .match-title-text {
     width: 100%;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
 }
 
@@ -323,56 +179,26 @@ button {
 
 .match-title-text strong {
     display: block;
-
     color: #175537;
-
     font-size: 26px;
-
     line-height: 1.05;
-
     font-weight: 750;
-
     letter-spacing: -0.6px;
 }
 
-
 /* Turno dentro il banner */
-
-.match-title::after {
-    content: "Turno " attr(data-turn);
-
-    display: block;
-
-    margin-top: 12px;
-
-    color: #1d5338;
-
-    font-size: 17px;
-
-    font-weight: 500;
-}
-
-
 /* =========================================================
    OBIETTIVO (sistema punteggio semplice)
-========================================================= */
-
+   ========================================================= */
 .objective-text {
     width: 100%;
-
     margin: 18px 0 14px;
-
     padding: 14px 18px;
-
     border-radius: 16px;
-
     background: var(--green-soft);
-
     color: var(--text);
-
     font-size: 14px;
     font-weight: 600;
-
     text-align: center;
 }
 
@@ -382,37 +208,26 @@ button {
     font-weight: 800;
 }
 
-
 /* =========================================================
    TABELLONE PUNTEGGIO SEMPLICE
-========================================================= */
-
+   ========================================================= */
 .simple-scoreboard {
     width: 100%;
-
     display: flex;
     flex-direction: column;
-
     gap: 10px;
-
     margin-bottom: 6px;
 }
 
 .simple-score-row {
     width: 100%;
-
     padding: 16px 18px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     border-radius: 16px;
-
     background: #ffffff;
-
     border: 1px solid var(--border);
-
     box-shadow: var(--shadow);
 }
 
@@ -423,246 +238,88 @@ button {
 
 .simple-player-name {
     color: var(--text);
-
     font-size: 16px;
     font-weight: 700;
 }
 
 .simple-player-score {
     color: var(--green-dark);
-
     font-size: 26px;
     font-weight: 850;
-
     font-variant-numeric: tabular-nums;
 }
 
-
 /* =========================================================
    SCOREBOARD
-========================================================= */
-
-.game-set-scoreboard {
-    width: 100%;
-
-    margin: 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 18px;
-}
-
-
+   ========================================================= */
 /* =========================================================
    INTESTAZIONI
-========================================================= */
-
+   ========================================================= */
 .scoreboard-labels {
     display: none;
 }
 
-
 /* =========================================================
    PLAYER CARD
-========================================================= */
-
-.match-row {
-    position: relative;
-
-    width: 100%;
-
-    min-height: 190px;
-
-    padding:
-        27px
-        24px
-        18px;
-
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1fr)
-        110px;
-
-    grid-template-rows:
-        auto
-        1fr;
-
-    column-gap: 12px;
-
-    align-items: start;
-
-    border-radius: var(--radius-card);
-
-    border: 1px solid var(--border);
-
-    box-shadow: var(--shadow);
-
-    overflow: hidden;
-}
-
-
+   ========================================================= */
 /* Prima card */
-
 .match-row:nth-child(2) {
     background: var(--green-card);
 }
 
-
 /* Seconda card */
-
 .match-row:nth-child(3) {
     background: var(--yellow-card);
 }
 
-
 /* =========================================================
    NOME
-========================================================= */
-
+   ========================================================= */
 .match-player {
     grid-column: 1;
-
     grid-row: 1;
-
     min-width: 0;
 }
 
 .match-player strong {
     display: block;
-
     max-width: 170px;
-
     overflow: hidden;
-
     text-overflow: ellipsis;
-
     white-space: nowrap;
-
     color: var(--green-dark);
-
     font-size: 27px;
-
     line-height: 1;
-
     font-weight: 800;
-
     letter-spacing: -0.7px;
 }
 
-
 /* =========================================================
    PUNTI GAME CORRENTE
-========================================================= */
-
+   ========================================================= */
 .match-player span {
     display: none;
 }
 
-
 /* =========================================================
    MENU ...
-========================================================= */
-
-.match-row::after {
-    content: "•••";
-
-    position: absolute;
-
-    top: 22px;
-    right: 22px;
-
-    color: #52715e;
-
-    font-size: 17px;
-
-    line-height: 1;
-
-    letter-spacing: 2px;
-
-    font-weight: 800;
-}
-
-
+   ========================================================= */
 /* =========================================================
    GAMES / SETS / MATCH
-========================================================= */
-
-.match-stat {
-    width: 51px;
-    height: 51px;
-
-    border-radius: 10px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: var(--green-box);
-
-    color: var(--green-dark);
-
-    font-size: 22px;
-
-    font-weight: 700;
-
-    border: 1px solid rgba(47, 106, 63, 0.08);
-}
-
-
+   ========================================================= */
 /* GAMES */
-
-.match-row > .match-stat:nth-child(2) {
-    position: absolute;
-
-    left: 24px;
-    bottom: 19px;
-}
-
-
 /* SETS */
-
-.match-row > .match-stat:nth-child(3) {
-    position: absolute;
-
-    left: 82px;
-    bottom: 19px;
-}
-
-
 /* MATCH */
-
-.match-row > .match-stat:nth-child(4) {
-    position: absolute;
-
-    left: 140px;
-    bottom: 19px;
-}
-
-
 /* Giallo per seconda card */
-
 .match-row:nth-child(3) > .match-stat {
     background: var(--yellow-box);
-
     color: #b88b17;
-
-    border-color:
-        rgba(184, 139, 23, 0.08);
+    border-color: rgba(184, 139, 23, 0.08);
 }
-
 
 /* =========================================================
    ETICHETTE SOPRA I BOX
-========================================================= */
-
-.match-row::before {
-    display: none !important;
-}
-
+   ========================================================= */
 .match-row > .match-stat:nth-child(2)::before {
     content: "GAME";
 }
@@ -694,210 +351,793 @@ button {
     color: #4f5139;
 }
 
-
 /* =========================================================
    PUNTEGGIO GRANDE
-========================================================= */
-
-.score-big {
-    position: absolute;
-
-    right: 30px; !important;
-    top: 16px; !important;
-
-    color: #146038;
-
-    font-size: 72px; !important;
-
-    line-height: 0.9;
-
-    font-weight: 850;
-
-    letter-spacing: -3px;
-
-    font-variant-numeric: Dongle;
-
-    text-align: right;
-}
-
+   ========================================================= */
 .match-row:nth-child(3) .score-big {
     color: #176340;
 }
 
-
 /* "punti" sotto il punteggio */
-
-.match-row .score-big::after {
-    content: "punti";
-
-    display: block;
-
-    margin-top: 10px;
-
-    color: #174f36;
-
-    font-size: 17px;
-
-    line-height: 1;
-
-    letter-spacing: 0;
-
-    font-weight: 550;
-}
-
-
 /* =========================================================
    NUOVO TURNO
-========================================================= */
-
-.turn-section {
-    width: 100%;
-
-    margin-top: 17px;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 9px;
-
-    align-items: stretch;
-}
-
-
+   ========================================================= */
 /* =========================================================
    TITOLO NUOVO TURNO
-========================================================= */
-
+   ========================================================= */
 .turn-section .section-heading {
     display: none;
 }
 
-
 /* =========================================================
    QUICK BUTTONS
-========================================================= */
-
-.quick-buttons {
-    display: contents;
-}
-
-.quick-button {
-    width: 100%;
-
-    min-height: 105px;
-
-    padding: 14px 6px;
-
-    border-radius: 18px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background: #e8f4e2;
-
-    color: #367a49;
-
-    font-size: 24px;
-
-    line-height: 1;
-
-    font-weight: 750;
-
-    box-shadow:
-        0 4px 10px rgba(43, 64, 47, 0.05);
-
-    -webkit-touch-callout: none;
-}
-
-.quick-button:active {
-    transform: scale(0.97);
-}
-
+   ========================================================= */
 .quick-button:nth-child(2) {
     background: #fff2cd;
-
     color: #d39d16;
 }
 
-
 /* =========================================================
    NASCONDI INSERIMENTO MANUALE
-========================================================= */
-
+   ========================================================= */
 .manual-score-card {
     display: none !important;
 }
 
-
 /* =========================================================
    ANNULLA
-========================================================= */
-
-.undo-button {
-    width: 100%;
-
-    min-height: 105px;
-
-    margin: 0;
-
-    padding: 14px 8px;
-
-    border-radius: 18px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background: #ffffff;
-
-    color: #222a24;
-
-    font-size: 13px;
-
-    line-height: 1.25;
-
-    font-weight: 500;
-
-    box-shadow:
-        0 4px 10px rgba(43, 64, 47, 0.06);
-}
-
-.undo-button span {
-    display: block;
-
-    margin: 0 0 8px;
-
-    color: #17261d;
-
-    font-size: 31px;
-
-    line-height: 1;
-
-    font-weight: 300;
-}
-
+   ========================================================= */
 .undo-button:active {
     transform: scale(0.97);
 }
 
-
 /* =========================================================
    RESPONSIVE
-========================================================= */
+   ========================================================= */
+/* =========================================================
+   SAFE AREA
+   ========================================================= */
+@supports (padding: max(0px)) {
 
+    .match-topbar {
+        padding-top:
+        max(
+        18px,
+        calc(env(safe-area-inset-top) + 8px)
+        );
+    }
+
+    .match-content {
+        padding-bottom:
+        max(
+        28px,
+        calc(env(safe-area-inset-bottom) + 20px)
+        );
+    }
+
+}
+
+/* =========================================================
+   RIDUZIONE ANIMAZIONI
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+}
+
+/* =========================================================
+   RIPRISTINO HOME + NUOVA PARTITA
+   ========================================================= */
+/* =========================
+   HOME
+   ========================= */
+.home-header {
+    width: 100%;
+    padding: calc(env(safe-area-inset-top) + 24px)
+    20px
+    12px;
+}
+
+.brand {
+    max-width: 520px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #236844;
+    color: white;
+    font-size: 23px;
+    box-shadow: 0 7px 18px rgba(31, 96, 67, 0.16);
+}
+
+.brand-text h1 {
+    margin: 0;
+    color: #173f31;
+    font-size: 25px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+}
+
+.brand-text p {
+    margin: 5px 0 0;
+    color: #747a72;
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.home-content {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 14px 20px
+    calc(30px + env(safe-area-inset-bottom));
+}
+
+/* =========================
+   TITOLI
+   ========================= */
+.section-heading {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.home-section-heading {
+    margin-bottom: 17px;
+}
+
+.small-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #9ca19a;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    color: #20251f;
+    font-size: 22px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.45px;
+}
+
+/* =========================
+   GAME GRID
+   ========================= */
+.games-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.game-card {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 24px;
+    text-align: left;
+    border: 0;
+    box-shadow: 0 8px 25px rgba(28, 42, 32, 0.07);
+    transition: transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.game-card:active {
+    transform: scale(0.97);
+}
+
+.game-card-image {
+    width: 100%;
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.game-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Colori */
+.game-uno {
+    background: #dcefd5;
+}
+
+.game-pili-pili {
+    background: #fae3aa;
+}
+
+.game-scala {
+    background: #d5ebf1;
+}
+
+.game-scopa {
+    background: #e8daef;
+}
+
+.game-card-info {
+    min-height: 67px;
+    padding: 12px 13px 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.game-card-info h3 {
+    margin: 0;
+    color: #20251f;
+    font-size: 17px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+
+.game-card-info span {
+    display: block;
+    margin-top: 4px;
+    color: rgba(32, 37, 31, 0.58);
+    font-size: 10px;
+    line-height: 1.2;
+    font-weight: 600;
+}
+
+.game-card-arrow {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.65);
+    color: #20251f;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* =========================
+   PARTITA IN CORSO
+   ========================= */
+.saved-game-card {
+    width: 100%;
+    margin-top: 18px;
+    padding: 17px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e4e7e1;
+    box-shadow: 0 8px 25px rgba(28,42,32,0.06);
+}
+
+.saved-game-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.saved-game-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #dcefd5;
+    color: #1f6043;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.saved-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #1f6043;
+    font-size: 9px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.saved-game-title h3 {
+    margin: 0;
+    color: #20251f;
+    font-size: 18px;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+.saved-game-info {
+    margin-top: 11px;
+    color: #747a72;
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+/* =========================
+   BUTTONS HOME
+   ========================= */
+.primary-button {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1f6043;
+    color: white;
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 750;
+    box-shadow: 0 8px 20px rgba(31,96,67,0.18);
+    transition: transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.primary-button:active {
+    transform: scale(0.98);
+}
+
+.saved-game-card .primary-button {
+    margin-top: 14px;
+}
+
+.secondary-button {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e4e7e1;
+    color: #173f31;
+    font-size: 15px;
+    font-weight: 750;
+    box-shadow: 0 8px 25px rgba(28,42,32,0.06);
+}
+
+/* =========================
+   PRIVACY
+   ========================= */
+.privacy-note {
+    margin: 17px 0 0;
+    text-align: center;
+    color: #9ca19a;
+    font-size: 10px;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+/* =========================================================
+   NUOVA PARTITA
+   ========================================================= */
+.topbar {
+    position: relative;
+    width: 100%;
+    min-height: 68px;
+    padding: calc(env(safe-area-inset-top) + 10px)
+    18px
+    10px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: #f8f8f4;
+    border-bottom: 1px solid rgba(229,232,226,0.65);
+    z-index: 10;
+}
+
+.topbar h1 {
+    margin: 0;
+    text-align: center;
+    color: #20251f;
+    font-size: 17px;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+.topbar-spacer {
+    width: 100%;
+}
+
+.back-button {
+    justify-self: start;
+    padding: 8px 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    color: #1f6043;
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.back-arrow {
+    margin-top: -1px;
+    font-size: 27px;
+    line-height: 14px;
+    font-weight: 300;
+}
+
+.setup-content {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 17px 20px
+    calc(35px + env(safe-area-inset-bottom));
+}
+
+/* Gioco selezionato */
+.selected-game-card {
+    width: 100%;
+    margin-bottom: 14px;
+    padding: 17px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    border-radius: 18px;
+    background: #dcefd5;
+}
+
+.selected-game-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: rgba(255,255,255,0.68);
+    font-size: 23px;
+}
+
+.selected-game-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.selected-game-card h2 {
+    margin: 0;
+    color: #173f31;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+/* Setup cards */
+.setup-card {
+    width: 100%;
+    margin-bottom: 13px;
+    padding: 17px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e4e7e1;
+    box-shadow: 0 8px 25px rgba(28,42,32,0.06);
+}
+
+.setup-card-title {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.setup-card-title h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.setup-card-divider {
+    width: 100%;
+    height: 1px;
+    margin: 16px 0;
+    background: #eceee9;
+}
+
+#impostazioni-semplice,
+#impostazioni-game-set {
+    width: 100%;
+}
+
+.counter {
+    min-width: 30px;
+    height: 30px;
+    padding: 0 8px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #dcefd5;
+    color: #1f6043;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* Giocatori */
+.players-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player-row {
+    width: 100%;
+    min-height: 48px;
+    padding: 7px 7px 7px 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 13px;
+    background: #f7f8f5;
+    border: 1px solid #e4e7e1;
+}
+
+.player-input {
+    width: 100%;
+    min-width: 0;
+    padding: 5px 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #20251f;
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.player-input::placeholder {
+    color: #9ca19a;
+}
+
+.remove-player {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: #9ca19a;
+    font-size: 18px;
+}
+
+.add-player-button {
+    width: 100%;
+    min-height: 45px;
+    margin-top: 10px;
+    border-radius: 13px;
+    background: #edf6e9;
+    color: #1f6043;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+/* Form */
+.field-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #9ca19a;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.15px;
+}
+
+.select-field {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 13px;
+    border-radius: 13px;
+    border: 1px solid #e4e7e1;
+    background: #f8f9f6;
+    color: #20251f;
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.number-field {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 13px;
+    border: 1px solid #e4e7e1;
+    background: #f8f9f6;
+}
+
+.number-field input {
+    width: 100%;
+    min-width: 0;
+    height: 45px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #20251f;
+    font-size: 17px;
+    font-weight: 750;
+}
+
+.number-field span {
+    color: #747a72;
+    font-size: 12px;
+}
+
+/* Game / Set */
+.settings-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 8px;
+}
+
+.setting-item {
+    min-width: 0;
+}
+
+.setting-item > span {
+    display: block;
+    min-height: 28px;
+    color: #747a72;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.setting-item input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 8px;
+    border-radius: 13px;
+    border: 1px solid #e4e7e1;
+    background: #f8f9f6;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.start-button {
+    margin-top: 4px;
+}
+
+/* =========================================================
+   PAGINA STORICO COMPLETO
+   ========================================================= */
+.history-page-content {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 17px 20px
+    calc(30px + env(safe-area-inset-bottom));
+}
+
+/* =========================================================
+   STORICO
+   ========================================================= */
+.history-section {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.history-heading {
+    margin-bottom: 10px;
+}
+
+.history-heading .small-label {
+    display: none;
+}
+
+.history-heading h2 {
+    color: var(--green-dark);
+    font-size: 21px;
+    font-weight: 750;
+}
+
+.history-link {
+    padding: 5px 0;
+    background: transparent;
+    color: #1f6043;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.history-list,
+.history-full-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.history-empty {
+    width: 100%;
+    padding: 22px 15px;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e4e7e1;
+    color: #9ca19a;
+    text-align: center;
+    font-size: 11px;
+}
+
+.history-row {
+    width: 100%;
+    min-height: 54px;
+    padding: 9px 12px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    border-radius: 15px;
+    background: #ffffff;
+    border: 1px solid #e4e7e1;
+}
+
+.history-turn {
+    width: 40px;
+    flex-shrink: 0;
+    color: #9ca19a;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.history-details {
+    min-width: 0;
+    flex: 1;
+}
+
+.history-player {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #20251f;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.history-points {
+    display: block;
+    margin-top: 3px;
+    color: #1f6043;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.history-arrow {
+    color: #9ca19a;
+}
+
+/* =========================================================
+   RESPONSIVE HOME
+   ========================================================= */
 @media (max-width: 390px) {
-
     .match-content {
         padding-left: 18px;
         padding-right: 18px;
@@ -923,13 +1163,11 @@ button {
 
     .score-big {
         right: 20px;
-
         font-size: 58px;
     }
 
     .match-row::before {
         left: 19px;
-
         font-size: 10px;
     }
 
@@ -948,1096 +1186,8 @@ button {
     .match-stat {
         width: 48px;
         height: 48px;
-
         font-size: 20px;
     }
-
-}
-
-
-/* =========================================================
-   SAFE AREA
-========================================================= */
-
-@supports (padding: max(0px)) {
-
-    .match-topbar {
-        padding-top:
-            max(
-                18px,
-                calc(env(safe-area-inset-top) + 8px)
-            );
-    }
-
-    .match-content {
-        padding-bottom:
-            max(
-                28px,
-                calc(env(safe-area-inset-bottom) + 20px)
-            );
-    }
-
-}
-
-
-/* =========================================================
-   RIDUZIONE ANIMAZIONI
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    * {
-        animation: none !important;
-        transition: none !important;
-    }
-
-}
-/* =========================================================
-   RIPRISTINO HOME + NUOVA PARTITA
-   ========================================================= */
-
-
-/* =========================
-   HOME
-========================= */
-
-.home-header {
-    width: 100%;
-    padding:
-        calc(env(safe-area-inset-top) + 24px)
-        20px
-        12px;
-}
-
-.brand {
-    max-width: 520px;
-    margin: 0 auto;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.brand-icon {
-    width: 46px;
-    height: 46px;
-
-    flex-shrink: 0;
-
-    border-radius: 14px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #236844;
-    color: white;
-
-    font-size: 23px;
-
-    box-shadow:
-        0 7px 18px rgba(31, 96, 67, 0.16);
-}
-
-.brand-text h1 {
-    margin: 0;
-
-    color: #173f31;
-
-    font-size: 25px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.7px;
-}
-
-.brand-text p {
-    margin: 5px 0 0;
-
-    color: #747a72;
-
-    font-size: 12px;
-    line-height: 1.2;
-
-    font-weight: 500;
-}
-
-
-.home-content {
-    width: 100%;
-    max-width: 520px;
-
-    margin: 0 auto;
-
-    padding:
-        14px 20px
-        calc(30px + env(safe-area-inset-bottom));
-}
-
-
-/* =========================
-   TITOLI
-========================= */
-
-.section-heading {
-    width: 100%;
-
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-
-    gap: 15px;
-}
-
-.home-section-heading {
-    margin-bottom: 17px;
-}
-
-.small-label {
-    display: block;
-
-    margin-bottom: 5px;
-
-    color: #9ca19a;
-
-    font-size: 10px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: 1.3px;
-}
-
-.section-heading h2 {
-    margin: 0;
-
-    color: #20251f;
-
-    font-size: 22px;
-    line-height: 1.1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.45px;
-}
-
-
-/* =========================
-   GAME GRID
-========================= */
-
-.games-grid {
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 13px;
-}
-
-
-.game-card {
-    position: relative;
-
-    width: 100%;
-    min-width: 0;
-
-    padding: 0;
-
-    overflow: hidden;
-
-    border-radius: 24px;
-
-    text-align: left;
-
-    border: 0;
-
-    box-shadow:
-        0 8px 25px rgba(28, 42, 32, 0.07);
-
-    transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease;
-}
-
-.game-card:active {
-    transform: scale(0.97);
-}
-
-
-.game-card-image {
-    width: 100%;
-    height: 125px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-}
-
-.game-card-image img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    display: block;
-}
-
-
-/* Colori */
-
-.game-uno {
-    background: #dcefd5;
-}
-
-.game-pili-pili {
-    background: #fae3aa;
-}
-
-.game-scala {
-    background: #d5ebf1;
-}
-
-.game-scopa {
-    background: #e8daef;
-}
-
-
-.game-card-info {
-    min-height: 67px;
-
-    padding:
-        12px 13px 13px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 8px;
-}
-
-.game-card-info h3 {
-    margin: 0;
-
-    color: #20251f;
-
-    font-size: 17px;
-    line-height: 1.1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.3px;
-}
-
-.game-card-info span {
-    display: block;
-
-    margin-top: 4px;
-
-    color: rgba(32, 37, 31, 0.58);
-
-    font-size: 10px;
-    line-height: 1.2;
-
-    font-weight: 600;
-}
-
-.game-card-arrow {
-    width: 28px;
-    height: 28px;
-
-    flex-shrink: 0;
-
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(255,255,255,0.65);
-
-    color: #20251f;
-
-    font-size: 17px;
-    font-weight: 700;
-}
-
-
-/* =========================
-   PARTITA IN CORSO
-========================= */
-
-.saved-game-card {
-    width: 100%;
-
-    margin-top: 18px;
-
-    padding: 17px;
-
-    border-radius: 18px;
-
-    background: #ffffff;
-
-    border: 1px solid #e4e7e1;
-
-    box-shadow:
-        0 8px 25px rgba(28,42,32,0.06);
-}
-
-.saved-game-top {
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-}
-
-.saved-game-icon {
-    width: 42px;
-    height: 42px;
-
-    flex-shrink: 0;
-
-    border-radius: 13px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #dcefd5;
-
-    color: #1f6043;
-
-    font-size: 17px;
-    font-weight: 800;
-}
-
-.saved-label {
-    display: block;
-
-    margin-bottom: 4px;
-
-    color: #1f6043;
-
-    font-size: 9px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: 1.2px;
-}
-
-.saved-game-title h3 {
-    margin: 0;
-
-    color: #20251f;
-
-    font-size: 18px;
-    line-height: 1.1;
-
-    font-weight: 800;
-}
-
-.saved-game-info {
-    margin-top: 11px;
-
-    color: #747a72;
-
-    font-size: 12px;
-    line-height: 1.4;
-
-    font-weight: 500;
-}
-
-
-/* =========================
-   BUTTONS HOME
-========================= */
-
-.primary-button {
-    width: 100%;
-
-    min-height: 52px;
-
-    padding: 14px 18px;
-
-    border-radius: 16px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #1f6043;
-
-    color: white;
-
-    font-size: 15px;
-    line-height: 1;
-
-    font-weight: 750;
-
-    box-shadow:
-        0 8px 20px rgba(31,96,67,0.18);
-
-    transition:
-        transform 0.15s ease,
-        opacity 0.15s ease;
-}
-
-.primary-button:active {
-    transform: scale(0.98);
-}
-
-.saved-game-card .primary-button {
-    margin-top: 14px;
-}
-
-
-.secondary-button {
-    width: 100%;
-
-    min-height: 52px;
-
-    padding: 14px 18px;
-
-    border-radius: 16px;
-
-    background: #ffffff;
-
-    border: 1px solid #e4e7e1;
-
-    color: #173f31;
-
-    font-size: 15px;
-
-    font-weight: 750;
-
-    box-shadow:
-        0 8px 25px rgba(28,42,32,0.06);
-}
-
-
-/* =========================
-   PRIVACY
-========================= */
-
-.privacy-note {
-    margin: 17px 0 0;
-
-    text-align: center;
-
-    color: #9ca19a;
-
-    font-size: 10px;
-    line-height: 1.4;
-
-    font-weight: 500;
-}
-
-
-/* =========================================================
-   NUOVA PARTITA
-========================================================= */
-
-.topbar {
-    position: relative;
-
-    width: 100%;
-
-    min-height: 68px;
-
-    padding:
-        calc(env(safe-area-inset-top) + 10px)
-        18px
-        10px;
-
-    display: grid;
-
-    grid-template-columns:
-        1fr auto 1fr;
-
-    align-items: center;
-
-    background: #f8f8f4;
-
-    border-bottom:
-        1px solid rgba(229,232,226,0.65);
-
-    z-index: 10;
-}
-
-.topbar h1 {
-    margin: 0;
-
-    text-align: center;
-
-    color: #20251f;
-
-    font-size: 17px;
-    line-height: 1.1;
-
-    font-weight: 800;
-}
-
-.topbar-spacer {
-    width: 100%;
-}
-
-.back-button {
-    justify-self: start;
-
-    padding: 8px 4px;
-
-    display: inline-flex;
-    align-items: center;
-
-    gap: 4px;
-
-    background: transparent;
-
-    color: #1f6043;
-
-    font-size: 14px;
-
-    font-weight: 650;
-}
-
-.back-arrow {
-    margin-top: -1px;
-
-    font-size: 27px;
-
-    line-height: 14px;
-
-    font-weight: 300;
-}
-
-
-.setup-content {
-    width: 100%;
-    max-width: 520px;
-
-    margin: 0 auto;
-
-    padding:
-        17px 20px
-        calc(35px + env(safe-area-inset-bottom));
-}
-
-
-/* Gioco selezionato */
-
-.selected-game-card {
-    width: 100%;
-
-    margin-bottom: 14px;
-
-    padding: 17px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 13px;
-
-    border-radius: 18px;
-
-    background: #dcefd5;
-}
-
-.selected-game-icon {
-    width: 48px;
-    height: 48px;
-
-    flex-shrink: 0;
-
-    border-radius: 15px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-
-    background: rgba(255,255,255,0.68);
-
-    font-size: 23px;
-}
-
-.selected-game-icon img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
-.selected-game-card h2 {
-    margin: 0;
-
-    color: #173f31;
-
-    font-size: 21px;
-
-    font-weight: 800;
-}
-
-
-/* Setup cards */
-
-.setup-card {
-    width: 100%;
-
-    margin-bottom: 13px;
-
-    padding: 17px;
-
-    border-radius: 18px;
-
-    background: #ffffff;
-
-    border: 1px solid #e4e7e1;
-
-    box-shadow:
-        0 8px 25px rgba(28,42,32,0.06);
-}
-
-.setup-card-title {
-    display: flex;
-
-    align-items: flex-start;
-    justify-content: space-between;
-
-    margin-bottom: 14px;
-}
-
-.setup-card-title h2 {
-    margin: 0;
-
-    font-size: 19px;
-
-    font-weight: 800;
-}
-
-.setup-card-divider {
-    width: 100%;
-    height: 1px;
-
-    margin: 16px 0;
-
-    background: #eceee9;
-}
-
-#impostazioni-semplice,
-#impostazioni-game-set {
-    width: 100%;
-}
-
-.counter {
-    min-width: 30px;
-    height: 30px;
-
-    padding: 0 8px;
-
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #dcefd5;
-
-    color: #1f6043;
-
-    font-size: 12px;
-
-    font-weight: 800;
-}
-
-
-/* Giocatori */
-
-.players-list {
-    width: 100%;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
-}
-
-.player-row {
-    width: 100%;
-
-    min-height: 48px;
-
-    padding:
-        7px 7px 7px 13px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    border-radius: 13px;
-
-    background: #f7f8f5;
-
-    border: 1px solid #e4e7e1;
-}
-
-.player-input {
-    width: 100%;
-    min-width: 0;
-
-    padding: 5px 0;
-
-    border: 0;
-    outline: 0;
-
-    background: transparent;
-
-    color: #20251f;
-
-    font-size: 14px;
-
-    font-weight: 650;
-}
-
-.player-input::placeholder {
-    color: #9ca19a;
-}
-
-.remove-player {
-    width: 32px;
-    height: 32px;
-
-    flex-shrink: 0;
-
-    border-radius: 10px;
-
-    background: transparent;
-
-    color: #9ca19a;
-
-    font-size: 18px;
-}
-
-.add-player-button {
-    width: 100%;
-
-    min-height: 45px;
-
-    margin-top: 10px;
-
-    border-radius: 13px;
-
-    background: #edf6e9;
-
-    color: #1f6043;
-
-    font-size: 13px;
-
-    font-weight: 750;
-}
-
-
-/* Form */
-
-.field-label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: #9ca19a;
-
-    font-size: 9px;
-
-    font-weight: 800;
-
-    letter-spacing: 1.15px;
-}
-
-.select-field {
-    width: 100%;
-
-    min-height: 48px;
-
-    padding: 0 13px;
-
-    border-radius: 13px;
-
-    border: 1px solid #e4e7e1;
-
-    background: #f8f9f6;
-
-    color: #20251f;
-
-    font-size: 14px;
-
-    font-weight: 650;
-}
-
-.number-field {
-    width: 100%;
-
-    min-height: 48px;
-
-    padding: 0 13px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    border-radius: 13px;
-
-    border: 1px solid #e4e7e1;
-
-    background: #f8f9f6;
-}
-
-.number-field input {
-    width: 100%;
-
-    min-width: 0;
-
-    height: 45px;
-
-    border: 0;
-    outline: 0;
-
-    background: transparent;
-
-    color: #20251f;
-
-    font-size: 17px;
-
-    font-weight: 750;
-}
-
-.number-field span {
-    color: #747a72;
-
-    font-size: 12px;
-}
-
-
-/* Game / Set */
-
-.settings-row {
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0,1fr));
-
-    gap: 8px;
-}
-
-.setting-item {
-    min-width: 0;
-}
-
-.setting-item > span {
-    display: block;
-
-    min-height: 28px;
-
-    color: #747a72;
-
-    font-size: 10px;
-
-    font-weight: 600;
-}
-
-.setting-item input {
-    width: 100%;
-
-    min-height: 48px;
-
-    padding: 0 8px;
-
-    border-radius: 13px;
-
-    border: 1px solid #e4e7e1;
-
-    background: #f8f9f6;
-
-    text-align: center;
-
-    font-size: 15px;
-
-    font-weight: 750;
-}
-
-.start-button {
-    margin-top: 4px;
-}
-
-
-/* =========================================================
-   PAGINA STORICO COMPLETO
-========================================================= */
-
-.history-page-content {
-    width: 100%;
-    max-width: 520px;
-
-    margin: 0 auto;
-
-    padding:
-        17px 20px
-        calc(30px + env(safe-area-inset-bottom));
-}
-
-
-/* =========================================================
-   STORICO
-========================================================= */
-
-.history-section {
-    width: 100%;
-
-    margin-top: 25px;
-}
-
-.history-heading {
-    margin-bottom: 10px;
-}
-
-.history-heading .small-label {
-    display: none;
-}
-
-.history-heading h2 {
-    color: var(--green-dark);
-
-    font-size: 21px;
-
-    font-weight: 750;
-}
-
-.history-link {
-    padding: 5px 0;
-
-    background: transparent;
-
-    color: #1f6043;
-
-    font-size: 11px;
-
-    font-weight: 750;
-}
-
-.history-list,
-.history-full-list {
-    width: 100%;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 7px;
-}
-
-.history-empty {
-    width: 100%;
-
-    padding: 22px 15px;
-
-    border-radius: 16px;
-
-    background: #ffffff;
-
-    border: 1px solid #e4e7e1;
-
-    color: #9ca19a;
-
-    text-align: center;
-
-    font-size: 11px;
-}
-
-.history-row {
-    width: 100%;
-
-    min-height: 54px;
-
-    padding: 9px 12px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 11px;
-
-    border-radius: 15px;
-
-    background: #ffffff;
-
-    border: 1px solid #e4e7e1;
-}
-
-.history-turn {
-    width: 40px;
-
-    flex-shrink: 0;
-
-    color: #9ca19a;
-
-    font-size: 9px;
-
-    font-weight: 700;
-}
-
-.history-details {
-    min-width: 0;
-
-    flex: 1;
-}
-
-.history-player {
-    display: block;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-
-    color: #20251f;
-
-    font-size: 12px;
-
-    font-weight: 700;
-}
-
-.history-points {
-    display: block;
-
-    margin-top: 3px;
-
-    color: #1f6043;
-
-    font-size: 9px;
-
-    font-weight: 700;
-}
-
-.history-arrow {
-    color: #9ca19a;
-}
-
-
-/* =========================================================
-   RESPONSIVE HOME
-========================================================= */
-
-@media (max-width: 390px) {
 
     .home-content,
     .setup-content {
@@ -2055,7 +1205,6 @@ button {
 
     .game-card-info {
         min-height: 62px;
-
         padding: 10px;
     }
 
@@ -2068,28 +1217,49 @@ button {
     }
 
 }
+
 /* =========================================================
    RIQUADRI COMPATTI (versione consolidata)
    Nota: qui prima esistevano 3 blocchi quasi identici che si
    sovrascrivevano a vicenda con !important. Sono stati uniti
    in un unico blocco con i valori finali effettivamente
    applicati, per evitare confusione e regole morte.
-========================================================= */
-
+   ========================================================= */
 /* Banner GAME / SET / MATCH */
 .match-title {
-    padding: 34px 14px 11px !important;
+    position: relative;
+    width: 100%;
     min-height: 92px !important;
     margin-top: 28px !important;
     margin-bottom: 12px !important;
+    padding: 34px 14px 11px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
     border-radius: 16px !important;
+    background: #cfe5c7;
+    box-shadow: 0 5px 14px rgba(45, 75, 48, 0.08);
+    text-align: center;
 }
 
 .match-title-icon {
+    position: absolute;
+    top: -19px !important;
+    left: 50%;
+    transform: translateX(-50%);
     width: 54px !important;
     height: 54px !important;
-    top: -19px !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #4b9258;
+    color: #fff5d8;
     font-size: 25px !important;
+    box-shadow: 0 6px 13px rgba(31, 83, 48, 0.13);
+    z-index: 3;
 }
 
 .match-title strong {
@@ -2097,26 +1267,53 @@ button {
 }
 
 .match-title::after {
+    content: "Turno " attr(data-turn);
+    display: block;
     margin-top: 5px !important;
+    color: #1d5338;
     font-size: 12px !important;
+    font-weight: 500;
 }
-
 
 /* Contenitore giocatori */
 .game-set-scoreboard {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
     gap: 9px !important;
 }
 
-
 /* Card giocatore */
 .match-row {
+    position: relative;
+    width: 100%;
     min-height: 125px !important;
     padding: 16px 16px 13px !important;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr)
+    110px;
+    grid-template-rows: auto
+    1fr;
+    column-gap: 12px;
+    align-items: start;
     border-radius: 15px !important;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
 }
 
 /* Nasconde i tre puntini del menu card */
 .match-row::after {
+    content: "•••";
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    color: #52715e;
+    font-size: 17px;
+    line-height: 1;
+    letter-spacing: 2px;
+    font-weight: 800;
     display: none !important;
 }
 
@@ -2134,11 +1331,20 @@ button {
 }
 
 .score-big {
-    top: 43px !important;
+    position: absolute;
     right: 20px !important;
+    top: 43px !important;
+    color: #146038;
+    font-size: 72px;
+    line-height: 0.9;
+    font-weight: 850;
+    letter-spacing: -3px;
+    font-variant-numeric: Dongle;
+    text-align: right;
 }
 
 .match-row::before {
+    display: none !important;
     left: 20px !important;
     bottom: 57px !important;
     font-size: 9px !important;
@@ -2148,260 +1354,236 @@ button {
     width: 39px !important;
     height: 39px !important;
     border-radius: 8px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--green-box);
+    color: var(--green-dark);
     font-size: 16px !important;
+    font-weight: 700;
+    border: 1px solid rgba(47, 106, 63, 0.08);
 }
 
 .match-row > .match-stat:nth-child(2) {
+    position: absolute;
     left: 20px !important;
     bottom: 8px !important;
 }
 
 .match-row > .match-stat:nth-child(3) {
+    position: absolute;
     left: 73px !important;
     bottom: 8px !important;
 }
 
-.match-row > .match-stat:nth-child(4) {
-    left: 126px !important;
-    bottom: 8px !important;
-}
-
 /* Punteggio grande (valori finali) */
-.match-row .score-big {
-    width: 115px !important;
-    font-size: 52px !important;
-    font-weight: 900 !important;
-    line-height: 0.9 !important;
-    letter-spacing: -3px !important;
-}
-
 .match-row .score-big::after {
+    content: "punti";
+    display: block;
     margin-top: 7px !important;
+    color: #174f36;
     font-size: 14px !important;
+    line-height: 1;
+    letter-spacing: 0;
+    font-weight: 550;
 }
-
 
 /* Pulsanti rapidi + annulla */
 .turn-section {
+    width: 100%;
     margin-top: 10px !important;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 6px !important;
+    align-items: stretch;
 }
 
 .quick-buttons {
+    display: contents;
     gap: 7px !important;
     margin-bottom: 8px !important;
 }
 
 .quick-button {
+    width: 100%;
     min-height: 58px !important;
     padding: 7px 8px !important;
     border-radius: 13px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #e8f4e2;
+    color: #367a49;
     font-size: 16px !important;
+    line-height: 1;
+    font-weight: 750;
+    box-shadow: 0 4px 10px rgba(43, 64, 47, 0.05);
+    -webkit-touch-callout: none;
 }
 
 .undo-button {
+    width: 100%;
     min-height: 58px !important;
+    margin: 0;
+    padding: 14px 8px;
     border-radius: 13px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: #222a24;
     font-size: 10px !important;
+    line-height: 1.25;
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(43, 64, 47, 0.06);
 }
 
 .undo-button span {
+    display: block;
+    margin: 0 0 8px;
+    color: #17261d;
     font-size: 22px !important;
+    line-height: 1;
+    font-weight: 300;
     margin-bottom: 3px !important;
 }
 
-
 /* =========================================================
    OVERLAY DI SFONDO (usato da popup GAME/SET e VITTORIA)
-========================================================= */
-
+   ========================================================= */
 .cardscore-overlay {
     position: fixed;
     inset: 0;
-
     background: rgba(15, 30, 20, 0.55);
-
     z-index: 900;
-
     animation: cardscoreFadeIn 0.2s ease;
 }
 
-
 /* =========================================================
    POPUP GAME / SET (toast centrale temporaneo)
-========================================================= */
-
+   ========================================================= */
 .match-message {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     width: min(320px, 84vw);
-
     padding: 32px 24px 26px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
     text-align: center;
-
     border-radius: 22px;
-
     background: #ffffff;
-
     box-shadow: 0 20px 45px rgba(20, 40, 25, 0.25);
-
     z-index: 950;
-
     animation: cardscoreMessagePopIn 0.25s ease;
 }
 
 .match-message-icon {
     width: 56px;
     height: 56px;
-
     margin-bottom: 12px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background: var(--green-soft);
-
     font-size: 28px;
 }
 
 .match-message-label {
     margin-bottom: 6px;
-
     color: var(--text-soft);
-
     font-size: 11px;
     font-weight: 800;
-
     letter-spacing: 1.3px;
 }
 
 .match-message h2 {
     margin: 0;
-
     color: var(--green-dark);
-
     font-size: 21px;
     font-weight: 800;
 }
 
 .match-message p {
     margin: 8px 0 0;
-
     color: var(--text-soft);
-
     font-size: 13px;
     font-weight: 500;
 }
 
-
 /* =========================================================
    SCHERMATA DI VITTORIA (fine partita)
-========================================================= */
-
+   ========================================================= */
 .victory-screen {
     position: fixed;
     inset: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 20px;
-
     background: rgba(15, 30, 20, 0.6);
-
     z-index: 1000;
-
     overflow-y: auto;
-
     animation: cardscoreFadeIn 0.25s ease;
 }
 
 .victory-content {
     width: 100%;
     max-width: 380px;
-
     margin: auto;
-
     padding: 36px 26px 28px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
     text-align: center;
-
     border-radius: 26px;
-
     background: #ffffff;
-
     box-shadow: 0 25px 60px rgba(15, 30, 20, 0.35);
-
     animation: cardscorePopIn 0.3s ease;
 }
 
 .victory-trophy {
     width: 74px;
     height: 74px;
-
     margin-bottom: 14px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background: var(--green-soft);
-
     font-size: 36px;
 }
 
 .victory-label {
     color: var(--text-soft);
-
     font-size: 11px;
     font-weight: 800;
-
     letter-spacing: 1.5px;
 }
 
 .victory-content h1 {
     margin: 6px 0 0;
-
     color: var(--green-dark);
-
     font-size: 24px;
     font-weight: 850;
-
     letter-spacing: -0.5px;
 }
 
 .victory-winner {
     margin-top: 10px;
-
     color: var(--green);
-
     font-size: 22px;
     font-weight: 800;
 }
 
 .victory-score {
     margin-top: 6px;
-
     color: var(--text-soft);
-
     font-size: 13px;
     font-weight: 600;
 }
@@ -2413,99 +1595,70 @@ button {
 
 .victory-stats {
     width: 100%;
-
     margin-top: 18px;
-
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-
     gap: 8px;
 }
 
 .victory-stat {
     padding: 12px 6px;
-
     border-radius: 14px;
-
     background: var(--green-box);
 }
 
 .victory-stat strong {
     display: block;
-
     color: var(--green-dark);
-
     font-size: 18px;
     font-weight: 800;
 }
 
 .victory-stat span {
     display: block;
-
     margin-top: 3px;
-
     color: var(--text-soft);
-
     font-size: 9px;
     font-weight: 700;
-
     letter-spacing: 0.8px;
 }
 
 .recap-title {
     width: 100%;
-
     margin-top: 18px;
     margin-bottom: 8px;
-
     color: var(--text-soft);
-
     font-size: 10px;
     font-weight: 800;
-
     letter-spacing: 1.2px;
-
     text-align: left;
 }
 
 .recap-set {
     width: 100%;
-
     padding: 8px 12px;
-
     margin-bottom: 6px;
-
     border-radius: 10px;
-
     background: #f7f8f5;
-
     color: var(--text);
-
     font-size: 11px;
     font-weight: 600;
-
     text-align: left;
 }
 
 .victory-actions {
     width: 100%;
-
     margin-top: 22px;
-
     display: flex;
     flex-direction: column;
-
     gap: 10px;
 }
 
 .victory-home-button,
 .victory-new-button {
     width: 100%;
-
     min-height: 50px;
-
     border-radius: 15px;
-
     font-size: 14px;
     font-weight: 750;
 }
@@ -2520,28 +1673,21 @@ button {
     color: #ffffff;
 }
 
-
 /* =========================================================
    CANVAS CORIANDOLI
-========================================================= */
-
+   ========================================================= */
 #confetti-canvas {
     position: fixed;
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     pointer-events: none;
-
     z-index: 980;
 }
 
-
 /* =========================================================
    ANIMAZIONI POPUP
-========================================================= */
-
+   ========================================================= */
 @keyframes cardscoreFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -2569,11 +1715,9 @@ button {
     }
 }
 
-
 /* =========================================================
    POPUP PUNTEGGIO PERSONALIZZATO (pressione prolungata)
-========================================================= */
-
+   ========================================================= */
 .custom-score-overlay {
     z-index: 960;
 }
@@ -2583,27 +1727,17 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     width: min(320px, 86vw);
-
     padding: 28px 24px 24px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
     text-align: center;
-
     border-radius: 22px;
-
     background: #ffffff;
-
     box-shadow: 0 20px 45px rgba(20, 40, 25, 0.25);
-
     z-index: 970;
-
     animation: cardscoreMessagePopIn 0.2s ease;
-
     /* Si adatta automaticamente quando compare la tastiera */
     max-height: calc(100dvh - 32px);
     overflow-y: auto;
@@ -2611,53 +1745,38 @@ button {
 
 .custom-score-label {
     color: var(--text-soft);
-
     font-size: 10px;
     font-weight: 800;
-
     letter-spacing: 1.2px;
 }
 
 .custom-score-name {
     margin: 6px 0 18px;
-
     color: var(--green-dark);
-
     font-size: 21px;
     font-weight: 800;
 }
 
 .custom-score-field {
     width: 100%;
-
     display: flex;
     align-items: center;
-
     gap: 10px;
 }
 
 .custom-score-field input {
     width: 100%;
     min-width: 0;
-
     height: 56px;
-
     border: 1px solid #e4e7e1;
     outline: 0;
-
     border-radius: 14px;
-
     background: #f8f9f6;
-
     color: var(--text);
-
     font-size: 26px;
     font-weight: 800;
-
     text-align: center;
-
     font-variant-numeric: tabular-nums;
-
     /* Rimuove le frecce dell'input number su alcuni browser */
     -moz-appearance: textfield;
 }
@@ -2671,49 +1790,23 @@ button {
 .custom-score-step {
     width: 48px;
     height: 48px;
-
     flex-shrink: 0;
-
     border-radius: 14px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: var(--green-soft);
-
     color: var(--green-dark);
-
     font-size: 22px;
     font-weight: 800;
-
     line-height: 1;
-}
-
-.custom-score-step:active {
-    transform: scale(0.95);
 }
 
 .custom-score-actions {
     width: 100%;
-
     margin-top: 20px;
-
     display: flex;
-
     gap: 10px;
-}
-
-.custom-score-cancel,
-.custom-score-confirm {
-    flex: 1;
-
-    min-height: 48px;
-
-    border-radius: 14px;
-
-    font-size: 13px;
-    font-weight: 750;
 }
 
 .custom-score-cancel {
@@ -2725,96 +1818,77 @@ button {
     background: var(--green);
     color: #ffffff;
 }
+
 /* =========================================================
    EFFETTO PRESSIONE 3D - PULSANTI PUNTEGGIO
-========================================================= */
-
+   ========================================================= */
 /* Pulsanti +1 / -1 durante la partita */
 .quick-button,
 .quick-button:focus {
-    transition:
-        transform 0.08s ease,
-        box-shadow 0.08s ease;
+    transition: transform 0.08s ease,
+    box-shadow 0.08s ease;
 }
 
 .quick-button:active {
     transform: translateY(4px) scale(0.98);
-    box-shadow:
-        0 1px 2px rgba(20, 40, 25, 0.18);
+    box-shadow: 0 1px 2px rgba(20, 40, 25, 0.18);
 }
-
 
 /* Pulsanti + / - del punteggio personalizzato */
 .custom-score-step,
 .custom-score-step:focus {
-    transition:
-        transform 0.08s ease,
-        box-shadow 0.08s ease;
+    transition: transform 0.08s ease,
+    box-shadow 0.08s ease;
 }
 
 .custom-score-step:active {
     transform: translateY(3px) scale(0.96);
-    box-shadow:
-        0 1px 2px rgba(20, 40, 25, 0.18);
+    box-shadow: 0 1px 2px rgba(20, 40, 25, 0.18);
 }
-
 
 /* Annulla / Aggiungi punti */
 .custom-score-cancel,
 .custom-score-confirm {
-    transition:
-        transform 0.08s ease,
-        box-shadow 0.08s ease;
+    flex: 1;
+    min-height: 48px;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 750;
+    transition: transform 0.08s ease,
+    box-shadow 0.08s ease;
 }
 
 .custom-score-cancel:active,
 .custom-score-confirm:active {
     transform: translateY(3px) scale(0.98);
-    box-shadow:
-        0 1px 2px rgba(20, 40, 25, 0.18);
+    box-shadow: 0 1px 2px rgba(20, 40, 25, 0.18);
 }
+
 /* =========================================================
    EFFETTO PRESSIONE 3D - TUTTI I PULSANTI
-========================================================= */
-
-button {
-    transition:
-        transform 0.08s ease,
-        box-shadow 0.08s ease;
-}
-
+   ========================================================= */
 button:active {
     transform: translateY(4px) scale(0.98) !important;
-
-    box-shadow:
-        0 1px 2px rgba(20, 40, 25, 0.18) !important;
+    box-shadow: 0 1px 2px rgba(20, 40, 25, 0.18) !important;
 }
+
 /* =========================================================
    EFFETTO PRESSIONE 3D - TUTTI I PULSANTI
-========================================================= */
-
-button {
-    -webkit-tap-highlight-color: transparent;
-    transition:
-        transform 0.08s ease,
-        box-shadow 0.08s ease;
-}
-
+   ========================================================= */
 /* =========================================================
    EFFETTO PRESSIONE 3D UNIVERSALE
    ========================================================= */
-
 button {
+    border: 0;
+    outline: none;
+    transition: transform 0.08s ease,
+    box-shadow 0.08s ease;
     -webkit-tap-highlight-color: transparent;
-    transition:
-        transform 0.08s ease,
-        box-shadow 0.08s ease;
 }
 
 button.is-pressed {
     transform: translateY(4px) scale(0.98) !important;
-    box-shadow:
-        0 1px 3px rgba(20, 40, 25, 0.20) !important;
+    box-shadow: 0 1px 3px rgba(20, 40, 25, 0.20) !important;
 }
 
 /* Pulsanti trasparenti */
@@ -2823,371 +1897,67 @@ button.is-pressed {
     transform: translateY(2px) scale(0.96) !important;
     box-shadow: none !important;
 }
+
 /* POSIZIONE PUNTEGGIO */
 .match-row .score-big {
+    width: 115px !important;
+    font-size: 52px !important;
+    font-weight: 900 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -3px !important;
     top: 28px !important;
     right: 28px !important;
 }
+
 /* RIMUOVE CASELLA MATCH */
 .match-row > .match-stat:nth-child(4) {
+    position: absolute;
+    left: 126px !important;
+    bottom: 8px !important;
     display: none !important;
 }
+
 /* =========================================================
    CARDSCORE - NUOVA HOME
    ========================================================= */
-
 /* ---------- HOME ---------- */
-
-#home {
-    background: #f7f8f4;
-}
-
-#home .home-header {
-    padding:
-        calc(env(safe-area-inset-top) + 22px)
-        20px
-        8px;
-}
-
-#home .brand {
-    max-width: 100%;
-    justify-content: center;
-    gap: 10px;
-}
-
-#home .brand-icon {
-    width: 62px;
-    height: 62px;
-    background: transparent;
-    box-shadow: none;
-    border-radius: 0;
-}
-
-#home .brand-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-}
-
 #home .brand-text {
     text-align: left;
 }
 
-#home .brand-text h1 {
-    font-size: 34px;
-    line-height: 1;
-    letter-spacing: -1.2px;
-    color: #1f6043;
-}
-
-#home .brand-text p {
-    margin-top: 7px;
-    font-size: 13px;
-    color: #6f766f;
-}
-
-
 /* ---------- CONTENUTO ---------- */
-
-#home .home-content {
-    max-width: 430px;
-    padding:
-        25px 20px
-        calc(30px + env(safe-area-inset-bottom));
-}
-
-
 /* ---------- TITOLO ---------- */
-
-#home .home-section-heading {
-    justify-content: center;
-    margin-bottom: 16px;
-    text-align: center;
-}
-
-#home .home-section-heading h2 {
-    margin: 0;
-    color: #173f31;
-    font-size: 15px;
-    line-height: 1.1;
-    font-weight: 800;
-    letter-spacing: 0.2px;
-    text-transform: uppercase;
-}
-
-
 /* ---------- CARTE GIOCHI ---------- */
-
-#home .games-grid {
-    gap: 10px;
-}
-
-#home .game-card {
-    min-height: 177px;
-    border-radius: 18px;
-    box-shadow:
-        0 7px 18px rgba(28, 42, 32, 0.07);
-
-    /* Mantiene l'animazione */
-    transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease;
-}
-
-#home .game-card-image {
-    height: 116px;
-}
-
-#home .game-card-info {
-    min-height: 61px;
-    padding: 8px 10px 11px;
-    justify-content: center;
-    text-align: center;
-}
-
-#home .game-card-info > div {
-    width: 100%;
-}
-
-#home .game-card-info h3 {
-    font-size: 16px;
-    line-height: 1.1;
-    font-weight: 800;
-    color: #173f31;
-}
-
-#home .game-card-info span {
-    margin-top: 5px;
-    font-size: 10px;
-    color: rgba(32, 37, 31, 0.62);
-    font-weight: 500;
-}
-
-
 /* ---------- COLORI CARTE ---------- */
-
-#home .game-uno {
-    background: #dcefd5;
-}
-
-#home .game-pili-pili {
-    background: #fae3aa;
-}
-
-#home .game-scala {
-    background: #d5ebf1;
-}
-
-#home .game-scopa {
-    background: #e8daef;
-}
-
-
 /* =========================================================
    PARTITA IN CORSO
    ========================================================= */
-
-#home .saved-game-card {
-    margin-top: 30px;
-    padding: 18px;
-    border-radius: 20px;
-    background: #edf7e9;
-    border: 1px solid #dcebd7;
-    box-shadow:
-        0 7px 20px rgba(28, 42, 32, 0.06);
-}
-
-
 /* Titolo */
-
-#home .saved-game-heading {
-    margin-bottom: 13px;
-    text-align: center;
-}
-
-#home .saved-game-heading h2 {
-    margin: 0;
-    color: #1f6043;
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-}
-
-
 /* Contenuto partita */
-
-#home .saved-game-content {
-    display: grid;
-    grid-template-columns: 50px minmax(0, 1fr) 24px;
-    align-items: center;
-    gap: 11px;
-}
-
-
 /* Icona */
-
-#home .saved-game-icon {
-    width: 50px;
-    height: 50px;
-    margin: 0;
-
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #4d9963;
-    color: white;
-
-    box-shadow:
-        0 5px 12px rgba(31, 96, 67, 0.14);
-}
-
 #home .saved-game-icon span {
     font-size: 18px;
 }
 
-
 /* Informazioni */
-
-#home .saved-game-main {
-    min-width: 0;
-}
-
-#home .saved-game-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-#home .saved-game-header h3 {
-    margin: 0;
-    color: #173f31;
-    font-size: 20px;
-    font-weight: 800;
-}
-
-#home .saved-game-turn {
-    color: #69726b;
-    font-size: 12px;
-    white-space: nowrap;
-}
-
-#home .saved-game-info {
-    margin-top: 7px;
-    color: #345746;
-    font-size: 12px;
-    line-height: 1.45;
-    font-weight: 500;
-}
-
-
 /* Freccia */
-
-#home .saved-game-arrow {
-    color: #173f31;
-    font-size: 29px;
-    line-height: 1;
-    text-align: center;
-}
-
-
 /* ---------- CONTINUA PARTITA ---------- */
-
-#home .saved-game-card .primary-button {
-    margin-top: 15px;
-    min-height: 50px;
-    border-radius: 25px;
-
-    background: #3f8a55;
-
-    font-size: 15px;
-    font-weight: 750;
-
-    box-shadow:
-        0 7px 16px rgba(31, 96, 67, 0.18);
-}
-
-#home .saved-game-card .primary-button span {
-    margin-right: 7px;
-    font-size: 13px;
-}
-
-
 /* ---------- PRIVACY ---------- */
-
-#home .privacy-note {
-    margin-top: 18px;
-    text-align: center;
-    font-size: 10px;
-    color: #8b928b;
-}
-
-
 /* =========================================================
    MOBILE
    ========================================================= */
-
-@media (max-width: 430px) {
-
-    #home .home-header {
-        padding-top:
-            calc(env(safe-area-inset-top) + 18px);
-    }
-
-    #home .brand-icon {
-        width: 58px;
-        height: 58px;
-    }
-
-    #home .brand-text h1 {
-        font-size: 31px;
-    }
-
-    #home .brand-text p {
-        font-size: 12px;
-    }
-
-    #home .home-content {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    #home .game-card {
-        min-height: 175px;
-    }
-
-    #home .game-card-image {
-        height: 112px;
-    }
-
-    #home .game-card-info h3 {
-        font-size: 15px;
-    }
-
-    #home .saved-game-card {
-        padding: 17px;
-    }
-
-}
 /* =========================================================
    CARD SCORE - HOME FINALE
    ========================================================= */
-
 /* HOME */
-
 #home {
     background: #f7f8f4;
 }
 
 #home .home-header {
-    padding:
-        calc(env(safe-area-inset-top) + 18px)
-        20px
-        6px;
+    padding: calc(env(safe-area-inset-top) + 18px)
+    20px
+    6px;
 }
 
 #home .brand {
@@ -3213,8 +1983,9 @@ button.is-pressed {
 
 #home .brand-text h1 {
     font-size: 34px;
-    color: #1f6043;
+    line-height: 1;
     letter-spacing: -1.2px;
+    color: #1f6043;
 }
 
 #home .brand-text p {
@@ -3223,23 +1994,19 @@ button.is-pressed {
     color: #687168;
 }
 
-
 /* CONTENUTO */
-
 #home .home-content {
     max-width: 430px;
-    padding:
-        22px 20px
-        calc(30px + env(safe-area-inset-bottom));
+    padding: 22px 20px
+    calc(30px + env(safe-area-inset-bottom));
 }
 
-
 /* TITOLO */
-
 #home .home-section-heading {
-    display: block;
+    justify-content: center;
     margin-bottom: 15px;
     text-align: center;
+    display: block;
 }
 
 #home .home-section-heading h2 {
@@ -3252,11 +2019,9 @@ button.is-pressed {
     text-transform: uppercase;
 }
 
-
 /* =========================================================
    GIOCHI
    ========================================================= */
-
 #home .games-grid {
     gap: 10px;
 }
@@ -3264,28 +2029,22 @@ button.is-pressed {
 #home .game-card {
     min-height: 176px;
     border-radius: 18px;
-
+    box-shadow: 0 7px 18px rgba(28, 42, 32, 0.07);
+    /* Mantiene l'animazione */
+    transition: transform 0.18s ease,
+    box-shadow 0.18s ease;
     display: flex;
     flex-direction: column;
-
-    box-shadow:
-        0 7px 18px rgba(28, 42, 32, 0.07);
-
-    transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease;
+    transition: transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
-
 /* Mantiene il tuo effetto di pressione */
-
 #home .game-card:active {
     transform: scale(0.97);
 }
 
-
 /* Immagini */
-
 #home .game-card-image {
     height: 112px;
     flex-shrink: 0;
@@ -3297,20 +2056,15 @@ button.is-pressed {
     object-fit: cover;
 }
 
-
 /* Testo */
-
 #home .game-card-info {
-    flex: 1;
     min-height: 64px;
-
     padding: 7px 8px 10px;
-
+    justify-content: center;
+    text-align: center;
+    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    text-align: center;
 }
 
 #home .game-card-info > div {
@@ -3318,35 +2072,28 @@ button.is-pressed {
 }
 
 #home .game-card-info h3 {
-    margin: 0;
-
-    color: #173f31;
     font-size: 16px;
     line-height: 1.1;
     font-weight: 800;
+    color: #173f31;
+    margin: 0;
 }
 
 #home .game-card-info span {
-    display: block;
-
     margin-top: 5px;
-
-    color: rgba(32, 37, 31, 0.62);
     font-size: 10px;
-    line-height: 1.2;
+    color: rgba(32, 37, 31, 0.62);
     font-weight: 500;
+    display: block;
+    line-height: 1.2;
 }
 
-
 /* Nascondiamo le vecchie frecce */
-
 #home .game-card-arrow {
     display: none;
 }
 
-
 /* Colori */
-
 #home .game-uno {
     background: #dcefd5;
 }
@@ -3363,99 +2110,69 @@ button.is-pressed {
     background: #e8daef;
 }
 
-
 /* =========================================================
    PARTITA IN CORSO
    ========================================================= */
-
 #home .saved-game-card {
-    width: 100%;
-
     margin-top: 30px;
     padding: 0;
-
-    background: #edf7e9;
-
-    border: 1px solid #dcebd7;
     border-radius: 20px;
-
-    box-shadow:
-        0 7px 20px rgba(28, 42, 32, 0.06);
-
+    background: #edf7e9;
+    border: 1px solid #dcebd7;
+    box-shadow: 0 7px 20px rgba(28, 42, 32, 0.06);
+    width: 100%;
     overflow: hidden;
 }
 
-
 /* Titolo */
-
 #home .saved-game-heading {
-    padding:
-        0 18px 10px;
-
+    margin-bottom: 13px;
     text-align: center;
+    padding: 0 18px 10px;
 }
 
 #home .saved-game-heading h2 {
     margin: 0;
-
     color: #1f6043;
-
     font-size: 14px;
-    line-height: 1.1;
     font-weight: 800;
-
     letter-spacing: 0.5px;
+    line-height: 1.1;
 }
-
 
 /* Contenuto */
-
 #home .saved-game-content {
-    padding: 0 18px;
-
     display: grid;
     grid-template-columns: 50px minmax(0, 1fr) 22px;
-
     align-items: center;
-
     gap: 11px;
+    padding: 0 18px;
 }
 
-
 /* Icona */
-
 #home .saved-game-icon {
     width: 50px;
     height: 50px;
-
-    padding: 0;
-
+    margin: 0;
     border-radius: 50%;
-
-    overflow: hidden;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: #4d9963;
-
-    box-shadow:
-        0 5px 12px rgba(31, 96, 67, 0.14);
+    color: white;
+    box-shadow: 0 5px 12px rgba(31, 96, 67, 0.14);
+    padding: 0;
+    overflow: hidden;
 }
 
 #home .saved-game-icon img {
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     display: block;
 }
 
-
 /* Testata partita */
-
 #home .saved-game-main {
     min-width: 0;
 }
@@ -3464,55 +2181,41 @@ button.is-pressed {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 8px;
 }
 
 #home .saved-game-header h3 {
     margin: 0;
-
     color: #173f31;
-
     font-size: 20px;
-    line-height: 1.1;
     font-weight: 800;
+    line-height: 1.1;
 }
 
 #home .saved-game-turn {
     color: #69726b;
-
     font-size: 12px;
-    line-height: 1;
-
     white-space: nowrap;
+    line-height: 1;
 }
-
 
 /* =========================================================
    GIOCATORI
    ========================================================= */
-
 #home .saved-game-info {
     margin-top: 8px;
-
     color: #345746;
-
     font-size: 12px;
     line-height: 1.45;
-
     font-weight: 500;
 }
 
 #home .saved-player-score {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
-
     gap: 10px;
-
     padding: 4px 0;
-
     border-bottom: 1px solid rgba(31, 96, 67, 0.14);
 }
 
@@ -3529,550 +2232,185 @@ button.is-pressed {
     font-weight: 700;
 }
 
-
 /* Freccia */
-
 #home .saved-game-arrow {
     color: #173f31;
-
     font-size: 30px;
     line-height: 1;
-
     text-align: center;
 }
-
 
 /* =========================================================
    PULSANTE CONTINUA
    ========================================================= */
-
 #home .saved-game-card .primary-button {
-    width: calc(100% - 36px);
-
+    margin-top: 15px;
     min-height: 50px;
-
-    margin:
-        15px 18px 18px;
-
-    padding: 13px 18px;
-
     border-radius: 26px;
-
     background: #3f8a55;
-
-    color: white;
-
     font-size: 15px;
     font-weight: 750;
-
-    box-shadow:
-        0 7px 16px rgba(31, 96, 67, 0.18);
+    box-shadow: 0 7px 16px rgba(31, 96, 67, 0.18);
+    width: calc(100% - 36px);
+    margin: 15px 18px 18px;
+    padding: 13px 18px;
+    color: white;
 }
 
 #home .saved-game-card .primary-button span {
     margin-right: 7px;
+    font-size: 13px;
 }
-
 
 /* =========================================================
    PRIVACY
    ========================================================= */
-
 #home .privacy-note {
     margin-top: 18px;
-
     text-align: center;
-
-    color: #8b928b;
-
     font-size: 10px;
+    color: #8b928b;
 }
-
 
 /* =========================================================
    SCHERMI PICCOLI
    ========================================================= */
-
-@media (max-width: 430px) {
-
-    #home .home-header {
-        padding-top:
-            calc(env(safe-area-inset-top) + 16px);
-    }
-
-    #home .brand-icon {
-        width: 56px;
-        height: 56px;
-    }
-
-    #home .brand-text h1 {
-        font-size: 31px;
-    }
-
-    #home .home-content {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    #home .game-card {
-        min-height: 174px;
-    }
-
-    #home .game-card-image {
-        height: 110px;
-    }
-
-}
 /* =========================================================
    HOME - VERSIONE COMPATTA MOBILE
    ========================================================= */
-
-@media (max-width: 430px) {
-
-    /* HOME */
-
-    #home .home-header {
-        padding-top: calc(env(safe-area-inset-top) + 8px);
-        padding-bottom: 0;
-    }
-
-    #home .brand {
-        gap: 7px;
-    }
-
-    #home .brand-icon {
-        width: 44px;
-        height: 44px;
-    }
-
-    #home .brand-text h1 {
-        font-size: 27px;
-        letter-spacing: -1px;
-    }
-
-    #home .brand-text p {
-        margin-top: 3px;
-        font-size: 10px;
-    }
-
-
-    /* CONTENUTO */
-
-    #home .home-content {
-        padding:
-            12px 16px
-            calc(16px + env(safe-area-inset-bottom));
-    }
-
-
-    /* TITOLO */
-
-    #home .home-section-heading {
-        margin-bottom: 10px;
-    }
-
-    #home .home-section-heading h2 {
-        font-size: 13px;
-    }
-
-
-    /* =====================================================
-       CARTE GIOCHI
-       ===================================================== */
-
-    #home .games-grid {
-        gap: 8px;
-    }
-
-    #home .game-card {
-        min-height: 148px;
-        border-radius: 16px;
-    }
-
-    #home .game-card-image {
-        height: 91px;
-    }
-
-    #home .game-card-info {
-        min-height: 57px;
-        padding: 5px 6px 7px;
-    }
-
-    #home .game-card-info h3 {
-        font-size: 14px;
-    }
-
-    #home .game-card-info span {
-        margin-top: 3px;
-        font-size: 9px;
-    }
-
-
-    /* =====================================================
-       PARTITA IN CORSO
-       ===================================================== */
-
-    #home .saved-game-card {
-        margin-top: 18px;
-        border-radius: 17px;
-    }
-
-    #home .saved-game-heading {
-        padding: 7px 16px 5px;
-    }
-
-    #home .saved-game-heading h2 {
-        font-size: 12px;
-    }
-
-
-    /* CONTENUTO PARTITA */
-
-    #home .saved-game-content {
-        padding: 0 14px;
-
-        grid-template-columns: 42px minmax(0, 1fr) 18px;
-
-        gap: 9px;
-    }
-
-
-    /* ICONA */
-
-    #home .saved-game-icon {
-        width: 42px;
-        height: 42px;
-    }
-
-
-    /* TESTO */
-
-    #home .saved-game-header h3 {
-        font-size: 17px;
-    }
-
-    #home .saved-game-turn {
-        font-size: 10px;
-    }
-
-    #home .saved-game-info {
-        margin-top: 4px;
-        font-size: 10px;
-        line-height: 1.25;
-    }
-
-    #home .saved-player-score {
-        padding: 2px 0;
-    }
-
-    #home .saved-game-arrow {
-        font-size: 25px;
-    }
-
-
-    /* PULSANTE */
-
-    #home .saved-game-card .primary-button {
-        width: calc(100% - 28px);
-
-        min-height: 43px;
-
-        margin:
-            10px 14px 12px;
-
-        padding: 10px 14px;
-
-        border-radius: 23px;
-
-        font-size: 13px;
-    }
-
-
-    /* PRIVACY */
-
-    #home .privacy-note {
-        margin-top: 10px;
-        font-size: 9px;
-    }
-
-}
 /* =========================================================
    PARTITA IN CORSO - RIFINITURA
    ========================================================= */
-
-@media (max-width: 430px) {
-
-    #home .saved-game-card {
-        margin-top: 17px;
-        padding-bottom: 1px;
-
-        border-radius: 20px;
-        border: 1.5px solid #d8e8d3;
-
-        box-shadow:
-            0 6px 18px rgba(35, 70, 45, 0.06);
-    }
-
-
-    /* TITOLO */
-
-    #home .saved-game-heading {
-        padding: 8px 16px 7px;
-    }
-
-    #home .saved-game-heading h2 {
-        font-size: 12px;
-        letter-spacing: 0.8px;
-    }
-
-
-    /* CONTENUTO */
-
-    #home .saved-game-content {
-        grid-template-columns: 48px minmax(0, 1fr) 18px;
-
-        gap: 10px;
-
-        padding: 0 15px;
-    }
-
-
-    /* ICONA */
-
-    #home .saved-game-icon {
-        width: 48px;
-        height: 48px;
-
-        border-radius: 50%;
-
-        box-shadow:
-            0 4px 10px rgba(31, 96, 67, 0.12);
-    }
-
-
-    /* NOME + TURNO */
-
-    #home .saved-game-header {
-        align-items: center;
-    }
-
-    #home .saved-game-header h3 {
-        font-size: 18px;
-        font-weight: 800;
-    }
-
-    #home .saved-game-turn {
-        font-size: 11px;
-    }
-
-
-    /* PUNTEGGI */
-
-    #home .saved-game-info {
-        margin-top: 5px;
-
-        font-size: 11px;
-        line-height: 1.3;
-    }
-
-    #home .saved-player-score {
-        padding: 2px 0;
-
-        border-bottom:
-            1px solid rgba(31, 96, 67, 0.13);
-    }
-
-    #home .saved-player-score span {
-        color: #345746;
-        font-size: 11px;
-    }
-
-    #home .saved-player-score strong {
-        color: #287047;
-        font-size: 11px;
-        font-weight: 750;
-    }
-
-
-    /* FRECCIA */
-
-    #home .saved-game-arrow {
-        font-size: 27px;
-        font-weight: 400;
-
-        transform: translateY(-1px);
-    }
-
-
-    /* PULSANTE */
-
-    #home .saved-game-card .primary-button {
-        width: calc(100% - 30px);
-
-        min-height: 44px;
-
-        margin:
-            11px 15px 13px;
-
-        padding: 9px 14px;
-
-        border-radius: 24px;
-
-        font-size: 14px;
-        font-weight: 750;
-
-        box-shadow:
-            0 5px 13px rgba(31, 96, 67, 0.16);
-    }
-
-    #home .saved-game-card .primary-button span {
-        margin-right: 6px;
-        font-size: 13px;
-    }
-
-}
 /* =========================================================
    CARDSCORE HOME - RIFINITURA FINALE MOBILE
    ========================================================= */
-
 @media (max-width: 430px) {
-
+    /* HOME */
+    /* CONTENUTO */
+    /* TITOLO */
+    /* =====================================================
+       CARTE GIOCHI
+       ===================================================== */
+    /* =====================================================
+       PARTITA IN CORSO
+       ===================================================== */
+    /* CONTENUTO PARTITA */
+    /* ICONA */
+    /* TESTO */
+    /* PULSANTE */
+    /* PRIVACY */
+    /* TITOLO */
+    /* CONTENUTO */
+    /* ICONA */
+    /* NOME + TURNO */
+    /* PUNTEGGI */
+    /* FRECCIA */
+    /* PULSANTE */
     /* =====================================================
        SFONDO
        ===================================================== */
-
     #home {
         background: #f7f8f4;
     }
 
-
     /* =====================================================
        HEADER / LOGO
        ===================================================== */
-
     #home .home-header {
-        padding:
-            calc(env(safe-area-inset-top) + 7px)
-            16px
-            0;
+        padding-top: calc(env(safe-area-inset-top) + 8px);
+        padding-bottom: 0;
+        padding: calc(env(safe-area-inset-top) + 7px)
+        16px
+        0;
     }
 
     #home .brand {
+        gap: 7px;
         width: 100%;
         max-width: none;
-
         justify-content: center;
         align-items: center;
-
-        gap: 7px;
     }
 
     #home .brand-icon {
         width: 48px;
         height: 48px;
-
         border-radius: 0;
-
         background: transparent;
         box-shadow: none;
-
         flex-shrink: 0;
     }
 
     #home .brand-icon img {
         width: 100%;
         height: 100%;
-
         object-fit: contain;
         display: block;
     }
 
     #home .brand-text h1 {
         font-size: 29px;
-        line-height: 1;
-
         letter-spacing: -1.2px;
-
+        line-height: 1;
         color: #1f6043;
     }
 
     #home .brand-text p {
-        margin-top: 4px;
-
         font-size: 10px;
+        margin-top: 4px;
         line-height: 1.15;
-
         color: #747a72;
     }
-
 
     /* =====================================================
        CONTENUTO
        ===================================================== */
-
     #home .home-content {
+        padding-left: 16px;
+        padding-right: 16px;
+        padding: 11px 16px
+        calc(12px + env(safe-area-inset-bottom));
         max-width: 430px;
-
-        padding:
-            11px 16px
-            calc(12px + env(safe-area-inset-bottom));
     }
-
 
     /* =====================================================
        TITOLO
        ===================================================== */
-
     #home .home-section-heading {
         margin-bottom: 9px;
-
         text-align: center;
     }
 
     #home .home-section-heading h2 {
         font-size: 13px;
         line-height: 1.1;
-
         letter-spacing: 0.3px;
     }
-
 
     /* =====================================================
        CARTE GIOCHI
        ===================================================== */
-
     #home .games-grid {
         gap: 8px;
     }
 
     #home .game-card {
         min-height: 146px;
-
         border-radius: 17px;
-
-        box-shadow:
-            0 6px 17px rgba(28, 42, 32, 0.065);
-
+        box-shadow: 0 6px 17px rgba(28, 42, 32, 0.065);
         overflow: hidden;
-
         /* mantiene l'animazione */
-        transition:
-            transform 0.12s ease,
-            box-shadow 0.12s ease;
+        transition: transform 0.12s ease,
+        box-shadow 0.12s ease;
     }
 
     #home .game-card:active {
-        transform:
-            translateY(3px)
-            scale(0.975);
-
-        box-shadow:
-            0 2px 7px rgba(28, 42, 32, 0.10);
+        transform: translateY(3px)
+        scale(0.975);
+        box-shadow: 0 2px 7px rgba(28, 42, 32, 0.10);
     }
 
-
     /* IMMAGINI */
-
     #home .game-card-image {
         height: 91px;
     }
@@ -4080,23 +2418,16 @@ button.is-pressed {
     #home .game-card-image img {
         width: 100%;
         height: 100%;
-
         object-fit: cover;
     }
 
-
     /* TESTO CARTE */
-
     #home .game-card-info {
         min-height: 55px;
-
-        padding:
-            5px 7px 7px;
-
+        padding: 5px 7px 7px;
         display: flex;
         align-items: center;
         justify-content: center;
-
         text-align: center;
     }
 
@@ -4107,16 +2438,13 @@ button.is-pressed {
     #home .game-card-info h3 {
         font-size: 14px;
         line-height: 1.1;
-
         color: #173f31;
     }
 
     #home .game-card-info span {
         margin-top: 3px;
-
         font-size: 9px;
         line-height: 1.1;
-
         color: rgba(32, 37, 31, 0.60);
     }
 
@@ -4124,153 +2452,105 @@ button.is-pressed {
         display: none;
     }
 
-
     /* =====================================================
        PARTITA IN CORSO
        ===================================================== */
-
     #home .saved-game-card {
-        width: 100%;
-
-        margin-top: 17px;
         padding: 0;
-
+        margin-top: 17px;
         border-radius: 19px;
-
-        background: #edf7e9;
-
+        padding-bottom: 1px;
         border: 1px solid #d9e9d4;
-
-        box-shadow:
-            0 6px 17px rgba(28, 42, 32, 0.055);
-
+        box-shadow: 0 6px 17px rgba(28, 42, 32, 0.055);
+        width: 100%;
+        background: #edf7e9;
         overflow: hidden;
     }
 
-
     /* TITOLO */
-
     #home .saved-game-heading {
-        padding:
-            7px 14px 6px;
-
+        padding: 7px 14px 6px;
         text-align: center;
     }
 
     #home .saved-game-heading h2 {
-        margin: 0;
-
         font-size: 12px;
-        line-height: 1.1;
-
         letter-spacing: 0.8px;
-
+        margin: 0;
+        line-height: 1.1;
         color: #286548;
     }
 
-
     /* CONTENUTO */
-
     #home .saved-game-content {
-        padding:
-            0 14px;
-
-        display: grid;
-
-        grid-template-columns:
-            48px
-            minmax(0, 1fr)
-            17px;
-
+        padding: 0 14px;
+        grid-template-columns: 48px
+        minmax(0, 1fr)
+        17px;
         gap: 10px;
-
+        display: grid;
         align-items: center;
     }
 
-
     /* ICONA GIOCO */
-
     #home .saved-game-icon {
         width: 48px;
         height: 48px;
-
         border-radius: 50%;
-
+        box-shadow: 0 4px 9px rgba(31, 96, 67, 0.12);
         overflow: hidden;
-
         background: #4d9963;
-
-        box-shadow:
-            0 4px 9px rgba(31, 96, 67, 0.12);
     }
 
     #home .saved-game-icon img {
         width: 100%;
         height: 100%;
-
         display: block;
-
         object-fit: cover;
     }
 
-
     /* NOME + TURNO */
-
     #home .saved-game-header {
-        min-width: 0;
-
-        display: flex;
         align-items: center;
+        min-width: 0;
+        display: flex;
         justify-content: space-between;
-
         gap: 8px;
     }
 
     #home .saved-game-header h3 {
-        margin: 0;
-
         font-size: 18px;
+        font-weight: 800;
+        margin: 0;
         line-height: 1.05;
-
         color: #173f31;
     }
 
     #home .saved-game-turn {
         font-size: 11px;
         line-height: 1;
-
         color: #69726b;
-
         white-space: nowrap;
     }
-
 
     /* =====================================================
        GIOCATORI / PUNTEGGI
        ===================================================== */
-
     #home .saved-game-info {
         margin-top: 4px;
-
         font-size: 11px;
         line-height: 1.25;
-
         color: #345746;
     }
 
     #home .saved-player-score {
-        min-height: 22px;
-
         padding: 2px 0;
-
+        border-bottom: 1px solid rgba(31, 96, 67, 0.13);
+        min-height: 22px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-
         gap: 8px;
-
-        border-bottom:
-            1px solid rgba(31, 96, 67, 0.13);
     }
 
     #home .saved-player-score:last-child {
@@ -4278,75 +2558,52 @@ button.is-pressed {
     }
 
     #home .saved-player-score span {
+        color: #345746;
+        font-size: 11px;
         min-width: 0;
-
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-
-        font-size: 11px;
-        color: #345746;
     }
 
     #home .saved-player-score strong {
-        flex-shrink: 0;
-
+        color: #287047;
         font-size: 11px;
         font-weight: 750;
-
-        color: #287047;
+        flex-shrink: 0;
     }
-
 
     /* FRECCIA */
-
     #home .saved-game-arrow {
         font-size: 27px;
+        font-weight: 400;
+        transform: translateY(-1px);
         line-height: 1;
-
         color: #173f31;
     }
-
 
     /* =====================================================
        CONTINUA PARTITA
        ===================================================== */
-
     #home .saved-game-card .primary-button {
         width: calc(100% - 28px);
-
         min-height: 44px;
-
-        margin:
-            10px 14px 12px;
-
-        padding:
-            9px 14px;
-
+        margin: 10px 14px 12px;
+        padding: 9px 14px;
         border-radius: 23px;
-
-        background: #3f8f56;
-
         font-size: 14px;
-        line-height: 1;
-
         font-weight: 750;
-
-        box-shadow:
-            0 5px 12px rgba(31, 96, 67, 0.15);
-
-        transition:
-            transform 0.10s ease,
-            box-shadow 0.10s ease;
+        box-shadow: 0 5px 12px rgba(31, 96, 67, 0.15);
+        background: #3f8f56;
+        line-height: 1;
+        transition: transform 0.10s ease,
+        box-shadow 0.10s ease;
     }
 
     #home .saved-game-card .primary-button:active {
-        transform:
-            translateY(3px)
-            scale(0.98);
-
-        box-shadow:
-            0 2px 5px rgba(31, 96, 67, 0.12);
+        transform: translateY(3px)
+        scale(0.98);
+        box-shadow: 0 2px 5px rgba(31, 96, 67, 0.12);
     }
 
     #home .saved-game-card .primary-button span {
@@ -4354,30 +2611,23 @@ button.is-pressed {
         font-size: 13px;
     }
 
-
     /* =====================================================
        PRIVACY
        ===================================================== */
-
     #home .privacy-note {
-        margin:
-            9px 0 0;
-
+        margin-top: 10px;
         font-size: 9px;
+        margin: 9px 0 0;
         line-height: 1.2;
-
         color: #8b928b;
     }
 
 }
 
-
 /* =========================================================
    SCHERMI MOLTO PICCOLI
    ========================================================= */
-
 @media (max-width: 375px) {
-
     #home .brand-icon {
         width: 44px;
         height: 44px;
