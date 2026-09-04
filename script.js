@@ -2402,72 +2402,86 @@ function salvaPartita() {
 
 function aggiornaPartitaSalvata() {
 
-    const card = elemento("partita-in-corso");
-    const titolo = elemento("partita-salvata-titolo");
-    const info = elemento("partita-salvata-info");
-    const turno = elemento("partita-salvata-turno");
-    const icona = document.querySelector("#partita-in-corso .saved-game-icon");
-    const bottone = elemento("continua-partita-btn");
+    const card =
+        elemento("partita-in-corso");
+
+    const titolo =
+        elemento("partita-salvata-titolo");
+
+    const info =
+        elemento("partita-salvata-info");
+
+    const top =
+        card?.querySelector(".saved-game-top");
+
+    const icona =
+        card?.querySelector(".saved-game-icon");
+
+    const label =
+        card?.querySelector(".saved-label");
+
+    const bottone =
+        elemento("continua-partita-btn");
+
 
     if (!card) return;
+
 
     let dati = null;
 
     try {
-        const salvata = localStorage.getItem(STORAGE_KEY);
+
+        const salvata =
+            localStorage.getItem(STORAGE_KEY);
 
         if (salvata) {
             dati = JSON.parse(salvata);
         }
 
     } catch (errore) {
-        console.error("Errore lettura partita:", errore);
+
+        console.error(
+            "Errore lettura partita:",
+            errore
+        );
     }
 
 
     /* =====================================================
-   NESSUNA PARTITA
-   ===================================================== */
+       NESSUNA PARTITA
+       ===================================================== */
 
-if (
-    !dati ||
-    !Array.isArray(dati.giocatori) ||
-    !dati.giocatori.length
-) {
+    if (
+        !dati ||
+        !Array.isArray(dati.giocatori) ||
+        !dati.giocatori.length
+    ) {
 
-    card.classList.remove("hidden");
-    card.classList.add("empty-state");
+        card.classList.remove("hidden");
+        card.classList.add("empty-state");
 
-    const intestazione =
-        card.querySelector(".saved-label");
 
-    if (intestazione) {
-        intestazione.textContent =
-            "Nessuna partita in corso";
+        if (top) {
+            top.style.display = "none";
+        }
+
+
+        if (info) {
+
+            info.textContent =
+                "Nessuna partita in corso";
+
+            info.style.display = "block";
+        }
+
+
+        if (bottone) {
+            bottone.style.display = "none";
+        }
+
+
+        return;
     }
-
-    if (titolo) {
-        titolo.textContent = "";
-    }
-
-    if (info) {
-        info.innerHTML = "";
-    }
-
-    if (turno) {
-        turno.textContent = "";
-    }
-
-    if (icona) {
-        icona.style.display = "none";
-    }
-
-    if (bottone) {
-        bottone.style.display = "none";
-    }
-
-    return;
-}
 
 
     /* =====================================================
@@ -2475,47 +2489,63 @@ if (
        ===================================================== */
 
     card.classList.remove("hidden");
+    card.classList.remove("empty-state");
+
+
+    if (top) {
+        top.style.display = "";
+    }
+
+
+    if (icona) {
+        icona.style.display = "";
+    }
+
 
     if (bottone) {
         bottone.style.display = "";
     }
 
 
+    if (label) {
+        label.textContent =
+            "PARTITA IN CORSO";
+    }
+
+
     if (titolo) {
-        titolo.textContent = dati.giocoScelto || "Partita";
+
+        titolo.textContent =
+            dati.giocoScelto ||
+            "Partita";
     }
 
-
-    if (turno) {
-        turno.textContent =
-            `Turno ${dati.numeroTurno || 0}`;
-    }
-
-card.classList.remove("empty-state");
-
-if (icona) {
-    icona.style.display = "";
-}
-
-if (bottone) {
-    bottone.style.display = "";
-}
 
     /* =====================================================
-       LOGO DEL GIOCO
+       LOGO
        ===================================================== */
 
     if (icona) {
 
         const immaginiGiochi = {
-            "UNO": "immagini/uno.png",
-            "Pili Pili": "immagini/pili-pili.png",
-            "Scala 40": "immagini/scala40.png",
-            "Scopa": "immagini/scopa.png"
+
+            "UNO":
+                "immagini/uno.png",
+
+            "Pili Pili":
+                "immagini/pili-pili.png",
+
+            "Scala 40":
+                "immagini/scala40.png",
+
+            "Scopa":
+                "immagini/scopa.png"
         };
+
 
         const immagine =
             immaginiGiochi[dati.giocoScelto];
+
 
         if (immagine) {
 
@@ -2525,9 +2555,6 @@ if (bottone) {
                     alt="${dati.giocoScelto || "Gioco"}"
                 >
             `;
-
-        } else {
-            icona.innerHTML = "▶";
         }
     }
 
@@ -2538,17 +2565,21 @@ if (bottone) {
 
     if (info) {
 
-        const giocatori = dati.giocatori || [];
+        const giocatori =
+            dati.giocatori || [];
+
 
         const puntiGame =
             Array.isArray(dati.puntiGame)
                 ? dati.puntiGame
                 : giocatori.map(() => 0);
 
+
         const gameVinti =
             Array.isArray(dati.gameVinti)
                 ? dati.gameVinti
                 : giocatori.map(() => 0);
+
 
         const setVinti =
             Array.isArray(dati.setVinti)
@@ -2556,34 +2587,46 @@ if (bottone) {
                 : giocatori.map(() => 0);
 
 
-        info.innerHTML = giocatori
-            .map((nome, indice) => {
+        info.innerHTML =
+            giocatori
+                .map((nome, indice) => {
 
-                const punti =
-                    Number(puntiGame[indice]) || 0;
+                    const punti =
+                        Number(
+                            puntiGame[indice]
+                        ) || 0;
 
-                const games =
-                    Number(gameVinti[indice]) || 0;
 
-                const sets =
-                    Number(setVinti[indice]) || 0;
+                    const games =
+                        Number(
+                            gameVinti[indice]
+                        ) || 0;
 
-                return `
-                    <div class="saved-player-score">
 
-                        <span>
-                            ${nome}
-                        </span>
+                    const sets =
+                        Number(
+                            setVinti[indice]
+                        ) || 0;
 
-                        <strong>
-                            Game ${games} · Set ${sets} · ${punti} punti
-                        </strong>
 
-                    </div>
-                `;
+                    return `
+                        <div class="saved-player-score">
 
-            })
-            .join("");
+                            <span>
+                                ${nome}
+                            </span>
+
+                            <strong>
+                                Game ${games} ·
+                                Set ${sets} ·
+                                ${punti} punti
+                            </strong>
+
+                        </div>
+                    `;
+
+                })
+                .join("");
     }
 }
 
