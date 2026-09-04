@@ -2402,44 +2402,26 @@ function salvaPartita() {
 
 function aggiornaPartitaSalvata() {
 
-    const card =
-        elemento("partita-in-corso");
-
-    const titolo =
-        elemento("partita-salvata-titolo");
-
-    const info =
-        elemento("partita-salvata-info");
-
-    const top =
-        card?.querySelector(".saved-game-top");
-
-    const icona =
-        card?.querySelector(".saved-game-icon");
-
-    const label =
-        card?.querySelector(".saved-label");
-
-    const bottone =
-        elemento("continua-partita-btn");
-
+    const card = elemento("partita-in-corso");
+    const titolo = elemento("partita-salvata-titolo");
+    const turno = elemento("partita-salvata-turno");
+    const info = elemento("partita-salvata-info");
+    const icona = card?.querySelector(".saved-game-icon");
+    const heading = card?.querySelector(".saved-game-heading");
+    const bottone = elemento("continua-partita-btn");
 
     if (!card) return;
-
 
     let dati = null;
 
     try {
-
-        const salvata =
-            localStorage.getItem(STORAGE_KEY);
+        const salvata = localStorage.getItem(STORAGE_KEY);
 
         if (salvata) {
             dati = JSON.parse(salvata);
         }
 
     } catch (errore) {
-
         console.error(
             "Errore lettura partita:",
             errore
@@ -2460,25 +2442,30 @@ function aggiornaPartitaSalvata() {
         card.classList.remove("hidden");
         card.classList.add("empty-state");
 
-
-        if (top) {
-            top.style.display = "none";
+        if (heading) {
+            heading.style.display = "none";
         }
 
+        if (icona) {
+            icona.style.display = "none";
+        }
+
+        if (titolo) {
+            titolo.style.display = "none";
+        }
+
+        if (turno) {
+            turno.style.display = "none";
+        }
 
         if (info) {
-
-            info.textContent =
-                "Nessuna partita in corso";
-
-            info.style.display = "block";
+            info.textContent = "Nessuna partita in corso";
+            info.style.display = "flex";
         }
-
 
         if (bottone) {
             bottone.style.display = "none";
         }
-
 
         return;
     }
@@ -2491,61 +2478,40 @@ function aggiornaPartitaSalvata() {
     card.classList.remove("hidden");
     card.classList.remove("empty-state");
 
-
-    if (top) {
-        top.style.display = "";
+    if (heading) {
+        heading.style.display = "";
     }
-
-
-    if (icona) {
-        icona.style.display = "";
-    }
-
-
-    if (bottone) {
-        bottone.style.display = "";
-    }
-
-
-    if (label) {
-        label.textContent =
-            "PARTITA IN CORSO";
-    }
-
 
     if (titolo) {
-
+        titolo.style.display = "";
         titolo.textContent =
-            dati.giocoScelto ||
-            "Partita";
+            dati.giocoScelto || "Partita";
+    }
+
+    if (turno) {
+        turno.style.display = "";
+        turno.textContent =
+            `Turno ${dati.numeroTurno || 0}`;
     }
 
 
     /* =====================================================
-       LOGO
+       LOGO DEL GIOCO
        ===================================================== */
 
     if (icona) {
 
+        icona.style.display = "";
+
         const immaginiGiochi = {
-
-            "UNO":
-                "immagini/uno.png",
-
-            "Pili Pili":
-                "immagini/pili-pili.png",
-
-            "Scala 40":
-                "immagini/scala40.png",
-
-            "Scopa":
-                "immagini/scopa.png"
+            "UNO": "immagini/uno.png",
+            "Pili Pili": "immagini/pili-pili.png",
+            "Scala 40": "immagini/scala40.png",
+            "Scopa": "immagini/scopa.png"
         };
-
 
         const immagine =
             immaginiGiochi[dati.giocoScelto];
-
 
         if (immagine) {
 
@@ -2560,73 +2526,48 @@ function aggiornaPartitaSalvata() {
 
 
     /* =====================================================
-       SITUAZIONE REALE DELLA PARTITA
+       INFORMAZIONI GIOCATORI
        ===================================================== */
 
     if (info) {
 
+        info.style.display = "";
+
         const giocatori =
-            dati.giocatori || [];
+            Array.isArray(dati.giocatori)
+                ? dati.giocatori
+                : [];
 
-
-        const puntiGame =
-            Array.isArray(dati.puntiGame)
-                ? dati.puntiGame
+        const punteggi =
+            Array.isArray(dati.punteggi)
+                ? dati.punteggi
                 : giocatori.map(() => 0);
-
-
-        const gameVinti =
-            Array.isArray(dati.gameVinti)
-                ? dati.gameVinti
-                : giocatori.map(() => 0);
-
-
-        const setVinti =
-            Array.isArray(dati.setVinti)
-                ? dati.setVinti
-                : giocatori.map(() => 0);
-
 
         info.innerHTML =
             giocatori
                 .map((nome, indice) => {
 
-                    const punti =
-                        Number(
-                            puntiGame[indice]
-                        ) || 0;
-
-
-                    const games =
-                        Number(
-                            gameVinti[indice]
-                        ) || 0;
-
-
-                    const sets =
-                        Number(
-                            setVinti[indice]
-                        ) || 0;
-
+                    const punteggio =
+                        Number(punteggi[indice]) || 0;
 
                     return `
                         <div class="saved-player-score">
-
                             <span>
-                                ${nome}
+                                ${escapeHTML(nome)}
                             </span>
 
                             <strong>
-                                Game ${games} ·
-                                Set ${sets} ·
-                                ${punti} punti
+                                ${punteggio} punti
                             </strong>
-
                         </div>
                     `;
-
                 })
                 .join("");
+    }
+
+
+    if (bottone) {
+        bottone.style.display = "";
     }
 }
 
