@@ -2909,3 +2909,39 @@ button.is-pressed {
     width: 68%;
     height: 58%;
 }
+/* =========================================================
+   PARTITA IN CORSO - HOME
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    #home .saved-game-heading {
+        padding: 10px 14px 9px;
+    }
+
+    #home .saved-game-heading h2 {
+        font-size: 17px !important;
+        line-height: 1.1;
+        font-weight: 900;
+        letter-spacing: 1.4px;
+        text-align: center;
+    }
+
+    #home .saved-game-info {
+        margin-top: 5px;
+    }
+
+    #home .saved-player-score {
+        min-height: 27px;
+        padding: 3px 0;
+    }
+
+    #home .saved-player-score span {
+        font-size: 12px;
+    }
+
+    #home .saved-player-score strong {
+        font-size: 11px;
+        font-weight: 750;
+    }
+}
