@@ -2400,56 +2400,34 @@ function salvaPartita() {
 }
 
 
-/* =========================================================
-   PARTITA SALVATA
-========================================================= */
-
 function aggiornaPartitaSalvata() {
 
-    const card =
-        elemento("partita-in-corso");
-
-    const titolo =
-        elemento("partita-salvata-titolo");
-
-    const info =
-        elemento("partita-salvata-info");
-
-    const turno =
-        elemento("partita-salvata-turno");
-
-    const icona =
-        document.querySelector(
-            "#partita-in-corso .saved-game-icon"
-        );
-
+    const card = elemento("partita-in-corso");
+    const titolo = elemento("partita-salvata-titolo");
+    const info = elemento("partita-salvata-info");
+    const turno = elemento("partita-salvata-turno");
+    const icona = document.querySelector("#partita-in-corso .saved-game-icon");
+    const bottone = elemento("continua-partita-btn");
 
     if (!card) return;
 
-
     let dati = null;
 
-
     try {
-
-        const salvata =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
+        const salvata = localStorage.getItem(STORAGE_KEY);
 
         if (salvata) {
             dati = JSON.parse(salvata);
         }
 
     } catch (errore) {
-
-        console.error(
-            "Errore lettura partita:",
-            errore
-        );
-
+        console.error("Errore lettura partita:", errore);
     }
 
+
+    /* =====================================================
+       NESSUNA PARTITA
+       ===================================================== */
 
     if (
         !dati ||
@@ -2457,121 +2435,138 @@ function aggiornaPartitaSalvata() {
         !dati.giocatori.length
     ) {
 
-        card.classList.add("hidden");
+        card.classList.remove("hidden");
+
+        if (titolo) {
+            titolo.textContent = "Nessuna partita in corso";
+        }
+
+        if (info) {
+            info.innerHTML = "";
+        }
+
+        if (turno) {
+            turno.textContent = "";
+        }
+
+        if (icona) {
+            icona.innerHTML = "▶";
+        }
+
+        if (bottone) {
+            bottone.style.display = "none";
+        }
 
         return;
-
     }
 
+
+    /* =====================================================
+       PARTITA PRESENTE
+       ===================================================== */
 
     card.classList.remove("hidden");
 
+    if (bottone) {
+        bottone.style.display = "";
+    }
 
-    /* =====================================================
-       TITOLO
-    ===================================================== */
 
     if (titolo) {
-
-        titolo.textContent =
-            dati.giocoScelto ||
-            "Partita";
-
+        titolo.textContent = dati.giocoScelto || "Partita";
     }
 
-
-    /* =====================================================
-       TURNO
-    ===================================================== */
 
     if (turno) {
-
         turno.textContent =
             `Turno ${dati.numeroTurno || 0}`;
-
     }
 
 
     /* =====================================================
-       ICONA DEL GIOCO
-    ===================================================== */
+       LOGO DEL GIOCO
+       ===================================================== */
 
     if (icona) {
 
         const immaginiGiochi = {
-
-            "UNO":
-                "immagini/uno.png",
-
-            "Pili Pili":
-                "immagini/pili-pili.png",
-
-            "Scala 40":
-                "immagini/scala40.png",
-
-            "Scopa":
-                "immagini/scopa.png"
-
+            "UNO": "immagini/uno.png",
+            "Pili Pili": "immagini/pili-pili.png",
+            "Scala 40": "immagini/scala40.png",
+            "Scopa": "immagini/scopa.png"
         };
-
 
         const immagine =
             immaginiGiochi[dati.giocoScelto];
-
 
         if (immagine) {
 
             icona.innerHTML = `
                 <img
-                    src="${escapeHTML(immagine)}"
-                    alt="${escapeHTML(dati.giocoScelto || "Gioco")}"
+                    src="${immagine}"
+                    alt="${dati.giocoScelto || "Gioco"}"
                 >
             `;
 
+        } else {
+            icona.innerHTML = "▶";
         }
-
     }
 
 
     /* =====================================================
-       GIOCATORI E PUNTEGGI
-    ===================================================== */
+       SITUAZIONE REALE DELLA PARTITA
+       ===================================================== */
 
     if (info) {
 
-        const giocatori =
-            dati.giocatori || [];
+        const giocatori = dati.giocatori || [];
 
-        const punteggi =
-            Array.isArray(dati.punteggi)
-                ? dati.punteggi
+        const puntiGame =
+            Array.isArray(dati.puntiGame)
+                ? dati.puntiGame
+                : giocatori.map(() => 0);
+
+        const gameVinti =
+            Array.isArray(dati.gameVinti)
+                ? dati.gameVinti
+                : giocatori.map(() => 0);
+
+        const setVinti =
+            Array.isArray(dati.setVinti)
+                ? dati.setVinti
                 : giocatori.map(() => 0);
 
 
-        info.innerHTML =
-            giocatori
-                .map((nome, indice) => {
+        info.innerHTML = giocatori
+            .map((nome, indice) => {
 
-                    const punteggio =
-                        Number(punteggi[indice]) || 0;
+                const punti =
+                    Number(puntiGame[indice]) || 0;
 
-                    return `
-                        <div class="saved-player-score">
-                            <span>
-                                ${escapeHTML(nome)}
-                            </span>
+                const games =
+                    Number(gameVinti[indice]) || 0;
 
-                            <strong>
-                                ${punteggio} punti
-                            </strong>
-                        </div>
-                    `;
+                const sets =
+                    Number(setVinti[indice]) || 0;
 
-                })
-                .join("");
+                return `
+                    <div class="saved-player-score">
 
+                        <span>
+                            ${nome}
+                        </span>
+
+                        <strong>
+                            Game ${games} · Set ${sets} · ${punti} punti
+                        </strong>
+
+                    </div>
+                `;
+
+            })
+            .join("");
     }
-
 }
 
 
