@@ -2876,3 +2876,36 @@ button.is-pressed {
     width: 94%;
     height: 82%;
 }
+/* =========================================================
+   LOGHI PARTITA IN CORSO - HOME
+   ========================================================= */
+
+#home .saved-game-icon img {
+    display: block;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* UNO */
+#home .saved-game-icon img[src*="uno.png"] {
+    width: 72%;
+    height: 72%;
+}
+
+/* PILI PILI */
+#home .saved-game-icon img[src*="pili-pili.png"] {
+    width: 58%;
+    height: 58%;
+}
+
+/* SCALA 40 */
+#home .saved-game-icon img[src*="scala40.png"] {
+    width: 72%;
+    height: 58%;
+}
+
+/* SCOPA */
+#home .saved-game-icon img[src*="scopa.png"] {
+    width: 68%;
+    height: 58%;
+}
