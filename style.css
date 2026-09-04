@@ -1952,6 +1952,10 @@ button.is-pressed {
 /* HOME */
 #home {
     background: #f7f8f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100dvh;
 }
 
 #home .home-header {
