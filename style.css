@@ -2773,3 +2773,27 @@ button.is-pressed {
         "Segoe UI",
         sans-serif !important;
 }
+/* =========================================================
+   LOGHI GIOCHI - VISIBILI COMPLETAMENTE
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    #home .game-card-image {
+        height: 91px;
+        padding: 6px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #home .game-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+    }
+
+}
