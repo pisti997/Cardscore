@@ -143,11 +143,7 @@ function nuovaPartita() {
 
 
 /* =========================================================
-   SCELTA GIOCO
-========================================================= */
-
-/* =========================================================
-   LOGHI DEI GIOCHI
+   SCELTA GIOCO / LOGHI DEI GIOCHI
 ========================================================= */
 
 const LOGHI_GIOCHI = {
@@ -1418,10 +1414,6 @@ function aggiungiMano() {
 
 
 /* =========================================================
-   CONTROLLO GAME
-========================================================= */
-
-/* =========================================================
    VITTORIA DI UN GAME (logica condivisa)
    Usata sia durante il gioco live (controllaGame) sia nel
    ricalcolo dello storico (ricalcolaPartita), cosi' che un
@@ -2531,8 +2523,8 @@ function aggiornaPartitaSalvata() {
 
             icona.innerHTML = `
                 <img
-                    src="${immagine}"
-                    alt="${dati.giocoScelto || "Gioco"}"
+                    src="${escapeHTML(immagine)}"
+                    alt="${escapeHTML(dati.giocoScelto || "Gioco")}"
                 >
             `;
 
@@ -2566,7 +2558,7 @@ function aggiornaPartitaSalvata() {
                     return `
                         <div class="saved-player-score">
                             <span>
-                                ${nome}
+                                ${escapeHTML(nome)}
                             </span>
 
                             <strong>
