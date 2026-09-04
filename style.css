@@ -289,9 +289,9 @@ select {
     white-space: nowrap;
     color: var(--green-dark);
     font-family: "Courier New" !important;
-    font-size: 31px;
+    font-size: 34px;
     line-height: 1;
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: -0.7px;
 }
 
