@@ -3045,3 +3045,15 @@ button.is-pressed {
         display: none !important;
     }
 }
+/* NESSUNA PARTITA - TESTO SU UNA RIGA */
+
+@media (max-width: 430px) {
+
+    #home .saved-game-card.empty-state .saved-game-info {
+        white-space: nowrap;
+        font-size: 30px;
+        line-height: 1;
+        text-align: center;
+    }
+
+}
