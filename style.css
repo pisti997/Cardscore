@@ -2797,3 +2797,44 @@ button.is-pressed {
     }
 
 }
+/* =========================================================
+   LOGHI GIOCHI - PARTITA IN CORSO + NUOVA PARTITA
+   ========================================================= */
+
+.saved-game-icon img,
+.selected-game-icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* PARTITA IN CORSO */
+.saved-game-icon {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* RIQUADRO GIOCO SELEZIONATO */
+.selected-game-icon {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@media (max-width: 430px) {
+
+    .saved-game-icon {
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+    .selected-game-icon {
+        padding: 4px;
+        box-sizing: border-box;
+    }
+
+}
