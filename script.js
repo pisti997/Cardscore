@@ -1575,20 +1575,59 @@ function elaboraVittoriaGame(indice, conMessaggi) {
         });
 
 
-        if (conMessaggi) {
-
-            mostraMessaggioPartita(
-                "set",
-                `${giocatori[indice]} vince il Set!`
-            );
-        }
-
-
         if (setVinti[indice] >= setPerMatch) {
 
-            matchVinto = true;
+    matchVinto = true;
 
-        } else {
+} else {
+
+    /* NUOVO SET: azzeriamo Game per tutti */
+    gameVinti =
+        giocatori.map(() => 0);
+
+    puntiGame =
+        giocatori.map(() => 0);
+
+    /*
+       Il Set non chiude il Match:
+       mostriamo il popup Set con la stessa
+       carta 3D usata per il Game.
+    */
+    if (conMessaggi) {
+
+        mostraMessaggioPartita(
+            "set",
+            `${giocatori[indice]} vince il Set!`
+        );
+
+        giocatoreAttivo = null;
+
+        if (timerSceltaGiocatore) {
+            clearTimeout(timerSceltaGiocatore);
+        }
+
+        timerSceltaGiocatore = setTimeout(() => {
+
+            if (
+                !partitaTerminata &&
+                sistemaPunteggio === "game-set"
+            ) {
+
+                const popup =
+                    document.querySelector(
+                        ".game-flip-card"
+                    );
+
+                if (popup) {
+                    popup.classList.add(
+                        "is-flipped"
+                    );
+                }
+            }
+
+        }, 3000);
+    }
+}
 
             /* NUOVO SET: azzeriamo Game per tutti */
 
@@ -1812,9 +1851,9 @@ function mostraMessaggioPartita(tipo, testo) {
     */
 
     if (
-        tipo === "game" &&
-        sistemaPunteggio === "game-set"
-    ) {
+    (tipo === "game" || tipo === "set") &&
+    sistemaPunteggio === "game-set"
+) {
 
         messaggio.classList.add(
             "game-flip-card"
@@ -1828,11 +1867,11 @@ function mostraMessaggioPartita(tipo, testo) {
                 <div class="game-flip-face game-flip-front">
 
                     <div class="match-message-icon">
-                        🎯
+                    ${icona}
                     </div>
 
                     <div class="match-message-label">
-                        GAME
+                    ${etichetta}
                     </div>
 
                     <h2>
