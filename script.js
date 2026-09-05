@@ -472,6 +472,7 @@ if (sistemaPunteggio === "game-set") {
     }, 150);
 }
 
+}
 
 /* =========================================================
    SCHERMATA PARTITA
