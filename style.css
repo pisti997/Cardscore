@@ -1365,6 +1365,21 @@ select {
     border: 1px solid rgba(47, 106, 63, 0.08);
 }
 
+/* Almeno un Game/Set vinto: riquadro evidenziato */
+.match-stat.active {
+    background: var(--green);
+    color: #ffffff;
+    border-color: var(--green-dark);
+}
+
+/* Match vinto: riquadro evidenziato con enfasi massima */
+.match-stat.won {
+    background: var(--green-dark);
+    color: #ffffff;
+    border-color: var(--green-dark);
+    box-shadow: 0 0 0 2px rgba(24, 85, 55, 0.25);
+}
+
 .match-row > .match-stat:nth-child(2) {
     position: absolute;
     left: 20px !important;
@@ -3112,7 +3127,7 @@ button.is-pressed {
 
     z-index: 980;
 
-    animation: cardscoreFadeIn 0.2s ease;
+    animation: none;
 }
 
 
@@ -3130,7 +3145,7 @@ button.is-pressed {
     box-shadow:
         0 24px 55px rgba(20, 40, 25, 0.28);
 
-    animation: cardscoreMessagePopIn 0.25s ease;
+    animation: none;
 }
 
 
@@ -3197,18 +3212,16 @@ button.is-pressed {
 
 .starting-player-button {
     width: 100%;
-    height: 20px;
-    min-height: 20px;
-    max-height: 20px;
+    height: 58px;
+    min-height: 58px;
 
-    padding: 2px 14px;
+    padding: 10px 14px;
 
     display: flex;
     align-items: center;
     gap: 12px;
 
     box-sizing: border-box;
-    flex: 0 0 33px;
 
     border: 0;
     border-radius: 15px;
@@ -3239,20 +3252,20 @@ button.is-pressed {
 
 
 .starting-player-number {
-    width: 20px;
-    height: 20px;
+    width: 34px;
+    height: 34px;
 
-    flex: 0 0 20px;
+    flex: 0 0 34px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     background: #ffffff;
 
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 900;
 }
 /* =========================================================
@@ -3262,7 +3275,14 @@ button.is-pressed {
 .game-flip-card {
     perspective: 1200px;
     transform: translate(-50%, -50%);
+    transform-origin: center center;
     animation: none !important;
+
+    /* Nessun riquadro esterno: lo sfondo è solo sulle facce della carta */
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
 }
 
 .game-flip-inner {
@@ -3284,6 +3304,8 @@ button.is-pressed {
 
     width: 100%;
     min-height: 250px;
+
+    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
@@ -3324,45 +3346,6 @@ button.is-pressed {
     font-weight: 500;
 }
 
-.game-flip-back .starting-player-buttons {
-    width: 100%;
-}
-
-
-/* Il popup resta perfettamente centrato durante la rotazione */
-
-.game-flip-card {
-    transform-origin: center center;
-}
-
-
-/* Nessun effetto di entrata sul popup di scelta */
-
-.starting-player-overlay {
-    animation: none !important;
-}
-
-.starting-player-popup {
-    animation: none !important;
-}
-/* =========================================================
-   POPUP GAME 3D - ELIMINA IL RIQUADRO ESTERNO
-   ========================================================= */
-
-.game-flip-card {
-    padding: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    overflow: visible !important;
-}
-
-.game-flip-inner {
-    width: 100%;
-}
-
-.game-flip-face {
-    box-sizing: border-box;
-}
 /* =========================================================
    POPUP GAME / SET - RETRO DELLA CARTA 3D
    NON MODIFICA IL POPUP INIZIA PARTITA
@@ -3416,60 +3399,11 @@ button.is-pressed {
     font-weight: 500;
 }
 
-/* Riquadri verdi identici al popup iniziale */
+/* Riquadri verdi identici al popup iniziale (regola base già coerente) */
 .game-flip-back .starting-player-buttons {
     width: 100%;
 
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.game-flip-back .starting-player-button {
-    width: 100%;
-    min-height: 58px;
-    height: 58px;
-
-    padding: 10px 14px;
-
-    box-sizing: border-box;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    border: 0;
-    border-radius: 15px;
-
-    background: var(--green-soft);
-    color: var(--green-dark);
-
-    font-size: 16px;
-    font-weight: 800;
-
-    box-shadow:
-        0 4px 0 rgba(20, 60, 35, 0.12);
-
-    cursor: pointer;
-}
-
-/* Riquadri bianchi numerati identici */
-.game-flip-back .starting-player-number {
-    width: 34px;
-    height: 34px;
-    min-width: 34px;
-    min-height: 34px;
-
-    flex: 0 0 34px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-
-    background: #ffffff;
-
-    font-size: 16px;
-    font-weight: 900;
 }
