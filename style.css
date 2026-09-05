@@ -3584,3 +3584,118 @@ button.is-pressed {
     color: var(--green-dark) !important;
     border-color: rgba(47, 106, 63, 0.08) !important;
 }
+/* =========================================================
+   ULTIMO TURNO - DIMENSIONI FINALI
+   ========================================================= */
+
+.history-section {
+    margin-top: 25px !important;
+}
+
+.history-heading {
+    margin-bottom: 10px !important;
+}
+
+.history-heading h2 {
+    margin: 0 !important;
+    font-size: 21px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+}
+
+.history-link {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+/* CARD STORICO */
+
+.history-row {
+    width: 100% !important;
+    height: 180px !important;
+    min-height: 180px !important;
+
+    padding: 20px 42px !important;
+
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    gap: 25px !important;
+
+    border-radius: 22px !important;
+
+    background: #ffffff !important;
+    border: 1px solid #e4e7e1 !important;
+
+    box-shadow: none !important;
+}
+
+/* TURNO */
+
+.history-turn {
+    width: 150px !important;
+    min-width: 150px !important;
+    flex: 0 0 150px !important;
+
+    color: #9ca19a !important;
+
+    font-size: 17px !important;
+    font-weight: 700 !important;
+
+    line-height: 1 !important;
+}
+
+/* BLOCCO NOME + PUNTI */
+
+.history-details {
+    min-width: 0 !important;
+    flex: 1 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    justify-content: center !important;
+}
+
+/* NOME */
+
+.history-player {
+    display: block !important;
+
+    color: #20251f !important;
+
+    font-size: 24px !important;
+    font-weight: 800 !important;
+
+    line-height: 1.05 !important;
+}
+
+/* PUNTI */
+
+.history-points {
+    display: block !important;
+
+    margin-top: 8px !important;
+
+    color: #1f6043 !important;
+
+    font-size: 18px !important;
+    font-weight: 800 !important;
+
+    line-height: 1 !important;
+}
+
+/* FRECCIA */
+
+.history-arrow {
+    flex: 0 0 auto !important;
+
+    color: #9ca19a !important;
+
+    font-size: 36px !important;
+    font-weight: 400 !important;
+
+    line-height: 1 !important;
+}
