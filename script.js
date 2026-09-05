@@ -1408,17 +1408,7 @@ function aggiungiMano() {
         return;
     }
 
-// Il turno può essere registrato solo per il giocatore attivo
-if (
-    sistemaPunteggio === "game-set" &&
-    giocatoreAttivo !== null &&
-    indice !== giocatoreAttivo
-) {
-    alert(
-        `È il turno di ${giocatori[giocatoreAttivo]}.`
-    );
-    return;
-}
+
     numeroTurno++;
 
 
