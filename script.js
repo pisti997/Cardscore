@@ -26,6 +26,11 @@ let storicoSet = [];
 let partitaIniziata = null;
 let messaggioTimeout = null;
 let partitaTerminata = false;
+// Giocatore che deve effettuare il prossimo turno
+let giocatoreAttivo = null;
+
+// Timer per il popup di scelta del giocatore
+let timerSceltaGiocatore = null;
 let popupPunteggioAttuale = {
     overlay: null,
     popup: null,
@@ -444,19 +449,27 @@ function iniziaPartita() {
     storicoGame = [];
     storicoSet = [];
 
-    numeroTurno = 0;
+   numeroTurno = 0;
 
-    partitaIniziata = Date.now();
-    partitaTerminata = false;
+// All'inizio non è ancora stato scelto chi parte
+giocatoreAttivo = null;
 
+partitaIniziata = Date.now();
+partitaTerminata = false;
 
-    mostraPagina("partita");
+mostraPagina("partita");
+aggiornaSchermataPartita();
 
-    aggiornaSchermataPartita();
+salvaPartita();
 
-    salvaPartita();
+aggiornaPartitaSalvata();
 
-    aggiornaPartitaSalvata();
+// Dopo aver mostrato la schermata dei punteggi,
+// chiediamo chi deve iniziare
+if (sistemaPunteggio === "game-set") {
+    setTimeout(() => {
+        apriPopupInizioGame();
+    }, 150);
 }
 
 
@@ -1361,7 +1374,17 @@ function aggiungiMano() {
         return;
     }
 
-
+// Il turno può essere registrato solo per il giocatore attivo
+if (
+    sistemaPunteggio === "game-set" &&
+    giocatoreAttivo !== null &&
+    indice !== giocatoreAttivo
+) {
+    alert(
+        `È il turno di ${giocatori[giocatoreAttivo]}.`
+    );
+    return;
+}
     numeroTurno++;
 
 
@@ -1407,10 +1430,23 @@ function aggiungiMano() {
 
     aggiornaSchermataPartita();
 
-    if (!partitaTerminata) {
-        salvaPartita();
+if (!partitaTerminata) {
+
+    // Se il Game non è terminato,
+    // il turno passa all'altro giocatore
+    if (
+        sistemaPunteggio === "game-set" &&
+        giocatoreAttivo !== null
+    ) {
+        giocatoreAttivo =
+            (giocatoreAttivo + 1) % giocatori.length;
+
+        aggiornaSchermataPartita();
     }
+
+    salvaPartita();
 }
+
 
 
 /* =========================================================
@@ -1453,11 +1489,31 @@ function elaboraVittoriaGame(indice, conMessaggi) {
 
     if (conMessaggi) {
 
-        mostraMessaggioPartita(
-            "game",
-            `${giocatori[indice]} vince il Game!`
-        );
+    mostraMessaggioPartita(
+        "game",
+        `${giocatori[indice]} vince il Game!`
+    );
+
+    // Blocchiamo temporaneamente il turno
+    giocatoreAttivo = null;
+
+    // Dopo 3 secondi scegliamo chi inizierà
+    // il nuovo Game
+    if (timerSceltaGiocatore) {
+        clearTimeout(timerSceltaGiocatore);
     }
+
+    timerSceltaGiocatore = setTimeout(() => {
+
+        if (
+            !partitaTerminata &&
+            sistemaPunteggio === "game-set"
+        ) {
+            apriPopupInizioGame();
+        }
+
+    }, 3000);
+}
 
 
     let setVinto = false;
@@ -2079,10 +2135,17 @@ function formattaDurata(millisecondi) {
 function creaRigaStorico(elementoStorico) {
 
     const riga =
-        document.createElement("div");
+    document.createElement("div");
 
-    riga.className =
-        "history-row";
+riga.className =
+    "match-row";
+
+if (
+    giocatoreAttivo !== null &&
+    indice === giocatoreAttivo
+) {
+    riga.classList.add("active-turn");
+}
 
 
     const turno =
@@ -2380,6 +2443,8 @@ function salvaPartita() {
         storicoSet,
 
         partitaIniziata
+        
+        giocatoreAttivo,
     };
 
 
@@ -2743,6 +2808,11 @@ function continuaPartita() {
         Date.now();
 
     partitaTerminata = false;
+    
+    giocatoreAttivo =
+    Number.isInteger(Number(dati.giocatoreAttivo))
+        ? Number(dati.giocatoreAttivo)
+        : null;
 
 
     /*
@@ -3097,4 +3167,111 @@ if ("serviceWorker" in navigator) {
                 // a funzionare normalmente, solo senza offline.
             });
     });
+}
+/* =========================================================
+   POPUP SCELTA GIOCATORE CHE INIZIA
+========================================================= */
+
+function apriPopupInizioGame() {
+
+    if (partitaTerminata) return;
+
+    // Chiudiamo eventuali popup precedenti
+    chiudiPopupInizioGame();
+
+    const overlay = document.createElement("div");
+    overlay.className = "starting-player-overlay";
+
+    const popup = document.createElement("div");
+    popup.className = "starting-player-popup";
+
+    popup.innerHTML = `
+        <div class="starting-player-icon">
+            🎯
+        </div>
+
+        <div class="starting-player-label">
+            NUOVO GAME
+        </div>
+
+        <h2>
+            Chi inizia?
+        </h2>
+
+        <p>
+            Scegli il giocatore che parte per primo
+        </p>
+
+        <div class="starting-player-buttons">
+            ${giocatori.map((nome, indice) => `
+                <button
+                    type="button"
+                    class="starting-player-button"
+                    data-player="${indice}"
+                >
+                    <span class="starting-player-number">
+                        ${indice + 1}
+                    </span>
+
+                    <strong>
+                        ${escapeHTML(nome)}
+                    </strong>
+                </button>
+            `).join("")}
+        </div>
+    `;
+
+    overlay.appendChild(popup);
+    document.body.appendChild(overlay);
+
+    popup.querySelectorAll(".starting-player-button")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const indice =
+                    Number(button.dataset.player);
+
+                scegliGiocatoreInizio(indice);
+            });
+
+        });
+}
+
+
+function scegliGiocatoreInizio(indice) {
+
+    if (
+        !Number.isInteger(indice) ||
+        indice < 0 ||
+        indice >= giocatori.length
+    ) {
+        return;
+    }
+
+    giocatoreAttivo = indice;
+
+    chiudiPopupInizioGame();
+
+    aggiornaSchermataPartita();
+
+    salvaPartita();
+}
+
+
+function chiudiPopupInizioGame() {
+
+    const overlay =
+        document.querySelector(
+            ".starting-player-overlay"
+        );
+
+    if (overlay) {
+        overlay.remove();
+    }
+
+    if (timerSceltaGiocatore) {
+        clearTimeout(timerSceltaGiocatore);
+        timerSceltaGiocatore = null;
+    }
 }
