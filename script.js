@@ -1628,8 +1628,8 @@ function elaboraVittoriaGame(indice, conMessaggi) {
         }, 3000);
     }
 }
-
-
+}
+}
     return { setVinto, matchVinto };
 }
 
@@ -1965,7 +1965,7 @@ function mostraMessaggioPartita(tipo, testo) {
         .forEach((bottone) => {
             bottone.addEventListener("click", () => {
                 const indice = Number(
-                    bottone.dataset.playerIndex
+                    bottone.dataset.player
                 );
 
                 scegliGiocatoreInizio(indice);
