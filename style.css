@@ -3196,27 +3196,26 @@ button.is-pressed {
 
 .starting-player-button {
     width: 100%;
-    box-sizing: border-box;
     min-height: 48px;
 
-    padding: 8px 10px;
+    padding: 6px 14px;
 
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 12px;
 
     border: 0;
-    border-radius: 13px;
+    border-radius: 15px;
 
     background: var(--green-soft);
 
     color: var(--green-dark);
 
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 800;
 
     box-shadow:
-        0 3px 0 rgba(20, 60, 35, 0.12);
+        0 4px 0 rgba(20, 60, 35, 0.12);
 
     cursor: pointer;
 
