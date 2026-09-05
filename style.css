@@ -3412,3 +3412,142 @@ button.is-pressed {
     flex-direction: column;
     gap: 10px;
 }
+/* =========================================================
+   ULTIMO TURNO - NUOVO DESIGN
+   ========================================================= */
+
+.history-section {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.history-heading {
+    margin-bottom: 10px;
+}
+
+.history-heading .small-label {
+    display: none;
+}
+
+.history-heading h2 {
+    margin: 0;
+
+    color: var(--green-dark);
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.history-link {
+    padding: 5px 0;
+
+    background: transparent;
+    color: #1f6043;
+
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+/* CONTENITORE ULTIMO TURNO */
+
+.history-list {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+/* RIQUADRO DEL TURNO */
+
+.history-row {
+    width: 100%;
+    min-height: 60px;
+
+    padding: 10px 14px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    box-sizing: border-box;
+
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e7e1;
+
+    box-shadow: none;
+}
+
+/* NUMERO TURNO */
+
+.history-turn {
+    width: 55px;
+    flex: 0 0 55px;
+
+    color: #9ca19a;
+
+    font-size: 11px;
+    font-weight: 750;
+
+    line-height: 1;
+}
+
+/* PARTE CENTRALE */
+
+.history-details {
+    min-width: 0;
+    flex: 1;
+}
+
+/* NOME */
+
+.history-player {
+    display: block;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #20251f;
+
+    font-size: 17px;
+    font-weight: 800;
+
+    line-height: 1.05;
+}
+
+/* PUNTI */
+
+.history-points {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #1f6043;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+/* FRECCIA */
+
+.history-arrow {
+    flex: 0 0 auto;
+
+    color: #9ca19a;
+
+    font-size: 30px;
+    font-weight: 400;
+
+    line-height: 1;
+
+    transform: translateY(-1px);
+}
