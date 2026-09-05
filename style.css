@@ -3119,7 +3119,7 @@ button.is-pressed {
 .starting-player-popup {
     width: min(360px, 88vw);
 
-    padding: 30px 22px 24px;
+    padding: 30px 22px 34px;
 
     background: #ffffff;
 
@@ -3137,6 +3137,8 @@ button.is-pressed {
 .starting-player-icon {
     width: 58px;
     height: 58px;
+    min-width: 58px;
+    min-height: 58px;
 
     margin: 0 auto 12px;
 
@@ -3149,6 +3151,7 @@ button.is-pressed {
     background: var(--green-soft);
 
     font-size: 29px;
+    line-height: 1;
 }
 
 
