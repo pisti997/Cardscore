@@ -3032,3 +3032,34 @@ button.is-pressed {
     }
 
 }
+/* =========================================================
+   NESSUNA PARTITA IN CORSO
+   ========================================================= */
+
+#home .saved-game-card.empty-state {
+    min-height: 135px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#home .saved-game-card.empty-state .saved-game-empty {
+    width: 100%;
+    text-align: center;
+
+    white-space: nowrap;
+
+    color: #286548;
+    font-size: 17px;
+    line-height: 1.2;
+    font-weight: 800;
+
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+
+    text-shadow:
+        0 2px 2px rgba(31, 96, 67, 0.18);
+}
