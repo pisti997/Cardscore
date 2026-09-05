@@ -3430,3 +3430,17 @@ function scegliGiocatoreInizio(indice) {
 
     salvaPartita();
 }
+function chiudiPopupInizioGame() {
+
+    const overlay =
+        document.querySelector(".starting-player-overlay");
+
+    if (overlay) {
+        overlay.remove();
+    }
+
+    if (timerSceltaGiocatore) {
+        clearTimeout(timerSceltaGiocatore);
+        timerSceltaGiocatore = null;
+    }
+}
