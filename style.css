@@ -3364,29 +3364,79 @@ button.is-pressed {
     box-sizing: border-box;
 }
 /* =========================================================
-   POPUP GAME / SET - RETRO IDENTICO AL POPUP INIZIA PARTITA
+   POPUP GAME / SET - RETRO DELLA CARTA 3D
+   NON MODIFICA IL POPUP INIZIA PARTITA
    ========================================================= */
 
+.game-flip-back {
+    box-sizing: border-box;
+    padding: 30px 22px 24px;
+    background: #ffffff;
+    border-radius: 24px;
+    text-align: center;
+}
+
+/* Spaziatura identica al popup iniziale */
+.game-flip-back .starting-player-icon {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    min-height: 58px;
+
+    margin: 0 auto 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: var(--green-soft);
+
+    font-size: 29px;
+    line-height: 1;
+}
+
+.game-flip-back .starting-player-label {
+    margin-bottom: 7px;
+}
+
+.game-flip-back h2 {
+    margin: 0;
+
+    color: var(--green-dark);
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.game-flip-back p {
+    margin: 7px 0 20px;
+
+    color: var(--text-soft);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Riquadri verdi identici al popup iniziale */
 .game-flip-back .starting-player-buttons {
+    width: 100%;
+
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 100%;
 }
 
 .game-flip-back .starting-player-button {
     width: 100%;
     min-height: 58px;
-
     height: 58px;
 
     padding: 10px 14px;
 
+    box-sizing: border-box;
+
     display: flex;
     align-items: center;
     gap: 12px;
-
-    box-sizing: border-box;
 
     border: 0;
     border-radius: 15px;
@@ -3399,8 +3449,11 @@ button.is-pressed {
 
     box-shadow:
         0 4px 0 rgba(20, 60, 35, 0.12);
+
+    cursor: pointer;
 }
 
+/* Riquadri bianchi numerati identici */
 .game-flip-back .starting-player-number {
     width: 34px;
     height: 34px;
