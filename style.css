@@ -3578,3 +3578,9 @@ button.is-pressed {
 .match-heading span {
     display: none !important;
 }
+/* Riquadri GAME / SET senza verde scuro */
+.match-stat {
+    background: #e5f1df !important;
+    color: var(--green-dark) !important;
+    border-color: rgba(47, 106, 63, 0.08) !important;
+}
