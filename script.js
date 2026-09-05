@@ -3403,27 +3403,31 @@ function scegliGiocatoreInizio(indice) {
 
     giocatoreAttivo = indice;
 
+    /*
+       Chiude il popup normale
+    */
     chiudiPopupInizioGame();
+
+    /*
+       Chiude anche il popup GAME
+       dopo la rotazione
+    */
+    const flipPopup =
+        document.querySelector(".game-flip-card");
+
+    const flipOverlay =
+        document.querySelector(".cardscore-overlay");
+
+    if (flipPopup) {
+        flipPopup.remove();
+    }
+
+    if (flipOverlay) {
+        flipOverlay.remove();
+    }
 
     aggiornaSchermataPartita();
 
     salvaPartita();
 }
-
-
-function chiudiPopupInizioGame() {
-
-    const overlay =
-        document.querySelector(
-            ".starting-player-overlay"
-        );
-
-    if (overlay) {
-        overlay.remove();
-    }
-
-    if (timerSceltaGiocatore) {
-        clearTimeout(timerSceltaGiocatore);
-        timerSceltaGiocatore = null;
-    }
 }
