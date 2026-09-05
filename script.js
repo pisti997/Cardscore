@@ -3430,4 +3430,3 @@ function scegliGiocatoreInizio(indice) {
 
     salvaPartita();
 }
-}
