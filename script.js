@@ -1487,73 +1487,26 @@ function elaboraVittoriaGame(indice, conMessaggi) {
     gameVinti[indice] =
         Number(gameVinti[indice] || 0) + 1;
 
-
-    /*
-       Quando si vince il Game, i punti del Game ripartono
-       SEMPRE da zero per tutti, vincitore compreso: eventuali
-       punti in eccesso rispetto al limite (es. limite 21,
-       arrivati a 24) non si portano dietro nel Game successivo.
-    */
-
+    // Il Game è terminato: azzeriamo i punti del Game
     puntiGame =
         giocatori.map(() => 0);
 
-
     storicoGame.push({
-
         vincitore: indice,
-
         nome: giocatori[indice],
-
         punti: puntiPerGame,
-
         game: [...gameVinti],
-
         set: [...setVinti]
     });
-
-
-    if (conMessaggi) {
-
-    mostraMessaggioPartita(
-        "game",
-        `${giocatori[indice]} vince il Game!`
-    );
-
-    // Blocchiamo temporaneamente il turno
-    giocatoreAttivo = null;
-
-    // Dopo 3 secondi scegliamo chi inizierà
-    // il nuovo Game
-    if (timerSceltaGiocatore) {
-        clearTimeout(timerSceltaGiocatore);
-    }
-
-    timerSceltaGiocatore = setTimeout(() => {
-
-    if (
-        !partitaTerminata &&
-        sistemaPunteggio === "game-set"
-    ) {
-        const popup =
-            document.querySelector(
-                ".game-flip-card"
-            );
-
-        if (popup) {
-            popup.classList.add(
-                "is-flipped"
-            );
-        }
-    }
-
-}, 3000);
-}
-
 
     let setVinto = false;
     let matchVinto = false;
 
+    /*
+       =====================================================
+       IL GAME È STATO VINTO
+       =====================================================
+    */
 
     if (gameVinti[indice] >= gamePerSet) {
 
@@ -1562,50 +1515,110 @@ function elaboraVittoriaGame(indice, conMessaggi) {
 
         setVinto = true;
 
-
         storicoSet.push({
-
             vincitore: indice,
-
             nome: giocatori[indice],
-
             game: [...gameVinti],
-
             set: [...setVinti]
         });
 
+        /*
+           =================================================
+           MATCH TERMINATO
+           =================================================
+        */
 
         if (setVinti[indice] >= setPerMatch) {
 
-    matchVinto = true;
+            matchVinto = true;
 
-} else {
+            // NON mostriamo il popup SET.
+            // controllaGame() chiamerà direttamente terminaMatch().
+            return {
+                setVinto,
+                matchVinto
+            };
+        }
 
-    /* NUOVO SET: azzeriamo Game per tutti */
-    gameVinti =
-        giocatori.map(() => 0);
+        /*
+           =================================================
+           NUOVO SET
+           =================================================
+        */
 
-    puntiGame =
-        giocatori.map(() => 0);
+        gameVinti =
+            giocatori.map(() => 0);
+
+        puntiGame =
+            giocatori.map(() => 0);
+
+        if (conMessaggi) {
+
+            // Mostriamo il popup SET
+            mostraMessaggioPartita(
+                "set",
+                `${giocatori[indice]} vince il Set!`
+            );
+
+            // Nessun giocatore attivo finché non viene scelto
+            giocatoreAttivo = null;
+
+            if (timerSceltaGiocatore) {
+                clearTimeout(timerSceltaGiocatore);
+                timerSceltaGiocatore = null;
+            }
+
+            // Dopo 3 secondi giriamo la carta
+            timerSceltaGiocatore = setTimeout(() => {
+
+                if (
+                    !partitaTerminata &&
+                    sistemaPunteggio === "game-set"
+                ) {
+
+                    const popup =
+                        document.querySelector(
+                            ".game-flip-card"
+                        );
+
+                    if (popup) {
+                        popup.classList.add(
+                            "is-flipped"
+                        );
+                    }
+                }
+
+            }, 3000);
+        }
+
+        return {
+            setVinto,
+            matchVinto
+        };
+    }
 
     /*
-       Il Set non chiude il Match:
-       mostriamo il popup Set con la stessa
-       carta 3D usata per il Game.
+       =====================================================
+       GAME NORMALE
+       =====================================================
     */
+
     if (conMessaggi) {
 
         mostraMessaggioPartita(
-            "set",
-            `${giocatori[indice]} vince il Set!`
+            "game",
+            `${giocatori[indice]} vince il Game!`
         );
 
+        // Blocchiamo il turno
         giocatoreAttivo = null;
 
         if (timerSceltaGiocatore) {
             clearTimeout(timerSceltaGiocatore);
+            timerSceltaGiocatore = null;
         }
 
+        // Dopo 3 secondi giriamo la carta
         timerSceltaGiocatore = setTimeout(() => {
 
             if (
@@ -1627,9 +1640,11 @@ function elaboraVittoriaGame(indice, conMessaggi) {
 
         }, 3000);
     }
-}
-   }
-    return { setVinto, matchVinto };
+
+    return {
+        setVinto,
+        matchVinto
+    };
 }
 
 
