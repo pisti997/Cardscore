@@ -1340,7 +1340,7 @@ select {
     line-height: 0.9;
     font-weight: 850;
     letter-spacing: -3px;
-    font-variant-numeric: Dongle;
+    font-variant-numeric: tabular-nums;
     text-align: right;
 }
 
