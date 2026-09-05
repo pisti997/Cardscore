@@ -3278,6 +3278,9 @@ button.is-pressed {
     transform-origin: center center;
     animation: none !important;
 
+    /* Stessa larghezza del popup "Chi inizia?" iniziale */
+    width: min(360px, 88vw) !important;
+
     /* Nessun riquadro esterno: lo sfondo è solo sulle facce della carta */
     padding: 0 !important;
     background: transparent !important;
@@ -3288,7 +3291,7 @@ button.is-pressed {
 .game-flip-inner {
     position: relative;
     width: 100%;
-    min-height: 250px;
+    display: grid;
     transform-style: preserve-3d;
     transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
@@ -3299,11 +3302,13 @@ button.is-pressed {
 }
 
 .game-flip-face {
-    position: absolute;
-    inset: 0;
+    /* Le due facce condividono la stessa cella di griglia:
+       il contenitore si adatta sempre all'altezza della
+       faccia più alta, evitando che il contenuto (es. molti
+       giocatori) fuoriesca dal riquadro bianco. */
+    grid-area: 1 / 1;
 
     width: 100%;
-    min-height: 250px;
 
     box-sizing: border-box;
 
