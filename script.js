@@ -678,8 +678,16 @@ function creaTabelloneGameSet() {
         const riga =
             document.createElement("div");
 
-        riga.className =
+            riga.className =
             "match-row";
+
+        if (
+            sistemaPunteggio === "game-set" &&
+            giocatoreAttivo !== null &&
+            indice === giocatoreAttivo
+        ) {
+            riga.classList.add("active-turn");
+        }
 
 
         const player =
@@ -2139,14 +2147,6 @@ function creaRigaStorico(elementoStorico) {
 
 riga.className =
     "match-row";
-
-if (
-    giocatoreAttivo !== null &&
-    indice === giocatoreAttivo
-) {
-    riga.classList.add("active-turn");
-}
-
 
     const turno =
         document.createElement("div");
