@@ -1628,8 +1628,6 @@ function elaboraVittoriaGame(indice, conMessaggi) {
         }, 3000);
     }
 }
-}
-}
     return { setVinto, matchVinto };
 }
 
