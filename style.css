@@ -3178,7 +3178,7 @@ button.is-pressed {
 
 
 .starting-player-popup p {
-    margin: 7px 0 20px;
+    margin: 7px 0 10px;
 
     color: var(--text-soft);
 
@@ -3191,25 +3191,29 @@ button.is-pressed {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
 }
 
 
 .starting-player-button {
     width: 100%;
-    height: 42px;
-    min-height: 42px;
+    height: 38px;
+    min-height: 38px;
+    max-height: 38px;
 
-    padding: 4px 14px;
+    padding: 2px 14px;
 
     display: flex;
     align-items: center;
     gap: 12px;
 
+    box-sizing: border-box;
+    flex: 0 0 38px;
+
     border: 0;
     border-radius: 15px;
 
     background: var(--green-soft);
-
     color: var(--green-dark);
 
     font-size: 16px;
@@ -3223,8 +3227,6 @@ button.is-pressed {
     transition:
         transform 0.08s ease,
         box-shadow 0.08s ease;
-
-    box-sizing: border-box;
 }
 
 
@@ -3237,10 +3239,10 @@ button.is-pressed {
 
 
 .starting-player-number {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
 
-    flex: 0 0 28px;
+    flex: 0 0 24px;
 
     display: flex;
     align-items: center;
