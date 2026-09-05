@@ -1629,16 +1629,6 @@ function elaboraVittoriaGame(indice, conMessaggi) {
     }
 }
 
-            /* NUOVO SET: azzeriamo Game per tutti */
-
-            gameVinti =
-                giocatori.map(() => 0);
-
-            puntiGame =
-                giocatori.map(() => 0);
-        }
-    }
-
 
     return { setVinto, matchVinto };
 }
@@ -1967,32 +1957,21 @@ function mostraMessaggioPartita(tipo, testo) {
     */
 
     if (
-        tipo === "game" &&
-        sistemaPunteggio === "game-set"
-    ) {
-
-        messaggio
-            .querySelectorAll(
-                ".starting-player-button"
-            )
-            .forEach(button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const indice =
-                            Number(
-                                button.dataset.player
-                            );
-
-                        scegliGiocatoreInizio(
-                            indice
-                        );
-                    }
+    (tipo === "game" || tipo === "set") &&
+    sistemaPunteggio === "game-set"
+) {
+    messaggio
+        .querySelectorAll(".starting-player-button")
+        .forEach((bottone) => {
+            bottone.addEventListener("click", () => {
+                const indice = Number(
+                    bottone.dataset.playerIndex
                 );
+
+                scegliGiocatoreInizio(indice);
             });
-    }
+        });
+}
 
 
     /*
@@ -2001,11 +1980,11 @@ function mostraMessaggioPartita(tipo, testo) {
     */
 
     if (
-        tipo === "game" &&
-        sistemaPunteggio === "game-set"
-    ) {
-        return;
-    }
+    (tipo === "game" || tipo === "set") &&
+    sistemaPunteggio === "game-set"
+) {
+    return;
+}
 
 
     messaggioTimeout =
