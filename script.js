@@ -1531,14 +1531,23 @@ function elaboraVittoriaGame(indice, conMessaggi) {
 
     timerSceltaGiocatore = setTimeout(() => {
 
-        if (
-            !partitaTerminata &&
-            sistemaPunteggio === "game-set"
-        ) {
-            apriPopupInizioGame();
-        }
+    if (
+        !partitaTerminata &&
+        sistemaPunteggio === "game-set"
+    ) {
+        const popup =
+            document.querySelector(
+                ".game-flip-card"
+            );
 
-    }, 3000);
+        if (popup) {
+            popup.classList.add(
+                "is-flipped"
+            );
+        }
+    }
+
+}, 3000);
 }
 
 
@@ -1747,29 +1756,22 @@ function terminaMatch(indiceVincitore) {
 function mostraMessaggioPartita(tipo, testo) {
 
     const precedente =
-        document.querySelector(
-            ".match-message"
-        );
+        document.querySelector(".match-message");
 
     if (precedente) {
         precedente.remove();
     }
 
-
     const precedenteOverlay =
-        document.querySelector(
-            ".cardscore-overlay"
-        );
+        document.querySelector(".cardscore-overlay");
 
     if (precedenteOverlay) {
         precedenteOverlay.remove();
     }
 
-
     if (messaggioTimeout) {
         clearTimeout(messaggioTimeout);
     }
-
 
     const overlay =
         document.createElement("div");
@@ -1777,32 +1779,25 @@ function mostraMessaggioPartita(tipo, testo) {
     overlay.className =
         "cardscore-overlay";
 
-
     const messaggio =
         document.createElement("div");
 
     messaggio.className =
         "match-message";
 
-
     let etichetta = "PARTITA";
     let icona = "🎉";
-
-    let sottotesto =
-        "Continua a giocare!";
-
+    let sottotesto = "Continua a giocare!";
 
     if (tipo === "game") {
         etichetta = "GAME";
         icona = "🎯";
     }
 
-
     if (tipo === "set") {
         etichetta = "SET";
         icona = "🏆";
     }
-
 
     if (tipo === "match") {
         etichetta = "MATCH";
@@ -1810,29 +1805,168 @@ function mostraMessaggioPartita(tipo, testo) {
         sottotesto = "Ecco il riepilogo finale...";
     }
 
+    /*
+       Per il GAME utilizziamo una vera carta 3D:
+       davanti = vittoria Game
+       dietro = scelta del giocatore
+    */
 
-    messaggio.innerHTML = `
+    if (
+        tipo === "game" &&
+        sistemaPunteggio === "game-set"
+    ) {
 
-        <div class="match-message-icon">
-            ${icona}
-        </div>
+        messaggio.classList.add(
+            "game-flip-card"
+        );
 
-        <div class="match-message-label">
-            ${etichetta}
-        </div>
+        messaggio.innerHTML = `
 
-        <h2>
-            ${escapeHTML(testo)}
-        </h2>
+            <div class="game-flip-inner">
 
-        <p>
-            ${escapeHTML(sottotesto)}
-        </p>
-    `;
+                <!-- DAVANTI -->
+                <div class="game-flip-face game-flip-front">
+
+                    <div class="match-message-icon">
+                        🎯
+                    </div>
+
+                    <div class="match-message-label">
+                        GAME
+                    </div>
+
+                    <h2>
+                        ${escapeHTML(testo)}
+                    </h2>
+
+                    <p>
+                        Continua a giocare!
+                    </p>
+
+                </div>
+
+
+                <!-- DIETRO -->
+                <div class="game-flip-face game-flip-back">
+
+                    <div class="starting-player-icon">
+                        🎯
+                    </div>
+
+                    <div class="starting-player-label">
+                        NUOVO GAME
+                    </div>
+
+                    <h2>
+                        Chi inizia?
+                    </h2>
+
+                    <p>
+                        Scegli il giocatore che parte per primo
+                    </p>
+
+                    <div class="starting-player-buttons">
+
+                        ${giocatori.map((nome, indice) => `
+                            <button
+                                type="button"
+                                class="starting-player-button"
+                                data-player="${indice}"
+                            >
+                                <span class="starting-player-number">
+                                    ${indice + 1}
+                                </span>
+
+                                <strong>
+                                    ${escapeHTML(nome)}
+                                </strong>
+                            </button>
+                        `).join("")}
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+    } else {
+
+        /*
+           Tutti gli altri messaggi rimangono
+           esattamente come prima.
+        */
+
+        messaggio.innerHTML = `
+
+            <div class="match-message-icon">
+                ${icona}
+            </div>
+
+            <div class="match-message-label">
+                ${etichetta}
+            </div>
+
+            <h2>
+                ${escapeHTML(testo)}
+            </h2>
+
+            <p>
+                ${escapeHTML(sottotesto)}
+            </p>
+        `;
+    }
 
 
     document.body.appendChild(overlay);
     document.body.appendChild(messaggio);
+
+
+    /*
+       I pulsanti sul retro vengono collegati
+       solo quando il popup viene girato.
+    */
+
+    if (
+        tipo === "game" &&
+        sistemaPunteggio === "game-set"
+    ) {
+
+        messaggio
+            .querySelectorAll(
+                ".starting-player-button"
+            )
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const indice =
+                            Number(
+                                button.dataset.player
+                            );
+
+                        scegliGiocatoreInizio(
+                            indice
+                        );
+                    }
+                );
+            });
+    }
+
+
+    /*
+       Il popup GAME resta a schermo fino alla
+       rotazione. Non deve essere rimosso dopo 3 secondi.
+    */
+
+    if (
+        tipo === "game" &&
+        sistemaPunteggio === "game-set"
+    ) {
+        return;
+    }
 
 
     messaggioTimeout =
