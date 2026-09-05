@@ -3193,22 +3193,23 @@ button.is-pressed {
 
 .starting-player-button {
     width: 100%;
+    box-sizing: border-box;
     min-height: 48px;
 
-    padding: 7px 12px;
+    padding: 8px 10px;
 
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
 
     border: 0;
-    border-radius: 14px;
+    border-radius: 13px;
 
     background: var(--green-soft);
 
     color: var(--green-dark);
 
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 800;
 
     box-shadow:
@@ -3231,10 +3232,10 @@ button.is-pressed {
 
 
 .starting-player-number {
-    width: 34px;
-    height: 34px;
+    width: 28px;
+    height: 28px;
 
-    flex: 0 0 34px;
+    flex: 0 0 28px;
 
     display: flex;
     align-items: center;
@@ -3336,4 +3337,22 @@ button.is-pressed {
 
 .starting-player-popup {
     animation: none !important;
+}
+/* =========================================================
+   POPUP GAME 3D - ELIMINA IL RIQUADRO ESTERNO
+   ========================================================= */
+
+.game-flip-card {
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+.game-flip-inner {
+    width: 100%;
+}
+
+.game-flip-face {
+    box-sizing: border-box;
 }
