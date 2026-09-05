@@ -3699,3 +3699,12 @@ button.is-pressed {
 
     line-height: 1 !important;
 }
+/* =========================================================
+   STORICO COMPLETO - CARD AZZURRINE
+   ========================================================= */
+
+.history-full-list .history-row {
+    background: #eaf1f6 !important;
+    border: 1px solid #dbe5ec !important;
+    box-shadow: none !important;
+}
