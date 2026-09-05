@@ -2946,7 +2946,7 @@ button.is-pressed {
     }
 }
 /* =========================================================
-   NESSUNA PARTITA IN CORSO
+   NESSUNA PARTITA IN CORSO - HOME
    ========================================================= */
 
 @media (max-width: 430px) {
@@ -2956,63 +2956,34 @@ button.is-pressed {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 25px 20px;
+        padding: 20px;
+        box-sizing: border-box;
     }
 
-    #home .saved-game-card.empty-state .saved-game-top {
+    /* Nasconde completamente intestazione e contenuto normale */
+    #home .saved-game-card.empty-state .saved-game-heading {
+        display: none !important;
+    }
+
+    #home .saved-game-card.empty-state .saved-game-content {
         width: 100%;
-        display: flex;
+        display: flex !important;
         align-items: center;
         justify-content: center;
+        padding: 0 !important;
     }
 
     #home .saved-game-card.empty-state .saved-game-icon {
         display: none !important;
     }
 
-    #home .saved-game-card.empty-state .saved-game-title {
+    #home .saved-game-card.empty-state .saved-game-main {
         width: 100%;
+        min-width: 0;
         text-align: center;
     }
 
-    #home .saved-game-card.empty-state .saved-label {
-        margin: 0;
-        color: #286548;
-        font-size: 18px;
-        line-height: 1.2;
-        font-weight: 800;
-        letter-spacing: 0.4px;
-        text-decoration: underline;
-        text-decoration-thickness: 1.5px;
-        text-underline-offset: 4px;
-
-        text-shadow:
-            0 2px 2px rgba(31, 96, 67, 0.18);
-    }
-
-    #home .saved-game-card.empty-state .saved-game-title h3,
-    #home .saved-game-card.empty-state .saved-game-info,
-    #home .saved-game-card.empty-state .primary-button {
-        display: none !important;
-    }
-
-}
-/* =========================================================
-   NESSUNA PARTITA IN CORSO
-   ========================================================= */
-
-@media (max-width: 430px) {
-
-    #home .saved-game-card.empty-state {
-        min-height: 135px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 25px 20px;
-        box-sizing: border-box;
-    }
-
-    #home .saved-game-card.empty-state .saved-game-top {
+    #home .saved-game-card.empty-state .saved-game-header {
         display: none !important;
     }
 
@@ -3025,11 +2996,12 @@ button.is-pressed {
         align-items: center;
         justify-content: center;
 
+        white-space: nowrap;
         text-align: center;
 
         color: #286548;
-        font-size: 18px;
-        line-height: 1.2;
+        font-size: 17px;
+        line-height: 1;
         font-weight: 800;
 
         text-decoration: underline;
@@ -3040,8 +3012,11 @@ button.is-pressed {
             0 2px 2px rgba(31, 96, 67, 0.18);
     }
 
-    #home .saved-game-card.empty-state
-    #continua-partita-btn {
+    #home .saved-game-card.empty-state .saved-game-arrow {
+        display: none !important;
+    }
+
+    #home .saved-game-card.empty-state .primary-button {
         display: none !important;
     }
 }
