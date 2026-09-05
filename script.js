@@ -647,7 +647,32 @@ function creaTabelloneSemplice() {
 ========================================================= */
 
 function creaTabelloneGameSet() {
+    if (!document.getElementById("stile-turno-attivo")) {
+        const style = document.createElement("style");
 
+        style.id = "stile-turno-attivo";
+
+        style.textContent = `
+            .match-row.active-turn {
+                transform: scale(1.02);
+                border: 2px solid #4f8cff;
+                box-shadow:
+                    0 0 8px rgba(79, 140, 255, 0.65),
+                    0 0 20px rgba(79, 140, 255, 0.45),
+                    0 0 35px rgba(79, 140, 255, 0.25);
+                background: rgba(79, 140, 255, 0.08);
+                position: relative;
+                z-index: 2;
+            }
+
+            .match-row.active-turn .score-big {
+                transform: scale(1.08);
+                font-weight: 800;
+            }
+        `;
+
+        document.head.appendChild(style);
+    }
     const tabellone =
         elemento("tabellone-game-set");
 
