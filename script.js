@@ -2527,7 +2527,7 @@ function ricalcolaPartita() {
     storicoSet = [];
 
 
-    storico.forEach(turno => {
+    for (const turno of storico) {
 
         const indice =
             Number(turno.giocatore);
@@ -2541,7 +2541,7 @@ function ricalcolaPartita() {
             indice < 0 ||
             indice >= giocatori.length
         ) {
-            return;
+            continue;
         }
 
 
@@ -2549,7 +2549,7 @@ function ricalcolaPartita() {
 
 
         if (sistemaPunteggio !== "game-set") {
-            return;
+            continue;
         }
 
 
@@ -2571,10 +2571,12 @@ function ricalcolaPartita() {
 
                 matchVinti[indice] = 1;
 
-                return;
+                // Il match è già stato vinto: eventuali
+                // turni successivi nello storico vengono ignorati.
+                break;
             }
         }
-    });
+    }
 }
 
 
@@ -2758,8 +2760,8 @@ function aggiornaPartitaSalvata() {
                     immagine
                         ? `
                             <img
-                                src="${immagine}"
-                                alt="${dati.giocoScelto || "Gioco"}"
+                                src="${escapeHTML(immagine)}"
+                                alt="${escapeHTML(dati.giocoScelto || "Gioco")}"
                             >
                           `
                         : "🃏"
@@ -2992,11 +2994,13 @@ function continuaPartita() {
         Date.now();
 
     partitaTerminata = false;
-    
+
     giocatoreAttivo =
-    Number.isInteger(Number(dati.giocatoreAttivo))
-        ? Number(dati.giocatoreAttivo)
-        : null;
+        dati.giocatoreAttivo === null ||
+        dati.giocatoreAttivo === undefined ||
+        !Number.isInteger(Number(dati.giocatoreAttivo))
+            ? null
+            : Number(dati.giocatoreAttivo);
 
 
     /*
@@ -3014,6 +3018,16 @@ function continuaPartita() {
     mostraPagina("partita");
 
     aggiornaSchermataPartita();
+
+    if (
+        sistemaPunteggio === "game-set" &&
+        giocatoreAttivo === null &&
+        !partitaTerminata
+    ) {
+        setTimeout(() => {
+            apriPopupInizioGame();
+        }, 150);
+    }
 }
 
 
