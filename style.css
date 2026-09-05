@@ -3708,3 +3708,24 @@ button.is-pressed {
     border: 1px solid #dbe5ec !important;
     box-shadow: none !important;
 }
+/* =========================================================
+   TITOLO GIOCO + ESCI
+   ========================================================= */
+
+.match-topbar {
+    align-items: center !important;
+}
+
+.match-topbar .back-button {
+    margin-top: 0 !important;
+    align-self: center !important;
+}
+
+.match-heading {
+    align-self: center !important;
+    transform: none !important;
+}
+
+.match-heading h1 {
+    margin: 0 !important;
+}
