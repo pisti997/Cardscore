@@ -2403,25 +2403,23 @@ function salvaPartita() {
 function aggiornaPartitaSalvata() {
 
     const card = elemento("partita-in-corso");
-    const titolo = elemento("partita-salvata-titolo");
-    const turno = elemento("partita-salvata-turno");
-    const info = elemento("partita-salvata-info");
-    const icona = card?.querySelector(".saved-game-icon");
-    const heading = card?.querySelector(".saved-game-heading");
-    const bottone = elemento("continua-partita-btn");
 
     if (!card) return;
+
 
     let dati = null;
 
     try {
-        const salvata = localStorage.getItem(STORAGE_KEY);
+
+        const salvata =
+            localStorage.getItem(STORAGE_KEY);
 
         if (salvata) {
             dati = JSON.parse(salvata);
         }
 
     } catch (errore) {
+
         console.error(
             "Errore lettura partita:",
             errore
@@ -2442,30 +2440,11 @@ function aggiornaPartitaSalvata() {
         card.classList.remove("hidden");
         card.classList.add("empty-state");
 
-        if (heading) {
-            heading.style.display = "none";
-        }
-
-        if (icona) {
-            icona.style.display = "none";
-        }
-
-        if (titolo) {
-            titolo.style.display = "none";
-        }
-
-        if (turno) {
-            turno.style.display = "none";
-        }
-
-        if (info) {
-            info.textContent = "Nessuna partita in corso";
-            info.style.display = "flex";
-        }
-
-        if (bottone) {
-            bottone.style.display = "none";
-        }
+        card.innerHTML = `
+            <div class="saved-game-empty">
+                Nessuna partita in corso
+            </div>
+        `;
 
         return;
     }
@@ -2478,97 +2457,150 @@ function aggiornaPartitaSalvata() {
     card.classList.remove("hidden");
     card.classList.remove("empty-state");
 
-    if (heading) {
-        heading.style.display = "";
-    }
 
-    if (titolo) {
-        titolo.style.display = "";
-        titolo.textContent =
-            dati.giocoScelto || "Partita";
-    }
-
-    if (turno) {
-        turno.style.display = "";
-        turno.textContent =
-            `Turno ${dati.numeroTurno || 0}`;
-    }
+    const immaginiGiochi = {
+        "UNO": "immagini/uno.png",
+        "Pili Pili": "immagini/pili-pili.png",
+        "Scala 40": "immagini/scala40.png",
+        "Scopa": "immagini/scopa.png"
+    };
 
 
-    /* =====================================================
-       LOGO DEL GIOCO
-       ===================================================== */
-
-    if (icona) {
-
-        icona.style.display = "";
-
-        const immaginiGiochi = {
-            "UNO": "immagini/uno.png",
-            "Pili Pili": "immagini/pili-pili.png",
-            "Scala 40": "immagini/scala40.png",
-            "Scopa": "immagini/scopa.png"
-        };
-
-        const immagine =
-            immaginiGiochi[dati.giocoScelto];
-
-        if (immagine) {
-
-            icona.innerHTML = `
-                <img
-                    src="${immagine}"
-                    alt="${dati.giocoScelto || "Gioco"}"
-                >
-            `;
-        }
-    }
+    const immagine =
+        immaginiGiochi[dati.giocoScelto];
 
 
-    /* =====================================================
-       INFORMAZIONI GIOCATORI
-       ===================================================== */
-
-    if (info) {
-
-        info.style.display = "";
-
-        const giocatori =
-            Array.isArray(dati.giocatori)
-                ? dati.giocatori
-                : [];
-
-        const punteggi =
-            Array.isArray(dati.punteggi)
-                ? dati.punteggi
-                : giocatori.map(() => 0);
-
-        info.innerHTML =
-            giocatori
-                .map((nome, indice) => {
-
-                    const punteggio =
-                        Number(punteggi[indice]) || 0;
-
-                    return `
-                        <div class="saved-player-score">
-                            <span>
-                                ${escapeHTML(nome)}
-                            </span>
-
-                            <strong>
-                                ${punteggio} punti
-                            </strong>
-                        </div>
-                    `;
-                })
-                .join("");
-    }
+    const giocatori =
+        Array.isArray(dati.giocatori)
+            ? dati.giocatori
+            : [];
 
 
-    if (bottone) {
-        bottone.style.display = "";
-    }
+    const puntiGame =
+        Array.isArray(dati.puntiGame)
+            ? dati.puntiGame
+            : giocatori.map(() => 0);
+
+
+    const gameVinti =
+        Array.isArray(dati.gameVinti)
+            ? dati.gameVinti
+            : giocatori.map(() => 0);
+
+
+    const setVinti =
+        Array.isArray(dati.setVinti)
+            ? dati.setVinti
+            : giocatori.map(() => 0);
+
+
+    card.innerHTML = `
+
+        <div class="saved-game-heading">
+            <h2>PARTITA IN CORSO</h2>
+        </div>
+
+
+        <div class="saved-game-content">
+
+            <div class="saved-game-icon">
+
+                ${
+                    immagine
+                        ? `
+                            <img
+                                src="${immagine}"
+                                alt="${dati.giocoScelto || "Gioco"}"
+                            >
+                          `
+                        : "🃏"
+                }
+
+            </div>
+
+
+            <div class="saved-game-main">
+
+                <div class="saved-game-header">
+
+                    <h3>
+                        ${escapeHTML(
+                            dati.giocoScelto || "Partita"
+                        )}
+                    </h3>
+
+                    <span class="saved-game-turn">
+                        Turno ${dati.numeroTurno || 0}
+                    </span>
+
+                </div>
+
+
+                <div class="saved-game-info">
+
+                    ${
+                        giocatori
+                            .map((nome, indice) => {
+
+                                const punti =
+                                    Number(
+                                        puntiGame[indice]
+                                    ) || 0;
+
+                                const games =
+                                    Number(
+                                        gameVinti[indice]
+                                    ) || 0;
+
+                                const sets =
+                                    Number(
+                                        setVinti[indice]
+                                    ) || 0;
+
+
+                                return `
+                                    <div class="saved-player-score">
+
+                                        <span>
+                                            ${escapeHTML(nome)}
+                                        </span>
+
+                                        <strong>
+                                            Game ${games}
+                                            · Set ${sets}
+                                            · ${punti} punti
+                                        </strong>
+
+                                    </div>
+                                `;
+
+                            })
+                            .join("")
+                    }
+
+                </div>
+
+            </div>
+
+
+            <div class="saved-game-arrow">
+                ›
+            </div>
+
+        </div>
+
+
+        <button
+            id="continua-partita-btn"
+            class="primary-button"
+            type="button"
+            onclick="continuaPartita()"
+        >
+            <span>▶</span>
+            Continua partita
+        </button>
+
+    `;
 }
 
 
