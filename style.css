@@ -3190,15 +3190,16 @@ button.is-pressed {
 .starting-player-buttons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 
 .starting-player-button {
     width: 100%;
-    min-height: 48px;
+    height: 42px;
+    min-height: 42px;
 
-    padding: 6px 14px;
+    padding: 4px 14px;
 
     display: flex;
     align-items: center;
@@ -3222,6 +3223,8 @@ button.is-pressed {
     transition:
         transform 0.08s ease,
         box-shadow 0.08s ease;
+
+    box-sizing: border-box;
 }
 
 
