@@ -3729,3 +3729,138 @@ button.is-pressed {
 .match-heading h1 {
     margin: 0 !important;
 }
+/* =========================================================
+   STORICO TURNI - VERSIONE DEFINITIVA
+   ========================================================= */
+
+.history-section {
+    width: 100% !important;
+    margin-top: 25px !important;
+}
+
+.history-heading {
+    width: 100% !important;
+    margin-bottom: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+.history-heading h2 {
+    margin: 0 !important;
+    font-size: 21px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+}
+
+.history-link {
+    padding: 0 !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+/* RIGA DELLO STORICO */
+.history-section .history-row {
+    width: 100% !important;
+    height: 72px !important;
+    min-height: 72px !important;
+    max-height: 72px !important;
+
+    padding: 12px 16px !important;
+    margin: 0 !important;
+
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+
+    gap: 16px !important;
+
+    border-radius: 18px !important;
+
+    background: #ffffff !important;
+    border: 1px solid #e4e7e1 !important;
+
+    box-shadow: none !important;
+
+    overflow: hidden !important;
+}
+
+/* TURNO */
+.history-section .history-turn {
+    width: 55px !important;
+    min-width: 55px !important;
+    max-width: 55px !important;
+
+    flex: 0 0 55px !important;
+
+    color: #9ca19a !important;
+
+    font-size: 12px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+
+    white-space: nowrap !important;
+}
+
+/* CONTENITORE NOME + PUNTI */
+.history-section .history-details {
+    min-width: 0 !important;
+
+    flex: 1 1 auto !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+
+    overflow: hidden !important;
+}
+
+/* NOME */
+.history-section .history-player {
+    display: block !important;
+
+    margin: 0 !important;
+
+    color: #20251f !important;
+
+    font-size: 16px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+/* PUNTI */
+.history-section .history-points {
+    display: block !important;
+
+    margin: 5px 0 0 !important;
+
+    color: #1f6043 !important;
+
+    font-size: 12px !important;
+    line-height: 1 !important;
+    font-weight: 800 !important;
+
+    white-space: nowrap !important;
+}
+
+/* FRECCIA */
+.history-section .history-arrow {
+    width: 18px !important;
+    min-width: 18px !important;
+
+    flex: 0 0 18px !important;
+
+    color: #9ca19a !important;
+
+    font-size: 26px !important;
+    line-height: 1 !important;
+    font-weight: 400 !important;
+
+    text-align: center !important;
+}
