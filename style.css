@@ -3900,3 +3900,113 @@ button.is-pressed {
 .match-topbar .match-menu-wrap {
     align-self: center !important;
 }
+/* =========================================================
+   TOPBAR PARTITA - PULSANTI FINALI
+   ========================================================= */
+
+#partita .match-topbar {
+    position: relative !important;
+    align-items: center !important;
+}
+
+/* CERCHIO SINISTRO */
+#partita .match-topbar .back-button {
+    position: absolute !important;
+
+    left: 18px !important;
+    top: 50% !important;
+
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: translateY(-50%) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border-radius: 50% !important;
+}
+
+/* FRECCIA */
+#partita .match-topbar .back-button .back-arrow {
+    position: static !important;
+
+    width: auto !important;
+    height: auto !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: none !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 27px !important;
+    line-height: 1 !important;
+}
+
+
+/* CERCHIO DESTRO */
+#partita .match-topbar .match-menu-wrap {
+    position: absolute !important;
+
+    right: 18px !important;
+    top: 50% !important;
+
+    width: 36px !important;
+    height: 36px !important;
+
+    margin: 0 !important;
+
+    transform: translateY(-50%) !important;
+}
+
+/* PULSANTE TRE PUNTINI */
+#partita .match-topbar .match-menu-button {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border-radius: 50% !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* TRE PUNTINI */
+#partita .match-topbar .match-menu-button span {
+    font-size: 11px !important;
+    letter-spacing: 2px !important;
+
+    transform: none !important;
+}
+
+
+/* =========================================================
+   UNO - CENTRO ESATTO
+   ========================================================= */
+
+#partita .match-topbar .match-heading {
+    position: absolute !important;
+
+    left: 50% !important;
+    top: 50% !important;
+
+    margin: 0 !important;
+    min-width: 0 !important;
+
+    transform: translate(-50%, -50%) !important;
+}
