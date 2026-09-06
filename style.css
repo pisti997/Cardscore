@@ -3406,3 +3406,221 @@ button.is-pressed {
     border: 1px solid #dbe5ec !important;
     box-shadow: none !important;
 }
+/* =========================================================
+   TOPBAR PARTITA - PULSANTI STILE IPHONE
+   ========================================================= */
+
+/* PULSANTE ESCI */
+.match-topbar .back-button {
+    height: 44px !important;
+    min-height: 44px !important;
+
+    padding: 0 14px !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    gap: 6px !important;
+
+    background: #ffffff !important;
+    border: 1px solid #e3e7e2 !important;
+    border-radius: 15px !important;
+
+    color: #17251d !important;
+
+    box-shadow:
+        0 4px 0 #d9ded9,
+        0 6px 12px rgba(25, 45, 32, 0.08) !important;
+
+    transition:
+        transform 0.08s ease,
+        box-shadow 0.08s ease !important;
+}
+
+/* Freccia Esci */
+.match-topbar .back-button .back-arrow {
+    margin: 0 !important;
+    font-size: 29px !important;
+    line-height: 1 !important;
+}
+
+/* Effetto pressione */
+.match-topbar .back-button:active {
+    transform: translateY(3px) !important;
+
+    box-shadow:
+        0 1px 0 #d9ded9,
+        0 3px 7px rgba(25, 45, 32, 0.08) !important;
+}
+
+
+/* =========================================================
+   CONTENITORE MENU
+   ========================================================= */
+
+.match-menu-wrap {
+    position: relative;
+
+    justify-self: end;
+
+    width: 44px;
+    height: 44px;
+
+    z-index: 50;
+}
+
+
+/* =========================================================
+   PULSANTE TRE PUNTINI
+   ========================================================= */
+
+.match-menu-button {
+    width: 44px !important;
+    height: 44px !important;
+
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    background: #ffffff !important;
+
+    border: 1px solid #e3e7e2 !important;
+    border-radius: 15px !important;
+
+    color: #17251d !important;
+
+    box-shadow:
+        0 4px 0 #d9ded9,
+        0 6px 12px rgba(25, 45, 32, 0.08) !important;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.08s ease,
+        box-shadow 0.08s ease !important;
+}
+
+.match-menu-button span {
+    display: block;
+
+    font-size: 16px;
+    line-height: 1;
+
+    letter-spacing: 2px;
+
+    transform: translateX(1px);
+}
+
+.match-menu-button:active {
+    transform: translateY(3px) !important;
+
+    box-shadow:
+        0 1px 0 #d9ded9,
+        0 3px 7px rgba(25, 45, 32, 0.08) !important;
+}
+
+
+/* =========================================================
+   MENU A COMPARSA
+   ========================================================= */
+
+.match-menu {
+    position: absolute;
+
+    top: 52px;
+    right: 0;
+
+    width: 205px;
+
+    padding: 7px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e5e0;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 14px 35px rgba(20, 40, 25, 0.16),
+        0 3px 8px rgba(20, 40, 25, 0.06);
+
+    animation: matchMenuIn 0.16s ease;
+
+    transform-origin: top right;
+}
+
+
+/* Elementi del menu */
+
+.match-menu-item {
+    width: 100%;
+    min-height: 48px;
+
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: #1d3025;
+
+    text-align: left;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.match-menu-item span {
+    width: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+}
+
+.match-menu-item strong {
+    font-weight: 650;
+}
+
+.match-menu-item:active {
+    background: #eef4ec;
+
+    transform: scale(0.98);
+}
+
+
+/* Termina partita */
+.match-menu-item.danger {
+    color: #b54848;
+}
+
+.match-menu-item.danger:active {
+    background: #fbeeee;
+}
+
+
+/* Animazione */
+
+@keyframes matchMenuIn {
+    from {
+        opacity: 0;
+        transform: scale(0.94) translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
