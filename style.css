@@ -3318,45 +3318,53 @@ button.is-pressed {
 
 /* =========================================================
    STORICO TURNI - RIQUADRI COMPATTI E UNIFORMI
+
+   NB: le regole di base (sfondo, bordo, dimensioni) sono
+   applicate direttamente su .history-row / .history-empty,
+   SENZA richiedere un genitore con classe .history-list o
+   .history-full-list. Così il riquadro resta visibile anche
+   se il contenitore nell'HTML non ha esattamente quella
+   classe (causa del bug per cui il riquadro spariva quando
+   veniva inserito un punteggio: mancavano sfondo e bordo).
    ========================================================= */
 
-/* DIMENSIONE COMUNE (stessa altezza per riquadro vuoto e riquadro con punteggio,
+/* DIMENSIONE COMUNE + SFONDO (stessi per riquadro vuoto e pieno,
    sia in "Ultimo turno" che in "Storico turni") */
-.history-list .history-empty,
-.history-full-list .history-empty,
-.history-list .history-row,
-.history-full-list .history-row {
+.history-empty,
+.history-row {
     width: 100% !important;
-    height: 104px !important;
-    min-height: 104px !important;
-    max-height: 104px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
     box-sizing: border-box !important;
-    border-radius: 16px !important;
+    border-radius: 14px !important;
+    background: #ffffff !important;
+    border: 1px solid #e4e7e1 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
 }
 
 /* Testo del riquadro vuoto centrato come il contenuto del riquadro pieno */
-.history-list .history-empty,
-.history-full-list .history-empty {
+.history-empty {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    padding: 0 12px !important;
 }
 
 /* ULTIMO TURNO + STORICO CON PUNTEGGIO */
-.history-list .history-row,
-.history-full-list .history-row {
-    padding: 14px 16px !important;
+.history-row {
+    padding: 6px 12px !important;
 
     display: grid !important;
-    grid-template-columns: 70px minmax(0, 1fr) 24px !important;
+    grid-template-columns: 50px minmax(0, 1fr) 18px !important;
 
     align-items: center !important;
-    gap: 10px !important;
+    gap: 8px !important;
 }
 
 /* CONTENUTO CENTRALE */
-.history-list .history-details,
-.history-full-list .history-details {
+.history-details {
     min-width: 0 !important;
 
     display: flex !important;
@@ -3366,31 +3374,27 @@ button.is-pressed {
 }
 
 /* TURNO */
-.history-list .history-turn,
-.history-full-list .history-turn {
+.history-turn {
     width: auto !important;
-    font-size: 14px !important;
+    font-size: 10px !important;
 }
 
 /* NOME GIOCATORE */
-.history-list .history-player,
-.history-full-list .history-player {
-    font-size: 20px !important;
+.history-player {
+    font-size: 15px !important;
     line-height: 1.1 !important;
 }
 
 /* PUNTEGGIO */
-.history-list .history-points,
-.history-full-list .history-points {
-    margin-top: 8px !important;
-    font-size: 14px !important;
+.history-points {
+    margin-top: 2px !important;
+    font-size: 11px !important;
     line-height: 1 !important;
 }
 
 /* FRECCIA */
-.history-list .history-arrow,
-.history-full-list .history-arrow {
-    font-size: 28px !important;
+.history-arrow {
+    font-size: 18px !important;
 }
 
 /* =========================================================
