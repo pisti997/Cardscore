@@ -4083,9 +4083,9 @@ button.is-pressed {
 
     display: block;
 
-    font-size: 31px;
+    font-size: 38px;
     line-height: 1;
-    font-weight: 400;
+    font-weight: 500;
 
     transform: translateY(-1px);
 }
@@ -4116,7 +4116,7 @@ button.is-pressed {
 
     display: block;
 
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1;
     letter-spacing: 2px;
 
