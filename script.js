@@ -1335,7 +1335,7 @@ function formattaDurata(millisecondi) {
 ========================================================= */
 function creaRigaStorico(elementoStorico) {
     const riga = document.createElement("div");
-    riga.className = "match-row";
+    riga.className = "history-row";
     const turno = document.createElement("div");
     turno.className = "history-turn";
     turno.textContent = `Turno ${ elementoStorico.turno }`;
