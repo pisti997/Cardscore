@@ -4055,3 +4055,70 @@ button.is-pressed {
 
     transform: none !important;
 }
+/* =========================================================
+   CENTRATURA DEFINITIVA SIMBOLI NEI PULSANTI
+   ========================================================= */
+
+/* FRECCIA */
+#partita .match-topbar .back-button .back-arrow {
+    position: absolute !important;
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 0 !important;
+    line-height: 1 !important;
+}
+
+#partita .match-topbar .back-button .back-arrow::before {
+    content: "‹";
+
+    display: block;
+
+    font-size: 27px;
+    line-height: 1;
+    font-weight: 300;
+
+    transform: translateY(-1px);
+}
+
+
+/* TRE PUNTINI */
+#partita .match-topbar .match-menu-button span {
+    position: absolute !important;
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 0 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+}
+
+#partita .match-topbar .match-menu-button span::before {
+    content: "•••";
+
+    display: block;
+
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 2px;
+
+    transform: translateX(1px);
+}
