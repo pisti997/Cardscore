@@ -4083,9 +4083,9 @@ button.is-pressed {
 
     display: block;
 
-    font-size: 38px;
+    font-size: 41px;
     line-height: 1;
-    font-weight: 500;
+    font-weight: 300;
 
     transform: translateY(-1px);
 }
