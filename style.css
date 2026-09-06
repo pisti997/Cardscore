@@ -236,7 +236,7 @@ select {
     text-overflow: ellipsis;
     white-space: nowrap;
     color: var(--green-dark);
-    font-family: "SS Safari" !important;
+    font-family: "Nunito Sans" !important;
     font-size: 34px;
     line-height: 1;
     font-weight: 900;
@@ -1079,7 +1079,7 @@ select {
     position: relative;
     width: 100%;
     min-height: 92px !important;
-    margin-top: 15px !important;
+    margin-top: 30px !important;
     margin-bottom: 18px !important;
     padding: 34px 14px 11px !important;
     display: flex;
@@ -3338,7 +3338,7 @@ button.is-pressed {
 .match-topbar {
     position: relative;
     width: 100%;
-    min-height: 65px;
+    min-height: 50px;
     padding: calc(env(safe-area-inset-top) + 18px) 27px 8px;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
