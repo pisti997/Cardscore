@@ -3675,3 +3675,79 @@ button.is-pressed {
     font-size: 25px !important;
     line-height: 1 !important;
 }
+/* =========================================================
+   STORICO TURNI - RIQUADRI COMPATTI E UNIFORMI
+   ========================================================= */
+
+/* DIMENSIONE COMUNE */
+.history-list .history-empty,
+.history-list .history-row,
+.history-full-list .history-row {
+    width: 100% !important;
+    height: 104px !important;
+    min-height: 104px !important;
+    max-height: 104px !important;
+    box-sizing: border-box !important;
+    border-radius: 16px !important;
+}
+
+/* ULTIMO TURNO + STORICO CON PUNTEGGIO */
+.history-list .history-row,
+.history-full-list .history-row {
+    padding: 14px 16px !important;
+
+    display: grid !important;
+    grid-template-columns: 70px minmax(0, 1fr) 24px !important;
+
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+/* CONTENUTO CENTRALE */
+.history-list .history-details,
+.history-full-list .history-details {
+    min-width: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* TURNO */
+.history-list .history-turn,
+.history-full-list .history-turn {
+    width: auto !important;
+    font-size: 14px !important;
+}
+
+/* NOME GIOCATORE */
+.history-list .history-player,
+.history-full-list .history-player {
+    font-size: 20px !important;
+    line-height: 1.1 !important;
+}
+
+/* PUNTEGGIO */
+.history-list .history-points,
+.history-full-list .history-points {
+    margin-top: 8px !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+}
+
+/* FRECCIA */
+.history-list .history-arrow,
+.history-full-list .history-arrow {
+    font-size: 28px !important;
+}
+
+/* =========================================================
+   SFONDO AZZURRINO SOLO PER LO STORICO COMPLETO
+   ========================================================= */
+
+.history-full-list .history-row {
+    background: #eaf1f6 !important;
+    border: 1px solid #dbe5ec !important;
+    box-shadow: none !important;
+}
