@@ -3798,8 +3798,8 @@ button.is-pressed {
 .match-topbar .back-button .back-arrow {
     position: absolute !important;
 
-    left: 13px !important;
-    top: 50% !important;
+    left: 7px !important;
+    top: calc(50% - 3px) !important;
 
     margin: 0 !important;
 
