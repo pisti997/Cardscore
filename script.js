@@ -1865,3 +1865,47 @@ function chiudiPopupInizioGame() {
         timerSceltaGiocatore = null;
     }
 }
+/* =========================================================
+   MENU PARTITA
+   Per ora solo estetico
+   ========================================================= */
+
+function toggleMatchMenu(event) {
+
+    if (event) {
+        event.stopPropagation();
+    }
+
+    const menu = document.getElementById("match-menu");
+
+    if (!menu) return;
+
+    menu.classList.toggle("hidden");
+}
+
+
+function chiudiMenuPartita() {
+
+    const menu = document.getElementById("match-menu");
+
+    if (!menu) return;
+
+    menu.classList.add("hidden");
+}
+
+
+/* Chiude il menu toccando fuori */
+document.addEventListener("click", function(event) {
+
+    const contenitore =
+        document.querySelector(".match-menu-wrap");
+
+    const menu =
+        document.getElementById("match-menu");
+
+    if (!contenitore || !menu) return;
+
+    if (!contenitore.contains(event.target)) {
+        menu.classList.add("hidden");
+    }
+});
