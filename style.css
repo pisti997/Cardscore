@@ -3779,3 +3779,50 @@ button.is-pressed {
 .match-topbar .match-heading {
     justify-self: center !important;
 }
+/* =========================================================
+   PULSANTE ESCI - FRECCIA E TESTO INDIPENDENTI
+   ========================================================= */
+
+.match-topbar .back-button {
+    position: relative !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding-left: 42px !important;
+    padding-right: 42px !important;
+}
+
+/* Freccia vicina al bordo sinistro */
+.match-topbar .back-button .back-arrow {
+    position: absolute !important;
+
+    left: 13px !important;
+    top: 50% !important;
+
+    margin: 0 !important;
+
+    transform: translateY(-50%) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 34px !important;
+    line-height: 1 !important;
+}
+
+/* Scritta ESci esattamente al centro */
+.match-topbar .back-button > span:last-child {
+    position: absolute !important;
+
+    left: 50% !important;
+    top: 50% !important;
+
+    margin: 0 !important;
+
+    transform: translate(-50%, -50%) !important;
+
+    white-space: nowrap !important;
+}
