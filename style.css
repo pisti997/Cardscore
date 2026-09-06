@@ -3826,3 +3826,38 @@ button.is-pressed {
 
     white-space: nowrap !important;
 }
+.match-topbar .back-button,
+.match-topbar .match-menu-button {
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    min-height: 64px !important;
+
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border-radius: 50% !important;
+}
+.match-topbar .back-button .back-arrow {
+    position: absolute !important;
+
+    left: 50% !important;
+    top: 50% !important;
+
+    margin: 0 !important;
+
+    transform: translate(-50%, -50%) !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 42px !important;
+    line-height: 1 !important;
+}
