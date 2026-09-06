@@ -3726,3 +3726,31 @@ button.is-pressed {
 
     margin: 0 !important;
 }
+/* =========================================================
+   TOPBAR - ALLINEAMENTO AI RIQUADRI DELLA PARTITA
+   ========================================================= */
+
+.match-topbar {
+    padding-left: 27px !important;
+    padding-right: 27px !important;
+}
+
+/* ESci: stesso margine sinistro dei riquadri */
+.match-topbar .back-button {
+    justify-self: start !important;
+    margin-left: 0 !important;
+}
+
+/* TRE PUNTINI: stesso margine destro dei riquadri */
+.match-menu-wrap {
+    justify-self: end !important;
+    margin-right: 0 !important;
+}
+
+/* Mantiene UNO esattamente al centro */
+.match-topbar .match-heading {
+    position: static !important;
+    transform: none !important;
+    margin: 0 !important;
+    justify-self: center !important;
+}
