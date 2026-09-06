@@ -4122,3 +4122,42 @@ button.is-pressed {
 
     transform: translateX(1px);
 }
+/* =========================================================
+   FRECCIA ESCI - CENTRATURA GEOMETRICA
+   ========================================================= */
+
+#partita .match-topbar .back-button .back-arrow {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: block !important;
+
+    font-size: 0 !important;
+}
+
+/* Disegna la freccia */
+#partita .match-topbar .back-button .back-arrow::before {
+    content: "";
+
+    position: absolute;
+
+    width: 14px;
+    height: 14px;
+
+    left: 50%;
+    top: 50%;
+
+    border-left: 4px solid #17251d;
+    border-bottom: 4px solid #17251d;
+
+    transform: translate(-38%, -50%) rotate(45deg);
+
+    border-radius: 2px;
+}
