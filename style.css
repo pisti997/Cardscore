@@ -236,7 +236,7 @@ select {
     text-overflow: ellipsis;
     white-space: nowrap;
     color: var(--green-dark);
-    font-family: "Nunito Sans" !important;
+    font-family: "Outfit" sans-serif !important;
     font-size: 34px;
     line-height: 1;
     font-weight: 900;
