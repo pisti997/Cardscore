@@ -1079,8 +1079,8 @@ select {
     position: relative;
     width: 100%;
     min-height: 92px !important;
-    margin-top: 28px !important;
-    margin-bottom: 12px !important;
+    margin-top: 15px !important;
+    margin-bottom: 18px !important;
     padding: 34px 14px 11px !important;
     display: flex;
     flex-direction: column;
