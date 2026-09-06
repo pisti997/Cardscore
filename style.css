@@ -3754,3 +3754,28 @@ button.is-pressed {
     margin: 0 !important;
     justify-self: center !important;
 }
+/* =========================================================
+   TOPBAR - ALLINEAMENTO ESATTO AI RIQUADRI
+   ========================================================= */
+
+.match-topbar {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+}
+
+/* Esci */
+.match-topbar .back-button {
+    justify-self: start !important;
+    margin-left: 0 !important;
+}
+
+/* Tre puntini */
+.match-topbar .match-menu-wrap {
+    justify-self: end !important;
+    margin-right: 0 !important;
+}
+
+/* UNO esattamente al centro */
+.match-topbar .match-heading {
+    justify-self: center !important;
+}
