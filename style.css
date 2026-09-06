@@ -3799,7 +3799,7 @@ button.is-pressed {
     position: absolute !important;
 
     left: 7px !important;
-    top: calc(50% - 6px) !important;
+    top: calc(50% - 4px) !important;
 
     margin: 0 !important;
 
