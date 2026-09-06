@@ -3861,3 +3861,42 @@ button.is-pressed {
     font-size: 42px !important;
     line-height: 1 !important;
 }
+/* =========================================================
+   TOPBAR - PULSANTI COMPATTI ALLINEATI A UNO
+   ========================================================= */
+
+.match-topbar {
+    align-items: center !important;
+}
+
+/* Dimensione pulsanti */
+.match-topbar .back-button,
+.match-topbar .match-menu-button {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+
+    padding: 0 !important;
+    border-radius: 50% !important;
+}
+
+/* Freccia */
+.match-topbar .back-button .back-arrow {
+    width: 100% !important;
+    height: 100% !important;
+
+    font-size: 29px !important;
+}
+
+/* Tre puntini */
+.match-topbar .match-menu-button span {
+    font-size: 13px !important;
+    letter-spacing: 3px !important;
+}
+
+/* Allineamento verticale */
+.match-topbar .back-button,
+.match-topbar .match-menu-wrap {
+    align-self: center !important;
+}
