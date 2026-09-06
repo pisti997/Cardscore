@@ -3686,3 +3686,43 @@ button.is-pressed {
         margin-left: 0 !important;
     }
 }
+/* =========================================================
+   TOPBAR PARTITA - POSIZIONE FINALE
+   ========================================================= */
+
+.match-topbar {
+    padding-left: 27px !important;
+    padding-right: 27px !important;
+    align-items: center !important;
+}
+
+/* ESCI: allineato al margine dei riquadri */
+.match-topbar .back-button {
+    justify-self: start !important;
+    align-self: center !important;
+
+    margin: 0 !important;
+}
+
+/* Freccia perfettamente centrata */
+.match-topbar .back-button .back-arrow {
+    margin: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    line-height: 1 !important;
+}
+
+/* UNO: centro matematico dello schermo */
+.match-topbar .match-heading {
+    position: absolute !important;
+
+    left: 50% !important;
+    top: 50% !important;
+
+    transform: translate(-50%, -50%) !important;
+
+    margin: 0 !important;
+}
