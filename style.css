@@ -1803,13 +1803,43 @@ select {
     font-variant-numeric: tabular-nums;
 }
 
+.timer-scaduto-contenuto {
+    display: none;
+}
+
+/* =========================================================
+   TIMER SCADUTO - POPUP INGRANDITO
+   ========================================================= */
 .timer-countdown-popup.timer-scaduto {
+    width: min(300px, 84vw);
+    aspect-ratio: auto;
+    padding: 38px 26px;
     background: #fdeaea;
-    animation: timerScadutoLampeggio 0.9s ease-in-out infinite;
+    z-index: 995;
+    animation: timerScadutoLampeggio 0.5s ease-in-out infinite;
 }
 
 .timer-countdown-popup.timer-scaduto .timer-countdown-number {
+    display: none;
+}
+
+.timer-countdown-popup.timer-scaduto .timer-scaduto-contenuto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timer-scaduto-icon {
+    font-size: 54px;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.timer-scaduto-label {
     color: #b54848;
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 1px;
 }
 
 @keyframes timerScadutoLampeggio {
@@ -1817,7 +1847,27 @@ select {
         transform: translate(-50%, -50%) scale(1);
     }
     50% {
-        transform: translate(-50%, -50%) scale(1.06);
+        transform: translate(-50%, -50%) scale(1.08);
+    }
+}
+
+/* =========================================================
+   FLASH A SCHERMO INTERO QUANDO IL TIMER SCADE
+   ========================================================= */
+.timer-flash-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 992;
+    pointer-events: none;
+    animation: timerFlashLampeggio 0.5s steps(1, end) infinite;
+}
+
+@keyframes timerFlashLampeggio {
+    0%, 49% {
+        background: rgba(181, 72, 72, 0.92);
+    }
+    50%, 100% {
+        background: rgba(255, 255, 255, 0.95);
     }
 }
 
