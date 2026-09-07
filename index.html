@@ -693,6 +693,16 @@
         </button>
 
         <button
+            id="menu-timer-btn"
+            type="button"
+            class="match-menu-item hidden"
+            onclick="apriPopupTimer()"
+        >
+            <span>⏱️</span>
+            <strong>Timer</strong>
+        </button>
+
+        <button
             type="button"
             class="match-menu-item danger"
             onclick="chiudiMenuPartita()"
@@ -900,6 +910,21 @@
                     </span>
 
                     Annulla ultimo turno
+
+                </button>
+
+                <button
+                    id="turno-successivo-btn"
+                    class="undo-button next-turn-button hidden"
+                    type="button"
+                    onclick="turnoSuccessivo()"
+                >
+
+                    <span>
+                        ➕
+                    </span>
+
+                    Turno successivo
 
                 </button>
 
