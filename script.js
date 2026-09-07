@@ -30,6 +30,14 @@ let popupPunteggioAttuale = {
     input: null
 };
 const STORAGE_KEY = "cardscore_partita";
+// Giochi che gestiscono il turno attivo manualmente
+// tramite il tasto "Turno successivo", invece che in automatico.
+const GIOCHI_TURNO_MANUALE = ["Pili Pili"];
+function usaTurnoManuale() {
+    return GIOCHI_TURNO_MANUALE.includes(giocoScelto);
+}
+// Timer del turno (solo Pili Pili)
+let timerCountdownInterval = null;
 /* =========================================================
    UTILITY
 ========================================================= */
@@ -52,6 +60,8 @@ function escapeHTML(testo) {
 ========================================================= */
 function mostraPagina(id) {
     chiudiPopupPuntiPersonalizzati();
+    chiudiPopupTimer();
+    fermaTimerTurno();
     document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
     });
@@ -141,7 +151,29 @@ function scegliGioco(gioco) {
             iconaGioco.textContent = "\uD83C\uDCCF";
         }
     }
+    applicaPresetGioco(gioco);
     mostraPagina("nuova-partita");
+}
+/* =========================================================
+   PRESET SPECIFICI PER GIOCO
+   Per ora usato solo da Pili Pili: punteggio semplice
+   con obiettivo a 6 punti già preselezionato.
+========================================================= */
+function applicaPresetGioco(gioco) {
+    if (gioco !== "Pili Pili") {
+        return;
+    }
+    sistemaPunteggio = "semplice";
+    obiettivoPartita = 6;
+    const sistema = elemento("sistema-punteggio");
+    const obiettivo = elemento("obiettivo-partita");
+    if (sistema) {
+        sistema.value = "semplice";
+    }
+    if (obiettivo) {
+        obiettivo.value = 6;
+    }
+    cambiaSistemaPunteggio();
 }
 /* =========================================================
    GIOCATORI
@@ -271,6 +303,12 @@ function iniziaPartita() {
     numeroTurno = 0;
     // All'inizio non è ancora stato scelto chi parte
     giocatoreAttivo = null;
+    // Per i giochi a turno manuale (es. Pili Pili) con punteggio
+    // semplice non c'è il popup "chi inizia": partiamo dal primo
+    // giocatore, poi si avanza solo con "Turno successivo".
+    if (usaTurnoManuale() && sistemaPunteggio !== "game-set") {
+        giocatoreAttivo = 0;
+    }
     partitaIniziata = Date.now();
     partitaTerminata = false;
     mostraPagina("partita");
@@ -341,6 +379,23 @@ function aggiornaSchermataPartita() {
     creaSelettoreGiocatore();
     creaQuickButtons();
     mostraStorico();
+    /* =====================================================
+       PULSANTE TURNO / MENU TIMER
+       Solo per i giochi a turno manuale (es. Pili Pili)
+    ===================================================== */
+    const modalitaManuale = usaTurnoManuale();
+    const bottoneAnnulla = elemento("annulla-ultimo-turno");
+    const bottoneTurnoSuccessivo = elemento("turno-successivo-btn");
+    const vocemenuTimer = elemento("menu-timer-btn");
+    if (bottoneAnnulla) {
+        bottoneAnnulla.classList.toggle("hidden", modalitaManuale);
+    }
+    if (bottoneTurnoSuccessivo) {
+        bottoneTurnoSuccessivo.classList.toggle("hidden", !modalitaManuale);
+    }
+    if (vocemenuTimer) {
+        vocemenuTimer.classList.toggle("hidden", !modalitaManuale);
+    }
 }
 /* =========================================================
    TABELLONE SEMPLICE
@@ -365,6 +420,9 @@ function creaTabelloneSemplice() {
         if (punteggi[indice] === massimo && punteggi[indice] > 0) {
             riga.classList.add("leader");
         }
+        if (usaTurnoManuale() && giocatoreAttivo !== null && indice === giocatoreAttivo) {
+            riga.classList.add("active-turn");
+        }
         tabellone.appendChild(riga);
     });
 }
@@ -372,29 +430,6 @@ function creaTabelloneSemplice() {
    TABELLONE GAME / SET / MATCH
 ========================================================= */
 function creaTabelloneGameSet() {
-    if (!document.getElementById("stile-turno-attivo")) {
-        const style = document.createElement("style");
-        style.id = "stile-turno-attivo";
-        style.textContent = `
-            .match-row.active-turn {
-                transform: scale(1.02);
-                border: 2px solid #4f8cff;
-                box-shadow:
-                    0 0 8px rgba(79, 140, 255, 0.65),
-                    0 0 20px rgba(79, 140, 255, 0.45),
-                    0 0 35px rgba(79, 140, 255, 0.25);
-                background: rgba(79, 140, 255, 0.08);
-                position: relative;
-                z-index: 2;
-            }
-
-            .match-row.active-turn .score-big {
-                transform: scale(1.08);
-                font-weight: 800;
-            }
-        `;
-        document.head.appendChild(style);
-    }
     const tabellone = elemento("tabellone-game-set");
     if (!tabellone)
         return;
@@ -795,7 +830,7 @@ function aggiungiMano() {
     if (!partitaTerminata) {
         // Se il Game non è terminato,
         // il turno passa all'altro giocatore
-        if (sistemaPunteggio === "game-set" && giocatoreAttivo !== null) {
+        if (sistemaPunteggio === "game-set" && giocatoreAttivo !== null && !usaTurnoManuale()) {
             giocatoreAttivo = (giocatoreAttivo + 1) % giocatori.length;
             aggiornaSchermataPartita();
         }
@@ -1307,6 +1342,7 @@ function chiudiVittoriaENuova() {
                 iconaGioco.textContent = "\uD83C\uDCCF";
             }
         }
+        applicaPresetGioco(giocoPrecedente);
     }
 }
 /* =========================================================
@@ -1407,6 +1443,24 @@ function annullaUltimoTurno() {
     storico.pop();
     numeroTurno = storico.length;
     ricalcolaPartita();
+    aggiornaSchermataPartita();
+    salvaPartita();
+}
+/* =========================================================
+   TURNO SUCCESSIVO (solo giochi a turno manuale, es. Pili Pili)
+   Al contrario dell'avanzamento automatico, qui il giocatore
+   evidenziato cambia solo quando viene premuto questo tasto,
+   non quando viene assegnato un punteggio.
+========================================================= */
+function turnoSuccessivo() {
+    if (partitaTerminata || !giocatori.length) {
+        return;
+    }
+    if (giocatoreAttivo === null || !Number.isInteger(giocatoreAttivo)) {
+        giocatoreAttivo = 0;
+    } else {
+        giocatoreAttivo = (giocatoreAttivo + 1) % giocatori.length;
+    }
     aggiornaSchermataPartita();
     salvaPartita();
 }
@@ -1909,3 +1963,112 @@ document.addEventListener("click", function(event) {
         menu.classList.add("hidden");
     }
 });
+
+
+/* =========================================================
+   TIMER TURNO (solo Pili Pili)
+   Accessibile dal menu a tre puntini: permette di avviare
+   un conto alla rovescia di 3 o 5 secondi.
+   ========================================================= */
+function apriPopupTimer() {
+    chiudiMenuPartita();
+    chiudiPopupTimer();
+    const overlay = document.createElement("div");
+    overlay.className = "cardscore-overlay timer-popup-overlay";
+    overlay.addEventListener("click", chiudiPopupTimer);
+    const popup = document.createElement("div");
+    popup.className = "timer-popup";
+    popup.addEventListener("click", evento => evento.stopPropagation());
+    popup.innerHTML = `
+        <div class="custom-score-label">
+            TIMER TURNO
+        </div>
+
+        <h2>
+            Quanto tempo?
+        </h2>
+
+        <p>
+            Scegli la durata del timer
+        </p>
+
+        <div class="timer-options">
+
+            <button
+                type="button"
+                class="timer-option-button"
+                data-secondi="3"
+            >
+                3 secondi
+            </button>
+
+            <button
+                type="button"
+                class="timer-option-button"
+                data-secondi="5"
+            >
+                5 secondi
+            </button>
+
+        </div>
+
+        <button
+            type="button"
+            class="timer-cancel"
+        >
+            Annulla
+        </button>
+    `;
+    document.body.appendChild(overlay);
+    document.body.appendChild(popup);
+    popup.querySelectorAll(".timer-option-button").forEach(bottone => {
+        bottone.addEventListener("click", () => {
+            const secondi = parseInt(bottone.dataset.secondi, 10);
+            chiudiPopupTimer();
+            avviaTimerTurno(secondi);
+        });
+    });
+    popup.querySelector(".timer-cancel").addEventListener("click", chiudiPopupTimer);
+}
+function chiudiPopupTimer() {
+    document.querySelectorAll(".timer-popup-overlay").forEach(nodo => nodo.remove());
+    document.querySelectorAll(".timer-popup").forEach(nodo => nodo.remove());
+}
+function avviaTimerTurno(secondiTotali) {
+    fermaTimerTurno();
+    document.querySelectorAll(".timer-countdown-badge").forEach(nodo => nodo.remove());
+    let rimanenti = secondiTotali;
+    const badge = document.createElement("div");
+    badge.id = "timer-countdown-badge";
+    badge.className = "timer-countdown-badge";
+    badge.textContent = rimanenti;
+    document.body.appendChild(badge);
+    if (navigator.vibrate) {
+        navigator.vibrate(20);
+    }
+    timerCountdownInterval = setInterval(() => {
+        rimanenti--;
+        const elementoBadge = elemento("timer-countdown-badge");
+        if (rimanenti <= 0) {
+            fermaTimerTurno();
+            if (navigator.vibrate) {
+                navigator.vibrate([50, 60, 50]);
+            }
+            if (elementoBadge) {
+                elementoBadge.textContent = "0";
+                elementoBadge.classList.add("timer-scaduto");
+                setTimeout(() => elementoBadge.remove(), 600);
+            }
+            return;
+        }
+        if (elementoBadge) {
+            elementoBadge.textContent = rimanenti;
+        }
+    }, 1000);
+}
+function fermaTimerTurno() {
+    if (timerCountdownInterval) {
+        clearInterval(timerCountdownInterval);
+        timerCountdownInterval = null;
+    }
+}
