@@ -1327,12 +1327,18 @@ select {
 }
 
 .next-turn-button {
-    background: var(--green);
-    color: #ffffff;
+    padding: 7px 8px !important;
+    background: #fbe9e9;
+    color: #b54848;
+    font-size: 16px !important;
+    font-weight: 750;
 }
 
 .next-turn-button span {
-    color: #ffffff;
+    color: #b54848;
+    font-size: 22px !important;
+    font-weight: 600;
+    margin-bottom: 3px !important;
 }
 
 /* =========================================================
@@ -1769,26 +1775,50 @@ select {
     font-weight: 700;
 }
 
-.timer-countdown-badge {
+.timer-countdown-popup {
     position: fixed;
-    top: 18px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    min-width: 64px;
-    padding: 10px 18px;
-    border-radius: 999px;
-    background: var(--green-dark);
-    color: #ffffff;
-    font-size: 26px;
-    font-weight: 850;
+    transform: translate(-50%, -50%);
+    width: min(160px, 42vw);
+    aspect-ratio: 1 / 1;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(20, 40, 25, 0.3);
-    z-index: 980;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 20px 45px rgba(20, 40, 25, 0.25);
+    z-index: 985;
+    animation: cardscoreMessagePopIn 0.2s ease;
+}
+
+.timer-countdown-number {
+    color: var(--green-dark);
+    font-size: 46px;
+    font-weight: 850;
+    line-height: 1;
     font-variant-numeric: tabular-nums;
 }
 
-.timer-countdown-badge.timer-scaduto {
-    background: #b54848;
+.timer-countdown-popup.timer-scaduto {
+    background: #fdeaea;
+    animation: timerScadutoLampeggio 0.9s ease-in-out infinite;
+}
+
+.timer-countdown-popup.timer-scaduto .timer-countdown-number {
+    color: #b54848;
+}
+
+@keyframes timerScadutoLampeggio {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.06);
+    }
 }
 
 /* =========================================================
