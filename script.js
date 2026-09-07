@@ -36,8 +36,34 @@ const GIOCHI_TURNO_MANUALE = ["Pili Pili"];
 function usaTurnoManuale() {
     return GIOCHI_TURNO_MANUALE.includes(giocoScelto);
 }
+// Giochi in cui chi arriva per primo al punteggio del Game
+// PERDE il Game, invece di vincerlo (es. Pili Pili).
+const GIOCHI_PUNTEGGIO_INVERSO = ["Pili Pili"];
+function usaPunteggioInverso() {
+    return GIOCHI_PUNTEGGIO_INVERSO.includes(giocoScelto);
+}
+/*
+   Dato il giocatore che ha raggiunto il limite (e quindi perde
+   il Game), determina chi vince: il giocatore rimanente con
+   meno punti nel Game (con 2 giocatori è semplicemente l'altro).
+*/
+function determinaVincitoreGamePiliPili(perdente) {
+    let vincitore = null;
+    giocatori.forEach((nome, i) => {
+        if (i === perdente) {
+            return;
+        }
+        if (vincitore === null || puntiGame[i] < puntiGame[vincitore]) {
+            vincitore = i;
+        }
+    });
+    return vincitore;
+}
 // Timer del turno (solo Pili Pili)
 let timerCountdownInterval = null;
+let timerSuonoInterval = null;
+let timerAudioCtx = null;
+let popupTimerTocco = null;
 /* =========================================================
    UTILITY
 ========================================================= */
@@ -61,7 +87,7 @@ function escapeHTML(testo) {
 function mostraPagina(id) {
     chiudiPopupPuntiPersonalizzati();
     chiudiPopupTimer();
-    fermaTimerTurno();
+    chiudiPopupTimerConto();
     document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
     });
@@ -163,15 +189,15 @@ function applicaPresetGioco(gioco) {
     if (gioco !== "Pili Pili") {
         return;
     }
-    sistemaPunteggio = "semplice";
-    obiettivoPartita = 6;
+    sistemaPunteggio = "game-set";
+    puntiPerGame = 6;
     const sistema = elemento("sistema-punteggio");
-    const obiettivo = elemento("obiettivo-partita");
+    const punti = elemento("punti-per-game");
     if (sistema) {
-        sistema.value = "semplice";
+        sistema.value = "game-set";
     }
-    if (obiettivo) {
-        obiettivo.value = 6;
+    if (punti) {
+        punti.value = 6;
     }
     cambiaSistemaPunteggio();
 }
@@ -967,9 +993,16 @@ function controllaGame(indice) {
        si portano dietro nel Game successivo.
     */
     if (puntiGame[indice] >= limiteGame) {
-        const risultato = elaboraVittoriaGame(indice, true);
+        let vincitoreGame = indice;
+        if (usaPunteggioInverso()) {
+            const vincitoreInverso = determinaVincitoreGamePiliPili(indice);
+            if (vincitoreInverso !== null) {
+                vincitoreGame = vincitoreInverso;
+            }
+        }
+        const risultato = elaboraVittoriaGame(vincitoreGame, true);
         if (risultato.matchVinto) {
-            terminaMatch(indice);
+            terminaMatch(vincitoreGame);
             return;
         }
     }
@@ -1483,10 +1516,17 @@ function ricalcolaPartita() {
         }
         puntiGame[indice] += punti;
         if (puntiGame[indice] >= puntiPerGame) {
-            const risultato = elaboraVittoriaGame(indice, false);
+            let vincitoreGame = indice;
+            if (usaPunteggioInverso()) {
+                const vincitoreInverso = determinaVincitoreGamePiliPili(indice);
+                if (vincitoreInverso !== null) {
+                    vincitoreGame = vincitoreInverso;
+                }
+            }
+            const risultato = elaboraVittoriaGame(vincitoreGame, false);
             if (risultato.matchVinto) {
                 matchVinti = giocatori.map(() => 0);
-                matchVinti[indice] = 1;
+                matchVinti[vincitoreGame] = 1;
                 // Il match è già stato vinto: eventuali
                 // turni successivi nello storico vengono ignorati.
                 break;
@@ -2035,34 +2075,50 @@ function chiudiPopupTimer() {
     document.querySelectorAll(".timer-popup").forEach(nodo => nodo.remove());
 }
 function avviaTimerTurno(secondiTotali) {
-    fermaTimerTurno();
-    document.querySelectorAll(".timer-countdown-badge").forEach(nodo => nodo.remove());
+    chiudiPopupTimerConto();
     let rimanenti = secondiTotali;
-    const badge = document.createElement("div");
-    badge.id = "timer-countdown-badge";
-    badge.className = "timer-countdown-badge";
-    badge.textContent = rimanenti;
-    document.body.appendChild(badge);
+    const overlay = document.createElement("div");
+    overlay.className = "cardscore-overlay timer-countdown-overlay";
+    const popup = document.createElement("div");
+    popup.id = "timer-countdown-popup";
+    popup.className = "timer-countdown-popup";
+    popup.innerHTML = `
+        <div
+            id="timer-countdown-numero"
+            class="timer-countdown-number"
+        >
+            ${ rimanenti }
+        </div>
+    `;
+    document.body.appendChild(overlay);
+    document.body.appendChild(popup);
     if (navigator.vibrate) {
         navigator.vibrate(20);
     }
+    /*
+       Il popup resta a schermo finché non si tocca in un
+       punto qualsiasi dello schermo: qui chiudiamo timer,
+       allarme e popup insieme.
+    */
+    popupTimerTocco = function () {
+        chiudiPopupTimerConto();
+    };
+    document.addEventListener("pointerdown", popupTimerTocco);
     timerCountdownInterval = setInterval(() => {
         rimanenti--;
-        const elementoBadge = elemento("timer-countdown-badge");
+        const numeroEl = elemento("timer-countdown-numero");
         if (rimanenti <= 0) {
-            fermaTimerTurno();
-            if (navigator.vibrate) {
-                navigator.vibrate([50, 60, 50]);
+            clearInterval(timerCountdownInterval);
+            timerCountdownInterval = null;
+            if (numeroEl) {
+                numeroEl.textContent = "0";
             }
-            if (elementoBadge) {
-                elementoBadge.textContent = "0";
-                elementoBadge.classList.add("timer-scaduto");
-                setTimeout(() => elementoBadge.remove(), 600);
-            }
+            popup.classList.add("timer-scaduto");
+            avviaAllarmeTimer();
             return;
         }
-        if (elementoBadge) {
-            elementoBadge.textContent = rimanenti;
+        if (numeroEl) {
+            numeroEl.textContent = rimanenti;
         }
     }, 1000);
 }
@@ -2070,5 +2126,69 @@ function fermaTimerTurno() {
     if (timerCountdownInterval) {
         clearInterval(timerCountdownInterval);
         timerCountdownInterval = null;
+    }
+}
+/*
+   Chiude il popup del conto alla rovescia: ferma anche
+   il conteggio, l'allarme sonoro/vibrazione e il gestore
+   del tocco sullo schermo.
+*/
+function chiudiPopupTimerConto() {
+    fermaTimerTurno();
+    fermaAllarmeTimer();
+    if (popupTimerTocco) {
+        document.removeEventListener("pointerdown", popupTimerTocco);
+        popupTimerTocco = null;
+    }
+    document.querySelectorAll(".timer-countdown-overlay").forEach(nodo => nodo.remove());
+    document.querySelectorAll(".timer-countdown-popup").forEach(nodo => nodo.remove());
+}
+/*
+   ALLARME SONORO + VIBRAZIONE
+   Si ripete finché l'utente non tocca lo schermo
+   (vedi popupTimerTocco in avviaTimerTurno).
+*/
+function suonaBeepTimer() {
+    try {
+        if (!timerAudioCtx) {
+            const AudioContextClasse = window.AudioContext || window.webkitAudioContext;
+            timerAudioCtx = new AudioContextClasse();
+        }
+        if (timerAudioCtx.state === "suspended") {
+            timerAudioCtx.resume();
+        }
+        const oscillatore = timerAudioCtx.createOscillator();
+        const guadagno = timerAudioCtx.createGain();
+        oscillatore.type = "sine";
+        oscillatore.frequency.value = 880;
+        guadagno.gain.value = 0.3;
+        oscillatore.connect(guadagno);
+        guadagno.connect(timerAudioCtx.destination);
+        oscillatore.start();
+        oscillatore.stop(timerAudioCtx.currentTime + 0.35);
+    } catch (errore) {
+        /* Audio non disponibile: l'app continua comunque a funzionare */
+    }
+}
+function avviaAllarmeTimer() {
+    fermaAllarmeTimer();
+    suonaBeepTimer();
+    if (navigator.vibrate) {
+        navigator.vibrate([250, 120, 250, 120, 250]);
+    }
+    timerSuonoInterval = setInterval(() => {
+        suonaBeepTimer();
+        if (navigator.vibrate) {
+            navigator.vibrate([250, 120, 250, 120, 250]);
+        }
+    }, 900);
+}
+function fermaAllarmeTimer() {
+    if (timerSuonoInterval) {
+        clearInterval(timerSuonoInterval);
+        timerSuonoInterval = null;
+    }
+    if (navigator.vibrate) {
+        navigator.vibrate(0);
     }
 }
