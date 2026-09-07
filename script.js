@@ -2076,6 +2076,15 @@ function chiudiPopupTimer() {
 }
 function avviaTimerTurno(secondiTotali) {
     chiudiPopupTimerConto();
+    /*
+       IMPORTANTE PER IOS: l'audio va "sbloccato" qui, dentro
+       alla stessa chiamata sincrona generata dal tocco
+       dell'utente su "3 secondi" / "5 secondi". Se creassimo
+       l'AudioContext solo più avanti (quando il timer scade
+       da solo, dentro un setInterval) Safari su iPhone lo
+       terrebbe bloccato e non si sentirebbe alcun suono.
+    */
+    sbloccaAudioTimer();
     let rimanenti = secondiTotali;
     const overlay = document.createElement("div");
     overlay.className = "cardscore-overlay timer-countdown-overlay";
@@ -2148,10 +2157,44 @@ function chiudiPopupTimerConto() {
    Si ripete finché l'utente non tocca lo schermo
    (vedi popupTimerTocco in avviaTimerTurno).
 */
+/*
+   SBLOCCO AUDIO (necessario su iOS/Safari)
+   Va chiamata SEMPRE dentro a un tocco diretto dell'utente:
+   crea/riattiva l'AudioContext e riproduce un suono a volume
+   zero, cosi' il browser lo considera "sbloccato" e permette
+   di riprodurre suoni anche più avanti, in modo automatico
+   (es. quando il timer scade da solo).
+*/
+function sbloccaAudioTimer() {
+    try {
+        const AudioContextClasse = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClasse) {
+            return;
+        }
+        if (!timerAudioCtx) {
+            timerAudioCtx = new AudioContextClasse();
+        }
+        if (timerAudioCtx.state === "suspended") {
+            timerAudioCtx.resume();
+        }
+        const oscillatoreSblocco = timerAudioCtx.createOscillator();
+        const guadagnoSblocco = timerAudioCtx.createGain();
+        guadagnoSblocco.gain.value = 0;
+        oscillatoreSblocco.connect(guadagnoSblocco);
+        guadagnoSblocco.connect(timerAudioCtx.destination);
+        oscillatoreSblocco.start();
+        oscillatoreSblocco.stop(timerAudioCtx.currentTime + 0.05);
+    } catch (errore) {
+        /* Audio non disponibile: l'app continua comunque a funzionare */
+    }
+}
 function suonaBeepTimer() {
     try {
         if (!timerAudioCtx) {
             const AudioContextClasse = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClasse) {
+                return;
+            }
             timerAudioCtx = new AudioContextClasse();
         }
         if (timerAudioCtx.state === "suspended") {
