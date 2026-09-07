@@ -64,6 +64,7 @@ let timerCountdownInterval = null;
 let timerSuonoInterval = null;
 let timerAudioCtx = null;
 let popupTimerTocco = null;
+let timerWakeLock = null;
 /* =========================================================
    UTILITY
 ========================================================= */
@@ -2085,6 +2086,7 @@ function avviaTimerTurno(secondiTotali) {
        terrebbe bloccato e non si sentirebbe alcun suono.
     */
     sbloccaAudioTimer();
+    richiediWakeLockTimer();
     let rimanenti = secondiTotali;
     const overlay = document.createElement("div");
     overlay.className = "cardscore-overlay timer-countdown-overlay";
@@ -2097,6 +2099,18 @@ function avviaTimerTurno(secondiTotali) {
             class="timer-countdown-number"
         >
             ${ rimanenti }
+        </div>
+
+        <div class="timer-scaduto-contenuto">
+
+            <div class="timer-scaduto-icon">
+                ⏰
+            </div>
+
+            <div class="timer-scaduto-label">
+                TEMPO SCADUTO
+            </div>
+
         </div>
     `;
     document.body.appendChild(overlay);
@@ -2145,6 +2159,7 @@ function fermaTimerTurno() {
 function chiudiPopupTimerConto() {
     fermaTimerTurno();
     fermaAllarmeTimer();
+    rilasciaWakeLockTimer();
     if (popupTimerTocco) {
         document.removeEventListener("pointerdown", popupTimerTocco);
         popupTimerTocco = null;
@@ -2152,6 +2167,43 @@ function chiudiPopupTimerConto() {
     document.querySelectorAll(".timer-countdown-overlay").forEach(nodo => nodo.remove());
     document.querySelectorAll(".timer-countdown-popup").forEach(nodo => nodo.remove());
 }
+/*
+   WAKE LOCK
+   Mantiene lo schermo acceso durante il conto alla rovescia,
+   cosi' il flash finale resta sempre visibile. Se il browser
+   non lo supporta l'app continua a funzionare normalmente.
+*/
+async function richiediWakeLockTimer() {
+    try {
+        if ("wakeLock" in navigator) {
+            timerWakeLock = await navigator.wakeLock.request("screen");
+        }
+    } catch (errore) {
+        timerWakeLock = null;
+    }
+}
+function rilasciaWakeLockTimer() {
+    if (timerWakeLock) {
+        try {
+            timerWakeLock.release();
+        } catch (errore) {
+            /* Ignoriamo: il wake lock potrebbe essere già scaduto */
+        }
+        timerWakeLock = null;
+    }
+}
+/*
+   Se il telefono viene bloccato/sbloccato o l'app va in
+   background e poi torna visibile mentre il timer è ancora
+   attivo, riproviamo a richiedere il Wake Lock: il sistema lo
+   rilascia automaticamente ogni volta che la pagina perde la
+   visibilità.
+*/
+document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && (timerCountdownInterval || timerSuonoInterval)) {
+        richiediWakeLockTimer();
+    }
+});
 /*
    ALLARME SONORO + VIBRAZIONE
    Si ripete finché l'utente non tocca lo schermo
@@ -2215,6 +2267,12 @@ function suonaBeepTimer() {
 }
 function avviaAllarmeTimer() {
     fermaAllarmeTimer();
+    if (!document.getElementById("timer-flash-overlay")) {
+        const flash = document.createElement("div");
+        flash.id = "timer-flash-overlay";
+        flash.className = "timer-flash-overlay";
+        document.body.appendChild(flash);
+    }
     suonaBeepTimer();
     if (navigator.vibrate) {
         navigator.vibrate([250, 120, 250, 120, 250]);
@@ -2234,4 +2292,5 @@ function fermaAllarmeTimer() {
     if (navigator.vibrate) {
         navigator.vibrate(0);
     }
+    document.querySelectorAll(".timer-flash-overlay").forEach(nodo => nodo.remove());
 }
