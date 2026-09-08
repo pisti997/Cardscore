@@ -110,7 +110,7 @@ function tornaHome() {
 ========================================================= */
 function nuovaPartita() {
     giocoScelto = "";
-    giocatori = [];
+    giocatori = ["", ""];
     punteggi = [];
     storico = [];
     numeroTurno = 0;
