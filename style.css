@@ -976,19 +976,31 @@ select {
 }
 
 /* =========================================================
-   NUOVA PARTITA - RESTYLE (colori leggeri, ombre soft
-   stile iPhone, pulsante indietro circolare, spaziature
-   compatte per stare in una sola schermata senza scroll)
+   NUOVA PARTITA - RESTYLE
    ========================================================= */
 
-/* Pulsante indietro: solo freccia, cerchio bianco come
-   nella schermata della partita */
+/* La pagina occupa esattamente lo schermo: niente scroll.
+   Il contenuto si distribuisce con flex, cosi' si adatta
+   anche a schermi leggermente diversi senza mai traboccare. */
+#nuova-partita.page.active {
+    height: 100dvh;
+    height: 100vh;
+    max-height: 100dvh;
+    max-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
 #nuova-partita .topbar {
     position: relative;
+    flex-shrink: 0;
     padding-left: 18px;
     padding-right: 18px;
 }
 
+/* Pulsante indietro: solo freccia, cerchio bianco come
+   nella schermata della partita */
 #nuova-partita .topbar .back-button {
     position: absolute;
     left: 18px;
@@ -1032,26 +1044,72 @@ select {
     line-height: 1;
 }
 
-/* Spaziature compatte: tutto il contenuto deve stare
-   nello schermo senza bisogno di scroll */
-#nuova-partita .setup-content {
-    padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
+/* Titolo: sempre nella colonna centrale della griglia
+   (indipendentemente dal pulsante indietro, ora assoluto)
+   e stesso stile del titolo nella schermata della partita */
+#nuova-partita .topbar h1 {
+    grid-column: 2;
+    color: var(--green);
+    font-size: clamp(22px, 7vw, 28px);
+    font-weight: 850;
+    letter-spacing: -0.6px;
 }
 
-/* Gioco selezionato: colori più leggeri + ombra soft */
+/* Contenuto: layout flessibile che riempie lo spazio
+   restante e distribuisce l'aria fra le sezioni, senza
+   mai forzare lo scroll */
+#nuova-partita .setup-content {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 20px calc(10px + env(safe-area-inset-bottom));
+    overflow: hidden;
+}
+
+#nuova-partita .selected-game-card,
+#nuova-partita .setup-card,
+#nuova-partita .start-button {
+    flex-shrink: 0;
+    margin: 0;
+}
+
+/* -----------------------------------------------------
+   GIOCO SELEZIONATO - versione minimal
+----------------------------------------------------- */
 #nuova-partita .selected-game-card {
-    margin-bottom: 10px;
-    padding: 14px;
-    background: #eef6ea;
-    border: 1px solid #e1ecda;
+    padding: 13px 15px;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid #ececea;
     box-shadow:
         0 1px 2px rgba(23, 37, 29, 0.04),
         0 6px 16px rgba(23, 37, 29, 0.05);
 }
 
-/* Riquadri: ombra soft stile iPhone invece del bordo netto */
+#nuova-partita .selected-game-icon {
+    background: #f1f6ee;
+    box-shadow: inset 0 0 0 1px #e6ebe1;
+}
+
+#nuova-partita .selected-game-card .small-label {
+    font-size: 9.5px;
+    letter-spacing: 1.3px;
+    color: #9aa39a;
+}
+
+#nuova-partita .selected-game-card h2 {
+    margin-top: 3px;
+    font-size: 19px;
+    letter-spacing: -0.2px;
+}
+
+/* -----------------------------------------------------
+   GIOCATORI
+----------------------------------------------------- */
 #nuova-partita .setup-card {
-    margin-bottom: 10px;
     padding: 15px;
     border: 1px solid #ececea;
     box-shadow:
@@ -1064,11 +1122,10 @@ select {
 }
 
 #nuova-partita .setup-card-divider {
-    margin: 13px 0;
+    margin: 12px 0;
+    background: #f0f1ec;
 }
 
-/* Giocatori: caselle bianche con ombra leggera invece
-   del riempimento grigio pieno */
 #nuova-partita .players-list {
     gap: 7px;
 }
@@ -1090,33 +1147,136 @@ select {
         0 3px 8px rgba(23, 37, 29, 0.04);
 }
 
-/* Campi (select, numeri): ombra leggera "incassata" */
-#nuova-partita .select-field,
-#nuova-partita .number-field,
-#nuova-partita .setting-item input {
-    min-height: 44px;
-    box-shadow: inset 0 1px 2px rgba(23, 37, 29, 0.03);
+/* -----------------------------------------------------
+   SISTEMA DI PUNTEGGIO - versione ridisegnata,
+   più elegante e pulita
+----------------------------------------------------- */
+#nuova-partita .field-label {
+    margin-bottom: 9px;
+    font-size: 9.5px;
+    letter-spacing: 1.3px;
+    color: #9aa39a;
+}
+
+#nuova-partita .select-field {
+    min-height: 46px;
+    padding: 0 40px 0 15px;
+    background: #f6f8f4;
+    border: 1px solid #e9ece6;
+    border-radius: 14px;
+    color: #17251d;
+    font-size: 15px;
+    font-weight: 700;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23236844' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 14px;
+    box-shadow: none;
+}
+
+#nuova-partita .settings-row {
+    gap: 9px;
 }
 
 #nuova-partita .setting-item > span {
-    min-height: 22px;
+    min-height: 18px;
+    margin-bottom: 6px;
+    color: #8b9188;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.1px;
 }
 
-/* Pulsante "Inizia partita": ombra "3D" morbida in stile
-   iPhone, con effetto di pressione */
+#nuova-partita .setting-item input {
+    min-height: 46px;
+    background: #f6f8f4;
+    border: 1px solid #e9ece6;
+    border-radius: 14px;
+    color: var(--green-dark);
+    font-size: 18px;
+    font-weight: 800;
+    box-shadow: none;
+}
+
+#nuova-partita .number-field {
+    min-height: 46px;
+    background: #f6f8f4;
+    border: 1px solid #e9ece6;
+    border-radius: 14px;
+    box-shadow: none;
+}
+
+/* -----------------------------------------------------
+   INIZIA PARTITA - piu' dinamico: pulsa leggermente
+   e ha un riflesso che lo attraversa, per invitare
+   al tocco. Al tocco l'animazione si ferma per lasciare
+   spazio al solo feedback di pressione.
+----------------------------------------------------- */
 #nuova-partita .start-button {
-    margin-top: 2px;
+    position: relative;
+    overflow: hidden;
+    gap: 8px;
     box-shadow:
         0 3px 0 #164a34,
         0 8px 18px rgba(31, 96, 67, 0.20);
     transition: transform 0.08s ease, box-shadow 0.08s ease;
+    animation: iniziaPartitaPulsa 2.4s ease-in-out infinite;
+}
+
+#nuova-partita .start-button-icon {
+    font-size: 12px;
+}
+
+#nuova-partita .start-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(
+        115deg,
+        transparent,
+        rgba(255, 255, 255, 0.32),
+        transparent
+    );
+    transform: skewX(-18deg);
+    animation: iniziaPartitaRiflesso 3.4s ease-in-out infinite;
 }
 
 #nuova-partita .start-button:active {
+    animation-play-state: paused;
     transform: translateY(2px) scale(0.99);
     box-shadow:
         0 1px 0 #164a34,
         0 4px 10px rgba(31, 96, 67, 0.18);
+}
+
+@keyframes iniziaPartitaPulsa {
+    0%, 100% {
+        box-shadow:
+            0 3px 0 #164a34,
+            0 8px 18px rgba(31, 96, 67, 0.20);
+    }
+    50% {
+        box-shadow:
+            0 3px 0 #164a34,
+            0 11px 26px rgba(31, 96, 67, 0.34);
+    }
+}
+
+@keyframes iniziaPartitaRiflesso {
+    0% {
+        left: -60%;
+    }
+    45% {
+        left: 130%;
+    }
+    100% {
+        left: 130%;
+    }
 }
 
 /* =========================================================
