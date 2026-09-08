@@ -976,6 +976,150 @@ select {
 }
 
 /* =========================================================
+   NUOVA PARTITA - RESTYLE (colori leggeri, ombre soft
+   stile iPhone, pulsante indietro circolare, spaziature
+   compatte per stare in una sola schermata senza scroll)
+   ========================================================= */
+
+/* Pulsante indietro: solo freccia, cerchio bianco come
+   nella schermata della partita */
+#nuova-partita .topbar {
+    position: relative;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+#nuova-partita .topbar .back-button {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+
+    margin: 0;
+    padding: 0;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+    border: 1px solid #e3e7e2;
+    border-radius: 50%;
+
+    box-shadow:
+        0 3px 0 #d9ded9,
+        0 5px 10px rgba(25, 45, 32, 0.08);
+
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+#nuova-partita .topbar .back-button:active {
+    transform: translateY(-50%) translateY(2px);
+    box-shadow:
+        0 1px 0 #d9ded9,
+        0 2px 5px rgba(25, 45, 32, 0.08);
+}
+
+#nuova-partita .topbar .back-button .back-arrow {
+    margin: 0;
+    font-size: 23px;
+    line-height: 1;
+}
+
+/* Spaziature compatte: tutto il contenuto deve stare
+   nello schermo senza bisogno di scroll */
+#nuova-partita .setup-content {
+    padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
+}
+
+/* Gioco selezionato: colori più leggeri + ombra soft */
+#nuova-partita .selected-game-card {
+    margin-bottom: 10px;
+    padding: 14px;
+    background: #eef6ea;
+    border: 1px solid #e1ecda;
+    box-shadow:
+        0 1px 2px rgba(23, 37, 29, 0.04),
+        0 6px 16px rgba(23, 37, 29, 0.05);
+}
+
+/* Riquadri: ombra soft stile iPhone invece del bordo netto */
+#nuova-partita .setup-card {
+    margin-bottom: 10px;
+    padding: 15px;
+    border: 1px solid #ececea;
+    box-shadow:
+        0 1px 2px rgba(23, 37, 29, 0.04),
+        0 6px 16px rgba(23, 37, 29, 0.05);
+}
+
+#nuova-partita .setup-card-title {
+    margin-bottom: 11px;
+}
+
+#nuova-partita .setup-card-divider {
+    margin: 13px 0;
+}
+
+/* Giocatori: caselle bianche con ombra leggera invece
+   del riempimento grigio pieno */
+#nuova-partita .players-list {
+    gap: 7px;
+}
+
+#nuova-partita .player-row {
+    min-height: 44px;
+    background: #ffffff;
+    border: 1px solid #ececea;
+    box-shadow:
+        0 1px 2px rgba(23, 37, 29, 0.03),
+        0 3px 8px rgba(23, 37, 29, 0.04);
+}
+
+#nuova-partita .add-player-button {
+    min-height: 42px;
+    margin-top: 8px;
+    box-shadow:
+        0 1px 2px rgba(23, 37, 29, 0.03),
+        0 3px 8px rgba(23, 37, 29, 0.04);
+}
+
+/* Campi (select, numeri): ombra leggera "incassata" */
+#nuova-partita .select-field,
+#nuova-partita .number-field,
+#nuova-partita .setting-item input {
+    min-height: 44px;
+    box-shadow: inset 0 1px 2px rgba(23, 37, 29, 0.03);
+}
+
+#nuova-partita .setting-item > span {
+    min-height: 22px;
+}
+
+/* Pulsante "Inizia partita": ombra "3D" morbida in stile
+   iPhone, con effetto di pressione */
+#nuova-partita .start-button {
+    margin-top: 2px;
+    box-shadow:
+        0 3px 0 #164a34,
+        0 8px 18px rgba(31, 96, 67, 0.20);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+#nuova-partita .start-button:active {
+    transform: translateY(2px) scale(0.99);
+    box-shadow:
+        0 1px 0 #164a34,
+        0 4px 10px rgba(31, 96, 67, 0.18);
+}
+
+/* =========================================================
    PAGINA STORICO COMPLETO
    ========================================================= */
 .history-page-content {
