@@ -24,7 +24,6 @@ let partitaTerminata = false;
 let giocatoreAttivo = null;
 // Timer per il popup di scelta del giocatore
 let timerSceltaGiocatore = null;
-let sorteggioInizialeInterval = null;
 let popupPunteggioAttuale = {
     overlay: null,
     popup: null,
@@ -337,9 +336,7 @@ function iniziaPartita() {
     if (usaTurnoManuale() && sistemaPunteggio !== "game-set") {
         giocatoreAttivo = 0;
     }
-    // La partita parte davvero quando viene premuto "Inizia partita" dopo il sorteggio.
-    // I giochi senza sorteggio continuano invece a partire immediatamente.
-    partitaIniziata = sistemaPunteggio === "game-set" ? null : Date.now();
+    partitaIniziata = Date.now();
     partitaTerminata = false;
     mostraPagina("partita");
     aggiornaSchermataPartita();
@@ -1723,12 +1720,7 @@ function continuaPartita() {
     matchVinti = Array.isArray(dati.matchVinti) ? dati.matchVinti : giocatori.map(() => 0);
     storicoGame = Array.isArray(dati.storicoGame) ? dati.storicoGame : [];
     storicoSet = Array.isArray(dati.storicoSet) ? dati.storicoSet : [];
-    // Se la partita era ancora nel sorteggio iniziale, manteniamo null
-    // e riproponiamo il sorteggio invece di far partire il cronometro.
-    partitaIniziata = dati.partitaIniziata ?? null;
-    if (partitaIniziata === null && sistemaPunteggio !== "game-set") {
-        partitaIniziata = Date.now();
-    }
+    partitaIniziata = dati.partitaIniziata || Date.now();
     partitaTerminata = false;
     giocatoreAttivo = dati.giocatoreAttivo === null || dati.giocatoreAttivo === undefined || !Number.isInteger(Number(dati.giocatoreAttivo)) ? null : Number(dati.giocatoreAttivo);
     /*
@@ -1882,141 +1874,57 @@ if ("serviceWorker" in navigator) {
    POPUP SCELTA GIOCATORE CHE INIZIA
 ========================================================= */
 function apriPopupInizioGame() {
-    if (partitaTerminata || !giocatori.length) {
+    if (partitaTerminata)
         return;
-    }
-
+    // Chiudiamo eventuali popup precedenti
     chiudiPopupInizioGame();
-
     const overlay = document.createElement("div");
-    overlay.className = "starting-draw-overlay";
-
+    overlay.className = "starting-player-overlay";
     const popup = document.createElement("div");
-    popup.className = "starting-draw-popup";
-
+    popup.className = "starting-player-popup";
     popup.innerHTML = `
-        <div class="starting-draw-badge">
-            🎲
+        <div class="starting-player-icon">
+            🎯
         </div>
 
-        <div class="starting-draw-label">
-            SORTEGGIO
+        <div class="starting-player-label">
+            NUOVO GAME
         </div>
 
         <h2>
             Chi inizia?
         </h2>
 
-        <p class="starting-draw-subtitle">
-            Estraiamo casualmente il primo giocatore
+        <p>
+            Scegli il giocatore che parte per primo
         </p>
 
-        <div class="starting-draw-stage">
-            <div class="starting-draw-glow"></div>
-            <div id="starting-draw-name" class="starting-draw-name">
-                ${ escapeHTML(giocatori[0]) }
-            </div>
-        </div>
+        <div class="starting-player-buttons">
+            ${ giocatori.map((nome, indice) => `
+                <button
+                    type="button"
+                    class="starting-player-button"
+                    data-player="${ indice }"
+                >
+                    <span class="starting-player-number">
+                        ${ indice + 1 }
+                    </span>
 
-        <div class="starting-draw-progress">
-            <div class="starting-draw-progress-fill"></div>
-        </div>
-
-        <div class="starting-draw-countdown">
-            Estrazione in corso…
-        </div>
-
-        <div class="starting-draw-result hidden">
-            <div class="starting-draw-result-label">
-                HA VINTO IL SORTEGGIO
-            </div>
-            <div class="starting-draw-winner"></div>
-            <button
-                type="button"
-                class="starting-draw-start-button"
-            >
-                <span>▶</span>
-                Inizia partita
-            </button>
+                    <strong>
+                        ${ escapeHTML(nome) }
+                    </strong>
+                </button>
+            `).join("") }
         </div>
     `;
-
     overlay.appendChild(popup);
     document.body.appendChild(overlay);
-
-    const nomeEl = popup.querySelector("#starting-draw-name");
-    const progress = popup.querySelector(".starting-draw-progress-fill");
-    const countdown = popup.querySelector(".starting-draw-countdown");
-    const result = popup.querySelector(".starting-draw-result");
-    const winnerEl = popup.querySelector(".starting-draw-winner");
-    const startButton = popup.querySelector(".starting-draw-start-button");
-
-    // Il vincitore viene estratto casualmente una sola volta.
-    const indiceVincitore = Math.floor(Math.random() * giocatori.length);
-    let indiceVisualizzato = Math.floor(Math.random() * giocatori.length);
-
-    const aggiornaNome = () => {
-        indiceVisualizzato = (indiceVisualizzato + 1) % giocatori.length;
-
-        if (nomeEl) {
-            nomeEl.classList.remove("draw-name-change");
-            void nomeEl.offsetWidth;
-            nomeEl.textContent = giocatori[indiceVisualizzato];
-            nomeEl.classList.add("draw-name-change");
-        }
-    };
-
-    // Il nome cambia rapidamente per simulare il sorteggio.
-    sorteggioInizialeInterval = setInterval(aggiornaNome, 95);
-
-    const terminaSorteggio = () => {
-        if (sorteggioInizialeInterval) {
-            clearInterval(sorteggioInizialeInterval);
-            sorteggioInizialeInterval = null;
-        }
-
-        if (!document.body.contains(overlay)) {
-            return;
-        }
-
-        if (nomeEl) {
-            nomeEl.classList.remove("draw-name-change");
-            nomeEl.textContent = giocatori[indiceVincitore];
-            nomeEl.classList.add("draw-winner-reveal");
-        }
-
-        if (progress) {
-            progress.style.width = "100%";
-        }
-
-        if (countdown) {
-            countdown.textContent = "Sorteggio completato";
-        }
-
-        if (winnerEl) {
-            winnerEl.textContent = giocatori[indiceVincitore];
-        }
-
-        if (result) {
-            result.classList.remove("hidden");
-            result.classList.add("is-visible");
-        }
-
-        popup.classList.add("draw-complete");
-
-        startButton?.addEventListener("click", () => {
-            giocatoreAttivo = indiceVincitore;
-            partitaIniziata = Date.now();
-            partitaTerminata = false;
-
-            chiudiPopupInizioGame();
-            aggiornaSchermataPartita();
-            salvaPartita();
-        }, { once: true });
-    };
-
-    // Esattamente 5 secondi di sorteggio prima della rivelazione.
-    timerSceltaGiocatore = setTimeout(terminaSorteggio, 5000);
+    popup.querySelectorAll(".starting-player-button").forEach(button => {
+        button.addEventListener("click", () => {
+            const indice = Number(button.dataset.player);
+            scegliGiocatoreInizio(indice);
+        });
+    });
 }
 function scegliGiocatoreInizio(indice) {
     if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
@@ -2043,16 +1951,10 @@ function scegliGiocatoreInizio(indice) {
     salvaPartita();
 }
 function chiudiPopupInizioGame() {
-    if (sorteggioInizialeInterval) {
-        clearInterval(sorteggioInizialeInterval);
-        sorteggioInizialeInterval = null;
-    }
-
-    const overlay = document.querySelector(".starting-draw-overlay");
+    const overlay = document.querySelector(".starting-player-overlay");
     if (overlay) {
         overlay.remove();
     }
-
     if (timerSceltaGiocatore) {
         clearTimeout(timerSceltaGiocatore);
         timerSceltaGiocatore = null;
