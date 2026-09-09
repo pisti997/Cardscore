@@ -980,23 +980,27 @@ select {
    ========================================================= */
 
 /* La pagina occupa esattamente lo schermo: niente scroll.
-   Il contenuto si distribuisce con flex, cosi' si adatta
-   anche a schermi leggermente diversi senza mai traboccare. */
+   Lo scroll è impedito nel contenuto sotto (.setup-content),
+   non qui, cosi' l'header può sconfinare nella safe-area
+   senza che nulla lo tagli. */
 #nuova-partita.page.active {
     height: 100dvh;
     height: 100vh;
     max-height: 100dvh;
     max-height: 100vh;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
 /* -----------------------------------------------------
    INTESTAZIONE VERDE (gioco + barra superiore unite)
+   Risale sopra la safe-area (margine negativo) e la
+   ripaga con altrettanto padding, cosi' il verde arriva
+   fino al bordo dello schermo, sotto l'orologio/notch.
 ----------------------------------------------------- */
 #nuova-partita .game-header-card {
     flex-shrink: 0;
+    margin-top: calc(-1 * env(safe-area-inset-top));
     padding: calc(env(safe-area-inset-top) + 14px) 18px 24px;
     background: linear-gradient(160deg, var(--green), var(--green-dark));
     border-radius: 0 0 26px 26px;
@@ -1009,27 +1013,54 @@ select {
     margin-bottom: 22px;
 }
 
-#nuova-partita .game-header-back {
-    width: 34px;
-    height: 34px;
+/* Pulsante indietro e "···": stessi identici a quelli
+   della schermata della partita (cerchio bianco, ombra
+   "3D", freccia disegnata) */
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    width: 36px;
+    height: 36px;
     flex-shrink: 0;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.16);
+    background: #ffffff;
+    border: 1px solid #e3e7e2;
+    border-radius: 50%;
+    box-shadow:
+        0 3px 0 #d9ded9,
+        0 5px 10px rgba(25, 45, 32, 0.08);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
 }
 
 #nuova-partita .game-header-back:active {
-    transform: scale(0.92);
+    transform: translateY(2px);
+    box-shadow:
+        0 1px 0 #d9ded9,
+        0 2px 5px rgba(25, 45, 32, 0.08);
 }
 
 #nuova-partita .game-header-back .back-arrow {
-    margin: 0;
-    color: #ffffff;
-    font-size: 21px;
-    line-height: 1;
-    font-weight: 400;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+}
+
+#nuova-partita .game-header-back .back-arrow::before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 50%;
+    top: 50%;
+    border-left: 3px solid #17251d;
+    border-bottom: 3px solid #17251d;
+    transform: translate(-38%, -50%) rotate(45deg);
+    border-radius: 2px;
 }
 
 #nuova-partita .game-header-label {
@@ -1040,17 +1071,9 @@ select {
 }
 
 #nuova-partita .game-header-dots {
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.16);
-    color: #ffffff;
+    color: #17251d;
     font-size: 13px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 #nuova-partita .game-header-main {
@@ -1059,14 +1082,16 @@ select {
     gap: 14px;
 }
 
+/* Logo del gioco: nessun riquadro dietro, solo l'immagine
+   alla stessa dimensione che aveva il riquadro bianco */
 #nuova-partita .selected-game-icon {
     width: 58px;
     height: 58px;
     flex-shrink: 0;
-    border-radius: 17px;
-    background: #ffffff;
-    border: 3px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    background: none;
+    border: 0;
+    box-shadow: none;
+    border-radius: 0;
 }
 
 #nuova-partita .game-header-name {
@@ -1093,7 +1118,6 @@ select {
 }
 
 #nuova-partita .setup-card,
-#nuova-partita .section-label,
 #nuova-partita .start-button {
     flex-shrink: 0;
     margin: 0;
@@ -1175,10 +1199,11 @@ select {
 }
 
 /* -----------------------------------------------------
-   SISTEMA DI PUNTEGGIO - etichetta fuori dal riquadro,
-   riga riassuntiva al posto del menu a tendina classico
+   SISTEMA DI PUNTEGGIO - etichetta dentro al riquadro,
+   riga riassuntiva con menu personalizzato a comparsa
+   (niente più selettore nativo di iOS)
 ----------------------------------------------------- */
-#nuova-partita .section-label {
+#nuova-partita .setup-card > .small-label {
     margin-bottom: 10px;
 }
 
@@ -1186,19 +1211,23 @@ select {
     position: relative;
 }
 
-/* Il select vero resta invisibile ma sopra a tutto:
-   il tocco apre comunque il selettore nativo, mentre
-   a schermo si vede solo la riga disegnata sotto */
-#nuova-partita .scoring-type-select {
+/* Il select nativo resta nel codice solo per tenere lo
+   stato (compatibilità con il resto della logica), ma
+   non è mai visibile né toccabile: il tocco va tutto
+   alla riga disegnata sotto e al menu personalizzato. */
+#nuova-partita .scoring-type-select-hidden {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
     border: 0;
 }
 
 #nuova-partita .scoring-type-summary {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -1206,7 +1235,11 @@ select {
     background: #f6f8f4;
     border: 1px solid #e9ece6;
     border-radius: 15px;
-    pointer-events: none;
+    transition: transform 0.08s ease;
+}
+
+#nuova-partita .scoring-type-summary:active {
+    transform: scale(0.98);
 }
 
 #nuova-partita .scoring-type-icon {
@@ -1224,6 +1257,7 @@ select {
 #nuova-partita .scoring-type-text {
     flex: 1;
     min-width: 0;
+    text-align: left;
 }
 
 #nuova-partita .scoring-type-title {
@@ -1244,6 +1278,56 @@ select {
     color: var(--green);
     font-size: 17px;
     font-weight: 700;
+    transition: transform 0.15s ease;
+}
+
+#nuova-partita .scoring-type-field.is-open .scoring-type-chevron {
+    transform: rotate(180deg);
+}
+
+/* Menu a comparsa con le due modalità di punteggio */
+#nuova-partita .scoring-type-options {
+    width: 100%;
+    margin-top: 8px;
+    padding: 6px;
+    background: #ffffff;
+    border: 1px solid #ececea;
+    border-radius: 15px;
+    box-shadow:
+        0 1px 2px rgba(23, 37, 29, 0.04),
+        0 10px 22px rgba(23, 37, 29, 0.10);
+}
+
+#nuova-partita .scoring-type-option {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 11px;
+    color: #17251d;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#nuova-partita .scoring-type-option:active {
+    background: #f4f6f2;
+}
+
+#nuova-partita .scoring-type-check {
+    color: var(--green);
+    font-size: 15px;
+    font-weight: 800;
+    opacity: 0;
+}
+
+#nuova-partita .scoring-type-option.is-selected {
+    background: #eef6ea;
+}
+
+#nuova-partita .scoring-type-option.is-selected .scoring-type-check {
+    opacity: 1;
 }
 
 #nuova-partita .settings-row {
@@ -1251,8 +1335,10 @@ select {
 }
 
 #nuova-partita .setting-item > span {
+    display: block;
     min-height: 18px;
     margin-bottom: 6px;
+    text-align: center;
     color: #8b9188;
     font-size: 10.5px;
     font-weight: 700;
