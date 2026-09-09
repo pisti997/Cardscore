@@ -213,6 +213,10 @@ function aggiornaListaGiocatori() {
     giocatori.forEach((nome, indice) => {
         const riga = document.createElement("div");
         riga.className = "player-row";
+        const numero = document.createElement("span");
+        numero.className = "player-number";
+        numero.textContent = indice + 1;
+        riga.appendChild(numero);
         const input = document.createElement("input");
         input.type = "text";
         input.className = "player-input";
@@ -224,6 +228,14 @@ function aggiornaListaGiocatori() {
             giocatori[indice] = this.value;
         });
         riga.appendChild(input);
+        const matita = document.createElement("span");
+        matita.className = "player-edit-icon";
+        matita.setAttribute("aria-hidden", "true");
+        matita.textContent = "✎";
+        matita.addEventListener("click", function () {
+            input.focus();
+        });
+        riga.appendChild(matita);
         if (giocatori.length > 2) {
             const removeButton = document.createElement("button");
             removeButton.type = "button";
@@ -272,14 +284,25 @@ function cambiaSistemaPunteggio() {
     sistemaPunteggio = select.value;
     const semplice = elemento("impostazioni-semplice");
     const gameSet = elemento("impostazioni-game-set");
-    if (!semplice || !gameSet)
-        return;
-    if (sistemaPunteggio === "game-set") {
-        semplice.classList.add("hidden");
-        gameSet.classList.remove("hidden");
-    } else {
-        semplice.classList.remove("hidden");
-        gameSet.classList.add("hidden");
+    if (semplice && gameSet) {
+        if (sistemaPunteggio === "game-set") {
+            semplice.classList.add("hidden");
+            gameSet.classList.remove("hidden");
+        } else {
+            semplice.classList.remove("hidden");
+            gameSet.classList.add("hidden");
+        }
+    }
+    const titolo = elemento("sistema-punteggio-titolo");
+    const descrizione = elemento("sistema-punteggio-descrizione");
+    if (titolo && descrizione) {
+        if (sistemaPunteggio === "game-set") {
+            titolo.textContent = "Game / Set / Match";
+            descrizione.textContent = "Vince chi fa più game e set";
+        } else {
+            titolo.textContent = "Punteggio semplice";
+            descrizione.textContent = "Vince chi raggiunge il punteggio";
+        }
     }
 }
 /* =========================================================
