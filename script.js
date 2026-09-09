@@ -89,6 +89,7 @@ function mostraPagina(id) {
     chiudiPopupPuntiPersonalizzati();
     chiudiPopupTimer();
     chiudiPopupTimerConto();
+    chiudiTipoPunteggioMenu();
     document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
     });
@@ -304,7 +305,49 @@ function cambiaSistemaPunteggio() {
             descrizione.textContent = "Vince chi raggiunge il punteggio";
         }
     }
+    document.querySelectorAll(".scoring-type-option").forEach(function (opzione) {
+        opzione.classList.toggle("is-selected", opzione.dataset.valore === sistemaPunteggio);
+    });
 }
+/* =========================================================
+   MENU PERSONALIZZATO SISTEMA DI PUNTEGGIO
+   Sostituisce il selettore nativo di iOS: si apre e chiude
+   direttamente dal riquadro, senza popup di sistema.
+========================================================= */
+function toggleTipoPunteggioMenu() {
+    const menu = elemento("scoring-type-options");
+    const campo = elemento("scoring-type-field");
+    if (!menu || !campo)
+        return;
+    menu.classList.toggle("hidden");
+    const aperto = !menu.classList.contains("hidden");
+    campo.classList.toggle("is-open", aperto);
+}
+function chiudiTipoPunteggioMenu() {
+    const menu = elemento("scoring-type-options");
+    const campo = elemento("scoring-type-field");
+    if (menu)
+        menu.classList.add("hidden");
+    if (campo)
+        campo.classList.remove("is-open");
+}
+function selezionaTipoPunteggio(valore) {
+    const select = elemento("sistema-punteggio");
+    if (select) {
+        select.value = valore;
+    }
+    cambiaSistemaPunteggio();
+    chiudiTipoPunteggioMenu();
+}
+/* Chiude il menu toccando fuori */
+document.addEventListener("click", function (event) {
+    const campo = elemento("scoring-type-field");
+    if (!campo)
+        return;
+    if (!campo.contains(event.target)) {
+        chiudiTipoPunteggioMenu();
+    }
+});
 /* =========================================================
    INIZIA PARTITA
 ========================================================= */
