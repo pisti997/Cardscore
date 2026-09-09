@@ -24,6 +24,7 @@ let partitaTerminata = false;
 let giocatoreAttivo = null;
 // Timer per il popup di scelta del giocatore
 let timerSceltaGiocatore = null;
+let sorteggioInizialeInterval = null;
 let popupPunteggioAttuale = {
     overlay: null,
     popup: null,
@@ -213,10 +214,6 @@ function aggiornaListaGiocatori() {
     giocatori.forEach((nome, indice) => {
         const riga = document.createElement("div");
         riga.className = "player-row";
-        const numero = document.createElement("span");
-        numero.className = "player-number";
-        numero.textContent = indice + 1;
-        riga.appendChild(numero);
         const input = document.createElement("input");
         input.type = "text";
         input.className = "player-input";
@@ -228,14 +225,6 @@ function aggiornaListaGiocatori() {
             giocatori[indice] = this.value;
         });
         riga.appendChild(input);
-        const matita = document.createElement("span");
-        matita.className = "player-edit-icon";
-        matita.setAttribute("aria-hidden", "true");
-        matita.textContent = "✎";
-        matita.addEventListener("click", function () {
-            input.focus();
-        });
-        riga.appendChild(matita);
         if (giocatori.length > 2) {
             const removeButton = document.createElement("button");
             removeButton.type = "button";
@@ -284,25 +273,14 @@ function cambiaSistemaPunteggio() {
     sistemaPunteggio = select.value;
     const semplice = elemento("impostazioni-semplice");
     const gameSet = elemento("impostazioni-game-set");
-    if (semplice && gameSet) {
-        if (sistemaPunteggio === "game-set") {
-            semplice.classList.add("hidden");
-            gameSet.classList.remove("hidden");
-        } else {
-            semplice.classList.remove("hidden");
-            gameSet.classList.add("hidden");
-        }
-    }
-    const titolo = elemento("sistema-punteggio-titolo");
-    const descrizione = elemento("sistema-punteggio-descrizione");
-    if (titolo && descrizione) {
-        if (sistemaPunteggio === "game-set") {
-            titolo.textContent = "Game / Set / Match";
-            descrizione.textContent = "Vince chi fa più game e set";
-        } else {
-            titolo.textContent = "Punteggio semplice";
-            descrizione.textContent = "Vince chi raggiunge il punteggio";
-        }
+    if (!semplice || !gameSet)
+        return;
+    if (sistemaPunteggio === "game-set") {
+        semplice.classList.add("hidden");
+        gameSet.classList.remove("hidden");
+    } else {
+        semplice.classList.remove("hidden");
+        gameSet.classList.add("hidden");
     }
 }
 /* =========================================================
@@ -359,7 +337,9 @@ function iniziaPartita() {
     if (usaTurnoManuale() && sistemaPunteggio !== "game-set") {
         giocatoreAttivo = 0;
     }
-    partitaIniziata = Date.now();
+    // La partita parte davvero quando viene premuto "Inizia partita" dopo il sorteggio.
+    // I giochi senza sorteggio continuano invece a partire immediatamente.
+    partitaIniziata = sistemaPunteggio === "game-set" ? null : Date.now();
     partitaTerminata = false;
     mostraPagina("partita");
     aggiornaSchermataPartita();
@@ -1743,7 +1723,12 @@ function continuaPartita() {
     matchVinti = Array.isArray(dati.matchVinti) ? dati.matchVinti : giocatori.map(() => 0);
     storicoGame = Array.isArray(dati.storicoGame) ? dati.storicoGame : [];
     storicoSet = Array.isArray(dati.storicoSet) ? dati.storicoSet : [];
-    partitaIniziata = dati.partitaIniziata || Date.now();
+    // Se la partita era ancora nel sorteggio iniziale, manteniamo null
+    // e riproponiamo il sorteggio invece di far partire il cronometro.
+    partitaIniziata = dati.partitaIniziata ?? null;
+    if (partitaIniziata === null && sistemaPunteggio !== "game-set") {
+        partitaIniziata = Date.now();
+    }
     partitaTerminata = false;
     giocatoreAttivo = dati.giocatoreAttivo === null || dati.giocatoreAttivo === undefined || !Number.isInteger(Number(dati.giocatoreAttivo)) ? null : Number(dati.giocatoreAttivo);
     /*
@@ -1897,57 +1882,141 @@ if ("serviceWorker" in navigator) {
    POPUP SCELTA GIOCATORE CHE INIZIA
 ========================================================= */
 function apriPopupInizioGame() {
-    if (partitaTerminata)
+    if (partitaTerminata || !giocatori.length) {
         return;
-    // Chiudiamo eventuali popup precedenti
+    }
+
     chiudiPopupInizioGame();
+
     const overlay = document.createElement("div");
-    overlay.className = "starting-player-overlay";
+    overlay.className = "starting-draw-overlay";
+
     const popup = document.createElement("div");
-    popup.className = "starting-player-popup";
+    popup.className = "starting-draw-popup";
+
     popup.innerHTML = `
-        <div class="starting-player-icon">
-            🎯
+        <div class="starting-draw-badge">
+            🎲
         </div>
 
-        <div class="starting-player-label">
-            NUOVO GAME
+        <div class="starting-draw-label">
+            SORTEGGIO
         </div>
 
         <h2>
             Chi inizia?
         </h2>
 
-        <p>
-            Scegli il giocatore che parte per primo
+        <p class="starting-draw-subtitle">
+            Estraiamo casualmente il primo giocatore
         </p>
 
-        <div class="starting-player-buttons">
-            ${ giocatori.map((nome, indice) => `
-                <button
-                    type="button"
-                    class="starting-player-button"
-                    data-player="${ indice }"
-                >
-                    <span class="starting-player-number">
-                        ${ indice + 1 }
-                    </span>
+        <div class="starting-draw-stage">
+            <div class="starting-draw-glow"></div>
+            <div id="starting-draw-name" class="starting-draw-name">
+                ${ escapeHTML(giocatori[0]) }
+            </div>
+        </div>
 
-                    <strong>
-                        ${ escapeHTML(nome) }
-                    </strong>
-                </button>
-            `).join("") }
+        <div class="starting-draw-progress">
+            <div class="starting-draw-progress-fill"></div>
+        </div>
+
+        <div class="starting-draw-countdown">
+            Estrazione in corso…
+        </div>
+
+        <div class="starting-draw-result hidden">
+            <div class="starting-draw-result-label">
+                HA VINTO IL SORTEGGIO
+            </div>
+            <div class="starting-draw-winner"></div>
+            <button
+                type="button"
+                class="starting-draw-start-button"
+            >
+                <span>▶</span>
+                Inizia partita
+            </button>
         </div>
     `;
+
     overlay.appendChild(popup);
     document.body.appendChild(overlay);
-    popup.querySelectorAll(".starting-player-button").forEach(button => {
-        button.addEventListener("click", () => {
-            const indice = Number(button.dataset.player);
-            scegliGiocatoreInizio(indice);
-        });
-    });
+
+    const nomeEl = popup.querySelector("#starting-draw-name");
+    const progress = popup.querySelector(".starting-draw-progress-fill");
+    const countdown = popup.querySelector(".starting-draw-countdown");
+    const result = popup.querySelector(".starting-draw-result");
+    const winnerEl = popup.querySelector(".starting-draw-winner");
+    const startButton = popup.querySelector(".starting-draw-start-button");
+
+    // Il vincitore viene estratto casualmente una sola volta.
+    const indiceVincitore = Math.floor(Math.random() * giocatori.length);
+    let indiceVisualizzato = Math.floor(Math.random() * giocatori.length);
+
+    const aggiornaNome = () => {
+        indiceVisualizzato = (indiceVisualizzato + 1) % giocatori.length;
+
+        if (nomeEl) {
+            nomeEl.classList.remove("draw-name-change");
+            void nomeEl.offsetWidth;
+            nomeEl.textContent = giocatori[indiceVisualizzato];
+            nomeEl.classList.add("draw-name-change");
+        }
+    };
+
+    // Il nome cambia rapidamente per simulare il sorteggio.
+    sorteggioInizialeInterval = setInterval(aggiornaNome, 95);
+
+    const terminaSorteggio = () => {
+        if (sorteggioInizialeInterval) {
+            clearInterval(sorteggioInizialeInterval);
+            sorteggioInizialeInterval = null;
+        }
+
+        if (!document.body.contains(overlay)) {
+            return;
+        }
+
+        if (nomeEl) {
+            nomeEl.classList.remove("draw-name-change");
+            nomeEl.textContent = giocatori[indiceVincitore];
+            nomeEl.classList.add("draw-winner-reveal");
+        }
+
+        if (progress) {
+            progress.style.width = "100%";
+        }
+
+        if (countdown) {
+            countdown.textContent = "Sorteggio completato";
+        }
+
+        if (winnerEl) {
+            winnerEl.textContent = giocatori[indiceVincitore];
+        }
+
+        if (result) {
+            result.classList.remove("hidden");
+            result.classList.add("is-visible");
+        }
+
+        popup.classList.add("draw-complete");
+
+        startButton?.addEventListener("click", () => {
+            giocatoreAttivo = indiceVincitore;
+            partitaIniziata = Date.now();
+            partitaTerminata = false;
+
+            chiudiPopupInizioGame();
+            aggiornaSchermataPartita();
+            salvaPartita();
+        }, { once: true });
+    };
+
+    // Esattamente 5 secondi di sorteggio prima della rivelazione.
+    timerSceltaGiocatore = setTimeout(terminaSorteggio, 5000);
 }
 function scegliGiocatoreInizio(indice) {
     if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
@@ -1974,10 +2043,16 @@ function scegliGiocatoreInizio(indice) {
     salvaPartita();
 }
 function chiudiPopupInizioGame() {
-    const overlay = document.querySelector(".starting-player-overlay");
+    if (sorteggioInizialeInterval) {
+        clearInterval(sorteggioInizialeInterval);
+        sorteggioInizialeInterval = null;
+    }
+
+    const overlay = document.querySelector(".starting-draw-overlay");
     if (overlay) {
         overlay.remove();
     }
+
     if (timerSceltaGiocatore) {
         clearTimeout(timerSceltaGiocatore);
         timerSceltaGiocatore = null;
