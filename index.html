@@ -475,15 +475,22 @@
                  SISTEMA PUNTEGGIO + IMPOSTAZIONI (riquadro unico)
             ================================================== -->
 
-            <span class="small-label section-label">
-                SISTEMA DI PUNTEGGIO
-            </span>
-
             <div class="setup-card">
 
-                <div class="scoring-type-field">
+                <span class="small-label">
+                    SISTEMA DI PUNTEGGIO
+                </span>
 
-                    <div class="scoring-type-summary">
+                <div
+                    class="scoring-type-field"
+                    id="scoring-type-field"
+                >
+
+                    <button
+                        type="button"
+                        class="scoring-type-summary"
+                        onclick="toggleTipoPunteggioMenu()"
+                    >
 
                         <div class="scoring-type-icon">
                             🏆
@@ -511,13 +518,44 @@
                             ⌄
                         </span>
 
+                    </button>
+
+
+                    <div
+                        class="scoring-type-options hidden"
+                        id="scoring-type-options"
+                    >
+
+                        <button
+                            type="button"
+                            class="scoring-type-option is-selected"
+                            data-valore="game-set"
+                            onclick="selezionaTipoPunteggio('game-set')"
+                        >
+                            <span>Game / Set / Match</span>
+                            <span class="scoring-type-check">✓</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="scoring-type-option"
+                            data-valore="semplice"
+                            onclick="selezionaTipoPunteggio('semplice')"
+                        >
+                            <span>Punteggio semplice</span>
+                            <span class="scoring-type-check">✓</span>
+                        </button>
+
                     </div>
 
+
+                    <!-- Tiene lo stato per il resto del codice,
+                         ma non è mai visibile né apribile -->
                     <select
                         id="sistema-punteggio"
-                        class="scoring-type-select"
-                        onchange="cambiaSistemaPunteggio()"
-                        aria-label="Sistema di punteggio"
+                        class="scoring-type-select-hidden"
+                        tabindex="-1"
+                        aria-hidden="true"
                     >
 
                         <option value="game-set" selected>
