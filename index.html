@@ -368,56 +368,58 @@
     >
 
 
-        <header class="topbar">
+        <header class="game-header-card">
 
-            <button
-                class="back-button"
-                type="button"
-                onclick="tornaHome()"
-                aria-label="Indietro"
-            >
+            <div class="game-header-topbar">
 
-                <span class="back-arrow">
-                    ‹
+                <button
+                    class="game-header-back"
+                    type="button"
+                    onclick="tornaHome()"
+                    aria-label="Indietro"
+                >
+
+                    <span class="back-arrow">
+                        ‹
+                    </span>
+
+                </button>
+
+
+                <span class="game-header-label">
+                    NUOVA PARTITA
                 </span>
 
-            </button>
+
+                <span
+                    class="game-header-dots"
+                    aria-hidden="true"
+                >
+                    •••
+                </span>
+
+            </div>
 
 
-            <h1>
-                Nuova partita
-            </h1>
-
-
-            <div class="topbar-spacer"></div>
-
-        </header>
-
-
-        <main class="setup-content">
-
-
-            <!-- GIOCO SELEZIONATO -->
-
-            <div class="selected-game-card">
+            <div class="game-header-main">
 
                 <div class="selected-game-icon" id="selected-game-icon">
                     🃏
                 </div>
 
-                <div>
-
-                    <span class="small-label">
-                        GIOCO
-                    </span>
-
-                    <h2 id="gioco-selezionato">
-                        —
-                    </h2>
-
-                </div>
+                <h2
+                    id="gioco-selezionato"
+                    class="game-header-name"
+                >
+                    —
+                </h2>
 
             </div>
+
+        </header>
+
+
+        <main class="setup-content">
 
 
             <!-- =================================================
@@ -473,31 +475,62 @@
                  SISTEMA PUNTEGGIO + IMPOSTAZIONI (riquadro unico)
             ================================================== -->
 
+            <span class="small-label section-label">
+                SISTEMA DI PUNTEGGIO
+            </span>
+
             <div class="setup-card">
 
-                <label
-                    class="field-label"
-                    for="sistema-punteggio"
-                >
-                    SISTEMA DI PUNTEGGIO
-                </label>
+                <div class="scoring-type-field">
 
+                    <div class="scoring-type-summary">
 
-                <select
-                    id="sistema-punteggio"
-                    class="select-field"
-                    onchange="cambiaSistemaPunteggio()"
-                >
+                        <div class="scoring-type-icon">
+                            🏆
+                        </div>
 
-                    <option value="game-set" selected>
-                        Game / Set / Match
-                    </option>
+                        <div class="scoring-type-text">
 
-                    <option value="semplice">
-                        Punteggio semplice
-                    </option>
+                            <div
+                                id="sistema-punteggio-titolo"
+                                class="scoring-type-title"
+                            >
+                                Game / Set / Match
+                            </div>
 
-                </select>
+                            <div
+                                id="sistema-punteggio-descrizione"
+                                class="scoring-type-desc"
+                            >
+                                Vince chi fa più game e set
+                            </div>
+
+                        </div>
+
+                        <span class="scoring-type-chevron">
+                            ⌄
+                        </span>
+
+                    </div>
+
+                    <select
+                        id="sistema-punteggio"
+                        class="scoring-type-select"
+                        onchange="cambiaSistemaPunteggio()"
+                        aria-label="Sistema di punteggio"
+                    >
+
+                        <option value="game-set" selected>
+                            Game / Set / Match
+                        </option>
+
+                        <option value="semplice">
+                            Punteggio semplice
+                        </option>
+
+                    </select>
+
+                </div>
 
 
                 <div class="setup-card-divider"></div>
