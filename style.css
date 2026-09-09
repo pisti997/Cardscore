@@ -992,72 +992,95 @@ select {
     flex-direction: column;
 }
 
-#nuova-partita .topbar {
-    position: relative;
+/* -----------------------------------------------------
+   INTESTAZIONE VERDE (gioco + barra superiore unite)
+----------------------------------------------------- */
+#nuova-partita .game-header-card {
     flex-shrink: 0;
-    padding-left: 18px;
-    padding-right: 18px;
+    padding: calc(env(safe-area-inset-top) + 14px) 18px 24px;
+    background: linear-gradient(160deg, var(--green), var(--green-dark));
+    border-radius: 0 0 26px 26px;
 }
 
-/* Pulsante indietro: solo freccia, cerchio bianco come
-   nella schermata della partita */
-#nuova-partita .topbar .back-button {
-    position: absolute;
-    left: 18px;
-    top: 50%;
+#nuova-partita .game-header-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
 
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
-
-    margin: 0;
-    padding: 0;
-
-    transform: translateY(-50%);
-
+#nuova-partita .game-header-back {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background: #ffffff;
-    border: 1px solid #e3e7e2;
-    border-radius: 50%;
-
-    box-shadow:
-        0 3px 0 #d9ded9,
-        0 5px 10px rgba(25, 45, 32, 0.08);
-
-    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    background: rgba(255, 255, 255, 0.16);
 }
 
-#nuova-partita .topbar .back-button:active {
-    transform: translateY(-50%) translateY(2px);
-    box-shadow:
-        0 1px 0 #d9ded9,
-        0 2px 5px rgba(25, 45, 32, 0.08);
+#nuova-partita .game-header-back:active {
+    transform: scale(0.92);
 }
 
-#nuova-partita .topbar .back-button .back-arrow {
+#nuova-partita .game-header-back .back-arrow {
     margin: 0;
-    font-size: 23px;
+    color: #ffffff;
+    font-size: 21px;
     line-height: 1;
+    font-weight: 400;
 }
 
-/* Titolo: sempre nella colonna centrale della griglia
-   (indipendentemente dal pulsante indietro, ora assoluto)
-   e stesso stile del titolo nella schermata della partita */
-#nuova-partita .topbar h1 {
-    grid-column: 2;
-    color: var(--green);
-    font-size: clamp(22px, 7vw, 28px);
+#nuova-partita .game-header-label {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+#nuova-partita .game-header-dots {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+#nuova-partita .game-header-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+#nuova-partita .selected-game-icon {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    border-radius: 17px;
+    background: #ffffff;
+    border: 3px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+#nuova-partita .game-header-name {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(24px, 8vw, 30px);
     font-weight: 850;
+    line-height: 1;
     letter-spacing: -0.6px;
 }
 
-/* Contenuto: layout flessibile che riempie lo spazio
-   restante e distribuisce l'aria fra le sezioni, senza
-   mai forzare lo scroll */
+/* -----------------------------------------------------
+   CONTENUTO: layout flessibile senza scroll
+----------------------------------------------------- */
 #nuova-partita .setup-content {
     flex: 1 1 auto;
     min-height: 0;
@@ -1065,45 +1088,15 @@ select {
     flex-direction: column;
     justify-content: space-between;
     gap: 10px;
-    padding: 10px 20px calc(10px + env(safe-area-inset-bottom));
+    padding: 14px 20px calc(10px + env(safe-area-inset-bottom));
     overflow: hidden;
 }
 
-#nuova-partita .selected-game-card,
 #nuova-partita .setup-card,
+#nuova-partita .section-label,
 #nuova-partita .start-button {
     flex-shrink: 0;
     margin: 0;
-}
-
-/* -----------------------------------------------------
-   GIOCO SELEZIONATO - versione minimal
------------------------------------------------------ */
-#nuova-partita .selected-game-card {
-    padding: 13px 15px;
-    gap: 12px;
-    background: #ffffff;
-    border: 1px solid #ececea;
-    box-shadow:
-        0 1px 2px rgba(23, 37, 29, 0.04),
-        0 6px 16px rgba(23, 37, 29, 0.05);
-}
-
-#nuova-partita .selected-game-icon {
-    background: #f1f6ee;
-    box-shadow: inset 0 0 0 1px #e6ebe1;
-}
-
-#nuova-partita .selected-game-card .small-label {
-    font-size: 9.5px;
-    letter-spacing: 1.3px;
-    color: #9aa39a;
-}
-
-#nuova-partita .selected-game-card h2 {
-    margin-top: 3px;
-    font-size: 19px;
-    letter-spacing: -0.2px;
 }
 
 /* -----------------------------------------------------
@@ -1132,48 +1125,125 @@ select {
 
 #nuova-partita .player-row {
     min-height: 44px;
-    background: #ffffff;
-    border: 1px solid #ececea;
-    box-shadow:
-        0 1px 2px rgba(23, 37, 29, 0.03),
-        0 3px 8px rgba(23, 37, 29, 0.04);
+    padding: 6px 8px 6px 6px;
+    gap: 10px;
+    background: rgba(150, 150, 140, 0.09);
+    border: 1px solid rgba(150, 150, 140, 0.09);
+    box-shadow: none;
+}
+
+#nuova-partita .player-number {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(150, 150, 140, 0.14);
+    color: #9a9990;
+    font-size: 12.5px;
+    font-weight: 800;
+}
+
+#nuova-partita .player-input {
+    color: #9a9990;
+    font-weight: 600;
+}
+
+#nuova-partita .player-input::placeholder {
+    color: #9a9990;
+}
+
+#nuova-partita .player-edit-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9a9990;
+    font-size: 14px;
 }
 
 #nuova-partita .add-player-button {
     min-height: 42px;
     margin-top: 8px;
-    box-shadow:
-        0 1px 2px rgba(23, 37, 29, 0.03),
-        0 3px 8px rgba(23, 37, 29, 0.04);
+    background: transparent;
+    border: 1.5px dashed #d7ddd3;
+    box-shadow: none;
 }
 
 /* -----------------------------------------------------
-   SISTEMA DI PUNTEGGIO - versione ridisegnata,
-   più elegante e pulita
+   SISTEMA DI PUNTEGGIO - etichetta fuori dal riquadro,
+   riga riassuntiva al posto del menu a tendina classico
 ----------------------------------------------------- */
-#nuova-partita .field-label {
-    margin-bottom: 9px;
-    font-size: 9.5px;
-    letter-spacing: 1.3px;
-    color: #9aa39a;
+#nuova-partita .section-label {
+    margin-bottom: 10px;
 }
 
-#nuova-partita .select-field {
-    min-height: 46px;
-    padding: 0 40px 0 15px;
+#nuova-partita .scoring-type-field {
+    position: relative;
+}
+
+/* Il select vero resta invisibile ma sopra a tutto:
+   il tocco apre comunque il selettore nativo, mentre
+   a schermo si vede solo la riga disegnata sotto */
+#nuova-partita .scoring-type-select {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border: 0;
+}
+
+#nuova-partita .scoring-type-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
     background: #f6f8f4;
     border: 1px solid #e9ece6;
-    border-radius: 14px;
+    border-radius: 15px;
+    pointer-events: none;
+}
+
+#nuova-partita .scoring-type-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef6ea;
+    font-size: 17px;
+}
+
+#nuova-partita .scoring-type-text {
+    flex: 1;
+    min-width: 0;
+}
+
+#nuova-partita .scoring-type-title {
     color: #17251d;
-    font-size: 15px;
+    font-size: 14.5px;
+    font-weight: 800;
+}
+
+#nuova-partita .scoring-type-desc {
+    margin-top: 1px;
+    color: #a5a49a;
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+#nuova-partita .scoring-type-chevron {
+    flex-shrink: 0;
+    color: var(--green);
+    font-size: 17px;
     font-weight: 700;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23236844' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 14px;
-    box-shadow: none;
 }
 
 #nuova-partita .settings-row {
