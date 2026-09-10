@@ -1001,37 +1001,27 @@ select {
 #nuova-partita .game-header-card {
     flex-shrink: 0;
     margin-top: calc(-1 * env(safe-area-inset-top));
-    padding: calc(env(safe-area-inset-top) + 14px) 18px 24px;
-    background: linear-gradient(160deg, var(--green), var(--green-dark));
+    padding: calc(env(safe-area-inset-top) + 8px) 18px 12px 10px;
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        var(--green) 24%,
+        var(--green-dark) 100%
+    );
     border-radius: 0 0 26px 26px;
     box-shadow: 0 10px 24px rgba(20, 45, 30, 0.16);
-}
-
-/* Rete di sicurezza: una striscia verde fissa esattamente
-   alta quanto la safe-area, cosi' l'area dietro all'orologio
-   non può mai mostrare altro che verde su questa schermata. */
-body.tema-verde-top::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: env(safe-area-inset-top);
-    background: var(--green);
-    z-index: 2100;
-    pointer-events: none;
 }
 
 #nuova-partita .game-header-topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 22px;
+    margin-bottom: 10px;
+    padding: 0 8px;
 }
 
-/* Pulsante indietro e "···": stessi identici a quelli
-   della schermata della partita (cerchio bianco, ombra
-   "3D", freccia disegnata) */
+/* Pulsante indietro e "···": stessa ombra soft dei
+   riquadri sotto, niente più effetto "3D" */
 #nuova-partita .game-header-back,
 #nuova-partita .game-header-dots {
     width: 36px;
@@ -1041,19 +1031,17 @@ body.tema-verde-top::before {
     align-items: center;
     justify-content: center;
     background: #ffffff;
-    border: 1px solid #e3e7e2;
+    border: 1px solid #ececea;
     border-radius: 50%;
     box-shadow:
-        0 3px 0 #d9ded9,
-        0 5px 10px rgba(25, 45, 32, 0.08);
-    transition: transform 0.08s ease, box-shadow 0.08s ease;
+        0 1px 2px rgba(23, 37, 29, 0.04),
+        0 6px 16px rgba(23, 37, 29, 0.05);
+    transition: transform 0.08s ease;
 }
 
-#nuova-partita .game-header-back:active {
-    transform: translateY(2px);
-    box-shadow:
-        0 1px 0 #d9ded9,
-        0 2px 5px rgba(25, 45, 32, 0.08);
+#nuova-partita .game-header-back:active,
+#nuova-partita .game-header-dots:active {
+    transform: scale(0.92);
 }
 
 #nuova-partita .game-header-back .back-arrow {
@@ -1095,14 +1083,15 @@ body.tema-verde-top::before {
 #nuova-partita .game-header-main {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 6px;
+    padding-left: 2px;
 }
 
-/* Logo del gioco: nessun riquadro dietro, molto più
-   grande (circa 3 volte la dimensione originale) */
+/* Logo del gioco: dimezzato rispetto a prima, quasi
+   attaccato al bordo sinistro, con un sottile alone */
 #nuova-partita .selected-game-icon {
-    width: 174px;
-    height: 174px;
+    width: 92px;
+    height: 92px;
     flex-shrink: 0;
     background: none;
     border: 0;
@@ -1110,30 +1099,32 @@ body.tema-verde-top::before {
     border-radius: 0;
 }
 
+#nuova-partita .selected-game-icon img {
+    filter:
+        drop-shadow(0 0 3px rgba(255, 255, 255, 0.55))
+        drop-shadow(0 0 14px rgba(255, 255, 255, 0.30));
+}
+
 #nuova-partita .game-header-name {
     margin: 0;
     color: #ffffff;
-    font-size: clamp(24px, 8vw, 30px);
+    font-size: clamp(22px, 7vw, 27px);
     font-weight: 850;
     line-height: 1;
     letter-spacing: -0.6px;
 }
 
 /* -----------------------------------------------------
-   CONTENUTO: layout flessibile senza scroll
+   CONTENUTO: scrollabile, cosi' si può sempre raggiungere
+   il fondo della pagina qualunque sia il contenuto aperto
 ----------------------------------------------------- */
 #nuova-partita .setup-content {
     flex: 1 1 auto;
     min-height: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     gap: 10px;
     padding: 14px 20px calc(10px + env(safe-area-inset-bottom));
-    overflow: hidden;
-}
-
-#nuova-partita .setup-content.is-scrollabile {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
