@@ -1004,6 +1004,22 @@ select {
     padding: calc(env(safe-area-inset-top) + 14px) 18px 24px;
     background: linear-gradient(160deg, var(--green), var(--green-dark));
     border-radius: 0 0 26px 26px;
+    box-shadow: 0 10px 24px rgba(20, 45, 30, 0.16);
+}
+
+/* Rete di sicurezza: una striscia verde fissa esattamente
+   alta quanto la safe-area, cosi' l'area dietro all'orologio
+   non può mai mostrare altro che verde su questa schermata. */
+body.tema-verde-top::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top);
+    background: var(--green);
+    z-index: 2100;
+    pointer-events: none;
 }
 
 #nuova-partita .game-header-topbar {
@@ -1082,11 +1098,11 @@ select {
     gap: 14px;
 }
 
-/* Logo del gioco: nessun riquadro dietro, solo l'immagine
-   alla stessa dimensione che aveva il riquadro bianco */
+/* Logo del gioco: nessun riquadro dietro, molto più
+   grande (circa 3 volte la dimensione originale) */
 #nuova-partita .selected-game-icon {
-    width: 58px;
-    height: 58px;
+    width: 174px;
+    height: 174px;
     flex-shrink: 0;
     background: none;
     border: 0;
@@ -1115,6 +1131,11 @@ select {
     gap: 10px;
     padding: 14px 20px calc(10px + env(safe-area-inset-bottom));
     overflow: hidden;
+}
+
+#nuova-partita .setup-content.is-scrollabile {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #nuova-partita .setup-card,
@@ -1171,12 +1192,13 @@ select {
 }
 
 #nuova-partita .player-input {
-    color: #9a9990;
-    font-weight: 600;
+    color: #17251d;
+    font-weight: 650;
 }
 
 #nuova-partita .player-input::placeholder {
     color: #9a9990;
+    font-weight: 600;
 }
 
 #nuova-partita .player-edit-icon {
@@ -1235,7 +1257,14 @@ select {
     background: #f6f8f4;
     border: 1px solid #e9ece6;
     border-radius: 15px;
-    transition: transform 0.08s ease;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.08s ease, border-radius 0.15s ease;
+}
+
+#nuova-partita .scoring-type-field.is-open .scoring-type-summary {
+    border-radius: 15px 15px 0 0;
+    border-bottom-color: transparent;
 }
 
 #nuova-partita .scoring-type-summary:active {
@@ -1285,14 +1314,16 @@ select {
     transform: rotate(180deg);
 }
 
-/* Menu a comparsa con le due modalità di punteggio */
+/* Menu a comparsa con le due modalità di punteggio,
+   attaccato al riquadro che lo apre (un unico blocco) */
 #nuova-partita .scoring-type-options {
     width: 100%;
-    margin-top: 8px;
+    margin-top: 0;
     padding: 6px;
-    background: #ffffff;
-    border: 1px solid #ececea;
-    border-radius: 15px;
+    background: #f6f8f4;
+    border: 1px solid #e9ece6;
+    border-top: 1px solid #dfe4da;
+    border-radius: 0 0 15px 15px;
     box-shadow:
         0 1px 2px rgba(23, 37, 29, 0.04),
         0 10px 22px rgba(23, 37, 29, 0.10);
