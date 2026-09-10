@@ -98,11 +98,6 @@ function mostraPagina(id) {
     if (pagina) {
         pagina.classList.add("active");
     }
-    const metaTema = elemento("meta-theme-color");
-    if (metaTema) {
-        metaTema.setAttribute("content", id === "nuova-partita" ? "#236844" : "#f7f8f4");
-    }
-    document.body.classList.toggle("tema-verde-top", id === "nuova-partita");
     window.scrollTo({
         top: 0,
         behavior: "auto"
@@ -323,26 +318,19 @@ function cambiaSistemaPunteggio() {
 function toggleTipoPunteggioMenu() {
     const menu = elemento("scoring-type-options");
     const campo = elemento("scoring-type-field");
-    const contenuto = document.querySelector("#nuova-partita .setup-content");
     if (!menu || !campo)
         return;
     menu.classList.toggle("hidden");
     const aperto = !menu.classList.contains("hidden");
     campo.classList.toggle("is-open", aperto);
-    if (contenuto) {
-        contenuto.classList.toggle("is-scrollabile", aperto);
-    }
 }
 function chiudiTipoPunteggioMenu() {
     const menu = elemento("scoring-type-options");
     const campo = elemento("scoring-type-field");
-    const contenuto = document.querySelector("#nuova-partita .setup-content");
     if (menu)
         menu.classList.add("hidden");
     if (campo)
         campo.classList.remove("is-open");
-    if (contenuto)
-        contenuto.classList.remove("is-scrollabile");
 }
 function selezionaTipoPunteggio(valore) {
     const select = elemento("sistema-punteggio");
@@ -2021,9 +2009,6 @@ function apriPopupInizioGame() {
     const progress = popup.querySelector(".starting-draw-progress-fill");
     const countdown = popup.querySelector(".starting-draw-countdown");
     const result = popup.querySelector(".starting-draw-result");
-    const winnerEl = popup.querySelector(".starting-draw-winner");
-    const startButton = popup.querySelector(".starting-draw-start-button");
-
     // Il vincitore viene estratto casualmente una sola volta.
     const indiceVincitore = Math.floor(Math.random() * giocatori.length);
     let indiceVisualizzato = Math.floor(Math.random() * giocatori.length);
@@ -2039,15 +2024,32 @@ function apriPopupInizioGame() {
         }
     };
 
-    // Il nome cambia rapidamente per simulare il sorteggio.
-    sorteggioInizialeInterval = setInterval(aggiornaNome, 95);
+    /*
+       Sequenza di attese fra un cambio nome e il successivo:
+       parte molto veloce e rallenta sempre di più verso la
+       fine (l'ultimo tratto è volutamente lunghissimo, cosi'
+       il nome "si posa" lentamente sul vincitore), per una
+       durata totale di esattamente 5 secondi.
+    */
+    const durataTotale = 5000;
+    function generaSequenzaSorteggio() {
+        const attese = [];
+        let attesa = 60;
+        let totale = 0;
+        while (totale + attesa < durataTotale - 1400) {
+            attese.push(attesa);
+            totale += attesa;
+            attesa = Math.min(attesa * 1.4, 700);
+        }
+        // Ultimo tratto, molto lento, prima della rivelazione
+        attese.push(durataTotale - totale);
+        return attese;
+    }
+
+    const sequenza = generaSequenzaSorteggio();
+    let passo = 0;
 
     const terminaSorteggio = () => {
-        if (sorteggioInizialeInterval) {
-            clearInterval(sorteggioInizialeInterval);
-            sorteggioInizialeInterval = null;
-        }
-
         if (!document.body.contains(overlay)) {
             return;
         }
@@ -2088,8 +2090,17 @@ function apriPopupInizioGame() {
         }, { once: true });
     };
 
-    // Esattamente 5 secondi di sorteggio prima della rivelazione.
-    timerSceltaGiocatore = setTimeout(terminaSorteggio, 5000);
+    const avanzaSorteggio = () => {
+        aggiornaNome();
+        passo++;
+        if (passo < sequenza.length) {
+            sorteggioInizialeInterval = setTimeout(avanzaSorteggio, sequenza[passo]);
+        } else {
+            sorteggioInizialeInterval = null;
+            terminaSorteggio();
+        }
+    };
+    sorteggioInizialeInterval = setTimeout(avanzaSorteggio, sequenza[0]);
 }
 function scegliGiocatoreInizio(indice) {
     if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
@@ -2117,7 +2128,7 @@ function scegliGiocatoreInizio(indice) {
 }
 function chiudiPopupInizioGame() {
     if (sorteggioInizialeInterval) {
-        clearInterval(sorteggioInizialeInterval);
+        clearTimeout(sorteggioInizialeInterval);
         sorteggioInizialeInterval = null;
     }
     const overlay = document.querySelector(".starting-draw-overlay");
