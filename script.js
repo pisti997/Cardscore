@@ -24,6 +24,7 @@ let partitaTerminata = false;
 let giocatoreAttivo = null;
 // Timer per il popup di scelta del giocatore
 let timerSceltaGiocatore = null;
+let timerSorteggio = null;
 let popupPunteggioAttuale = {
     overlay: null,
     popup: null,
@@ -1939,58 +1940,143 @@ if ("serviceWorker" in navigator) {
 /* =========================================================
    POPUP SCELTA GIOCATORE CHE INIZIA
 ========================================================= */
+/* =========================================================
+   SORTEGGIO DI CHI INIZIA
+   Popup a schermo intero con un'animazione di sorteggio
+   (5 secondi, molto randomizzata) che alla fine mostra il
+   nome del vincitore e il tasto per confermare.
+========================================================= */
 function apriPopupInizioGame() {
     if (partitaTerminata)
         return;
     // Chiudiamo eventuali popup precedenti
     chiudiPopupInizioGame();
+    if (!giocatori.length)
+        return;
+    const vincitoreIndice = Math.floor(Math.random() * giocatori.length);
     const overlay = document.createElement("div");
-    overlay.className = "starting-player-overlay";
-    const popup = document.createElement("div");
-    popup.className = "starting-player-popup";
-    popup.innerHTML = `
-        <div class="starting-player-icon">
-            🎯
-        </div>
-
-        <div class="starting-player-label">
+    overlay.id = "sorteggio-overlay";
+    overlay.className = "sorteggio-overlay";
+    overlay.innerHTML = `
+        <div class="sorteggio-label">
             NUOVO GAME
         </div>
 
-        <h2>
+        <h2 class="sorteggio-titolo">
             Chi inizia?
         </h2>
 
-        <p>
-            Scegli il giocatore che parte per primo
-        </p>
-
-        <div class="starting-player-buttons">
+        <div
+            class="sorteggio-lista"
+            id="sorteggio-lista"
+        >
             ${ giocatori.map((nome, indice) => `
-                <button
-                    type="button"
-                    class="starting-player-button"
-                    data-player="${ indice }"
+                <div
+                    class="sorteggio-giocatore"
+                    data-indice="${ indice }"
                 >
-                    <span class="starting-player-number">
+                    <span class="sorteggio-numero">
                         ${ indice + 1 }
                     </span>
 
                     <strong>
                         ${ escapeHTML(nome) }
                     </strong>
-                </button>
+                </div>
             `).join("") }
         </div>
+
+        <div
+            class="sorteggio-risultato hidden"
+            id="sorteggio-risultato"
+        >
+            <div class="sorteggio-risultato-icona">
+                🏆
+            </div>
+
+            <div class="sorteggio-risultato-testo">
+                <strong id="sorteggio-vincitore-nome"></strong>
+                inizia per primo!
+            </div>
+
+            <button
+                type="button"
+                class="primary-button sorteggio-conferma"
+                id="sorteggio-conferma-btn"
+            >
+                <span class="start-button-icon">▶</span>
+                Inizia partita
+            </button>
+        </div>
     `;
-    overlay.appendChild(popup);
     document.body.appendChild(overlay);
-    popup.querySelectorAll(".starting-player-button").forEach(button => {
-        button.addEventListener("click", () => {
-            const indice = Number(button.dataset.player);
-            scegliGiocatoreInizio(indice);
+    avviaAnimazioneSorteggio(vincitoreIndice);
+}
+/*
+   Genera la sequenza di attese fra un'evidenziazione e la
+   successiva: parte veloce e rallenta progressivamente,
+   cosi' l'ultima attesa combacia sempre con la durata totale
+   richiesta (5 secondi).
+*/
+function generaSequenzaSorteggio(durataTotale) {
+    const attese = [];
+    let attesa = 70;
+    let totale = 0;
+    while (totale + attesa < durataTotale) {
+        attese.push(attesa);
+        totale += attesa;
+        attesa = Math.min(attesa * 1.18, 550);
+    }
+    attese.push(durataTotale - totale);
+    return attese;
+}
+function avviaAnimazioneSorteggio(vincitoreIndice) {
+    const righe = document.querySelectorAll("#sorteggio-lista .sorteggio-giocatore");
+    if (!righe.length)
+        return;
+    const sequenza = generaSequenzaSorteggio(5000);
+    let passo = 0;
+    function evidenziaCasuale() {
+        righe.forEach(riga => riga.classList.remove("is-attivo"));
+        const ultimoPasso = passo === sequenza.length - 1;
+        const indiceDaEvidenziare = ultimoPasso
+            ? vincitoreIndice
+            : Math.floor(Math.random() * righe.length);
+        const riga = righe[indiceDaEvidenziare];
+        if (riga) {
+            riga.classList.add("is-attivo");
+        }
+        if (ultimoPasso) {
+            timerSorteggio = setTimeout(() => {
+                mostraRisultatoSorteggio(vincitoreIndice);
+            }, 550);
+            return;
+        }
+        passo++;
+        timerSorteggio = setTimeout(evidenziaCasuale, sequenza[passo]);
+    }
+    evidenziaCasuale();
+}
+function mostraRisultatoSorteggio(vincitoreIndice) {
+    const risultato = elemento("sorteggio-risultato");
+    const nomeEl = elemento("sorteggio-vincitore-nome");
+    const lista = elemento("sorteggio-lista");
+    if (nomeEl) {
+        nomeEl.textContent = giocatori[vincitoreIndice] || "";
+    }
+    if (lista) {
+        lista.classList.add("is-sfocata");
+    }
+    if (risultato) {
+        risultato.classList.remove("hidden");
+    }
+    lanciaConfetti();
+    const bottone = elemento("sorteggio-conferma-btn");
+    if (bottone) {
+        bottone.addEventListener("click", () => {
+            scegliGiocatoreInizio(vincitoreIndice);
         });
-    });
+    }
 }
 function scegliGiocatoreInizio(indice) {
     if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
@@ -1998,7 +2084,7 @@ function scegliGiocatoreInizio(indice) {
     }
     giocatoreAttivo = indice;
     /*
-       Chiude il popup normale
+       Chiude il popup del sorteggio
     */
     chiudiPopupInizioGame();
     /*
@@ -2017,9 +2103,13 @@ function scegliGiocatoreInizio(indice) {
     salvaPartita();
 }
 function chiudiPopupInizioGame() {
-    const overlay = document.querySelector(".starting-player-overlay");
+    const overlay = document.getElementById("sorteggio-overlay");
     if (overlay) {
         overlay.remove();
+    }
+    if (timerSorteggio) {
+        clearTimeout(timerSorteggio);
+        timerSorteggio = null;
     }
     if (timerSceltaGiocatore) {
         clearTimeout(timerSceltaGiocatore);
