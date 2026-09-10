@@ -98,6 +98,11 @@ function mostraPagina(id) {
     if (pagina) {
         pagina.classList.add("active");
     }
+    const metaTema = elemento("meta-theme-color");
+    if (metaTema) {
+        metaTema.setAttribute("content", id === "nuova-partita" ? "#236844" : "#f7f8f4");
+    }
+    document.body.classList.toggle("tema-verde-top", id === "nuova-partita");
     window.scrollTo({
         top: 0,
         behavior: "auto"
@@ -318,19 +323,26 @@ function cambiaSistemaPunteggio() {
 function toggleTipoPunteggioMenu() {
     const menu = elemento("scoring-type-options");
     const campo = elemento("scoring-type-field");
+    const contenuto = document.querySelector("#nuova-partita .setup-content");
     if (!menu || !campo)
         return;
     menu.classList.toggle("hidden");
     const aperto = !menu.classList.contains("hidden");
     campo.classList.toggle("is-open", aperto);
+    if (contenuto) {
+        contenuto.classList.toggle("is-scrollabile", aperto);
+    }
 }
 function chiudiTipoPunteggioMenu() {
     const menu = elemento("scoring-type-options");
     const campo = elemento("scoring-type-field");
+    const contenuto = document.querySelector("#nuova-partita .setup-content");
     if (menu)
         menu.classList.add("hidden");
     if (campo)
         campo.classList.remove("is-open");
+    if (contenuto)
+        contenuto.classList.remove("is-scrollabile");
 }
 function selezionaTipoPunteggio(valore) {
     const select = elemento("sistema-punteggio");
