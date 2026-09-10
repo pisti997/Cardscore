@@ -2037,6 +2037,165 @@ select {
 }
 
 /* =========================================================
+   SORTEGGIO DI CHI INIZIA - POPUP A SCHERMO INTERO
+   ========================================================= */
+.sorteggio-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 960;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        calc(env(safe-area-inset-top) + 28px)
+        24px
+        calc(env(safe-area-inset-bottom) + 28px);
+
+    background: linear-gradient(160deg, var(--green), var(--green-dark));
+
+    animation: cardscoreFadeIn 0.25s ease;
+}
+
+.sorteggio-label {
+    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+}
+
+.sorteggio-titolo {
+    margin: 0 0 28px;
+    color: #ffffff;
+    font-size: clamp(26px, 8vw, 32px);
+    font-weight: 850;
+    letter-spacing: -0.6px;
+    text-align: center;
+}
+
+.sorteggio-lista {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.sorteggio-lista.is-sfocata {
+    filter: blur(6px);
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.sorteggio-giocatore {
+    width: 100%;
+    min-height: 58px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    transition:
+        transform 0.12s ease,
+        background 0.12s ease,
+        border-color 0.12s ease,
+        box-shadow 0.12s ease;
+}
+
+.sorteggio-numero {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.16);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.sorteggio-giocatore strong {
+    font-size: 17px;
+    font-weight: 750;
+}
+
+/* Riga evidenziata durante il sorteggio (cambia a scatti) */
+.sorteggio-giocatore.is-attivo {
+    transform: scale(1.045);
+    background: #ffffff;
+    border-color: #ffffff;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+}
+
+.sorteggio-giocatore.is-attivo .sorteggio-numero {
+    background: var(--green-soft);
+    color: var(--green-dark);
+}
+
+.sorteggio-giocatore.is-attivo strong {
+    color: var(--green-dark);
+}
+
+/* Messaggio finale con il vincitore, sopra alla lista sfocata */
+.sorteggio-risultato {
+    position: fixed;
+    left: 24px;
+    right: 24px;
+    top: 50%;
+    z-index: 965;
+
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 34px 26px 26px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    background: #ffffff;
+    border-radius: 26px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+
+    transform: translateY(-50%);
+    animation: cardscoreMessagePopIn 0.3s ease;
+}
+
+.sorteggio-risultato-icona {
+    margin-bottom: 14px;
+    font-size: 46px;
+    line-height: 1;
+}
+
+.sorteggio-risultato-testo {
+    margin-bottom: 24px;
+    color: #17251d;
+    font-size: 17px;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+.sorteggio-risultato-testo strong {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--green-dark);
+    font-size: 27px;
+    font-weight: 850;
+}
+
+.sorteggio-conferma {
+    width: 100%;
+}
+
+/* =========================================================
    ANIMAZIONI POPUP
    ========================================================= */
 @keyframes cardscoreFadeIn {
@@ -3354,15 +3513,15 @@ button.is-pressed {
 /* UNO */
 .saved-game-icon img[src*="uno.png"],
 .selected-game-icon img[src*="uno.png"] {
-    width: 120%;
-    height: 120%;
+    width: 100%;
+    height: 100%;
 }
 
 /* PILI PILI */
 .saved-game-icon img[src*="pili-pili.png"],
 .selected-game-icon img[src*="pili-pili.png"] {
-    width: 140%;
-    height: 140%;
+    width: 82%;
+    height: 82%;
 }
 
 /* SCALA 40 */
@@ -3391,14 +3550,14 @@ button.is-pressed {
 
 /* UNO */
 #home .saved-game-icon img[src*="uno.png"] {
-    width: 100%;
-    height: 100%;
+    width: 72%;
+    height: 72%;
 }
 
 /* PILI PILI */
 #home .saved-game-icon img[src*="pili-pili.png"] {
-    width: 100%;
-    height: 100%;
+    width: 58%;
+    height: 58%;
 }
 
 /* SCALA 40 */
