@@ -24,7 +24,7 @@ let partitaTerminata = false;
 let giocatoreAttivo = null;
 // Timer per il popup di scelta del giocatore
 let timerSceltaGiocatore = null;
-let timerSorteggio = null;
+let sorteggioInizialeInterval = null;
 let popupPunteggioAttuale = {
     overlay: null,
     popup: null,
@@ -1939,144 +1939,145 @@ if ("serviceWorker" in navigator) {
 }
 /* =========================================================
    POPUP SCELTA GIOCATORE CHE INIZIA
-========================================================= */
-/* =========================================================
-   SORTEGGIO DI CHI INIZIA
-   Popup a schermo intero con un'animazione di sorteggio
-   (5 secondi, molto randomizzata) che alla fine mostra il
-   nome del vincitore e il tasto per confermare.
+   Sorteggio a schermo intero: il nome scorre rapidamente
+   per 5 secondi e poi si ferma sul vincitore.
 ========================================================= */
 function apriPopupInizioGame() {
-    if (partitaTerminata)
+    if (partitaTerminata || !giocatori.length) {
         return;
-    // Chiudiamo eventuali popup precedenti
+    }
+
     chiudiPopupInizioGame();
-    if (!giocatori.length)
-        return;
-    const vincitoreIndice = Math.floor(Math.random() * giocatori.length);
+
     const overlay = document.createElement("div");
-    overlay.id = "sorteggio-overlay";
-    overlay.className = "sorteggio-overlay";
-    overlay.innerHTML = `
-        <div class="sorteggio-label">
-            NUOVO GAME
+    overlay.className = "starting-draw-overlay";
+
+    const popup = document.createElement("div");
+    popup.className = "starting-draw-popup";
+
+    popup.innerHTML = `
+        <div class="starting-draw-badge">
+            🎲
         </div>
 
-        <h2 class="sorteggio-titolo">
+        <div class="starting-draw-label">
+            SORTEGGIO
+        </div>
+
+        <h2>
             Chi inizia?
         </h2>
 
-        <div
-            class="sorteggio-lista"
-            id="sorteggio-lista"
-        >
-            ${ giocatori.map((nome, indice) => `
-                <div
-                    class="sorteggio-giocatore"
-                    data-indice="${ indice }"
-                >
-                    <span class="sorteggio-numero">
-                        ${ indice + 1 }
-                    </span>
+        <p class="starting-draw-subtitle">
+            Estraiamo casualmente il primo giocatore
+        </p>
 
-                    <strong>
-                        ${ escapeHTML(nome) }
-                    </strong>
-                </div>
-            `).join("") }
+        <div class="starting-draw-stage">
+            <div class="starting-draw-glow"></div>
+            <div id="starting-draw-name" class="starting-draw-name">
+                ${ escapeHTML(giocatori[0]) }
+            </div>
         </div>
 
-        <div
-            class="sorteggio-risultato hidden"
-            id="sorteggio-risultato"
-        >
-            <div class="sorteggio-risultato-icona">
-                🏆
-            </div>
+        <div class="starting-draw-progress">
+            <div class="starting-draw-progress-fill"></div>
+        </div>
 
-            <div class="sorteggio-risultato-testo">
-                <strong id="sorteggio-vincitore-nome"></strong>
-                inizia per primo!
-            </div>
+        <div class="starting-draw-countdown">
+            Estrazione in corso…
+        </div>
 
+        <div class="starting-draw-result hidden">
+            <div class="starting-draw-result-label">
+                HA VINTO IL SORTEGGIO
+            </div>
+            <div class="starting-draw-winner"></div>
             <button
                 type="button"
-                class="primary-button sorteggio-conferma"
-                id="sorteggio-conferma-btn"
+                class="starting-draw-start-button"
             >
-                <span class="start-button-icon">▶</span>
+                <span>▶</span>
                 Inizia partita
             </button>
         </div>
     `;
+
+    overlay.appendChild(popup);
     document.body.appendChild(overlay);
-    avviaAnimazioneSorteggio(vincitoreIndice);
-}
-/*
-   Genera la sequenza di attese fra un'evidenziazione e la
-   successiva: parte veloce e rallenta progressivamente,
-   cosi' l'ultima attesa combacia sempre con la durata totale
-   richiesta (5 secondi).
-*/
-function generaSequenzaSorteggio(durataTotale) {
-    const attese = [];
-    let attesa = 70;
-    let totale = 0;
-    while (totale + attesa < durataTotale) {
-        attese.push(attesa);
-        totale += attesa;
-        attesa = Math.min(attesa * 1.18, 550);
-    }
-    attese.push(durataTotale - totale);
-    return attese;
-}
-function avviaAnimazioneSorteggio(vincitoreIndice) {
-    const righe = document.querySelectorAll("#sorteggio-lista .sorteggio-giocatore");
-    if (!righe.length)
-        return;
-    const sequenza = generaSequenzaSorteggio(5000);
-    let passo = 0;
-    function evidenziaCasuale() {
-        righe.forEach(riga => riga.classList.remove("is-attivo"));
-        const ultimoPasso = passo === sequenza.length - 1;
-        const indiceDaEvidenziare = ultimoPasso
-            ? vincitoreIndice
-            : Math.floor(Math.random() * righe.length);
-        const riga = righe[indiceDaEvidenziare];
-        if (riga) {
-            riga.classList.add("is-attivo");
+
+    const nomeEl = popup.querySelector("#starting-draw-name");
+    const progress = popup.querySelector(".starting-draw-progress-fill");
+    const countdown = popup.querySelector(".starting-draw-countdown");
+    const result = popup.querySelector(".starting-draw-result");
+    const winnerEl = popup.querySelector(".starting-draw-winner");
+    const startButton = popup.querySelector(".starting-draw-start-button");
+
+    // Il vincitore viene estratto casualmente una sola volta.
+    const indiceVincitore = Math.floor(Math.random() * giocatori.length);
+    let indiceVisualizzato = Math.floor(Math.random() * giocatori.length);
+
+    const aggiornaNome = () => {
+        indiceVisualizzato = (indiceVisualizzato + 1) % giocatori.length;
+
+        if (nomeEl) {
+            nomeEl.classList.remove("draw-name-change");
+            void nomeEl.offsetWidth;
+            nomeEl.textContent = giocatori[indiceVisualizzato];
+            nomeEl.classList.add("draw-name-change");
         }
-        if (ultimoPasso) {
-            timerSorteggio = setTimeout(() => {
-                mostraRisultatoSorteggio(vincitoreIndice);
-            }, 550);
+    };
+
+    // Il nome cambia rapidamente per simulare il sorteggio.
+    sorteggioInizialeInterval = setInterval(aggiornaNome, 95);
+
+    const terminaSorteggio = () => {
+        if (sorteggioInizialeInterval) {
+            clearInterval(sorteggioInizialeInterval);
+            sorteggioInizialeInterval = null;
+        }
+
+        if (!document.body.contains(overlay)) {
             return;
         }
-        passo++;
-        timerSorteggio = setTimeout(evidenziaCasuale, sequenza[passo]);
-    }
-    evidenziaCasuale();
-}
-function mostraRisultatoSorteggio(vincitoreIndice) {
-    const risultato = elemento("sorteggio-risultato");
-    const nomeEl = elemento("sorteggio-vincitore-nome");
-    const lista = elemento("sorteggio-lista");
-    if (nomeEl) {
-        nomeEl.textContent = giocatori[vincitoreIndice] || "";
-    }
-    if (lista) {
-        lista.classList.add("is-sfocata");
-    }
-    if (risultato) {
-        risultato.classList.remove("hidden");
-    }
-    lanciaConfetti();
-    const bottone = elemento("sorteggio-conferma-btn");
-    if (bottone) {
-        bottone.addEventListener("click", () => {
-            scegliGiocatoreInizio(vincitoreIndice);
-        });
-    }
+
+        if (nomeEl) {
+            nomeEl.classList.remove("draw-name-change");
+            nomeEl.textContent = giocatori[indiceVincitore];
+            nomeEl.classList.add("draw-winner-reveal");
+        }
+
+        if (progress) {
+            progress.style.width = "100%";
+        }
+
+        if (countdown) {
+            countdown.textContent = "Sorteggio completato";
+        }
+
+        if (winnerEl) {
+            winnerEl.textContent = giocatori[indiceVincitore];
+        }
+
+        if (result) {
+            result.classList.remove("hidden");
+            result.classList.add("is-visible");
+        }
+
+        popup.classList.add("draw-complete");
+
+        startButton?.addEventListener("click", () => {
+            giocatoreAttivo = indiceVincitore;
+            partitaIniziata = Date.now();
+            partitaTerminata = false;
+
+            chiudiPopupInizioGame();
+            aggiornaSchermataPartita();
+            salvaPartita();
+        }, { once: true });
+    };
+
+    // Esattamente 5 secondi di sorteggio prima della rivelazione.
+    timerSceltaGiocatore = setTimeout(terminaSorteggio, 5000);
 }
 function scegliGiocatoreInizio(indice) {
     if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
@@ -2103,13 +2104,13 @@ function scegliGiocatoreInizio(indice) {
     salvaPartita();
 }
 function chiudiPopupInizioGame() {
-    const overlay = document.getElementById("sorteggio-overlay");
+    if (sorteggioInizialeInterval) {
+        clearInterval(sorteggioInizialeInterval);
+        sorteggioInizialeInterval = null;
+    }
+    const overlay = document.querySelector(".starting-draw-overlay");
     if (overlay) {
         overlay.remove();
-    }
-    if (timerSorteggio) {
-        clearTimeout(timerSorteggio);
-        timerSorteggio = null;
     }
     if (timerSceltaGiocatore) {
         clearTimeout(timerSceltaGiocatore);
