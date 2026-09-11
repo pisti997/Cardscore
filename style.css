@@ -5158,91 +5158,118 @@ button.is-pressed {
 }
 
 /* =========================================================
-   SORTEGGIO — EFFETTO SLOT MACHINE REALISTICO
+   SORTEGGIO SLOT — RULLI GRANDI 3X + FIX ARTEFATTI SAFARI
    ========================================================= */
-
 .starting-draw-slot {
-    position: relative !important;
+    width: min(380px, 94vw) !important;
+    min-height: 224px !important;
+    height: 224px !important;
+    padding: 16px 14px !important;
+    gap: 10px !important;
     overflow: hidden !important;
 }
 
-/* Maschera morbida sopra e sotto i rulli, come una vera slot. */
-.starting-draw-slot::before,
-.starting-draw-slot::after {
-    content: "";
-    position: absolute;
-    left: 14px;
-    right: 14px;
-    height: 22px;
-    z-index: 5;
-    pointer-events: none;
-}
-
-.starting-draw-slot::before {
-    top: 0;
-    background: linear-gradient(to bottom, #ffffff, rgba(255,255,255,0));
-}
-
-.starting-draw-slot::after {
-    bottom: 0;
-    background: linear-gradient(to top, #ffffff, rgba(255,255,255,0));
-}
-
 .starting-draw-reel {
-    height: 64px !important;
-    min-height: 64px !important;
-    max-height: 64px !important;
-    border-radius: 14px !important;
-    background: #f7f8f4 !important;
+    height: 192px !important;
+    min-height: 192px !important;
+    max-height: 192px !important;
+    overflow: hidden !important;
+    border-radius: 18px !important;
+    position: relative !important;
+    contain: paint !important;
+    isolation: isolate !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-touch-callout: none !important;
+    caret-color: transparent !important;
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
 }
 
 .starting-draw-reel-strip {
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
-}
-
-.starting-draw-reel.is-spinning {
-    background: #f3f5f1 !important;
-    box-shadow: inset 0 8px 12px rgba(24,85,55,0.04),
-                inset 0 -8px 12px rgba(24,85,55,0.04) !important;
-}
-
-/* Leggero blur solo mentre il rullo gira: il nome resta leggibile
-   ma comunica velocità, senza l'effetto di testo che scompare. */
-.starting-draw-reel.is-spinning .starting-draw-reel-item {
-    filter: blur(0.55px);
-    opacity: 0.88;
+    position: relative !important;
+    z-index: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
+    will-change: transform !important;
 }
 
 .starting-draw-reel-item {
-    height: 64px !important;
-    min-height: 64px !important;
-    max-height: 64px !important;
-    padding: 0 4px !important;
-    font-size: 30px !important;
+    width: 100% !important;
+    height: 192px !important;
+    min-height: 192px !important;
+    max-height: 192px !important;
+    flex: 0 0 192px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 8px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    color: var(--green-dark) !important;
+    font-family: "Outfit", sans-serif !important;
+    font-size: 42px !important;
     line-height: 1 !important;
     font-weight: 800 !important;
-    letter-spacing: -0.8px !important;
-    transition: filter 0.12s ease, opacity 0.12s ease;
+    text-align: center !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-touch-callout: none !important;
+    caret-color: transparent !important;
+    cursor: default !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
 }
 
-.starting-draw-reel.is-winning {
-    background: var(--green-soft) !important;
-    box-shadow: 0 0 0 2px var(--green) inset,
-                0 8px 18px rgba(35,104,68,0.12) !important;
+.starting-draw-slot-payline {
+    left: 22px !important;
+    right: 22px !important;
+    top: 50% !important;
+    height: 2px !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
 }
 
-/* Sui display piccoli manteniamo 64px: è la stessa altezza usata
-   dal calcolo del movimento e impedisce al vincitore di salire. */
+/* Elimina qualunque caret/artefatto di selezione dentro la slot */
+.starting-draw-slot,
+.starting-draw-slot * {
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    caret-color: transparent !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
 @media (max-width: 390px) {
+    .starting-draw-slot {
+        width: min(380px, 94vw) !important;
+        height: 224px !important;
+        min-height: 224px !important;
+        padding: 16px 10px !important;
+        gap: 7px !important;
+    }
+
     .starting-draw-reel,
     .starting-draw-reel-item {
-        height: 64px !important;
-        min-height: 64px !important;
-        max-height: 64px !important;
+        height: 192px !important;
+        min-height: 192px !important;
+        max-height: 192px !important;
     }
 
     .starting-draw-reel-item {
-        font-size: 27px !important;
+        flex-basis: 192px !important;
+        font-size: 42px !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
     }
 }
