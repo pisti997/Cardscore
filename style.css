@@ -5199,3 +5199,12 @@ button.is-pressed {
         justify-content: center !important;
     }
 }
+/* =========================================================
+   SORTEGGIO — NOMI GRANDI NEI RULLI
+   ========================================================= */
+
+.starting-draw-reel-item {
+    font-size: 30px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+}
