@@ -2128,8 +2128,8 @@ select {
 
 .starting-draw-slot {
     position: relative;
-    width: min(340px, 92vw);
-    padding: 16px 14px;
+    width: min(360px, 94vw);
+    padding: 18px 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2158,9 +2158,9 @@ select {
     position: relative;
     flex: 1;
     min-width: 0;
-    height: 64px;
+    height: 192px;
     overflow: hidden;
-    border-radius: 14px;
+    border-radius: 18px;
     background: var(--bg);
     border: 1px solid rgba(40, 65, 48, 0.08);
     transition: box-shadow 0.2s ease, background 0.2s ease;
@@ -2183,7 +2183,7 @@ select {
 }
 
 .starting-draw-reel-item {
-    height: 64px;
+    height: 192px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -2194,7 +2194,7 @@ select {
     white-space: nowrap;
     color: var(--green-dark);
     font-family: "Outfit", sans-serif;
-    font-size: 15px;
+    font-size: 52px;
     line-height: 1.1;
     font-weight: 800;
     text-align: center;
@@ -5189,10 +5189,10 @@ button.is-pressed {
 }
 
 .starting-draw-reel {
-    height: 64px !important;
-    min-height: 64px !important;
-    max-height: 64px !important;
-    border-radius: 14px !important;
+    height: 192px !important;
+    min-height: 192px !important;
+    max-height: 192px !important;
+    border-radius: 18px !important;
     background: #f7f8f4 !important;
 }
 
@@ -5215,14 +5215,14 @@ button.is-pressed {
 }
 
 .starting-draw-reel-item {
-    height: 64px !important;
-    min-height: 64px !important;
-    max-height: 64px !important;
-    padding: 0 4px !important;
-    font-size: 30px !important;
+    height: 192px !important;
+    min-height: 192px !important;
+    max-height: 192px !important;
+    padding: 0 6px !important;
+    font-size: 52px !important;
     line-height: 1 !important;
     font-weight: 800 !important;
-    letter-spacing: -0.8px !important;
+    letter-spacing: -1.2px !important;
     transition: filter 0.12s ease, opacity 0.12s ease;
 }
 
@@ -5232,17 +5232,18 @@ button.is-pressed {
                 0 8px 18px rgba(35,104,68,0.12) !important;
 }
 
-/* Sui display piccoli manteniamo 64px: è la stessa altezza usata
-   dal calcolo del movimento e impedisce al vincitore di salire. */
+/* Sui display piccoli manteniamo la stessa altezza: è quella
+   letta dal JS per il calcolo del movimento, cosi' il vincitore
+   non "sale" o si disallinea rispetto alla finestra visibile. */
 @media (max-width: 390px) {
     .starting-draw-reel,
     .starting-draw-reel-item {
-        height: 64px !important;
-        min-height: 64px !important;
-        max-height: 64px !important;
+        height: 192px !important;
+        min-height: 192px !important;
+        max-height: 192px !important;
     }
 
     .starting-draw-reel-item {
-        font-size: 27px !important;
+        font-size: 44px !important;
     }
 }
