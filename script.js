@@ -2051,7 +2051,7 @@ function apriPopupInizioGame() {
     const durataMassimaMs = Math.max(...durateRulli) * 1000;
 
     if (progress) {
-        progress.style.animationDuration = (durataMassimaMs + 300) + "ms";
+        progress.style.animationDuration = (durataMassimaMs + 650) + "ms";
     }
 
     const terminaSorteggio = () => {
@@ -2103,7 +2103,9 @@ function apriPopupInizioGame() {
                 rullo.classList.add("is-winning");
                 rulliFermi++;
                 if (rulliFermi === rulli.length) {
-                    terminaSorteggio();
+                    // Lasciamo bene in vista i tre rulli verdi
+                    // per un istante prima di aprire il popup.
+                    setTimeout(terminaSorteggio, 650);
                 }
             }, { once: true });
         });
@@ -2111,7 +2113,7 @@ function apriPopupInizioGame() {
 
     // Rete di sicurezza, nel caso l'evento di fine transizione
     // non scattasse per qualche motivo.
-    sorteggioInizialeInterval = setTimeout(terminaSorteggio, durataMassimaMs + 700);
+    sorteggioInizialeInterval = setTimeout(terminaSorteggio, durataMassimaMs + 1400);
 }
 function scegliGiocatoreInizio(indice) {
     if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
