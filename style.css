@@ -5156,3 +5156,46 @@ button.is-pressed {
 
     border-radius: 2px;
 }
+/* =========================================================
+   FIX DEFINITIVO SORTEGGIO — ALLINEAMENTO RULLI
+   Il JS utilizza 64px per ogni posizione.
+   Manteniamo quindi 64px anche sugli schermi piccoli.
+   ========================================================= */
+
+.starting-draw-reel {
+    height: 64px !important;
+    min-height: 64px !important;
+    max-height: 64px !important;
+}
+
+.starting-draw-reel-item {
+    height: 64px !important;
+    min-height: 64px !important;
+    max-height: 64px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    transform: none !important;
+}
+
+/* Anche su iPhone piccoli: niente riduzione a 56px */
+@media (max-width: 390px) {
+
+    .starting-draw-reel {
+        height: 64px !important;
+        min-height: 64px !important;
+        max-height: 64px !important;
+    }
+
+    .starting-draw-reel-item {
+        height: 64px !important;
+        min-height: 64px !important;
+        max-height: 64px !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
