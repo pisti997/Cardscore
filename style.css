@@ -1000,12 +1000,7 @@ select {
     flex-shrink: 0;
     margin-top: calc(-1 * env(safe-area-inset-top));
     padding: calc(env(safe-area-inset-top) + 8px) 18px 12px 10px;
-    background: linear-gradient(
-        180deg,
-        #ffffff 0%,
-        var(--green) 24%,
-        var(--green-dark) 100%
-    );
+    background: linear-gradient(160deg, var(--green), var(--green-dark));
     border-radius: 0 0 26px 26px;
     box-shadow: 0 10px 24px rgba(20, 45, 30, 0.16);
 }
@@ -1107,10 +1102,10 @@ select {
 #nuova-partita .game-header-name {
     margin: 0;
     color: #ffffff;
-    font-size: clamp(22px, 7vw, 27px);
+    font-size: clamp(30px, 11vw, 42px);
     font-weight: 850;
     line-height: 1;
-    letter-spacing: -0.6px;
+    letter-spacing: -0.8px;
 }
 
 /* -----------------------------------------------------
@@ -2171,33 +2166,14 @@ select {
     transition: box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.starting-draw-reel::before,
-.starting-draw-reel::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 20px;
-    z-index: 3;
-    pointer-events: none;
-}
-
-.starting-draw-reel::before {
-    top: 0;
-    background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0));
-}
-
-.starting-draw-reel::after {
-    bottom: 0;
-    background: linear-gradient(0deg, #ffffff, rgba(255, 255, 255, 0));
-}
-
 .starting-draw-reel.is-winning {
     background: var(--green-soft);
     box-shadow: 0 0 0 2px var(--green) inset;
 }
 
 .starting-draw-reel-strip {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     transform: translateY(0);
