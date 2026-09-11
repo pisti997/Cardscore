@@ -2023,11 +2023,15 @@ function apriPopupInizioGame() {
     const indiceVincitore = Math.floor(Math.random() * giocatori.length);
     const nomeVincitore = giocatori[indiceVincitore];
 
-    const ALTEZZA_RIGA = 64;
-    // Durate crescenti: i rulli si fermano in sequenza (effetto
-    // a cascata), l'ultimo è il più lento dei tre.
-    const durateRulli = [1900, 2900, 4000];
-    const lunghezzeRulli = [22, 32, 42];
+    // L'altezza viene letta dal DOM così il movimento del rullo
+    // resta sempre perfettamente sincronizzato con il CSS.
+    const ALTEZZA_RIGA = rulli[0]?.querySelector(".starting-draw-reel-item")
+        ?.getBoundingClientRect().height || 64;
+
+    // Effetto slot machine: i tre rulli rallentano e si fermano
+    // in sequenza. Il terzo arriva quasi alla fine dei 5 secondi.
+    const durateRulli = [3000, 3900, 4800];
+    const lunghezzeRulli = [30, 40, 50];
 
     function generaSequenzaRullo(lunghezza) {
         const sequenza = [];
@@ -2104,41 +2108,52 @@ function apriPopupInizioGame() {
         return 1 - Math.pow(1 - progresso, 4);
     }
 
-    function animaRullo(strip, offsetFinale, durataMs, alTermine) {
+    function animaRullo(strip, rullo, offsetFinale, durataMs, alTermine) {
         const preferenzaRidotta = window.matchMedia
             && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        rullo.classList.add("is-spinning");
+
         if (preferenzaRidotta) {
             strip.style.transform = `translate3d(0, -${ offsetFinale }px, 0)`;
-            strip.style.webkitTransform = `translate3d(0, -${ offsetFinale }px, 0)`;
+            rullo.classList.remove("is-spinning");
             alTermine();
             return;
         }
+
         const partenza = performance.now();
+
         function fotogramma(adesso) {
             const trascorso = adesso - partenza;
             const progresso = Math.min(trascorso / durataMs, 1);
             const distanza = offsetFinale * easeOutRullo(progresso);
+
             strip.style.transform = `translate3d(0, -${ distanza }px, 0)`;
-            strip.style.webkitTransform = `translate3d(0, -${ distanza }px, 0)`;
+
             if (progresso < 1) {
                 requestAnimationFrame(fotogramma);
             } else {
+                // Forziamo il valore finale esatto per evitare anche
+                // micro-disallineamenti dovuti ai decimali dei frame.
+                strip.style.transform = `translate3d(0, -${ offsetFinale }px, 0)`;
+                rullo.classList.remove("is-spinning");
                 alTermine();
             }
         }
+
         requestAnimationFrame(fotogramma);
     }
 
     let rulliFermi = 0;
     strisce.forEach((strip, indice) => {
         const offset = (lunghezzeRulli[indice] - 1) * ALTEZZA_RIGA;
-        animaRullo(strip, offset, durateRulli[indice], () => {
+        animaRullo(strip, rulli[indice], offset, durateRulli[indice], () => {
             rulli[indice].classList.add("is-winning");
             rulliFermi++;
             if (rulliFermi === rulli.length) {
                 // Lasciamo bene in vista i tre rulli verdi
                 // per un istante prima di aprire il popup.
-                sorteggioInizialeInterval = setTimeout(terminaSorteggio, 650);
+                sorteggioInizialeInterval = setTimeout(terminaSorteggio, 200);
             }
         });
     });
