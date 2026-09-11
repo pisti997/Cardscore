@@ -2026,8 +2026,8 @@ function apriPopupInizioGame() {
     const ALTEZZA_RIGA = 64;
     // Durate crescenti: i rulli si fermano in sequenza (effetto
     // a cascata), l'ultimo è il più lento dei tre.
-    const durateRulli = [2.6, 3.5, 4.4];
-    const lunghezzeRulli = [16, 20, 25];
+    const durateRulli = [1900, 2900, 4000];
+    const lunghezzeRulli = [22, 32, 42];
 
     function generaSequenzaRullo(lunghezza) {
         const sequenza = [];
@@ -2039,16 +2039,16 @@ function apriPopupInizioGame() {
         return sequenza;
     }
 
-    rulli.forEach((rullo, indice) => {
+    const strisce = rulli.map((rullo, indice) => {
         const strip = rullo.querySelector(".starting-draw-reel-strip");
         const sequenza = generaSequenzaRullo(lunghezzeRulli[indice]);
         strip.innerHTML = sequenza
             .map(nome => `<div class="starting-draw-reel-item">${ escapeHTML(nome) }</div>`)
             .join("");
-        strip.style.transitionDuration = durateRulli[indice] + "s";
+        return strip;
     });
 
-    const durataMassimaMs = Math.max(...durateRulli) * 1000;
+    const durataMassimaMs = Math.max(...durateRulli);
 
     if (progress) {
         progress.style.animationDuration = (durataMassimaMs + 650) + "ms";
@@ -2089,31 +2089,65 @@ function apriPopupInizioGame() {
         }, { once: true });
     };
 
-    // Avvia i tre rulli al frame successivo, cosi' il browser
-    // registra prima la posizione iniziale (riga 0) e poi anima
-    // davvero lo scorrimento fino all'ultima riga (il vincitore).
+    /*
+       Il rullo viene animato aggiornando "transform" ad ogni
+       fotogramma con requestAnimationFrame, invece di usare
+       una CSS transition: su Safari/iOS le transition lunghe
+       su elementi con del testo dentro possono far sparire il
+       testo a metà animazione (bug noto del motore grafico).
+       Aggiornando noi stessi la posizione, il testo resta
+       sempre disegnato normalmente, fotogramma per fotogramma.
+       La curva "ease out" pronunciata dà la sensazione di un
+       vero rullo che rallenta e si ferma.
+    */
+    function easeOutRullo(progresso) {
+        return 1 - Math.pow(1 - progresso, 4);
+    }
+
+    function animaRullo(strip, offsetFinale, durataMs, alTermine) {
+        const preferenzaRidotta = window.matchMedia
+            && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (preferenzaRidotta) {
+            strip.style.transform = `translateY(-${ offsetFinale }px)`;
+            alTermine();
+            return;
+        }
+        const partenza = performance.now();
+        function fotogramma(adesso) {
+            const trascorso = adesso - partenza;
+            const progresso = Math.min(trascorso / durataMs, 1);
+            const distanza = offsetFinale * easeOutRullo(progresso);
+            strip.style.transform = `translateY(-${ distanza }px)`;
+            if (progresso < 1) {
+                requestAnimationFrame(fotogramma);
+            } else {
+                alTermine();
+            }
+        }
+        requestAnimationFrame(fotogramma);
+    }
+
     let rulliFermi = 0;
-    requestAnimationFrame(() => {
-        rulli.forEach((rullo, indice) => {
-            const strip = rullo.querySelector(".starting-draw-reel-strip");
-            const offset = (lunghezzeRulli[indice] - 1) * ALTEZZA_RIGA;
-            strip.style.transform = `translateY(-${ offset }px)`;
-            strip.addEventListener("transitionend", function gestisciArrivoRullo() {
-                strip.removeEventListener("transitionend", gestisciArrivoRullo);
-                rullo.classList.add("is-winning");
-                rulliFermi++;
-                if (rulliFermi === rulli.length) {
-                    // Lasciamo bene in vista i tre rulli verdi
-                    // per un istante prima di aprire il popup.
-                    setTimeout(terminaSorteggio, 650);
-                }
-            }, { once: true });
+    strisce.forEach((strip, indice) => {
+        const offset = (lunghezzeRulli[indice] - 1) * ALTEZZA_RIGA;
+        animaRullo(strip, offset, durateRulli[indice], () => {
+            rulli[indice].classList.add("is-winning");
+            rulliFermi++;
+            if (rulliFermi === rulli.length) {
+                // Lasciamo bene in vista i tre rulli verdi
+                // per un istante prima di aprire il popup.
+                sorteggioInizialeInterval = setTimeout(terminaSorteggio, 650);
+            }
         });
     });
 
-    // Rete di sicurezza, nel caso l'evento di fine transizione
-    // non scattasse per qualche motivo.
-    sorteggioInizialeInterval = setTimeout(terminaSorteggio, durataMassimaMs + 1400);
+    // Rete di sicurezza, nel caso qualcosa impedisse ai rulli
+    // di completare l'animazione.
+    setTimeout(() => {
+        if (!popup.classList.contains("draw-complete")) {
+            terminaSorteggio();
+        }
+    }, durataMassimaMs + 1600);
 }
 function scegliGiocatoreInizio(indice) {
     if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
