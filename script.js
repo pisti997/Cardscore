@@ -1957,7 +1957,7 @@ function apriPopupInizioGame() {
 
     popup.innerHTML = `
         <div class="starting-draw-badge">
-            🎲
+            🎰
         </div>
 
         <div class="starting-draw-label">
@@ -1972,10 +1972,16 @@ function apriPopupInizioGame() {
             Estraiamo casualmente il primo giocatore
         </p>
 
-        <div class="starting-draw-stage">
-            <div class="starting-draw-glow"></div>
-            <div id="starting-draw-name" class="starting-draw-name">
-                ${ escapeHTML(giocatori[0]) }
+        <div class="starting-draw-slot">
+            <div class="starting-draw-slot-payline"></div>
+            <div class="starting-draw-reel">
+                <div class="starting-draw-reel-strip"></div>
+            </div>
+            <div class="starting-draw-reel">
+                <div class="starting-draw-reel-strip"></div>
+            </div>
+            <div class="starting-draw-reel">
+                <div class="starting-draw-reel-strip"></div>
             </div>
         </div>
 
@@ -2005,59 +2011,52 @@ function apriPopupInizioGame() {
     overlay.appendChild(popup);
     document.body.appendChild(overlay);
 
-    const nomeEl = popup.querySelector("#starting-draw-name");
     const progress = popup.querySelector(".starting-draw-progress-fill");
     const countdown = popup.querySelector(".starting-draw-countdown");
     const result = popup.querySelector(".starting-draw-result");
-    // Il vincitore viene estratto casualmente una sola volta.
+    const winnerEl = popup.querySelector(".starting-draw-winner");
+    const startButton = popup.querySelector(".starting-draw-start-button");
+    const rulli = Array.from(popup.querySelectorAll(".starting-draw-reel"));
+
+    // Il vincitore viene estratto casualmente una sola volta:
+    // tutti e tre i rulli si fermeranno su questo stesso nome.
     const indiceVincitore = Math.floor(Math.random() * giocatori.length);
-    let indiceVisualizzato = Math.floor(Math.random() * giocatori.length);
+    const nomeVincitore = giocatori[indiceVincitore];
 
-    const aggiornaNome = () => {
-        indiceVisualizzato = (indiceVisualizzato + 1) % giocatori.length;
+    const ALTEZZA_RIGA = 64;
+    // Durate crescenti: i rulli si fermano in sequenza (effetto
+    // a cascata), l'ultimo è il più lento dei tre.
+    const durateRulli = [2.6, 3.5, 4.4];
+    const lunghezzeRulli = [16, 20, 25];
 
-        if (nomeEl) {
-            nomeEl.classList.remove("draw-name-change");
-            void nomeEl.offsetWidth;
-            nomeEl.textContent = giocatori[indiceVisualizzato];
-            nomeEl.classList.add("draw-name-change");
+    function generaSequenzaRullo(lunghezza) {
+        const sequenza = [];
+        for (let i = 0; i < lunghezza - 1; i++) {
+            sequenza.push(giocatori[Math.floor(Math.random() * giocatori.length)]);
         }
-    };
-
-    /*
-       Sequenza di attese fra un cambio nome e il successivo:
-       parte molto veloce e rallenta sempre di più verso la
-       fine (l'ultimo tratto è volutamente lunghissimo, cosi'
-       il nome "si posa" lentamente sul vincitore), per una
-       durata totale di esattamente 5 secondi.
-    */
-    const durataTotale = 5000;
-    function generaSequenzaSorteggio() {
-        const attese = [];
-        let attesa = 60;
-        let totale = 0;
-        while (totale + attesa < durataTotale - 1400) {
-            attese.push(attesa);
-            totale += attesa;
-            attesa = Math.min(attesa * 1.4, 700);
-        }
-        // Ultimo tratto, molto lento, prima della rivelazione
-        attese.push(durataTotale - totale);
-        return attese;
+        // L'ultima riga di ogni rullo è sempre il vincitore.
+        sequenza.push(nomeVincitore);
+        return sequenza;
     }
 
-    const sequenza = generaSequenzaSorteggio();
-    let passo = 0;
+    rulli.forEach((rullo, indice) => {
+        const strip = rullo.querySelector(".starting-draw-reel-strip");
+        const sequenza = generaSequenzaRullo(lunghezzeRulli[indice]);
+        strip.innerHTML = sequenza
+            .map(nome => `<div class="starting-draw-reel-item">${ escapeHTML(nome) }</div>`)
+            .join("");
+        strip.style.transitionDuration = durateRulli[indice] + "s";
+    });
+
+    const durataMassimaMs = Math.max(...durateRulli) * 1000;
+
+    if (progress) {
+        progress.style.animationDuration = (durataMassimaMs + 300) + "ms";
+    }
 
     const terminaSorteggio = () => {
-        if (!document.body.contains(overlay)) {
+        if (!document.body.contains(overlay) || popup.classList.contains("draw-complete")) {
             return;
-        }
-
-        if (nomeEl) {
-            nomeEl.classList.remove("draw-name-change");
-            nomeEl.textContent = giocatori[indiceVincitore];
-            nomeEl.classList.add("draw-winner-reveal");
         }
 
         if (progress) {
@@ -2069,7 +2068,7 @@ function apriPopupInizioGame() {
         }
 
         if (winnerEl) {
-            winnerEl.textContent = giocatori[indiceVincitore];
+            winnerEl.textContent = nomeVincitore;
         }
 
         if (result) {
@@ -2090,17 +2089,29 @@ function apriPopupInizioGame() {
         }, { once: true });
     };
 
-    const avanzaSorteggio = () => {
-        aggiornaNome();
-        passo++;
-        if (passo < sequenza.length) {
-            sorteggioInizialeInterval = setTimeout(avanzaSorteggio, sequenza[passo]);
-        } else {
-            sorteggioInizialeInterval = null;
-            terminaSorteggio();
-        }
-    };
-    sorteggioInizialeInterval = setTimeout(avanzaSorteggio, sequenza[0]);
+    // Avvia i tre rulli al frame successivo, cosi' il browser
+    // registra prima la posizione iniziale (riga 0) e poi anima
+    // davvero lo scorrimento fino all'ultima riga (il vincitore).
+    let rulliFermi = 0;
+    requestAnimationFrame(() => {
+        rulli.forEach((rullo, indice) => {
+            const strip = rullo.querySelector(".starting-draw-reel-strip");
+            const offset = (lunghezzeRulli[indice] - 1) * ALTEZZA_RIGA;
+            strip.style.transform = `translateY(-${ offset }px)`;
+            strip.addEventListener("transitionend", function gestisciArrivoRullo() {
+                strip.removeEventListener("transitionend", gestisciArrivoRullo);
+                rullo.classList.add("is-winning");
+                rulliFermi++;
+                if (rulliFermi === rulli.length) {
+                    terminaSorteggio();
+                }
+            }, { once: true });
+        });
+    });
+
+    // Rete di sicurezza, nel caso l'evento di fine transizione
+    // non scattasse per qualche motivo.
+    sorteggioInizialeInterval = setTimeout(terminaSorteggio, durataMassimaMs + 700);
 }
 function scegliGiocatoreInizio(indice) {
     if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
