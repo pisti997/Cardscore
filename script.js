@@ -226,9 +226,6 @@ function aggiornaListaGiocatori() {
         input.value = nome;
         input.maxLength = 20;
         input.autocomplete = "off";
-        input.spellcheck = false;
-        input.setAttribute("autocorrect", "off");
-        input.setAttribute("autocapitalize", "words");
         input.addEventListener("input", function () {
             giocatori[indice] = this.value;
         });
