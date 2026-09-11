@@ -2177,8 +2177,9 @@ select {
     display: flex;
     flex-direction: column;
     transform: translateY(0);
-    transition-property: transform;
-    transition-timing-function: cubic-bezier(0.1, 0.8, 0.22, 1);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
 }
 
 .starting-draw-reel-item {
@@ -2197,6 +2198,8 @@ select {
     line-height: 1.1;
     font-weight: 800;
     text-align: center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .starting-draw-progress {
@@ -2358,7 +2361,6 @@ select {
 @media (prefers-reduced-motion: reduce) {
     .starting-draw-overlay,
     .starting-draw-badge,
-    .starting-draw-reel-strip,
     .starting-draw-progress-fill,
     .starting-draw-winner,
     .starting-draw-start-button {
