@@ -2023,7 +2023,7 @@ function apriPopupInizioGame() {
     const indiceVincitore = Math.floor(Math.random() * giocatori.length);
     const nomeVincitore = giocatori[indiceVincitore];
 
-    const ALTEZZA_RIGA = 192;
+    const ALTEZZA_RIGA = 64;
     // Durate crescenti: i rulli si fermano in sequenza (effetto
     // a cascata), l'ultimo è il più lento dei tre.
     const durateRulli = [1900, 2900, 4000];
