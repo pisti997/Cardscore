@@ -5215,9 +5215,12 @@ button.is-pressed {
 }
 
 .starting-draw-reel-item {
-    height: 192px !important;
-    min-height: 192px !important;
-    max-height: 192px !important;
+    /* Il rullo è alto 192px e contiene 3 righe da 64px:
+       così si vedono sempre un nome sopra, uno sulla linea centrale
+       e uno sotto. */
+    height: 64px !important;
+    min-height: 64px !important;
+    max-height: 64px !important;
     padding: 0 6px !important;
     font-size: 34px !important;
     line-height: 1 !important;
@@ -5232,9 +5235,8 @@ button.is-pressed {
                 0 8px 18px rgba(35,104,68,0.12) !important;
 }
 
-/* Sui display piccoli manteniamo la stessa altezza: è quella
-   letta dal JS per il calcolo del movimento, cosi' il vincitore
-   non "sale" o si disallinea rispetto alla finestra visibile. */
+/* Anche sui display piccoli ogni riga resta di 64px: il rullo
+   da 192px mostra quindi tre nomi contemporaneamente. */
 @media (max-width: 390px) {
     .starting-draw-reel {
         height: 192px !important;
