@@ -2582,7 +2582,12 @@ function apriPopupInizioGame() {
 
     let rulliFermi = 0;
     strisce.forEach((strip, indice) => {
-        const offset = (lunghezzeRulli[indice] - 1) * ALTEZZA_RIGA;
+        // Il rullo è alto 192px e ogni nome 64px: così restano
+        // visibili 3 nomi contemporaneamente. Fermiamo il vincitore
+        // al centro della finestra, non in cima al rullo.
+        const altezzaFinestra = rulli[indice].getBoundingClientRect().height || 192;
+        const offset = (lunghezzeRulli[indice] - 1) * ALTEZZA_RIGA
+            - (altezzaFinestra - ALTEZZA_RIGA) / 2;
         animaRullo(strip, rulli[indice], offset, durateRulli[indice], () => {
             rulli[indice].classList.add("is-winning");
             rulliFermi++;
