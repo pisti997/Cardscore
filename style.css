@@ -5236,14 +5236,16 @@ button.is-pressed {
    letta dal JS per il calcolo del movimento, cosi' il vincitore
    non "sale" o si disallinea rispetto alla finestra visibile. */
 @media (max-width: 390px) {
-    .starting-draw-reel,
-    .starting-draw-reel-item {
+    .starting-draw-reel {
         height: 192px !important;
         min-height: 192px !important;
         max-height: 192px !important;
     }
 
     .starting-draw-reel-item {
+        height: 64px !important;
+        min-height: 64px !important;
+        max-height: 64px !important;
         font-size: 30px !important;
     }
 }
