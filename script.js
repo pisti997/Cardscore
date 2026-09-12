@@ -226,6 +226,9 @@ function aggiornaListaGiocatori() {
         input.value = nome;
         input.maxLength = 20;
         input.autocomplete = "off";
+        input.spellcheck = false;
+        input.setAttribute("autocorrect", "off");
+        input.setAttribute("autocapitalize", "words");
         input.addEventListener("input", function () {
             giocatori[indice] = this.value;
         });
@@ -2025,11 +2028,9 @@ function apriPopupInizioGame() {
 
     // L'altezza viene letta dal DOM così il movimento del rullo
     // resta sempre perfettamente sincronizzato con il CSS.
-    const ALTEZZA_RIGA = rulli[0]?.querySelector(".starting-draw-reel-item")
-        ?.getBoundingClientRect().height || 64;
-
-    // Effetto slot machine: i tre rulli rallentano e si fermano
-    // in sequenza. Il terzo arriva quasi alla fine dei 5 secondi.
+    // IMPORTANTE: va misurata DOPO aver riempito i rulli con i
+    // nomi, altrimenti non esiste ancora nessuna riga da misurare
+    // e si otterrebbe sempre il valore di riserva (sbagliato).
     const durateRulli = [3000, 3900, 4800];
     const lunghezzeRulli = [30, 40, 50];
 
@@ -2051,6 +2052,9 @@ function apriPopupInizioGame() {
             .join("");
         return strip;
     });
+
+    const ALTEZZA_RIGA = rulli[0]?.querySelector(".starting-draw-reel-item")
+        ?.getBoundingClientRect().height || 192;
 
     const durataMassimaMs = Math.max(...durateRulli);
 
