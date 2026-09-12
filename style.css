@@ -111,8 +111,28 @@ select {
 
 /* =========================================================
    BANNER GAME / SET / MATCH
-   (stile completo più sotto, blocco "Banner GAME / SET / MATCH")
    ========================================================= */
+/* Trofeo sovrapposto */
+/* Testo banner */
+.match-title-text {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.match-title-text span {
+    display: none;
+}
+
+.match-title-text strong {
+    display: block;
+    color: #175537;
+    font-size: 26px;
+    line-height: 1.05;
+    font-weight: 750;
+    letter-spacing: -0.6px;
+}
 
 /* Turno dentro il banner */
 /* =========================================================
@@ -328,9 +348,8 @@ select {
    QUICK BUTTONS
    ========================================================= */
 .quick-button:nth-child(2) {
-    background: #fdf7e7;
-    border-color: #f0e4c2;
-    color: #a97e13;
+    background: #fff2cd;
+    color: #d39d16;
 }
 
 /* =========================================================
@@ -1561,108 +1580,47 @@ select {
     min-height: 92px !important;
     margin-top: 30px !important;
     margin-bottom: 18px !important;
-    padding: 20px 22px !important;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    overflow: visible;
-    border-radius: 18px !important;
-    background: #cfe5c7;
-    box-shadow: 0 5px 14px rgba(45, 75, 48, 0.08);
-    text-align: left;
-}
-
-.match-title-text {
+    padding: 34px 14px 11px !important;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    border-radius: 16px !important;
+    background: #cfe5c7;
+    box-shadow: 0 5px 14px rgba(45, 75, 48, 0.08);
+    text-align: center;
+}
+
+.match-title-icon {
+    position: absolute;
+    top: -19px !important;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 54px !important;
+    height: 54px !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #4b9258;
+    color: #fff5d8;
+    font-size: 25px !important;
+    box-shadow: 0 6px 13px rgba(31, 83, 48, 0.13);
+    z-index: 3;
 }
 
 .match-title strong {
-    font-size: 19px !important;
-    color: #175537;
-    font-weight: 800;
-    letter-spacing: -0.2px;
+    font-size: 18px !important;
 }
 
 .match-title::after {
     content: "Turno " attr(data-turn);
     display: block;
-    margin-top: 4px !important;
-    color: #4f7a5d;
-    font-size: 13px !important;
+    margin-top: 5px !important;
+    color: #1d5338;
+    font-size: 12px !important;
     font-weight: 500;
-    text-align: left;
-}
-
-/* Illustrazione carte, sulla destra del banner */
-.match-title-cards {
-    position: relative;
-    width: 72px;
-    height: 58px;
-    flex-shrink: 0;
-}
-
-.mini-card {
-    position: absolute;
-    bottom: 0;
-    width: 34px;
-    height: 48px;
-    border-radius: 7px;
-    background: #ffffff;
-    box-shadow: 0 5px 10px rgba(20, 40, 25, 0.16);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1;
-}
-
-.mini-card.card-1 {
-    left: 0;
-    color: #c0392b;
-    transform: rotate(-13deg);
-    z-index: 1;
-}
-
-.mini-card.card-2 {
-    left: 19px;
-    bottom: 4px;
-    color: #17251d;
-    transform: rotate(0deg);
-    z-index: 2;
-}
-
-.mini-card.card-3 {
-    left: 38px;
-    color: #c0392b;
-    transform: rotate(13deg);
-    z-index: 1;
-}
-
-.mini-spark {
-    position: absolute;
-    width: 9px;
-    height: 2px;
-    border-radius: 2px;
-    background: #4f7a5d;
-    opacity: 0.55;
-}
-
-.mini-spark.spark-1 {
-    top: 2px;
-    left: -6px;
-    transform: rotate(-35deg);
-}
-
-.mini-spark.spark-2 {
-    top: 14px;
-    right: -4px;
-    transform: rotate(35deg);
 }
 
 /* Contenitore giocatori */
@@ -1710,38 +1668,6 @@ select {
 /* Nome giocatore */
 .match-row strong {
     font-size: 20px !important;
-}
-
-/* =========================================================
-   BARRA ACCENTO SINISTRA + DIVISORE INTERNO
-   (aggiunti senza toccare nessun'altra dimensione della card)
-   ========================================================= */
-.match-row-accent {
-    position: absolute;
-    left: 10px;
-    top: 18px;
-    bottom: 18px;
-    width: 4px;
-    border-radius: 3px;
-    background: var(--green);
-    opacity: 0.55;
-}
-
-.match-row:nth-child(3) .match-row-accent {
-    background: #d39d16;
-}
-
-.match-row-divider {
-    position: absolute;
-    top: 20px;
-    bottom: 20px;
-    right: 148px;
-    width: 1px;
-    background: rgba(23, 37, 29, 0.12);
-}
-
-.match-row:nth-child(3) .match-row-divider {
-    background: rgba(79, 65, 12, 0.14);
 }
 
 /* Piccole caselle GAME / SET / MATCH */
@@ -1836,13 +1762,12 @@ select {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #f2f8ef;
-    border: 1px solid #e2ecdd;
-    color: #2f6b42;
+    background: #e8f4e2;
+    color: #367a49;
     font-size: 16px !important;
     line-height: 1;
-    font-weight: 650;
-    box-shadow: none;
+    font-weight: 750;
+    box-shadow: 0 4px 10px rgba(43, 64, 47, 0.05);
     -webkit-touch-callout: none;
 }
 
@@ -1857,19 +1782,18 @@ select {
     align-items: center;
     justify-content: center;
     background: #ffffff;
-    border: 1px solid #ececea;
-    color: #4a534d;
+    color: #222a24;
     font-size: 10px !important;
     line-height: 1.25;
     font-weight: 500;
-    box-shadow: none;
+    box-shadow: 0 4px 10px rgba(43, 64, 47, 0.06);
 }
 
 .undo-button span {
     display: block;
     margin: 0 0 8px;
-    color: #4a534d;
-    font-size: 20px !important;
+    color: #17261d;
+    font-size: 22px !important;
     line-height: 1;
     font-weight: 300;
     margin-bottom: 3px !important;
@@ -1877,17 +1801,16 @@ select {
 
 .next-turn-button {
     padding: 7px 8px !important;
-    background: #fdf1f1;
-    border-color: #f5dfdf;
-    color: #a24444;
+    background: #fbe9e9;
+    color: #b54848;
     font-size: 16px !important;
-    font-weight: 650;
+    font-weight: 750;
 }
 
 .next-turn-button span {
-    color: #a24444;
-    font-size: 20px !important;
-    font-weight: 500;
+    color: #b54848;
+    font-size: 22px !important;
+    font-weight: 600;
     margin-bottom: 3px !important;
 }
 
@@ -2752,8 +2675,8 @@ select {
 }
 
 .quick-button:active {
-    transform: scale(0.97);
-    box-shadow: none;
+    transform: translateY(4px) scale(0.98);
+    box-shadow: 0 1px 2px rgba(20, 40, 25, 0.18);
 }
 
 /* Pulsanti + / - del punteggio personalizzato */
