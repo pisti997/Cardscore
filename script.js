@@ -2442,11 +2442,36 @@ function apriPopupInizioGame() {
     const lunghezzeRulli = [30, 40, 50];
 
     function generaSequenzaRullo(lunghezza) {
+        /*
+           Costruiamo il rullo come una vera slot: ogni ciclo contiene
+           tutti i giocatori una volta, ma l'ordine viene mescolato.
+           Ripetiamo più cicli fino a riempire il rullo e aggiungiamo
+           infine il vincitore nella posizione di arresto.
+
+           In questo modo durante la rotazione si vedono continuamente
+           nomi diversi, come i diversi simboli di una slot, senza
+           favorire accidentalmente un giocatore perché il suo nome
+           è stato pescato più volte del necessario.
+        */
         const sequenza = [];
-        for (let i = 0; i < lunghezza - 1; i++) {
-            sequenza.push(giocatori[Math.floor(Math.random() * giocatori.length)]);
+
+        while (sequenza.length < lunghezza - 1) {
+            const ciclo = [...giocatori];
+
+            for (let i = ciclo.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [ciclo[i], ciclo[j]] = [ciclo[j], ciclo[i]];
+            }
+
+            for (const nome of ciclo) {
+                if (sequenza.length >= lunghezza - 1) {
+                    break;
+                }
+                sequenza.push(nome);
+            }
         }
-        // L'ultima riga di ogni rullo è sempre il vincitore.
+
+        // L'ultima posizione di ogni rullo è sempre il vincitore.
         sequenza.push(nomeVincitore);
         return sequenza;
     }
