@@ -536,7 +536,9 @@ function creaTabelloneGameSet() {
     const tabellone = elemento("tabellone-game-set");
     if (!tabellone)
         return;
+
     tabellone.innerHTML = "";
+
     const labels = document.createElement("div");
     labels.className = "scoreboard-labels";
     labels.innerHTML = `
@@ -547,97 +549,104 @@ function creaTabelloneGameSet() {
         <span>PUNTI</span>
     `;
     tabellone.appendChild(labels);
+
     giocatori.forEach((nome, indice) => {
         const riga = document.createElement("div");
         riga.className = "match-row";
-        if (sistemaPunteggio === "game-set" && giocatoreAttivo !== null && indice === giocatoreAttivo) {
+
+        if (
+            sistemaPunteggio === "game-set" &&
+            giocatoreAttivo !== null &&
+            indice === giocatoreAttivo
+        ) {
             riga.classList.add("active-turn");
         }
+
         const player = document.createElement("div");
         player.className = "match-player";
+
         const strong = document.createElement("strong");
         strong.textContent = nome;
+
         const sub = document.createElement("span");
         sub.textContent = `Game ${ puntiGame[indice] } / ${ puntiPerGame }`;
+
         player.appendChild(strong);
         player.appendChild(sub);
-        /* GAMES */
+
         const games = document.createElement("span");
         games.className = "match-stat";
         games.textContent = gameVinti[indice];
+
         if (gameVinti[indice] > 0) {
             games.classList.add("active");
         }
-        /* SETS */
+
         const sets = document.createElement("span");
         sets.className = "match-stat";
         sets.textContent = setVinti[indice];
+
         if (setVinti[indice] > 0) {
             sets.classList.add("active");
         }
-        /* MATCH */
+
         const match = document.createElement("span");
         match.className = "match-stat";
         match.textContent = matchVinti[indice];
+
         if (matchVinti[indice] > 0) {
             match.classList.add("won");
         }
-        /* PUNTI TOTALI */
+
         const punti = document.createElement("span");
         punti.className = "score-big";
         punti.textContent = puntiGame[indice];
 
-        /*
-           Menu contestuale del singolo giocatore.
-           Viene aggiunto come ultimo elemento della riga per non
-           alterare gli nth-child usati dal CSS per GAME/SET/MATCH.
-        */
+        /* Menu ... specifico del giocatore */
         const menuWrap = document.createElement("div");
         menuWrap.className = "score-card-menu-wrap";
 
         const menuButton = document.createElement("button");
         menuButton.type = "button";
         menuButton.className = "score-card-menu-button";
-        menuButton.textContent = "•••";
         menuButton.setAttribute("aria-label", `Menu ${nome}`);
-        menuButton.addEventListener("click", evento => {
+        menuButton.innerHTML = "<span>•••</span>";
+
+        menuButton.addEventListener("click", function (evento) {
             toggleScoreCardMenu(evento, indice);
         });
 
         const menu = document.createElement("div");
         menu.className = "score-card-menu hidden";
-        menu.innerHTML = `
-            <button
-                type="button"
-                class="score-card-menu-item"
-                data-action="undo"
-            >
-                <span>↶</span>
-                <strong>Annulla ultimo turno</strong>
-            </button>
 
-            <button
-                type="button"
-                class="score-card-menu-item"
-                data-action="edit"
-            >
-                <span>✎</span>
-                <strong>Modifica punteggio</strong>
-            </button>
+        const undoButton = document.createElement("button");
+        undoButton.type = "button";
+        undoButton.className = "score-card-menu-item";
+        undoButton.innerHTML = `
+            <span>↶</span>
+            <strong>Annulla ultimo turno</strong>
         `;
-
-        menu.querySelector('[data-action="undo"]').addEventListener("click", evento => {
+        undoButton.addEventListener("click", function (evento) {
             evento.stopPropagation();
             chiudiScoreCardMenu();
             annullaUltimoTurno();
         });
 
-        menu.querySelector('[data-action="edit"]').addEventListener("click", evento => {
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.className = "score-card-menu-item";
+        editButton.innerHTML = `
+            <span>✎</span>
+            <strong>Modifica punteggio</strong>
+        `;
+        editButton.addEventListener("click", function (evento) {
             evento.stopPropagation();
             chiudiScoreCardMenu();
             apriPopupModificaPunteggio(indice);
         });
 
+        menu.appendChild(undoButton);
+        menu.appendChild(editButton);
         menuWrap.appendChild(menuButton);
         menuWrap.appendChild(menu);
 
@@ -647,9 +656,11 @@ function creaTabelloneGameSet() {
         riga.appendChild(match);
         riga.appendChild(punti);
         riga.appendChild(menuWrap);
+
         tabellone.appendChild(riga);
     });
 }
+
 /* =========================================================
    MENU DEL RIQUADRO GIOCATORE
 ========================================================= */
@@ -668,9 +679,9 @@ function toggleScoreCardMenu(event, indice) {
         return;
     }
 
-    document.querySelectorAll(".score-card-menu").forEach(altroMenu => {
-        if (altroMenu !== menu) {
-            altroMenu.classList.add("hidden");
+    document.querySelectorAll(".score-card-menu").forEach(altro => {
+        if (altro !== menu) {
+            altro.classList.add("hidden");
         }
     });
 
@@ -693,12 +704,12 @@ function chiudiScoreCardMenu() {
     document.querySelectorAll(".score-card-menu").forEach(menu => {
         menu.classList.add("hidden");
     });
+
     document.querySelectorAll(".match-row.menu-open").forEach(riga => {
         riga.classList.remove("menu-open");
     });
 }
 
-/* Chiude i menu dei riquadri toccando fuori */
 document.addEventListener("click", function (event) {
     if (!event.target.closest(".score-card-menu-wrap")) {
         chiudiScoreCardMenu();
@@ -706,58 +717,88 @@ document.addEventListener("click", function (event) {
 });
 
 /* =========================================================
-   MODIFICA PUNTEGGIO DEL GIOCATORE
+   MODIFICA PUNTEGGIO
 ========================================================= */
-
-/*
-   Restituisce gli indici dello storico appartenenti al Game
-   attualmente in corso per il giocatore indicato.
-*/
 function trovaTurniGameCorrente(indiceGiocatore) {
-    const sommeGame = giocatori.map(() => 0);
-    let inizioGameCorrente = 0;
+    const turni = [];
+    const totalePerGiocatore = giocatori.map(() => 0);
 
     for (let i = 0; i < storico.length; i++) {
         const turno = storico[i];
         const indice = Number(turno.giocatore);
         const punti = Number(turno.punti);
 
-        if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
+        if (
+            !Number.isInteger(indice) ||
+            indice < 0 ||
+            indice >= giocatori.length ||
+            !Number.isFinite(punti)
+        ) {
             continue;
         }
 
-        sommeGame[indice] += Number.isFinite(punti) ? punti : 0;
+        turni.push({
+            indiceStorico: i,
+            giocatore: indice,
+            punti
+        });
 
-        if (sommeGame[indice] >= Number(puntiPerGame)) {
-            sommeGame.fill(0);
-            inizioGameCorrente = i + 1;
+        totalePerGiocatore[indice] += punti;
+
+        if (sistemaPunteggio === "game-set" && totalePerGiocatore[indice] >= puntiPerGame) {
+            totalePerGiocatore.fill(0);
         }
     }
 
-    const risultati = [];
-    for (let i = inizioGameCorrente; i < storico.length; i++) {
-        if (Number(storico[i].giocatore) === indiceGiocatore) {
-            risultati.push(i);
+    /* Per Pili Pili consideriamo il Game corrente come la parte
+       successiva all'ultimo superamento del limite. */
+    let ultimoReset = -1;
+    const correnti = giocatori.map(() => 0);
+
+    for (let i = 0; i < storico.length; i++) {
+        const turno = storico[i];
+        const indice = Number(turno.giocatore);
+        const punti = Number(turno.punti);
+
+        if (!Number.isInteger(indice) || !Number.isFinite(punti)) {
+            continue;
+        }
+
+        correnti[indice] += punti;
+
+        if (sistemaPunteggio === "game-set" && correnti[indice] >= puntiPerGame) {
+            ultimoReset = i;
+            correnti.fill(0);
         }
     }
-    return risultati;
+
+    return storico
+        .map((turno, i) => ({
+            indiceStorico: i,
+            giocatore: Number(turno.giocatore),
+            punti: Number(turno.punti)
+        }))
+        .filter(item =>
+            item.indiceStorico > ultimoReset &&
+            item.giocatore === indiceGiocatore &&
+            Number.isFinite(item.punti)
+        );
 }
 
-/*
-   Modifica il punteggio del Game corrente mantenendo coerente
-   lo storico. Se necessario, la variazione viene applicata
-   all'ultimo turno del giocatore nel Game corrente.
-*/
 function applicaModificaPunteggio(indice, nuovoValore) {
     const valoreAttuale = Math.max(0, Number(puntiGame[indice]) || 0);
     const differenza = nuovoValore - valoreAttuale;
-    const turniCorrenti = trovaTurniGameCorrente(indice);
+    const turni = trovaTurniGameCorrente(indice);
+
+    if (differenza === 0) {
+        aggiornaSchermataPartita();
+        return;
+    }
 
     if (differenza > 0) {
-        if (turniCorrenti.length) {
-            const indiceStorico = turniCorrenti[turniCorrenti.length - 1];
-            storico[indiceStorico].punti =
-                Number(storico[indiceStorico].punti || 0) + differenza;
+        if (turni.length) {
+            const ultimo = turni[turni.length - 1].indiceStorico;
+            storico[ultimo].punti = Number(storico[ultimo].punti || 0) + differenza;
         } else {
             numeroTurno++;
             storico.push({
@@ -767,15 +808,15 @@ function applicaModificaPunteggio(indice, nuovoValore) {
                 punti: differenza
             });
         }
-    } else if (differenza < 0) {
+    } else {
         let daTogliere = Math.abs(differenza);
 
-        for (let j = turniCorrenti.length - 1; j >= 0 && daTogliere > 0; j--) {
-            const indiceStorico = turniCorrenti[j];
-            const puntiTurno = Math.max(0, Number(storico[indiceStorico].punti) || 0);
-            const sottrai = Math.min(puntiTurno, daTogliere);
+        for (let i = turni.length - 1; i >= 0 && daTogliere > 0; i--) {
+            const storicoIndex = turni[i].indiceStorico;
+            const disponibili = Math.max(0, Number(storico[storicoIndex].punti) || 0);
+            const sottrai = Math.min(disponibili, daTogliere);
 
-            storico[indiceStorico].punti = puntiTurno - sottrai;
+            storico[storicoIndex].punti = disponibili - sottrai;
             daTogliere -= sottrai;
         }
 
@@ -783,73 +824,11 @@ function applicaModificaPunteggio(indice, nuovoValore) {
     }
 
     numeroTurno = storico.length;
-    storico.forEach((turno, indice) => {
-        turno.turno = indice + 1;
+    storico.forEach((turno, i) => {
+        turno.turno = i + 1;
     });
 
-    const gamePrima = [...gameVinti];
-    const setPrima = [...setVinti];
-    const matchPrima = [...matchVinti];
-
     ricalcolaPartita();
-
-    /*
-       Se la modifica ha fatto vincere un Game/Set/Match,
-       manteniamo lo stesso comportamento della registrazione
-       normale del punteggio.
-    */
-    const indiceMatch = matchVinti.findIndex(
-        (valore, i) => valore > 0 && !matchPrima[i]
-    );
-
-    if (indiceMatch !== -1) {
-        aggiornaSchermataPartita();
-        salvaPartita();
-        terminaMatch(indiceMatch);
-        return;
-    }
-
-    const indiceGame = gameVinti.findIndex(
-        (valore, i) => valore > gamePrima[i]
-    );
-
-    if (indiceGame !== -1) {
-        const indiceSet = setVinti.findIndex(
-            (valore, i) => valore > setPrima[i]
-        );
-
-        giocatoreAttivo = null;
-        aggiornaSchermataPartita();
-        salvaPartita();
-
-        if (indiceSet !== -1) {
-            mostraMessaggioPartita(
-                "set",
-                `${ giocatori[indiceSet] } vince il Set!`
-            );
-        } else {
-            mostraMessaggioPartita(
-                "game",
-                `${ giocatori[indiceGame] } vince il Game!`
-            );
-        }
-
-        if (timerSceltaGiocatore) {
-            clearTimeout(timerSceltaGiocatore);
-        }
-
-        timerSceltaGiocatore = setTimeout(() => {
-            if (!partitaTerminata && sistemaPunteggio === "game-set") {
-                const popup = document.querySelector(".game-flip-card");
-                if (popup) {
-                    popup.classList.add("is-flipped");
-                }
-            }
-        }, 3000);
-
-        return;
-    }
-
     aggiornaSchermataPartita();
     salvaPartita();
 }
@@ -876,26 +855,18 @@ function apriPopupModificaPunteggio(indice) {
     popup.addEventListener("click", evento => evento.stopPropagation());
 
     popup.innerHTML = `
-        <div class="custom-score-label">
+        <div class="edit-score-label">
             MODIFICA PUNTEGGIO
         </div>
 
-        <h2 class="custom-score-name">
-            ${ escapeHTML(giocatori[indice]) }
-        </h2>
+        <h2>${ escapeHTML(giocatori[indice]) }</h2>
 
         <div class="edit-score-current">
-            Punti nel Game corrente
+            Punti del Game corrente
         </div>
 
-        <div class="custom-score-field">
-            <button
-                type="button"
-                class="custom-score-step"
-                data-step="-1"
-            >
-                −
-            </button>
+        <div class="edit-score-field">
+            <button type="button" class="edit-score-step" data-step="-1">−</button>
 
             <input
                 id="edit-score-input"
@@ -907,29 +878,12 @@ function apriPopupModificaPunteggio(indice) {
                 autocomplete="off"
             >
 
-            <button
-                type="button"
-                class="custom-score-step"
-                data-step="1"
-            >
-                +
-            </button>
+            <button type="button" class="edit-score-step" data-step="1">+</button>
         </div>
 
-        <div class="custom-score-actions">
-            <button
-                type="button"
-                class="custom-score-cancel"
-            >
-                Annulla
-            </button>
-
-            <button
-                type="button"
-                class="custom-score-confirm"
-            >
-                Salva modifiche
-            </button>
+        <div class="edit-score-actions">
+            <button type="button" class="edit-score-cancel">Annulla</button>
+            <button type="button" class="edit-score-confirm">Salva</button>
         </div>
     `;
 
@@ -945,41 +899,38 @@ function apriPopupModificaPunteggio(indice) {
     };
 
     if (input) {
-        const apriTastiera = function () {
+        const focusInput = () => {
             input.focus({ preventScroll: true });
             input.select();
-            popup.style.top = "35%";
         };
 
-        apriTastiera();
-        requestAnimationFrame(apriTastiera);
-        setTimeout(apriTastiera, 120);
+        focusInput();
+        requestAnimationFrame(focusInput);
+        setTimeout(focusInput, 100);
 
         input.addEventListener("keydown", function (evento) {
             if (evento.key === "Enter") {
                 confermaModificaPunteggio(indice);
-            }
-            if (evento.key === "Escape") {
+            } else if (evento.key === "Escape") {
                 chiudiPopupModificaPunteggio();
             }
         });
     }
 
-    popup.querySelectorAll(".custom-score-step").forEach(bottone => {
-        bottone.addEventListener("click", function () {
-            const passo = parseInt(bottone.dataset.step, 10);
-            const valore = parseInt(input?.value, 10);
-            const valoreSicuro = Number.isFinite(valore) ? valore : 0;
-            input.value = Math.max(0, valoreSicuro + passo);
+    popup.querySelectorAll(".edit-score-step").forEach(button => {
+        button.addEventListener("click", function () {
+            const step = Number(button.dataset.step);
+            const current = Number(input.value);
+            input.value = Math.max(0, (Number.isFinite(current) ? current : 0) + step);
         });
     });
 
-    popup.querySelector(".custom-score-cancel").addEventListener(
+    popup.querySelector(".edit-score-cancel").addEventListener(
         "click",
         chiudiPopupModificaPunteggio
     );
 
-    popup.querySelector(".custom-score-confirm").addEventListener(
+    popup.querySelector(".edit-score-confirm").addEventListener(
         "click",
         () => confermaModificaPunteggio(indice)
     );
