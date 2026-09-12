@@ -5518,3 +5518,108 @@ button.is-pressed {
         font-size: 9px !important;
     }
 }
+
+
+/* =========================================================
+   FIX FINALE RIQUADRI PUNTEGGIO
+   ========================================================= */
+
+/* Il nome mantiene esattamente la sua posizione normale
+   anche quando il riquadro diventa attivo. */
+.match-row.active-turn .match-player {
+    padding-top: 0 !important;
+    transform: none !important;
+}
+
+/* L'indicatore TURNO resta fuori dal flusso del nome. */
+.match-row.active-turn::after {
+    top: -10px !important;
+    left: 14px !important;
+    padding: 2px 5px !important;
+    border-radius: 6px !important;
+    background: #eef7ea !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+    font-weight: 750 !important;
+    letter-spacing: 0.7px !important;
+}
+
+/* Matita piccola nell'angolo della card */
+.score-card-menu-wrap {
+    top: 4px !important;
+    right: 4px !important;
+    width: 22px !important;
+    height: 22px !important;
+}
+
+.score-card-menu-button {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    background: rgba(255,255,255,0.86) !important;
+}
+
+.score-card-menu-button span {
+    font-size: 14px !important;
+    letter-spacing: 0 !important;
+    line-height: 1 !important;
+    font-weight: 400 !important;
+}
+
+/* Menu leggermente più leggibile, ma non in grassetto */
+.score-card-menu {
+    top: 27px !important;
+    width: 188px !important;
+    padding: 5px !important;
+    border-radius: 13px !important;
+}
+
+.score-card-menu-item {
+    min-height: 38px !important;
+    padding: 0 8px !important;
+    gap: 8px !important;
+    font-size: 12px !important;
+    line-height: 1.1 !important;
+    font-weight: 400 !important;
+}
+
+.score-card-menu-item span {
+    width: 20px !important;
+    flex-basis: 20px !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+}
+
+.score-card-menu-item strong {
+    font-size: 12px !important;
+    line-height: 1.1 !important;
+    font-weight: 400 !important;
+}
+
+/* =========================================================
+   POPUP MODIFICA: POSIZIONAMENTO SOPRA LA TASTIERA
+   ========================================================= */
+
+.edit-score-popup {
+    transform: translateX(-50%) !important;
+    max-height: calc(100dvh - 24px) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+}
+
+/* Su schermi piccoli lasciamo più spazio utile al popup. */
+@media (max-width: 390px) {
+    .score-card-menu {
+        width: 188px !important;
+    }
+
+    .score-card-menu-item,
+    .score-card-menu-item strong {
+        font-size: 12px !important;
+    }
+
+    .score-card-menu-item span {
+        font-size: 16px !important;
+    }
+}
