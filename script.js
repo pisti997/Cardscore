@@ -33,7 +33,8 @@ let popupPunteggioAttuale = {
 let popupModificaPunteggio = {
     overlay: null,
     popup: null,
-    input: null
+    input: null,
+    viewportHandler: null
 };
 const STORAGE_KEY = "cardscore_partita";
 // Giochi che gestiscono il turno attivo manualmente
@@ -610,7 +611,7 @@ function creaTabelloneGameSet() {
         menuButton.type = "button";
         menuButton.className = "score-card-menu-button";
         menuButton.setAttribute("aria-label", `Menu ${nome}`);
-        menuButton.innerHTML = "<span>•••</span>";
+        menuButton.innerHTML = "<span>✎</span>";
 
         menuButton.addEventListener("click", function (evento) {
             toggleScoreCardMenu(evento, indice);
@@ -895,18 +896,46 @@ function apriPopupModificaPunteggio(indice) {
     popupModificaPunteggio = {
         overlay,
         popup,
-        input
+        input,
+        viewportHandler: null
     };
 
     if (input) {
+        const posizionaPopup = () => {
+            const vv = window.visualViewport;
+
+            if (!popup || !vv) {
+                return;
+            }
+
+            const altezzaPopup = popup.offsetHeight;
+            const altezzaViewport = vv.height;
+            const spazioDisponibile = altezzaViewport - altezzaPopup;
+            const top = vv.offsetTop + Math.max(12, spazioDisponibile * 0.32);
+
+            popup.style.top = `${top}px`;
+            popup.style.transform = "translateX(-50%)";
+        };
+
         const focusInput = () => {
             input.focus({ preventScroll: true });
             input.select();
+            requestAnimationFrame(posizionaPopup);
         };
+
+        popupModificaPunteggio.viewportHandler = posizionaPopup;
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener("resize", posizionaPopup);
+            window.visualViewport.addEventListener("scroll", posizionaPopup);
+        }
 
         focusInput();
         requestAnimationFrame(focusInput);
-        setTimeout(focusInput, 100);
+        setTimeout(() => {
+            focusInput();
+            posizionaPopup();
+        }, 100);
 
         input.addEventListener("keydown", function (evento) {
             if (evento.key === "Enter") {
@@ -950,13 +979,19 @@ function confermaModificaPunteggio(indice) {
 }
 
 function chiudiPopupModificaPunteggio() {
+    if (popupModificaPunteggio.viewportHandler && window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", popupModificaPunteggio.viewportHandler);
+        window.visualViewport.removeEventListener("scroll", popupModificaPunteggio.viewportHandler);
+    }
+
     document.querySelectorAll(".edit-score-overlay").forEach(nodo => nodo.remove());
     document.querySelectorAll(".edit-score-popup").forEach(nodo => nodo.remove());
 
     popupModificaPunteggio = {
         overlay: null,
         popup: null,
-        input: null
+        input: null,
+        viewportHandler: null
     };
 }
 
