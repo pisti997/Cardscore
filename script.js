@@ -547,14 +547,6 @@ function creaTabelloneGameSet() {
         if (sistemaPunteggio === "game-set" && giocatoreAttivo !== null && indice === giocatoreAttivo) {
             riga.classList.add("active-turn");
         }
-        const accento = document.createElement("span");
-        accento.className = "match-row-accent";
-        accento.setAttribute("aria-hidden", "true");
-        riga.appendChild(accento);
-        const divisore = document.createElement("span");
-        divisore.className = "match-row-divider";
-        divisore.setAttribute("aria-hidden", "true");
-        riga.appendChild(divisore);
         const player = document.createElement("div");
         player.className = "match-player";
         const strong = document.createElement("strong");
