@@ -2430,7 +2430,10 @@ function apriPopupInizioGame() {
 
     // Il vincitore viene estratto casualmente una sola volta:
     // tutti e tre i rulli si fermeranno su questo stesso nome.
-    const indiceVincitore = Math.floor(Math.random() * giocatori.length);
+    // Estrazione realmente casuale, indipendente dalla posizione del giocatore nel form.
+    const arrayCasuale = new Uint32Array(1);
+    crypto.getRandomValues(arrayCasuale);
+    const indiceVincitore = arrayCasuale[0] % giocatori.length;
     const nomeVincitore = giocatori[indiceVincitore];
 
     // L'altezza viene letta dal DOM così il movimento del rullo
