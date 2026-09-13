@@ -6412,3 +6412,30 @@ button.is-pressed {
         height: 82px;
     }
 }
+
+/* =========================================================
+   CARDSCORE HOME — CENTRATURA PERFETTA STATO VUOTO
+   ========================================================= */
+#home .saved-game-card.empty-state {
+    position: relative !important;
+    display: block !important;
+}
+
+#home .saved-game-card.empty-state .saved-game-content,
+#home .saved-game-card.empty-state .saved-game-main {
+    position: static !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#home .saved-game-card.empty-state .saved-game-empty {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: max-content !important;
+    max-width: calc(100% - 24px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: translate(-50%, -50%) !important;
+    text-align: center !important;
+}
