@@ -1,280 +1,279 @@
 /* =========================================================
    CARDSCORE - SCRIPT COMPLETO
 ========================================================= */
-
 let giocoScelto = "";
 let giocatori = [];
 let punteggi = [];
 let storico = [];
 let numeroTurno = 0;
-
 let sistemaPunteggio = "game-set";
 let obiettivoPartita = 500;
-
 let puntiPerGame = 21;
 let gamePerSet = 3;
 let setPerMatch = 2;
-
 let puntiGame = [];
 let gameVinti = [];
 let setVinti = [];
 let matchVinti = [];
-
 let storicoGame = [];
 let storicoSet = [];
-
 let partitaIniziata = null;
 let messaggioTimeout = null;
 let partitaTerminata = false;
 // Giocatore che deve effettuare il prossimo turno
 let giocatoreAttivo = null;
-
 // Timer per il popup di scelta del giocatore
 let timerSceltaGiocatore = null;
+let sorteggioInizialeInterval = null;
 let popupPunteggioAttuale = {
     overlay: null,
     popup: null,
     input: null
 };
-
+let popupModificaPunteggio = {
+    overlay: null,
+    popup: null,
+    input: null,
+    viewportHandler: null
+};
 const STORAGE_KEY = "cardscore_partita";
-
-
+// Giochi che gestiscono il turno attivo manualmente
+// tramite il tasto "Turno successivo", invece che in automatico.
+const GIOCHI_TURNO_MANUALE = ["Pili Pili"];
+function usaTurnoManuale() {
+    return GIOCHI_TURNO_MANUALE.includes(giocoScelto);
+}
+// Giochi in cui chi arriva per primo al punteggio del Game
+// PERDE il Game, invece di vincerlo (es. Pili Pili).
+const GIOCHI_PUNTEGGIO_INVERSO = ["Pili Pili"];
+function usaPunteggioInverso() {
+    return GIOCHI_PUNTEGGIO_INVERSO.includes(giocoScelto);
+}
+/*
+   Dato il giocatore che ha raggiunto il limite (e quindi perde
+   il Game), determina chi vince: il giocatore rimanente con
+   meno punti nel Game (con 2 giocatori è semplicemente l'altro).
+*/
+function determinaVincitoreGamePiliPili(perdente) {
+    let vincitore = null;
+    giocatori.forEach((nome, i) => {
+        if (i === perdente) {
+            return;
+        }
+        if (vincitore === null || puntiGame[i] < puntiGame[vincitore]) {
+            vincitore = i;
+        }
+    });
+    return vincitore;
+}
+// Timer del turno (solo Pili Pili)
+let timerCountdownInterval = null;
+let timerSuonoInterval = null;
+let timerAudioCtx = null;
+let popupTimerTocco = null;
+let timerWakeLock = null;
 /* =========================================================
    UTILITY
 ========================================================= */
+function azzeraPunteggi() {
+    punteggi = giocatori.map(() => 0);
+    puntiGame = giocatori.map(() => 0);
+    gameVinti = giocatori.map(() => 0);
+    setVinti = giocatori.map(() => 0);
+    matchVinti = giocatori.map(() => 0);
+}
 
 function elemento(id) {
     return document.getElementById(id);
 }
-
-
 function escapeHTML(testo) {
-    return String(testo)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(testo).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
-
-
 /* =========================================================
    PAGINE
 ========================================================= */
-
 function mostraPagina(id) {
-
     chiudiPopupPuntiPersonalizzati();
-
+    chiudiPopupModificaPunteggio();
+    chiudiPopupTimer();
+    chiudiPopupTimerConto();
+    chiudiTipoPunteggioMenu();
     document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
     });
-
     const pagina = elemento(id);
-
     if (pagina) {
         pagina.classList.add("active");
     }
-
     window.scrollTo({
         top: 0,
         behavior: "auto"
     });
 }
-
-
 function tornaHome() {
     mostraPagina("home");
     aggiornaPartitaSalvata();
 }
-
-
 /* =========================================================
    NUOVA PARTITA
 ========================================================= */
-
 function nuovaPartita() {
-
     giocoScelto = "";
-
-    giocatori = [];
+    giocatori = ["", ""];
     punteggi = [];
     storico = [];
-
     numeroTurno = 0;
-
     sistemaPunteggio = "game-set";
     obiettivoPartita = 500;
-
     puntiPerGame = 21;
     gamePerSet = 3;
     setPerMatch = 2;
-
     puntiGame = [];
     gameVinti = [];
     setVinti = [];
     matchVinti = [];
-
     storicoGame = [];
     storicoSet = [];
-
     partitaIniziata = null;
     partitaTerminata = false;
-
     const gioco = elemento("gioco-selezionato");
     const sistema = elemento("sistema-punteggio");
     const obiettivo = elemento("obiettivo-partita");
     const punti = elemento("punti-per-game");
     const games = elemento("game-per-set");
     const sets = elemento("set-per-match");
-
-    if (gioco) gioco.textContent = "—";
-
+    if (gioco)
+        gioco.textContent = "\u2014";
     const iconaGioco = elemento("selected-game-icon");
-    if (iconaGioco) iconaGioco.textContent = "🃏";
-
-    if (sistema) sistema.value = "game-set";
-    if (obiettivo) obiettivo.value = 500;
-    if (punti) punti.value = 21;
-    if (games) games.value = 3;
-    if (sets) sets.value = 2;
-
+    if (iconaGioco)
+        iconaGioco.textContent = "\uD83C\uDCCF";
+    if (sistema)
+        sistema.value = "game-set";
+    if (obiettivo)
+        obiettivo.value = 500;
+    if (punti)
+        punti.value = 21;
+    if (games)
+        games.value = 3;
+    if (sets)
+        sets.value = 2;
     aggiornaListaGiocatori();
     cambiaSistemaPunteggio();
-
     mostraPagina("nuova-partita");
 }
-
-
 /* =========================================================
    SCELTA GIOCO / LOGHI DEI GIOCHI
 ========================================================= */
-
 const LOGHI_GIOCHI = {
     "UNO": "immagini/uno.png",
     "Pili Pili": "immagini/pili-pili.png",
     "Scala 40": "immagini/scala40.png",
     "Scopa": "immagini/scopa.png"
 };
-
-
 function scegliGioco(gioco) {
-
     nuovaPartita();
-
     giocoScelto = gioco;
-
     const elementoGioco = elemento("gioco-selezionato");
-
     if (elementoGioco) {
         elementoGioco.textContent = gioco;
     }
-
-
     const iconaGioco = elemento("selected-game-icon");
-
     if (iconaGioco) {
-
         const logo = LOGHI_GIOCHI[gioco];
-
         if (logo) {
-
-            iconaGioco.innerHTML =
-                `<img src="${escapeHTML(logo)}" alt="${escapeHTML(gioco)}">`;
-
+            iconaGioco.innerHTML = `<img src="${ escapeHTML(logo) }" alt="${ escapeHTML(gioco) }">`;
         } else {
-
             /* Nessun logo disponibile: torniamo all'emoji di riserva */
-
-            iconaGioco.textContent = "🃏";
+            iconaGioco.textContent = "\uD83C\uDCCF";
         }
     }
-
-
+    applicaPresetGioco(gioco);
     mostraPagina("nuova-partita");
 }
-
-
+/* =========================================================
+   PRESET SPECIFICI PER GIOCO
+   Per ora usato solo da Pili Pili: punteggio semplice
+   con obiettivo a 6 punti già preselezionato.
+========================================================= */
+function applicaPresetGioco(gioco) {
+    if (gioco !== "Pili Pili") {
+        return;
+    }
+    sistemaPunteggio = "game-set";
+    puntiPerGame = 6;
+    const sistema = elemento("sistema-punteggio");
+    const punti = elemento("punti-per-game");
+    if (sistema) {
+        sistema.value = "game-set";
+    }
+    if (punti) {
+        punti.value = 6;
+    }
+    cambiaSistemaPunteggio();
+}
 /* =========================================================
    GIOCATORI
 ========================================================= */
-
 function aggiornaListaGiocatori() {
-
     const lista = elemento("lista-giocatori");
-
-    if (!lista) return;
-
+    if (!lista)
+        return;
     lista.innerHTML = "";
-
     giocatori.forEach((nome, indice) => {
-
         const riga = document.createElement("div");
         riga.className = "player-row";
-
+        const numero = document.createElement("span");
+        numero.className = "player-number";
+        numero.textContent = indice + 1;
+        riga.appendChild(numero);
         const input = document.createElement("input");
-
         input.type = "text";
         input.className = "player-input";
-        input.placeholder = `Nome giocatore ${indice + 1}`;
+        input.placeholder = `Nome giocatore ${ indice + 1 }`;
         input.value = nome;
         input.maxLength = 20;
         input.autocomplete = "off";
-
+        input.spellcheck = false;
+        input.setAttribute("autocorrect", "off");
+        input.setAttribute("autocapitalize", "words");
         input.addEventListener("input", function () {
             giocatori[indice] = this.value;
         });
-
         riga.appendChild(input);
-
+        const matita = document.createElement("span");
+        matita.className = "player-edit-icon";
+        matita.setAttribute("aria-hidden", "true");
+        matita.textContent = "✎";
+        matita.addEventListener("click", function () {
+            input.focus();
+        });
+        riga.appendChild(matita);
         if (giocatori.length > 2) {
-
             const removeButton = document.createElement("button");
-
             removeButton.type = "button";
             removeButton.className = "remove-player";
-            removeButton.setAttribute(
-                "aria-label",
-                "Rimuovi giocatore"
-            );
-
-            removeButton.textContent = "×";
-
+            removeButton.setAttribute("aria-label", "Rimuovi giocatore");
+            removeButton.textContent = "\xD7";
             removeButton.addEventListener("click", function () {
-
                 giocatori.splice(indice, 1);
-
                 aggiornaListaGiocatori();
             });
-
             riga.appendChild(removeButton);
         }
-
         lista.appendChild(riga);
     });
-
     const counter = elemento("numero-giocatori");
-
     if (counter) {
         counter.textContent = giocatori.length;
     }
 }
-
-
 function aggiungiGiocatore() {
-
     if (giocatori.length >= 6) {
-
         alert("Puoi inserire massimo 6 giocatori.");
-
         return;
     }
-
     giocatori.push("");
-
     aggiornaListaGiocatori();
-
     /*
        Il focus va chiamato SUBITO, in modo sincrono, dentro
        al gestore del click che ha originato l'azione: solo
@@ -282,412 +281,267 @@ function aggiungiGiocatore() {
        gesto genuino dell'utente e la mostra davvero. Un
        setTimeout, anche breve, spezza questa catena.
     */
-
-    const inputs =
-        document.querySelectorAll(".player-input");
-
+    const inputs = document.querySelectorAll(".player-input");
     if (inputs.length) {
         inputs[inputs.length - 1].focus({ preventScroll: true });
     }
 }
-
-
 /* =========================================================
    SISTEMA PUNTEGGIO
 ========================================================= */
-
 function cambiaSistemaPunteggio() {
-
     const select = elemento("sistema-punteggio");
-
-    if (!select) return;
-
+    if (!select)
+        return;
     sistemaPunteggio = select.value;
-
-    const semplice =
-        elemento("impostazioni-semplice");
-
-    const gameSet =
-        elemento("impostazioni-game-set");
-
-    if (!semplice || !gameSet) return;
-
-    if (sistemaPunteggio === "game-set") {
-
-        semplice.classList.add("hidden");
-        gameSet.classList.remove("hidden");
-
-    } else {
-
-        semplice.classList.remove("hidden");
-        gameSet.classList.add("hidden");
+    const semplice = elemento("impostazioni-semplice");
+    const gameSet = elemento("impostazioni-game-set");
+    if (semplice && gameSet) {
+        if (sistemaPunteggio === "game-set") {
+            semplice.classList.add("hidden");
+            gameSet.classList.remove("hidden");
+        } else {
+            semplice.classList.remove("hidden");
+            gameSet.classList.add("hidden");
+        }
     }
+    const titolo = elemento("sistema-punteggio-titolo");
+    const descrizione = elemento("sistema-punteggio-descrizione");
+    if (titolo && descrizione) {
+        if (sistemaPunteggio === "game-set") {
+            titolo.textContent = "Game / Set / Match";
+            descrizione.textContent = "Vince chi fa più game e set";
+        } else {
+            titolo.textContent = "Punteggio semplice";
+            descrizione.textContent = "Vince chi raggiunge il punteggio";
+        }
+    }
+    document.querySelectorAll(".scoring-type-option").forEach(function (opzione) {
+        opzione.classList.toggle("is-selected", opzione.dataset.valore === sistemaPunteggio);
+    });
 }
-
-
+/* =========================================================
+   MENU PERSONALIZZATO SISTEMA DI PUNTEGGIO
+   Sostituisce il selettore nativo di iOS: si apre e chiude
+   direttamente dal riquadro, senza popup di sistema.
+========================================================= */
+function toggleTipoPunteggioMenu() {
+    const menu = elemento("scoring-type-options");
+    const campo = elemento("scoring-type-field");
+    if (!menu || !campo)
+        return;
+    menu.classList.toggle("hidden");
+    const aperto = !menu.classList.contains("hidden");
+    campo.classList.toggle("is-open", aperto);
+}
+function chiudiTipoPunteggioMenu() {
+    const menu = elemento("scoring-type-options");
+    const campo = elemento("scoring-type-field");
+    if (menu)
+        menu.classList.add("hidden");
+    if (campo)
+        campo.classList.remove("is-open");
+}
+function selezionaTipoPunteggio(valore) {
+    const select = elemento("sistema-punteggio");
+    if (select) {
+        select.value = valore;
+    }
+    cambiaSistemaPunteggio();
+    chiudiTipoPunteggioMenu();
+}
+/* Chiude il menu toccando fuori */
+document.addEventListener("click", function (event) {
+    const campo = elemento("scoring-type-field");
+    if (!campo)
+        return;
+    if (!campo.contains(event.target)) {
+        chiudiTipoPunteggioMenu();
+    }
+});
 /* =========================================================
    INIZIA PARTITA
 ========================================================= */
-
 function iniziaPartita() {
-
-    const inputs =
-        document.querySelectorAll(".player-input");
-
-    giocatori = Array.from(inputs)
-        .map(input => input.value.trim())
-        .filter(nome => nome.length > 0);
-
+    const inputs = document.querySelectorAll(".player-input");
+    giocatori = Array.from(inputs).map(input => input.value.trim()).filter(nome => nome.length > 0);
     if (giocatori.length < 2) {
-
         alert("Inserisci almeno 2 giocatori.");
-
         return;
     }
-
     if (giocatori.length > 6) {
-
         alert("Puoi inserire massimo 6 giocatori.");
-
         return;
     }
-
     if (!giocoScelto) {
-
         alert("Seleziona prima un gioco.");
-
         return;
     }
-
-
     /* =====================================================
        LEGGIAMO SEMPRE I VALORI DIRETTAMENTE DAL FORM
        ===================================================== */
-
-    const selectSistema =
-        elemento("sistema-punteggio");
-
-    sistemaPunteggio =
-        selectSistema
-            ? selectSistema.value
-            : "semplice";
-
-
+    const selectSistema = elemento("sistema-punteggio");
+    sistemaPunteggio = selectSistema ? selectSistema.value : "semplice";
     if (sistemaPunteggio === "semplice") {
-
-        obiettivoPartita = parseInt(
-            elemento("obiettivo-partita").value,
-            10
-        );
-
-        if (
-            !Number.isFinite(obiettivoPartita) ||
-            obiettivoPartita <= 0
-        ) {
-
+        obiettivoPartita = parseInt(elemento("obiettivo-partita").value, 10);
+        if (!Number.isFinite(obiettivoPartita) || obiettivoPartita <= 0) {
             alert("Inserisci un obiettivo valido.");
-
             return;
         }
-
     } else {
-
-        puntiPerGame = parseInt(
-            elemento("punti-per-game").value,
-            10
-        );
-
-        gamePerSet = parseInt(
-            elemento("game-per-set").value,
-            10
-        );
-
-        setPerMatch = parseInt(
-            elemento("set-per-match").value,
-            10
-        );
-
-
-        if (
-            !Number.isFinite(puntiPerGame) ||
-            puntiPerGame <= 0 ||
-            !Number.isFinite(gamePerSet) ||
-            gamePerSet <= 0 ||
-            !Number.isFinite(setPerMatch) ||
-            setPerMatch <= 0
-        ) {
-
-            alert(
-                "Controlla le impostazioni del match."
-            );
-
+        puntiPerGame = parseInt(elemento("punti-per-game").value, 10);
+        gamePerSet = parseInt(elemento("game-per-set").value, 10);
+        setPerMatch = parseInt(elemento("set-per-match").value, 10);
+        if (!Number.isFinite(puntiPerGame) || puntiPerGame <= 0 || !Number.isFinite(gamePerSet) || gamePerSet <= 0 || !Number.isFinite(setPerMatch) || setPerMatch <= 0) {
+            alert("Controlla le impostazioni del match.");
             return;
         }
     }
-
-
     /* =====================================================
        RESET COMPLETO
        ===================================================== */
-
-    punteggi =
-        giocatori.map(() => 0);
-
-    puntiGame =
-        giocatori.map(() => 0);
-
-    gameVinti =
-        giocatori.map(() => 0);
-
-    setVinti =
-        giocatori.map(() => 0);
-
-    matchVinti =
-        giocatori.map(() => 0);
-
+    azzeraPunteggi();
     storico = [];
     storicoGame = [];
     storicoSet = [];
-
-   numeroTurno = 0;
-
-// All'inizio non è ancora stato scelto chi parte
-giocatoreAttivo = null;
-
-partitaIniziata = Date.now();
-partitaTerminata = false;
-
-mostraPagina("partita");
-aggiornaSchermataPartita();
-
-salvaPartita();
-
-aggiornaPartitaSalvata();
-
-// Dopo aver mostrato la schermata dei punteggi,
-// chiediamo chi deve iniziare
-if (sistemaPunteggio === "game-set") {
-    setTimeout(() => {
-        apriPopupInizioGame();
-    }, 150);
+    numeroTurno = 0;
+    // All'inizio non è ancora stato scelto chi parte
+    giocatoreAttivo = null;
+    // Per i giochi a turno manuale (es. Pili Pili) con punteggio
+    // semplice non c'è il popup "chi inizia": partiamo dal primo
+    // giocatore, poi si avanza solo con "Turno successivo".
+    if (usaTurnoManuale() && sistemaPunteggio !== "game-set") {
+        giocatoreAttivo = 0;
+    }
+    partitaIniziata = Date.now();
+    partitaTerminata = false;
+    mostraPagina("partita");
+    aggiornaSchermataPartita();
+    salvaPartita();
+    aggiornaPartitaSalvata();
+    // Dopo aver mostrato la schermata dei punteggi,
+    // chiediamo chi deve iniziare
+    if (sistemaPunteggio === "game-set") {
+        setTimeout(() => {
+            apriPopupInizioGame();
+        }, 150);
+    }
 }
-
-}
-
 /* =========================================================
    SCHERMATA PARTITA
 ========================================================= */
-
 function aggiornaSchermataPartita() {
-
-    const titolo =
-        elemento("titolo-partita");
-
-    const turno =
-        elemento("numero-mano");
-
+    const titolo = elemento("titolo-partita");
+    const turno = elemento("numero-mano");
     if (titolo) {
-        titolo.textContent =
-            giocoScelto || "Partita";
+        titolo.textContent = giocoScelto || "Partita";
     }
-
     if (turno) {
-        turno.textContent =
-            `Turno ${numeroTurno + 1}`;
+        turno.textContent = `Turno ${ numeroTurno + 1 }`;
     }
-
-    const banner =
-        elemento("banner-game-set");
-
+    const banner = elemento("banner-game-set");
     if (banner) {
-        banner.setAttribute(
-            "data-turn",
-            numeroTurno + 1
-        );
+        banner.setAttribute("data-turn", numeroTurno + 1);
     }
-
-
+    const obiettivo = elemento("obiettivo-container");
+    const semplice = elemento("tabellone-semplice");
+    const gameSet = elemento("tabellone-game-set");
+    const gameBanner = elemento("banner-game-set");
     if (sistemaPunteggio === "game-set") {
-
-        const obiettivo =
-            elemento("obiettivo-container");
-
-        const semplice =
-            elemento("tabellone-semplice");
-
-        const gameSet =
-            elemento("tabellone-game-set");
-
-        const gameBanner =
-            elemento("banner-game-set");
-
         if (obiettivo) {
             obiettivo.classList.add("hidden");
         }
-
         if (semplice) {
             semplice.classList.add("hidden");
         }
-
         if (gameSet) {
             gameSet.classList.remove("hidden");
         }
-
         if (gameBanner) {
             gameBanner.classList.remove("hidden");
         }
-
         creaTabelloneGameSet();
-
     } else {
-
-        const obiettivo =
-            elemento("obiettivo-container");
-
-        const semplice =
-            elemento("tabellone-semplice");
-
-        const gameSet =
-            elemento("tabellone-game-set");
-
-        const gameBanner =
-            elemento("banner-game-set");
-
         if (obiettivo) {
             obiettivo.classList.remove("hidden");
         }
-
-        const testo =
-            elemento("obiettivo-testo");
-
+        const testo = elemento("obiettivo-testo");
         if (testo) {
             testo.textContent = obiettivoPartita;
         }
-
         if (semplice) {
             semplice.classList.remove("hidden");
         }
-
         if (gameSet) {
             gameSet.classList.add("hidden");
         }
-
         if (gameBanner) {
             gameBanner.classList.add("hidden");
         }
-
         creaTabelloneSemplice();
     }
-
-
     creaSelettoreGiocatore();
     creaQuickButtons();
     mostraStorico();
+    /* =====================================================
+       PULSANTE TURNO / MENU TIMER
+       Solo per i giochi a turno manuale (es. Pili Pili)
+    ===================================================== */
+    const modalitaManuale = usaTurnoManuale();
+    const bottoneAnnulla = elemento("annulla-ultimo-turno");
+    const bottoneTurnoSuccessivo = elemento("turno-successivo-btn");
+    const vocemenuTimer = elemento("menu-timer-btn");
+    if (bottoneAnnulla) {
+        bottoneAnnulla.classList.toggle("hidden", modalitaManuale);
+    }
+    if (bottoneTurnoSuccessivo) {
+        bottoneTurnoSuccessivo.classList.toggle("hidden", !modalitaManuale);
+    }
+    if (vocemenuTimer) {
+        vocemenuTimer.classList.toggle("hidden", !modalitaManuale);
+    }
 }
-
-
 /* =========================================================
    TABELLONE SEMPLICE
 ========================================================= */
-
 function creaTabelloneSemplice() {
-
-    const tabellone =
-        elemento("tabellone-semplice");
-
-    if (!tabellone) return;
-
+    const tabellone = elemento("tabellone-semplice");
+    if (!tabellone)
+        return;
     tabellone.innerHTML = "";
-
-    const massimo =
-        Math.max(...punteggi);
-
+    const massimo = Math.max(...punteggi);
     giocatori.forEach((nome, indice) => {
-
-        const riga =
-            document.createElement("div");
-
-        riga.className =
-            "simple-score-row";
-
-        const nomeElement =
-            document.createElement("strong");
-
-        nomeElement.className =
-            "simple-player-name";
-
-        nomeElement.textContent =
-            nome;
-
-        const score =
-            document.createElement("span");
-
-        score.className =
-            "simple-player-score";
-
-        score.textContent =
-            punteggi[indice];
-
+        const riga = document.createElement("div");
+        riga.className = "simple-score-row";
+        const nomeElement = document.createElement("strong");
+        nomeElement.className = "simple-player-name";
+        nomeElement.textContent = nome;
+        const score = document.createElement("span");
+        score.className = "simple-player-score";
+        score.textContent = punteggi[indice];
         riga.appendChild(nomeElement);
         riga.appendChild(score);
-
-        if (
-            punteggi[indice] === massimo &&
-            punteggi[indice] > 0
-        ) {
+        if (punteggi[indice] === massimo && punteggi[indice] > 0) {
             riga.classList.add("leader");
         }
-
+        if (usaTurnoManuale() && giocatoreAttivo !== null && indice === giocatoreAttivo) {
+            riga.classList.add("active-turn");
+        }
         tabellone.appendChild(riga);
     });
 }
-
-
 /* =========================================================
    TABELLONE GAME / SET / MATCH
 ========================================================= */
-
 function creaTabelloneGameSet() {
-    if (!document.getElementById("stile-turno-attivo")) {
-        const style = document.createElement("style");
-
-        style.id = "stile-turno-attivo";
-
-        style.textContent = `
-            .match-row.active-turn {
-                transform: scale(1.02);
-                border: 2px solid #4f8cff;
-                box-shadow:
-                    0 0 8px rgba(79, 140, 255, 0.65),
-                    0 0 20px rgba(79, 140, 255, 0.45),
-                    0 0 35px rgba(79, 140, 255, 0.25);
-                background: rgba(79, 140, 255, 0.08);
-                position: relative;
-                z-index: 2;
-            }
-
-            .match-row.active-turn .score-big {
-                transform: scale(1.08);
-                font-weight: 800;
-            }
-        `;
-
-        document.head.appendChild(style);
-    }
-    const tabellone =
-        elemento("tabellone-game-set");
-
-    if (!tabellone) return;
+    const tabellone = elemento("tabellone-game-set");
+    if (!tabellone)
+        return;
 
     tabellone.innerHTML = "";
 
-
-    const labels =
-        document.createElement("div");
-
-    labels.className =
-        "scoreboard-labels";
-
+    const labels = document.createElement("div");
+    labels.className = "scoreboard-labels";
     labels.innerHTML = `
         <span></span>
         <span>GAMES</span>
@@ -695,17 +549,11 @@ function creaTabelloneGameSet() {
         <span>MATCH</span>
         <span>PUNTI</span>
     `;
-
     tabellone.appendChild(labels);
 
-
     giocatori.forEach((nome, indice) => {
-
-        const riga =
-            document.createElement("div");
-
-            riga.className =
-            "match-row";
+        const riga = document.createElement("div");
+        riga.className = "match-row";
 
         if (
             sistemaPunteggio === "game-set" &&
@@ -715,198 +563,487 @@ function creaTabelloneGameSet() {
             riga.classList.add("active-turn");
         }
 
+        const player = document.createElement("div");
+        player.className = "match-player";
 
-        const player =
-            document.createElement("div");
+        const strong = document.createElement("strong");
+        strong.textContent = nome;
 
-        player.className =
-            "match-player";
-
-
-        const strong =
-            document.createElement("strong");
-
-        strong.textContent =
-            nome;
-
-
-        const sub =
-            document.createElement("span");
-
-        sub.textContent =
-            `Game ${puntiGame[indice]} / ${puntiPerGame}`;
-
+        const sub = document.createElement("span");
+        sub.textContent = `Game ${ puntiGame[indice] } / ${ puntiPerGame }`;
 
         player.appendChild(strong);
         player.appendChild(sub);
 
-
-        /* GAMES */
-
-        const games =
-            document.createElement("span");
-
-        games.className =
-            "match-stat";
-
-        games.textContent =
-            gameVinti[indice];
-
+        const games = document.createElement("span");
+        games.className = "match-stat";
+        games.textContent = gameVinti[indice];
 
         if (gameVinti[indice] > 0) {
             games.classList.add("active");
         }
 
-
-        /* SETS */
-
-        const sets =
-            document.createElement("span");
-
-        sets.className =
-            "match-stat";
-
-        sets.textContent =
-            setVinti[indice];
-
+        const sets = document.createElement("span");
+        sets.className = "match-stat";
+        sets.textContent = setVinti[indice];
 
         if (setVinti[indice] > 0) {
             sets.classList.add("active");
         }
 
-
-        /* MATCH */
-
-        const match =
-            document.createElement("span");
-
-        match.className =
-            "match-stat";
-
-        match.textContent =
-            matchVinti[indice];
-
+        const match = document.createElement("span");
+        match.className = "match-stat";
+        match.textContent = matchVinti[indice];
 
         if (matchVinti[indice] > 0) {
             match.classList.add("won");
         }
 
+        const punti = document.createElement("span");
+        punti.className = "score-big";
+        punti.textContent = puntiGame[indice];
 
-        /* PUNTI TOTALI */
+        /* Menu ... specifico del giocatore */
+        const menuWrap = document.createElement("div");
+        menuWrap.className = "score-card-menu-wrap";
 
-        const punti =
-            document.createElement("span");
+        const menuButton = document.createElement("button");
+        menuButton.type = "button";
+        menuButton.className = "score-card-menu-button";
+        menuButton.setAttribute("aria-label", `Menu ${nome}`);
+        menuButton.innerHTML = "<span>✎</span>";
 
-        punti.className =
-            "score-big";
+        menuButton.addEventListener("click", function (evento) {
+            toggleScoreCardMenu(evento, indice);
+        });
 
-        punti.textContent =
-            puntiGame[indice];
+        const menu = document.createElement("div");
+        menu.className = "score-card-menu hidden";
 
+        const undoButton = document.createElement("button");
+        undoButton.type = "button";
+        undoButton.className = "score-card-menu-item";
+        undoButton.innerHTML = `
+            <span>↶</span>
+            <strong>Annulla ultimo turno</strong>
+        `;
+        undoButton.addEventListener("click", function (evento) {
+            evento.stopPropagation();
+            chiudiScoreCardMenu();
+            annullaUltimoTurno();
+        });
+
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.className = "score-card-menu-item";
+        editButton.innerHTML = `
+            <span>✎</span>
+            <strong>Modifica punteggio</strong>
+        `;
+        editButton.addEventListener("click", function (evento) {
+            evento.stopPropagation();
+            chiudiScoreCardMenu();
+            apriPopupModificaPunteggio(indice);
+        });
+
+        menu.appendChild(undoButton);
+        menu.appendChild(editButton);
+        menuWrap.appendChild(menuButton);
+        menuWrap.appendChild(menu);
 
         riga.appendChild(player);
         riga.appendChild(games);
         riga.appendChild(sets);
         riga.appendChild(match);
         riga.appendChild(punti);
+        riga.appendChild(menuWrap);
 
         tabellone.appendChild(riga);
     });
 }
 
+/* =========================================================
+   MENU DEL RIQUADRO GIOCATORE
+========================================================= */
+function toggleScoreCardMenu(event, indice) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    const wrap = event?.currentTarget?.closest(".score-card-menu-wrap");
+    if (!wrap) {
+        return;
+    }
+
+    const menu = wrap.querySelector(".score-card-menu");
+    if (!menu) {
+        return;
+    }
+
+    document.querySelectorAll(".score-card-menu").forEach(altro => {
+        if (altro !== menu) {
+            altro.classList.add("hidden");
+        }
+    });
+
+    document.querySelectorAll(".match-row.menu-open").forEach(riga => {
+        if (riga !== wrap.closest(".match-row")) {
+            riga.classList.remove("menu-open");
+        }
+    });
+
+    const aperto = !menu.classList.contains("hidden");
+    menu.classList.toggle("hidden", aperto);
+
+    const riga = wrap.closest(".match-row");
+    if (riga) {
+        riga.classList.toggle("menu-open", !aperto);
+    }
+}
+
+function chiudiScoreCardMenu() {
+    document.querySelectorAll(".score-card-menu").forEach(menu => {
+        menu.classList.add("hidden");
+    });
+
+    document.querySelectorAll(".match-row.menu-open").forEach(riga => {
+        riga.classList.remove("menu-open");
+    });
+}
+
+document.addEventListener("click", function (event) {
+    if (!event.target.closest(".score-card-menu-wrap")) {
+        chiudiScoreCardMenu();
+    }
+});
+
+/* =========================================================
+   MODIFICA PUNTEGGIO
+========================================================= */
+function trovaTurniGameCorrente(indiceGiocatore) {
+    const turni = [];
+    const totalePerGiocatore = giocatori.map(() => 0);
+
+    for (let i = 0; i < storico.length; i++) {
+        const turno = storico[i];
+        const indice = Number(turno.giocatore);
+        const punti = Number(turno.punti);
+
+        if (
+            !Number.isInteger(indice) ||
+            indice < 0 ||
+            indice >= giocatori.length ||
+            !Number.isFinite(punti)
+        ) {
+            continue;
+        }
+
+        turni.push({
+            indiceStorico: i,
+            giocatore: indice,
+            punti
+        });
+
+        totalePerGiocatore[indice] += punti;
+
+        if (sistemaPunteggio === "game-set" && totalePerGiocatore[indice] >= puntiPerGame) {
+            totalePerGiocatore.fill(0);
+        }
+    }
+
+    /* Per Pili Pili consideriamo il Game corrente come la parte
+       successiva all'ultimo superamento del limite. */
+    let ultimoReset = -1;
+    const correnti = giocatori.map(() => 0);
+
+    for (let i = 0; i < storico.length; i++) {
+        const turno = storico[i];
+        const indice = Number(turno.giocatore);
+        const punti = Number(turno.punti);
+
+        if (!Number.isInteger(indice) || !Number.isFinite(punti)) {
+            continue;
+        }
+
+        correnti[indice] += punti;
+
+        if (sistemaPunteggio === "game-set" && correnti[indice] >= puntiPerGame) {
+            ultimoReset = i;
+            correnti.fill(0);
+        }
+    }
+
+    return storico
+        .map((turno, i) => ({
+            indiceStorico: i,
+            giocatore: Number(turno.giocatore),
+            punti: Number(turno.punti)
+        }))
+        .filter(item =>
+            item.indiceStorico > ultimoReset &&
+            item.giocatore === indiceGiocatore &&
+            Number.isFinite(item.punti)
+        );
+}
+
+function applicaModificaPunteggio(indice, nuovoValore) {
+    const valoreAttuale = Math.max(0, Number(puntiGame[indice]) || 0);
+    const differenza = nuovoValore - valoreAttuale;
+    const turni = trovaTurniGameCorrente(indice);
+
+    if (differenza === 0) {
+        aggiornaSchermataPartita();
+        return;
+    }
+
+    if (differenza > 0) {
+        if (turni.length) {
+            const ultimo = turni[turni.length - 1].indiceStorico;
+            storico[ultimo].punti = Number(storico[ultimo].punti || 0) + differenza;
+        } else {
+            numeroTurno++;
+            storico.push({
+                turno: numeroTurno,
+                giocatore: indice,
+                nome: giocatori[indice],
+                punti: differenza
+            });
+        }
+    } else {
+        let daTogliere = Math.abs(differenza);
+
+        for (let i = turni.length - 1; i >= 0 && daTogliere > 0; i--) {
+            const storicoIndex = turni[i].indiceStorico;
+            const disponibili = Math.max(0, Number(storico[storicoIndex].punti) || 0);
+            const sottrai = Math.min(disponibili, daTogliere);
+
+            storico[storicoIndex].punti = disponibili - sottrai;
+            daTogliere -= sottrai;
+        }
+
+        storico = storico.filter(turno => Number(turno.punti) > 0);
+    }
+
+    numeroTurno = storico.length;
+    storico.forEach((turno, i) => {
+        turno.turno = i + 1;
+    });
+
+    ricalcolaPartita();
+    aggiornaSchermataPartita();
+    salvaPartita();
+}
+
+function apriPopupModificaPunteggio(indice) {
+    if (partitaTerminata) {
+        return;
+    }
+
+    if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
+        return;
+    }
+
+    chiudiPopupModificaPunteggio();
+
+    const valoreAttuale = Math.max(0, Number(puntiGame[indice]) || 0);
+
+    const overlay = document.createElement("div");
+    overlay.className = "cardscore-overlay edit-score-overlay";
+    overlay.addEventListener("click", chiudiPopupModificaPunteggio);
+
+    const popup = document.createElement("div");
+    popup.className = "edit-score-popup";
+    popup.addEventListener("click", evento => evento.stopPropagation());
+
+    popup.innerHTML = `
+        <div class="edit-score-label">
+            MODIFICA PUNTEGGIO
+        </div>
+
+        <h2>${ escapeHTML(giocatori[indice]) }</h2>
+
+        <div class="edit-score-current">
+            Punti del Game corrente
+        </div>
+
+        <div class="edit-score-field">
+            <button type="button" class="edit-score-step" data-step="-1">−</button>
+
+            <input
+                id="edit-score-input"
+                type="number"
+                inputmode="numeric"
+                min="0"
+                step="1"
+                value="${ valoreAttuale }"
+                autocomplete="off"
+            >
+
+            <button type="button" class="edit-score-step" data-step="1">+</button>
+        </div>
+
+        <div class="edit-score-actions">
+            <button type="button" class="edit-score-cancel">Annulla</button>
+            <button type="button" class="edit-score-confirm">Salva</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(popup);
+
+    const input = popup.querySelector("#edit-score-input");
+
+    popupModificaPunteggio = {
+        overlay,
+        popup,
+        input,
+        viewportHandler: null
+    };
+
+    if (input) {
+        const posizionaPopup = () => {
+            const vv = window.visualViewport;
+
+            if (!popup || !vv) {
+                return;
+            }
+
+            const altezzaPopup = popup.offsetHeight;
+            const altezzaViewport = vv.height;
+            const spazioDisponibile = altezzaViewport - altezzaPopup;
+            const top = vv.offsetTop + Math.max(12, spazioDisponibile * 0.32);
+
+            popup.style.top = `${top}px`;
+            popup.style.transform = "translateX(-50%)";
+        };
+
+        const focusInput = () => {
+            input.focus({ preventScroll: true });
+            input.select();
+            requestAnimationFrame(posizionaPopup);
+        };
+
+        popupModificaPunteggio.viewportHandler = posizionaPopup;
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener("resize", posizionaPopup);
+            window.visualViewport.addEventListener("scroll", posizionaPopup);
+        }
+
+        focusInput();
+        requestAnimationFrame(focusInput);
+        setTimeout(() => {
+            focusInput();
+            posizionaPopup();
+        }, 100);
+
+        input.addEventListener("keydown", function (evento) {
+            if (evento.key === "Enter") {
+                confermaModificaPunteggio(indice);
+            } else if (evento.key === "Escape") {
+                chiudiPopupModificaPunteggio();
+            }
+        });
+    }
+
+    popup.querySelectorAll(".edit-score-step").forEach(button => {
+        button.addEventListener("click", function () {
+            const step = Number(button.dataset.step);
+            const current = Number(input.value);
+            input.value = Math.max(0, (Number.isFinite(current) ? current : 0) + step);
+        });
+    });
+
+    popup.querySelector(".edit-score-cancel").addEventListener(
+        "click",
+        chiudiPopupModificaPunteggio
+    );
+
+    popup.querySelector(".edit-score-confirm").addEventListener(
+        "click",
+        () => confermaModificaPunteggio(indice)
+    );
+}
+
+function confermaModificaPunteggio(indice) {
+    const input = popupModificaPunteggio.input;
+    const valore = parseInt(input ? input.value : "", 10);
+
+    if (!Number.isFinite(valore) || valore < 0) {
+        alert("Inserisci un punteggio valido.");
+        return;
+    }
+
+    chiudiPopupModificaPunteggio();
+    applicaModificaPunteggio(indice, valore);
+}
+
+function chiudiPopupModificaPunteggio() {
+    if (popupModificaPunteggio.viewportHandler && window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", popupModificaPunteggio.viewportHandler);
+        window.visualViewport.removeEventListener("scroll", popupModificaPunteggio.viewportHandler);
+    }
+
+    document.querySelectorAll(".edit-score-overlay").forEach(nodo => nodo.remove());
+    document.querySelectorAll(".edit-score-popup").forEach(nodo => nodo.remove());
+
+    popupModificaPunteggio = {
+        overlay: null,
+        popup: null,
+        input: null,
+        viewportHandler: null
+    };
+}
 
 /* =========================================================
    SELETTORE GIOCATORE
 ========================================================= */
-
 function creaSelettoreGiocatore() {
-
-    const select =
-        elemento("giocatore-vincitore");
-
-    if (!select) return;
-
-    const precedente =
-        select.value;
-
+    const select = elemento("giocatore-vincitore");
+    if (!select)
+        return;
+    const precedente = select.value;
     select.innerHTML = "";
-
     giocatori.forEach((nome, indice) => {
-
-        const option =
-            document.createElement("option");
-
-        option.value =
-            indice;
-
-        option.textContent =
-            nome;
-
+        const option = document.createElement("option");
+        option.value = indice;
+        option.textContent = nome;
         select.appendChild(option);
     });
-
-
-    if (
-        precedente !== "" &&
-        giocatori[parseInt(precedente, 10)]
-    ) {
-
+    if (precedente !== "" && giocatori[parseInt(precedente, 10)]) {
         select.value = precedente;
     }
 }
-
-
 /* =========================================================
    BOTTONI RAPIDI
 ========================================================= */
-
 function creaQuickButtons() {
-
-    const container =
-        elemento("quick-buttons");
-
-    if (!container) return;
-
+    const container = elemento("quick-buttons");
+    if (!container)
+        return;
     container.innerHTML = "";
-
     giocatori.forEach((nome, indice) => {
-
-        const button =
-            document.createElement("button");
-
+        const button = document.createElement("button");
         button.type = "button";
-
-        button.className =
-            "quick-button";
-
-        button.textContent =
-            `+1 ${nome}`;
-
-
+        button.className = "quick-button";
+        button.textContent = `+1 ${ nome }`;
         /* =============================================
            TAP BREVE = +1 PUNTO
            PRESSIONE PROLUNGATA = PUNTEGGIO PERSONALIZZATO
         ============================================= */
-
         let timerPressione = null;
         let pressioneLunga = false;
         let pointerIdAttivo = null;
-
         const DURATA_PRESSIONE = 480;
-
-
         const avviaPressione = function (evento) {
-
-            if (partitaTerminata) return;
-
+            if (partitaTerminata)
+                return;
             /* Evita di aprire un secondo popup se uno e' gia' attivo */
             if (document.querySelector(".custom-score-popup")) {
                 return;
             }
-
             pressioneLunga = false;
             pointerIdAttivo = evento.pointerId;
-
             /*
                setPointerCapture "aggancia" tutti i prossimi eventi
                di questo tocco al bottone, anche se il popup compare
@@ -915,188 +1052,91 @@ function creaQuickButtons() {
                invece che sul bottone, e la tastiera non si apriva
                in modo affidabile.
             */
-
             try {
                 button.setPointerCapture(evento.pointerId);
             } catch (errore) {
                 /* Non tutti i browser supportano la pointer capture */
             }
-
             clearTimeout(timerPressione);
-
-            timerPressione = setTimeout(
-                () => {
-
-                    pressioneLunga = true;
-
-                    if (navigator.vibrate) {
-                        navigator.vibrate(15);
-                    }
-
-                    apriPopupPuntiPersonalizzati(indice);
-
-                },
-                DURATA_PRESSIONE
-            );
+            timerPressione = setTimeout(() => {
+                pressioneLunga = true;
+                if (navigator.vibrate) {
+                    navigator.vibrate(15);
+                }
+                apriPopupPuntiPersonalizzati(indice);
+            }, DURATA_PRESSIONE);
         };
-
-
         const annullaPressione = function (evento) {
-
             clearTimeout(timerPressione);
-
-            if (
-                pointerIdAttivo !== null &&
-                button.releasePointerCapture &&
-                button.hasPointerCapture &&
-                button.hasPointerCapture(pointerIdAttivo)
-            ) {
+            if (pointerIdAttivo !== null && button.releasePointerCapture && button.hasPointerCapture && button.hasPointerCapture(pointerIdAttivo)) {
                 try {
                     button.releasePointerCapture(pointerIdAttivo);
                 } catch (errore) {
                     /* Ignora se gia' rilasciato */
                 }
             }
-
             /*
                Il rilascio del dito (pointerup) e' un gesto utente
                "genuino" agli occhi di Safari: se il popup e' gia'
                aperto, richiamiamo di nuovo il focus proprio qui,
                in modo sincrono, cosi' la tastiera numerica si apre.
             */
-
-            if (
-                pressioneLunga &&
-                evento &&
-                evento.type === "pointerup"
-            ) {
+            if (pressioneLunga && evento && evento.type === "pointerup") {
                 riattivaFocusPopupPersonalizzato();
             }
-
             pointerIdAttivo = null;
         };
-
-
-        button.addEventListener(
-            "pointerdown",
-            avviaPressione
-        );
-
-        button.addEventListener(
-            "pointerup",
-            annullaPressione
-        );
-
-        button.addEventListener(
-            "pointerleave",
-            annullaPressione
-        );
-
-        button.addEventListener(
-            "pointercancel",
-            annullaPressione
-        );
-
-        button.addEventListener(
-            "contextmenu",
-            function (evento) {
-                evento.preventDefault();
-            }
-        );
-
-
-        button.addEventListener(
-            "click",
-            function (evento) {
-
-                /*
+        button.addEventListener("pointerdown", avviaPressione);
+        button.addEventListener("pointerup", annullaPressione);
+        button.addEventListener("pointerleave", annullaPressione);
+        button.addEventListener("pointercancel", annullaPressione);
+        button.addEventListener("contextmenu", function (evento) {
+            evento.preventDefault();
+        });
+        button.addEventListener("click", function (evento) {
+            /*
                    Se e' scattata la pressione prolungata,
                    il tap normale (+1) va ignorato: il popup
                    personalizzato se ne occupa gia'.
                 */
-
-                if (pressioneLunga) {
-
-                    evento.preventDefault();
-
-                    pressioneLunga = false;
-
-                    return;
-                }
-
-
-                const select =
-                    elemento("giocatore-vincitore");
-
-                const punti =
-                    elemento("punti-mano");
-
-                if (select) {
-                    select.value = indice;
-                }
-
-                if (punti) {
-                    punti.value = 1;
-                }
-
-                aggiungiMano();
+            if (pressioneLunga) {
+                evento.preventDefault();
+                pressioneLunga = false;
+                return;
             }
-        );
-
+            const select = elemento("giocatore-vincitore");
+            const punti = elemento("punti-mano");
+            if (select) {
+                select.value = indice;
+            }
+            if (punti) {
+                punti.value = 1;
+            }
+            aggiungiMano();
+        });
         container.appendChild(button);
     });
 }
-
-
 /* =========================================================
    POPUP PUNTEGGIO PERSONALIZZATO (pressione prolungata)
 ========================================================= */
-
 function apriPopupPuntiPersonalizzati(indice) {
-
-    if (partitaTerminata) return;
-
-    if (
-        !Number.isInteger(indice) ||
-        indice < 0 ||
-        indice >= giocatori.length
-    ) {
+    if (partitaTerminata)
+        return;
+    if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
         return;
     }
-
-
     chiudiPopupPuntiPersonalizzati();
-
-
-    const overlay =
-        document.createElement("div");
-
-    overlay.className =
-        "cardscore-overlay custom-score-overlay";
-
-    overlay.addEventListener(
-        "click",
-        chiudiPopupPuntiPersonalizzati
-    );
-
-
-    const popup =
-        document.createElement("div");
-
-    popup.className =
-        "custom-score-popup";
-
+    const overlay = document.createElement("div");
+    overlay.className = "cardscore-overlay custom-score-overlay";
+    overlay.addEventListener("click", chiudiPopupPuntiPersonalizzati);
+    const popup = document.createElement("div");
+    popup.className = "custom-score-popup";
     /*
        Evitiamo che il click dentro al popup
        chiuda il popup stesso.
     */
-
-    popup.addEventListener(
-        "click",
-        evento => evento.stopPropagation()
-    );
-
-
+    popup.addEventListener("click", evento => evento.stopPropagation());
     popup.innerHTML = `
 
         <div class="custom-score-label">
@@ -1104,7 +1144,7 @@ function apriPopupPuntiPersonalizzati(indice) {
         </div>
 
         <h2 class="custom-score-name">
-            ${escapeHTML(giocatori[indice])}
+            ${ escapeHTML(giocatori[indice]) }
         </h2>
 
         <div class="custom-score-field">
@@ -1155,23 +1195,15 @@ function apriPopupPuntiPersonalizzati(indice) {
 
         </div>
     `;
-
-
     document.body.appendChild(overlay);
     document.body.appendChild(popup);
-
-
-    const input =
-        popup.querySelector("#custom-score-input");
-
+    const input = popup.querySelector("#custom-score-input");
     popupPunteggioAttuale = {
         overlay: overlay,
         popup: popup,
         input: input
     };
-
     if (input) {
-
         /*
            Su mobile il focus subito dopo l'inserimento nel DOM
            a volte non basta a far apparire la tastiera: lo
@@ -1179,140 +1211,63 @@ function apriPopupPuntiPersonalizzati(indice) {
            successivo, cosi' la tastiera numerica si apre
            in automatico in modo affidabile.
         */
-
-       const apriTastiera = function () {
-    input.focus({ preventScroll: true });
-    input.select();
-
-    // Sposta il popup verso l'alto quando viene aperta la tastiera
-    if (popup) {
-        popup.style.top = "35%";
-    }
-};
-
-        apriTastiera();
-
-        requestAnimationFrame(apriTastiera);
-
-        setTimeout(apriTastiera, 120);
-
-
-        input.addEventListener(
-            "keydown",
-            function (evento) {
-
-                if (evento.key === "Enter") {
-                    confermaPuntiPersonalizzati(indice);
-                }
-
-                if (evento.key === "Escape") {
-                    chiudiPopupPuntiPersonalizzati();
-                }
+        const apriTastiera = function () {
+            input.focus({ preventScroll: true });
+            input.select();
+            // Sposta il popup verso l'alto quando viene aperta la tastiera
+            if (popup) {
+                popup.style.top = "35%";
             }
-        );
-    }
-
-
-    popup
-        .querySelectorAll(".custom-score-step")
-        .forEach(bottone => {
-
-            bottone.addEventListener(
-                "click",
-                function () {
-
-                    const passo =
-                        parseInt(
-                            bottone.dataset.step,
-                            10
-                        );
-
-                    const valoreAttuale =
-                        parseInt(input.value, 10) || 0;
-
-                    const nuovoValore =
-                        Math.max(
-                            1,
-                            valoreAttuale + passo
-                        );
-
-                    input.value = nuovoValore;
-                }
-            );
+        };
+        apriTastiera();
+        requestAnimationFrame(apriTastiera);
+        setTimeout(apriTastiera, 120);
+        input.addEventListener("keydown", function (evento) {
+            if (evento.key === "Enter") {
+                confermaPuntiPersonalizzati(indice);
+            }
+            if (evento.key === "Escape") {
+                chiudiPopupPuntiPersonalizzati();
+            }
         });
-
-
-    popup
-        .querySelector(".custom-score-cancel")
-        .addEventListener(
-            "click",
-            chiudiPopupPuntiPersonalizzati
-        );
-
-    popup
-        .querySelector(".custom-score-confirm")
-        .addEventListener(
-            "click",
-            () => confermaPuntiPersonalizzati(indice)
-        );
+    }
+    popup.querySelectorAll(".custom-score-step").forEach(bottone => {
+        bottone.addEventListener("click", function () {
+            const passo = parseInt(bottone.dataset.step, 10);
+            const valoreAttuale = parseInt(input.value, 10) || 0;
+            const nuovoValore = Math.max(1, valoreAttuale + passo);
+            input.value = nuovoValore;
+        });
+    });
+    popup.querySelector(".custom-score-cancel").addEventListener("click", chiudiPopupPuntiPersonalizzati);
+    popup.querySelector(".custom-score-confirm").addEventListener("click", () => confermaPuntiPersonalizzati(indice));
 }
-
-
 function riattivaFocusPopupPersonalizzato() {
-
     const input = popupPunteggioAttuale.input;
-
-    if (!input) return;
-
+    if (!input)
+        return;
     input.focus({ preventScroll: true });
     input.select();
 }
-
-
 function confermaPuntiPersonalizzati(indice) {
-
     const input = popupPunteggioAttuale.input;
-
-    const valore =
-        parseInt(
-            input ? input.value : "",
-            10
-        );
-
-    if (
-        !Number.isFinite(valore) ||
-        valore <= 0
-    ) {
-
+    const valore = parseInt(input ? input.value : "", 10);
+    if (!Number.isFinite(valore) || valore <= 0) {
         alert("Inserisci un numero di punti valido.");
-
         return;
     }
-
-
-    const select =
-        elemento("giocatore-vincitore");
-
-    const puntiMano =
-        elemento("punti-mano");
-
+    const select = elemento("giocatore-vincitore");
+    const puntiMano = elemento("punti-mano");
     if (select) {
         select.value = indice;
     }
-
     if (puntiMano) {
         puntiMano.value = valore;
     }
-
-
     chiudiPopupPuntiPersonalizzati();
-
     aggiungiMano();
 }
-
-
 function chiudiPopupPuntiPersonalizzati() {
-
     /*
        Rimuoviamo TUTTI gli elementi corrispondenti, non solo il
        primo: se per qualche motivo (es. gesture particolari su
@@ -1320,326 +1275,194 @@ function chiudiPopupPuntiPersonalizzati() {
        precedenti, non deve mai restare nel DOM ne' interferire
        con il popup corrente.
     */
-
-    document
-        .querySelectorAll(".custom-score-overlay")
-        .forEach(nodo => nodo.remove());
-
-    document
-        .querySelectorAll(".custom-score-popup")
-        .forEach(nodo => nodo.remove());
-
+    document.querySelectorAll(".custom-score-overlay").forEach(nodo => nodo.remove());
+    document.querySelectorAll(".custom-score-popup").forEach(nodo => nodo.remove());
     popupPunteggioAttuale = {
         overlay: null,
         popup: null,
         input: null
     };
 }
-
-
 /* =========================================================
    AGGIUNGI TURNO
 ========================================================= */
-
 function aggiungiMano() {
-
     if (partitaTerminata) {
         return;
     }
-
     /*
        IMPORTANTISSIMO:
        leggiamo il sistema direttamente dal select ogni volta.
        Questo evita che il Game/Set/Match venga ignorato.
     */
-
-    const selectSistema =
-        elemento("sistema-punteggio");
-
-    sistemaPunteggio =
-        selectSistema
-            ? selectSistema.value
-            : sistemaPunteggio;
-
-
-    const selectGiocatore =
-        elemento("giocatore-vincitore");
-
-    const inputPunti =
-        elemento("punti-mano");
-
-
-    const indice =
-        parseInt(
-            selectGiocatore
-                ? selectGiocatore.value
-                : "",
-            10
-        );
-
-    const punti =
-        parseInt(
-            inputPunti
-                ? inputPunti.value
-                : "",
-            10
-        );
-
-
-    if (
-        !Number.isInteger(indice) ||
-        indice < 0 ||
-        indice >= giocatori.length
-    ) {
-
+    const selectSistema = elemento("sistema-punteggio");
+    sistemaPunteggio = selectSistema ? selectSistema.value : sistemaPunteggio;
+    const selectGiocatore = elemento("giocatore-vincitore");
+    const inputPunti = elemento("punti-mano");
+    const indice = parseInt(selectGiocatore ? selectGiocatore.value : "", 10);
+    const punti = parseInt(inputPunti ? inputPunti.value : "", 10);
+    if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
         alert("Seleziona un giocatore.");
-
         return;
     }
-
-
-    if (
-        !Number.isFinite(punti) ||
-        punti <= 0
-    ) {
-
+    if (!Number.isFinite(punti) || punti <= 0) {
         alert("Inserisci un numero di punti valido.");
-
         return;
     }
-
-
     numeroTurno++;
-
-
     storico.push({
-
         turno: numeroTurno,
-
         giocatore: indice,
-
         nome: giocatori[indice],
-
         punti: punti
     });
-
-
     /* PUNTEGGIO TOTALE DEL MATCH */
-
-    punteggi[indice] =
-        Number(punteggi[indice] || 0) + punti;
-
-
+    punteggi[indice] = Number(punteggi[indice] || 0) + punti;
     /* =====================================================
        GAME / SET / MATCH
     ===================================================== */
-
     if (sistemaPunteggio === "game-set") {
-
-        puntiGame[indice] =
-            Number(puntiGame[indice] || 0) + punti;
-
+        puntiGame[indice] = Number(puntiGame[indice] || 0) + punti;
         controllaGame(indice);
-
     } else {
-
         controllaVittoria();
     }
-
-
     if (inputPunti) {
         inputPunti.value = 1;
     }
-
-
     aggiornaSchermataPartita();
-
-if (!partitaTerminata) {
-
-    // Se il Game non è terminato,
-    // il turno passa all'altro giocatore
-    if (
-        sistemaPunteggio === "game-set" &&
-        giocatoreAttivo !== null
-    ) {
-        giocatoreAttivo =
-            (giocatoreAttivo + 1) % giocatori.length;
-
-        aggiornaSchermataPartita();
+    if (!partitaTerminata) {
+        // Se il Game non è terminato,
+        // il turno passa all'altro giocatore
+        if (sistemaPunteggio === "game-set" && giocatoreAttivo !== null && !usaTurnoManuale()) {
+            giocatoreAttivo = (giocatoreAttivo + 1) % giocatori.length;
+            aggiornaSchermataPartita();
+        }
+        salvaPartita();
     }
-
-    salvaPartita();
 }
-
-}
-
-
-
 /* =========================================================
    VITTORIA DI UN GAME (logica condivisa)
    Usata sia durante il gioco live (controllaGame) sia nel
    ricalcolo dello storico (ricalcolaPartita), cosi' che un
    'game vinto' si comporti sempre allo stesso identico modo.
 ========================================================= */
-
 function elaboraVittoriaGame(indice, conMessaggi) {
-
-    gameVinti[indice] =
-        Number(gameVinti[indice] || 0) + 1;
-
-
-    /*
-       Quando si vince il Game, i punti del Game ripartono
-       SEMPRE da zero per tutti, vincitore compreso: eventuali
-       punti in eccesso rispetto al limite (es. limite 21,
-       arrivati a 24) non si portano dietro nel Game successivo.
-    */
-
-    puntiGame =
-        giocatori.map(() => 0);
-
-
+    gameVinti[indice] = Number(gameVinti[indice] || 0) + 1;
+    // Il Game è terminato: azzeriamo i punti del Game
+    puntiGame = giocatori.map(() => 0);
     storicoGame.push({
-
         vincitore: indice,
-
         nome: giocatori[indice],
-
         punti: puntiPerGame,
-
         game: [...gameVinti],
-
         set: [...setVinti]
     });
-
-
-    if (conMessaggi) {
-
-    mostraMessaggioPartita(
-        "game",
-        `${giocatori[indice]} vince il Game!`
-    );
-
-    // Blocchiamo temporaneamente il turno
-    giocatoreAttivo = null;
-
-    // Dopo 3 secondi scegliamo chi inizierà
-    // il nuovo Game
-    if (timerSceltaGiocatore) {
-        clearTimeout(timerSceltaGiocatore);
-    }
-
-    timerSceltaGiocatore = setTimeout(() => {
-
-    if (
-        !partitaTerminata &&
-        sistemaPunteggio === "game-set"
-    ) {
-        const popup =
-            document.querySelector(
-                ".game-flip-card"
-            );
-
-        if (popup) {
-            popup.classList.add(
-                "is-flipped"
-            );
-        }
-    }
-
-}, 3000);
-}
-
-
     let setVinto = false;
     let matchVinto = false;
-
-
+    /*
+       =====================================================
+       IL GAME È STATO VINTO
+       =====================================================
+    */
     if (gameVinti[indice] >= gamePerSet) {
-
-        setVinti[indice] =
-            Number(setVinti[indice] || 0) + 1;
-
+        setVinti[indice] = Number(setVinti[indice] || 0) + 1;
         setVinto = true;
-
-
         storicoSet.push({
-
             vincitore: indice,
-
             nome: giocatori[indice],
-
             game: [...gameVinti],
-
             set: [...setVinti]
         });
-
-
-        if (conMessaggi) {
-
-            mostraMessaggioPartita(
-                "set",
-                `${giocatori[indice]} vince il Set!`
-            );
-        }
-
-
+        /*
+           =================================================
+           MATCH TERMINATO
+           =================================================
+        */
         if (setVinti[indice] >= setPerMatch) {
-
             matchVinto = true;
-
-        } else {
-
-            /* NUOVO SET: azzeriamo Game per tutti */
-
-            gameVinti =
-                giocatori.map(() => 0);
-
-            puntiGame =
-                giocatori.map(() => 0);
+            // NON mostriamo il popup SET.
+            // controllaGame() chiamerà direttamente terminaMatch().
+            return {
+                setVinto,
+                matchVinto
+            };
         }
+        /*
+           =================================================
+           NUOVO SET
+           =================================================
+        */
+        gameVinti = giocatori.map(() => 0);
+        puntiGame = giocatori.map(() => 0);
+        if (conMessaggi) {
+            // Mostriamo il popup SET
+            mostraMessaggioPartita("set", `${ giocatori[indice] } vince il Set!`);
+            // Nessun giocatore attivo finché non viene scelto
+            giocatoreAttivo = null;
+            if (timerSceltaGiocatore) {
+                clearTimeout(timerSceltaGiocatore);
+                timerSceltaGiocatore = null;
+            }
+            // Dopo 3 secondi giriamo la carta
+            timerSceltaGiocatore = setTimeout(() => {
+                if (!partitaTerminata && sistemaPunteggio === "game-set") {
+                    const popup = document.querySelector(".game-flip-card");
+                    if (popup) {
+                        popup.classList.add("is-flipped");
+                    }
+                }
+            }, 3000);
+        }
+        return {
+            setVinto,
+            matchVinto
+        };
     }
-
-
-    return { setVinto, matchVinto };
+    /*
+       =====================================================
+       GAME NORMALE
+       =====================================================
+    */
+    if (conMessaggi) {
+        mostraMessaggioPartita("game", `${ giocatori[indice] } vince il Game!`);
+        // Blocchiamo il turno
+        giocatoreAttivo = null;
+        if (timerSceltaGiocatore) {
+            clearTimeout(timerSceltaGiocatore);
+            timerSceltaGiocatore = null;
+        }
+        // Dopo 3 secondi giriamo la carta
+        timerSceltaGiocatore = setTimeout(() => {
+            if (!partitaTerminata && sistemaPunteggio === "game-set") {
+                const popup = document.querySelector(".game-flip-card");
+                if (popup) {
+                    popup.classList.add("is-flipped");
+                }
+            }
+        }, 3000);
+    }
+    return {
+        setVinto,
+        matchVinto
+    };
 }
-
-
 function controllaGame(indice) {
-
     if (sistemaPunteggio !== "game-set") {
         return;
     }
-
-
     /*
        RILEGGIAMO I VALORI NUMERICI
        DIRETTAMENTE DALLE VARIABILI DEL MATCH.
     */
-
-    const limiteGame =
-        Number(puntiPerGame);
-
-
-    if (
-        !Number.isFinite(limiteGame) ||
-        limiteGame <= 0
-    ) {
-
-        console.error(
-            "ERRORE: puntiPerGame non valido",
-            puntiPerGame
-        );
-
+    const limiteGame = Number(puntiPerGame);
+    if (!Number.isFinite(limiteGame) || limiteGame <= 0) {
+        console.error("ERRORE: puntiPerGame non valido", puntiPerGame);
         return;
     }
-
-
     if (!Number.isFinite(puntiGame[indice])) {
         puntiGame[indice] = 0;
     }
-
-
     /*
        Un solo Game per volta: quando si raggiunge il limite,
        il Game viene assegnato e i punti ripartono da zero per
@@ -1647,179 +1470,100 @@ function controllaGame(indice) {
        rispetto al limite vengono semplicemente scartati, non
        si portano dietro nel Game successivo.
     */
-
-    if (
-        puntiGame[indice] >= limiteGame
-    ) {
-
-        const risultato =
-            elaboraVittoriaGame(indice, true);
-
-
+    if (puntiGame[indice] >= limiteGame) {
+        let vincitoreGame = indice;
+        if (usaPunteggioInverso()) {
+            const vincitoreInverso = determinaVincitoreGamePiliPili(indice);
+            if (vincitoreInverso !== null) {
+                vincitoreGame = vincitoreInverso;
+            }
+        }
+        const risultato = elaboraVittoriaGame(vincitoreGame, true);
         if (risultato.matchVinto) {
-
-            terminaMatch(indice);
-
+            terminaMatch(vincitoreGame);
             return;
         }
     }
 }
-
-
 /* =========================================================
    VITTORIA PUNTEGGIO SEMPLICE
 ========================================================= */
-
 function controllaVittoria() {
-
     if (sistemaPunteggio !== "semplice") {
         return;
     }
-
-
-    const vincitore =
-        punteggi.findIndex(
-            punteggio =>
-                punteggio >= obiettivoPartita
-        );
-
-
+    const vincitore = punteggi.findIndex(punteggio => punteggio >= obiettivoPartita);
     if (vincitore === -1) {
         return;
     }
-
-
     terminaMatch(vincitore);
 }
-
-
 /* =========================================================
    TERMINA MATCH
 ========================================================= */
-
 function terminaMatch(indiceVincitore) {
-
     partitaTerminata = true;
-
-    matchVinti =
-        giocatori.map(() => 0);
-
+    matchVinti = giocatori.map(() => 0);
     matchVinti[indiceVincitore] = 1;
-
-
-    localStorage.removeItem(
-        STORAGE_KEY
-    );
-
-
-    mostraMessaggioPartita(
-        "match",
-        `${giocatori[indiceVincitore]} vince il Match!`
-    );
-
+    localStorage.removeItem(STORAGE_KEY);
+    mostraMessaggioPartita("match", `${ giocatori[indiceVincitore] } vince il Match!`);
     lanciaConfetti();
-
-
-    setTimeout(
-        () => {
-
-            /*
+    setTimeout(() => {
+        /*
                Puliamo l'eventuale popup MATCH ancora a schermo
                prima di mostrare il recap finale, cosi' non
                restano elementi residui dietro alla schermata
                di vittoria.
             */
-
-            if (messaggioTimeout) {
-                clearTimeout(messaggioTimeout);
-            }
-
-            document
-                .querySelectorAll(".match-message, .cardscore-overlay")
-                .forEach(nodo => nodo.remove());
-
-
-            mostraSchermataVittoria(
-                indiceVincitore
-            );
-
-        },
-        4000
-    );
+        if (messaggioTimeout) {
+            clearTimeout(messaggioTimeout);
+        }
+        document.querySelectorAll(".match-message, .cardscore-overlay").forEach(nodo => nodo.remove());
+        mostraSchermataVittoria(indiceVincitore);
+    }, 4000);
 }
-
-
 /* =========================================================
    MESSAGGIO GAME / SET
 ========================================================= */
-
 function mostraMessaggioPartita(tipo, testo) {
-
-    const precedente =
-        document.querySelector(".match-message");
-
+    const precedente = document.querySelector(".match-message");
     if (precedente) {
         precedente.remove();
     }
-
-    const precedenteOverlay =
-        document.querySelector(".cardscore-overlay");
-
+    const precedenteOverlay = document.querySelector(".cardscore-overlay");
     if (precedenteOverlay) {
         precedenteOverlay.remove();
     }
-
     if (messaggioTimeout) {
         clearTimeout(messaggioTimeout);
     }
-
-    const overlay =
-        document.createElement("div");
-
-    overlay.className =
-        "cardscore-overlay";
-
-    const messaggio =
-        document.createElement("div");
-
-    messaggio.className =
-        "match-message";
-
+    const overlay = document.createElement("div");
+    overlay.className = "cardscore-overlay";
+    const messaggio = document.createElement("div");
+    messaggio.className = "match-message";
     let etichetta = "PARTITA";
-    let icona = "🎉";
+    let icona = "\uD83C\uDF89";
     let sottotesto = "Continua a giocare!";
-
     if (tipo === "game") {
         etichetta = "GAME";
-        icona = "🎯";
+        icona = "\uD83C\uDFAF";
     }
-
     if (tipo === "set") {
         etichetta = "SET";
-        icona = "🏆";
+        icona = "\uD83C\uDFC6";
     }
-
     if (tipo === "match") {
         etichetta = "MATCH";
-        icona = "🏆";
+        icona = "\uD83C\uDFC6";
         sottotesto = "Ecco il riepilogo finale...";
     }
-
     /*
        Per il GAME utilizziamo una vera carta 3D:
        davanti = vittoria Game
        dietro = scelta del giocatore
     */
-
-    if (
-        tipo === "game" &&
-        sistemaPunteggio === "game-set"
-    ) {
-
-        messaggio.classList.add(
-            "game-flip-card"
-        );
-
+    if ((tipo === "game" || tipo === "set") && sistemaPunteggio === "game-set") {
+        messaggio.classList.add("game-flip-card");
         messaggio.innerHTML = `
 
             <div class="game-flip-inner">
@@ -1828,15 +1572,15 @@ function mostraMessaggioPartita(tipo, testo) {
                 <div class="game-flip-face game-flip-front">
 
                     <div class="match-message-icon">
-                        🎯
+                    ${ icona }
                     </div>
 
                     <div class="match-message-label">
-                        GAME
+                    ${ etichetta }
                     </div>
 
                     <h2>
-                        ${escapeHTML(testo)}
+                        ${ escapeHTML(testo) }
                     </h2>
 
                     <p>
@@ -1867,21 +1611,21 @@ function mostraMessaggioPartita(tipo, testo) {
 
                     <div class="starting-player-buttons">
 
-                        ${giocatori.map((nome, indice) => `
+                        ${ giocatori.map((nome, indice) => `
                             <button
                                 type="button"
                                 class="starting-player-button"
-                                data-player="${indice}"
+                                data-player="${ indice }"
                             >
                                 <span class="starting-player-number">
-                                    ${indice + 1}
+                                    ${ indice + 1 }
                                 </span>
 
                                 <strong>
-                                    ${escapeHTML(nome)}
+                                    ${ escapeHTML(nome) }
                                 </strong>
                             </button>
-                        `).join("")}
+                        `).join("") }
 
                     </div>
 
@@ -1889,176 +1633,90 @@ function mostraMessaggioPartita(tipo, testo) {
 
             </div>
         `;
-
     } else {
-
         /*
            Tutti gli altri messaggi rimangono
            esattamente come prima.
         */
-
         messaggio.innerHTML = `
 
             <div class="match-message-icon">
-                ${icona}
+                ${ icona }
             </div>
 
             <div class="match-message-label">
-                ${etichetta}
+                ${ etichetta }
             </div>
 
             <h2>
-                ${escapeHTML(testo)}
+                ${ escapeHTML(testo) }
             </h2>
 
             <p>
-                ${escapeHTML(sottotesto)}
+                ${ escapeHTML(sottotesto) }
             </p>
         `;
     }
-
-
     document.body.appendChild(overlay);
     document.body.appendChild(messaggio);
-
-
     /*
        I pulsanti sul retro vengono collegati
        solo quando il popup viene girato.
     */
-
-    if (
-        tipo === "game" &&
-        sistemaPunteggio === "game-set"
-    ) {
-
-        messaggio
-            .querySelectorAll(
-                ".starting-player-button"
-            )
-            .forEach(button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const indice =
-                            Number(
-                                button.dataset.player
-                            );
-
-                        scegliGiocatoreInizio(
-                            indice
-                        );
-                    }
-                );
+    if ((tipo === "game" || tipo === "set") && sistemaPunteggio === "game-set") {
+        messaggio.querySelectorAll(".starting-player-button").forEach(bottone => {
+            bottone.addEventListener("click", () => {
+                const indice = Number(bottone.dataset.player);
+                scegliGiocatoreInizio(indice);
             });
+        });
     }
-
-
     /*
        Il popup GAME resta a schermo fino alla
        rotazione. Non deve essere rimosso dopo 3 secondi.
     */
-
-    if (
-        tipo === "game" &&
-        sistemaPunteggio === "game-set"
-    ) {
+    if ((tipo === "game" || tipo === "set") && sistemaPunteggio === "game-set") {
         return;
     }
-
-
-    messaggioTimeout =
-        setTimeout(
-            () => {
-
-                messaggio.remove();
-                overlay.remove();
-
-            },
-            tipo === "match"
-                ? 4000
-                : 3000
-        );
+    messaggioTimeout = setTimeout(() => {
+        messaggio.remove();
+        overlay.remove();
+    }, tipo === "match" ? 4000 : 3000);
 }
-
-
 /* =========================================================
    SCHERMATA VITTORIA
 ========================================================= */
-
 function mostraSchermataVittoria(indiceVincitore) {
-
-    const precedente =
-        document.querySelector(
-            ".victory-screen"
-        );
-
+    const precedente = document.querySelector(".victory-screen");
     if (precedente) {
         precedente.remove();
     }
-
-
-    const durata =
-        calcolaDurataPartita();
-
-    const durataTesto =
-        formattaDurata(durata);
-
-
-    const vittorieGame =
-        gameVinti[indiceVincitore] || 0;
-
-    const vittorieSet =
-        setVinti[indiceVincitore] || 0;
-
-
-    const screen =
-        document.createElement("div");
-
-    screen.className =
-        "victory-screen";
-
-
+    const durata = calcolaDurataPartita();
+    const durataTesto = formattaDurata(durata);
+    const vittorieGame = gameVinti[indiceVincitore] || 0;
+    const vittorieSet = setVinti[indiceVincitore] || 0;
+    const screen = document.createElement("div");
+    screen.className = "victory-screen";
     let recapHTML = "";
-
-
     if (storicoSet.length) {
-
         recapHTML = `
             <div class="recap-title">
                 RISULTATO DEI SET
             </div>
         `;
-
-
-        storicoSet.forEach(
-            (set, indice) => {
-
-                const risultati =
-                    set.game
-                        .map(
-                            (valore, i) =>
-                                `${giocatori[i]} ${valore}`
-                        )
-                        .join(" · ");
-
-
-                recapHTML += `
+        storicoSet.forEach((set, indice) => {
+            const risultati = set.game.map((valore, i) => `${ giocatori[i] } ${ valore }`).join(" \xB7 ");
+            recapHTML += `
                     <div class="recap-set">
-                        Set ${indice + 1}
+                        Set ${ indice + 1 }
                         ·
-                        ${escapeHTML(set.nome)}
+                        ${ escapeHTML(set.nome) }
                         ·
-                        ${escapeHTML(risultati)}
+                        ${ escapeHTML(risultati) }
                     </div>
                 `;
-            }
-        );
+        });
     }
-
-
     screen.innerHTML = `
 
         <div class="victory-content">
@@ -2076,15 +1734,13 @@ function mostraSchermataVittoria(indiceVincitore) {
             </h1>
 
             <div class="victory-winner">
-                ${escapeHTML(
-                    giocatori[indiceVincitore]
-                )}
+                ${ escapeHTML(giocatori[indiceVincitore]) }
             </div>
 
             <div class="victory-score">
                 Punteggio finale:
                 <strong>
-                    ${punteggi[indiceVincitore]}
+                    ${ punteggi[indiceVincitore] }
                 </strong>
             </div>
 
@@ -2092,17 +1748,17 @@ function mostraSchermataVittoria(indiceVincitore) {
             <div class="victory-stats">
 
                 <div class="victory-stat">
-                    <strong>${durataTesto}</strong>
+                    <strong>${ durataTesto }</strong>
                     <span>DURATA</span>
                 </div>
 
                 <div class="victory-stat">
-                    <strong>${numeroTurno}</strong>
+                    <strong>${ numeroTurno }</strong>
                     <span>TURNI</span>
                 </div>
 
                 <div class="victory-stat">
-                    <strong>${vittorieGame}</strong>
+                    <strong>${ vittorieGame }</strong>
                     <span>GAMES</span>
                 </div>
 
@@ -2112,20 +1768,20 @@ function mostraSchermataVittoria(indiceVincitore) {
             <div class="victory-stats">
 
                 <div class="victory-stat">
-                    <strong>${vittorieSet}</strong>
+                    <strong>${ vittorieSet }</strong>
                     <span>SETS</span>
                 </div>
 
                 <div class="victory-stat">
                     <strong>
-                        ${matchVinti[indiceVincitore]}
+                        ${ matchVinti[indiceVincitore] }
                     </strong>
                     <span>MATCH</span>
                 </div>
 
                 <div class="victory-stat">
                     <strong>
-                        ${punteggi[indiceVincitore]}
+                        ${ punteggi[indiceVincitore] }
                     </strong>
                     <span>PUNTI</span>
                 </div>
@@ -2133,7 +1789,7 @@ function mostraSchermataVittoria(indiceVincitore) {
             </div>
 
 
-            ${recapHTML}
+            ${ recapHTML }
 
 
             <div class="victory-actions">
@@ -2158,559 +1814,273 @@ function mostraSchermataVittoria(indiceVincitore) {
 
         </div>
     `;
-
-
     document.body.appendChild(screen);
 }
-
-
 /* =========================================================
    CHIUSURA VITTORIA
 ========================================================= */
-
 function chiudiVittoriaEHome() {
-
-    const screen =
-        document.querySelector(
-            ".victory-screen"
-        );
-
+    const screen = document.querySelector(".victory-screen");
     if (screen) {
         screen.remove();
     }
-
     tornaHome();
 }
-
-
 function chiudiVittoriaENuova() {
-
-    const screen =
-        document.querySelector(
-            ".victory-screen"
-        );
-
+    const screen = document.querySelector(".victory-screen");
     if (screen) {
         screen.remove();
     }
-
-
     /*
        Ricordiamo il gioco appena concluso PRIMA che
        nuovaPartita() lo azzeri, per poterlo riselezionare
        automaticamente subito dopo.
     */
-
     const giocoPrecedente = giocoScelto;
-
-
     nuovaPartita();
-
-
     if (giocoPrecedente) {
-
         giocoScelto = giocoPrecedente;
-
-        const elementoGioco =
-            elemento("gioco-selezionato");
-
+        const elementoGioco = elemento("gioco-selezionato");
         if (elementoGioco) {
             elementoGioco.textContent = giocoPrecedente;
         }
-
-
-        const iconaGioco =
-            elemento("selected-game-icon");
-
+        const iconaGioco = elemento("selected-game-icon");
         if (iconaGioco) {
-
-            const logo =
-                LOGHI_GIOCHI[giocoPrecedente];
-
+            const logo = LOGHI_GIOCHI[giocoPrecedente];
             if (logo) {
-
-                iconaGioco.innerHTML =
-                    `<img src="${escapeHTML(logo)}" alt="${escapeHTML(giocoPrecedente)}">`;
-
+                iconaGioco.innerHTML = `<img src="${ escapeHTML(logo) }" alt="${ escapeHTML(giocoPrecedente) }">`;
             } else {
-
-                iconaGioco.textContent = "🃏";
+                iconaGioco.textContent = "\uD83C\uDCCF";
             }
         }
+        applicaPresetGioco(giocoPrecedente);
     }
 }
-
-
 /* =========================================================
    DURATA
 ========================================================= */
-
 function calcolaDurataPartita() {
-
     if (!partitaIniziata) {
         return 0;
     }
-
-    return Math.max(
-        0,
-        Date.now() - partitaIniziata
-    );
+    return Math.max(0, Date.now() - partitaIniziata);
 }
-
-
 function formattaDurata(millisecondi) {
-
-    const secondi =
-        Math.floor(
-            millisecondi / 1000
-        );
-
-    const minuti =
-        Math.floor(
-            secondi / 60
-        );
-
-    const ore =
-        Math.floor(
-            minuti / 60
-        );
-
-
+    const secondi = Math.floor(millisecondi / 1000);
+    const minuti = Math.floor(secondi / 60);
+    const ore = Math.floor(minuti / 60);
     if (ore > 0) {
-        return `${ore}h ${minuti % 60}m`;
+        return `${ ore }h ${ minuti % 60 }m`;
     }
-
     if (minuti > 0) {
-        return `${minuti} min`;
+        return `${ minuti } min`;
     }
-
-    return `${secondi} sec`;
+    return `${ secondi } sec`;
 }
-
-
 /* =========================================================
    STORICO
 ========================================================= */
-
 function creaRigaStorico(elementoStorico) {
-
-    const riga =
-    document.createElement("div");
-
-riga.className =
-    "match-row";
-
-    const turno =
-        document.createElement("div");
-
-    turno.className =
-        "history-turn";
-
-    turno.textContent =
-        `Turno ${elementoStorico.turno}`;
-
-
-    const dettagli =
-        document.createElement("div");
-
-    dettagli.className =
-        "history-details";
-
-
-    const nome =
-        document.createElement("span");
-
-    nome.className =
-        "history-player";
-
-    nome.textContent =
-        elementoStorico.nome;
-
-
-    const punti =
-        document.createElement("span");
-
-    punti.className =
-        "history-points";
-
-    punti.textContent =
-        `+${elementoStorico.punti} punti`;
-
-
+    const riga = document.createElement("div");
+    riga.className = "history-row";
+    const turno = document.createElement("div");
+    turno.className = "history-turn";
+    turno.textContent = `Turno ${ elementoStorico.turno }`;
+    const dettagli = document.createElement("div");
+    dettagli.className = "history-details";
+    const nome = document.createElement("span");
+    nome.className = "history-player";
+    nome.textContent = elementoStorico.nome;
+    const punti = document.createElement("span");
+    punti.className = "history-points";
+    punti.textContent = `+${ elementoStorico.punti } punti`;
     dettagli.appendChild(nome);
     dettagli.appendChild(punti);
-
-
-    const freccia =
-        document.createElement("span");
-
-    freccia.className =
-        "history-arrow";
-
-    freccia.textContent =
-        "›";
-
-
+    const freccia = document.createElement("span");
+    freccia.className = "history-arrow";
+    freccia.textContent = "\u203A";
     riga.appendChild(turno);
     riga.appendChild(dettagli);
     riga.appendChild(freccia);
-
-
     return riga;
 }
-
-
 function mostraStorico() {
-
-    const container =
-        elemento("storico-turni");
-
-    if (!container) return;
-
+    const container = elemento("storico-turni");
+    if (!container)
+        return;
     container.innerHTML = "";
-
-
     if (!storico.length) {
-
         container.innerHTML = `
             <div class="history-empty">
                 Nessun turno ancora registrato
             </div>
         `;
-
         return;
     }
-
-
-    storico
-        .slice(-1)
-        .reverse()
-        .forEach(turno => {
-
-            container.appendChild(
-                creaRigaStorico(turno)
-            );
-
-        });
+    storico.slice(-1).reverse().forEach(turno => {
+        container.appendChild(creaRigaStorico(turno));
+    });
 }
-
-
 function mostraStoricoCompleto() {
-
-    const container =
-        elemento("storico-completo-lista");
-
-    if (!container) return;
-
+    const container = elemento("storico-completo-lista");
+    if (!container)
+        return;
     container.innerHTML = "";
-
-
     if (!storico.length) {
-
         container.innerHTML = `
             <div class="history-empty">
                 Nessun turno ancora registrato
             </div>
         `;
-
     } else {
-
-        storico
-            .slice()
-            .reverse()
-            .forEach(turno => {
-
-                container.appendChild(
-                    creaRigaStorico(turno)
-                );
-
-            });
+        storico.slice().reverse().forEach(turno => {
+            container.appendChild(creaRigaStorico(turno));
+        });
     }
-
-
     mostraPagina("storico-completo");
 }
-
-
 function chiudiStorico() {
-
     mostraPagina("partita");
-
     aggiornaSchermataPartita();
 }
-
-
 /* =========================================================
    ANNULLA ULTIMO TURNO
 ========================================================= */
-
 function annullaUltimoTurno() {
-
     if (!storico.length) {
-
-        alert(
-            "Non ci sono turni da annullare."
-        );
-
+        alert("Non ci sono turni da annullare.");
         return;
     }
-
-
     storico.pop();
-
-    numeroTurno =
-        storico.length;
-
-
+    numeroTurno = storico.length;
     ricalcolaPartita();
-
     aggiornaSchermataPartita();
-
     salvaPartita();
 }
-
-
+/* =========================================================
+   TURNO SUCCESSIVO (solo giochi a turno manuale, es. Pili Pili)
+   Al contrario dell'avanzamento automatico, qui il giocatore
+   evidenziato cambia solo quando viene premuto questo tasto,
+   non quando viene assegnato un punteggio.
+========================================================= */
+function turnoSuccessivo() {
+    if (partitaTerminata || !giocatori.length) {
+        return;
+    }
+    if (giocatoreAttivo === null || !Number.isInteger(giocatoreAttivo)) {
+        giocatoreAttivo = 0;
+    } else {
+        giocatoreAttivo = (giocatoreAttivo + 1) % giocatori.length;
+    }
+    aggiornaSchermataPartita();
+    salvaPartita();
+}
 /* =========================================================
    RICALCOLA PARTITA
 ========================================================= */
-
 function ricalcolaPartita() {
-
-    punteggi =
-        giocatori.map(() => 0);
-
-    puntiGame =
-        giocatori.map(() => 0);
-
-    gameVinti =
-        giocatori.map(() => 0);
-
-    setVinti =
-        giocatori.map(() => 0);
-
-    matchVinti =
-        giocatori.map(() => 0);
-
+    azzeraPunteggi();
     storicoGame = [];
     storicoSet = [];
-
-
-    storico.forEach(turno => {
-
-        const indice =
-            Number(turno.giocatore);
-
-        const punti =
-            Number(turno.punti);
-
-
-        if (
-            !Number.isInteger(indice) ||
-            indice < 0 ||
-            indice >= giocatori.length
-        ) {
-            return;
+    for (const turno of storico) {
+        const indice = Number(turno.giocatore);
+        const punti = Number(turno.punti);
+        if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
+            continue;
         }
-
-
         punteggi[indice] += punti;
-
-
         if (sistemaPunteggio !== "game-set") {
-            return;
+            continue;
         }
-
-
         puntiGame[indice] += punti;
-
-
-        if (
-            puntiGame[indice] >= puntiPerGame
-        ) {
-
-            const risultato =
-                elaboraVittoriaGame(indice, false);
-
-
+        if (puntiGame[indice] >= puntiPerGame) {
+            let vincitoreGame = indice;
+            if (usaPunteggioInverso()) {
+                const vincitoreInverso = determinaVincitoreGamePiliPili(indice);
+                if (vincitoreInverso !== null) {
+                    vincitoreGame = vincitoreInverso;
+                }
+            }
+            const risultato = elaboraVittoriaGame(vincitoreGame, false);
             if (risultato.matchVinto) {
-
-                matchVinti =
-                    giocatori.map(() => 0);
-
-                matchVinti[indice] = 1;
-
-                return;
+                matchVinti = giocatori.map(() => 0);
+                matchVinti[vincitoreGame] = 1;
+                // Il match è già stato vinto: eventuali
+                // turni successivi nello storico vengono ignorati.
+                break;
             }
         }
-    });
+    }
 }
-
-
 /* =========================================================
    SALVATAGGIO
 ========================================================= */
-
 function salvaPartita() {
-
-    if (
-        !giocoScelto ||
-        !giocatori.length
-    ) {
+    if (!giocoScelto || !giocatori.length) {
         return;
     }
-
-
     const dati = {
-
         giocoScelto,
-
         giocatori,
-
         punteggi,
-
         storico,
-
         numeroTurno,
-
         sistemaPunteggio,
-
         obiettivoPartita,
-
         puntiPerGame,
-
         gamePerSet,
-
         setPerMatch,
-
         puntiGame,
-
         gameVinti,
-
         setVinti,
-
         matchVinti,
-
         storicoGame,
-
         storicoSet,
-
         partitaIniziata,
-        
-        giocatoreAttivo,
+        giocatoreAttivo
     };
-
-
     try {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(dati)
-        );
-
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(dati));
     } catch (errore) {
-
-        console.error(
-            "Errore salvataggio:",
-            errore
-        );
+        console.error("Errore salvataggio:", errore);
     }
 }
-
-
 function aggiornaPartitaSalvata() {
-
     const card = elemento("partita-in-corso");
-
-    if (!card) return;
-
-
+    if (!card)
+        return;
     let dati = null;
-
     try {
-
-        const salvata =
-            localStorage.getItem(STORAGE_KEY);
-
+        const salvata = localStorage.getItem(STORAGE_KEY);
         if (salvata) {
             dati = JSON.parse(salvata);
         }
-
     } catch (errore) {
-
-        console.error(
-            "Errore lettura partita:",
-            errore
-        );
+        console.error("Errore lettura partita:", errore);
     }
-
-
     /* =====================================================
        NESSUNA PARTITA
        ===================================================== */
-
-    if (
-        !dati ||
-        !Array.isArray(dati.giocatori) ||
-        !dati.giocatori.length
-    ) {
-
+    if (!dati || !Array.isArray(dati.giocatori) || !dati.giocatori.length) {
         card.classList.remove("hidden");
         card.classList.add("empty-state");
-
         card.innerHTML = `
             <div class="saved-game-empty">
                 Nessuna partita in corso
             </div>
         `;
-
         return;
     }
-
-
     /* =====================================================
        PARTITA PRESENTE
        ===================================================== */
-
     card.classList.remove("hidden");
     card.classList.remove("empty-state");
-
-
-    const immaginiGiochi = {
-        "UNO": "immagini/uno.png",
-        "Pili Pili": "immagini/pili-pili.png",
-        "Scala 40": "immagini/scala40.png",
-        "Scopa": "immagini/scopa.png"
-    };
-
-
-    const immagine =
-        immaginiGiochi[dati.giocoScelto];
-
-
-    const giocatori =
-        Array.isArray(dati.giocatori)
-            ? dati.giocatori
-            : [];
-
-
-    const puntiGame =
-        Array.isArray(dati.puntiGame)
-            ? dati.puntiGame
-            : giocatori.map(() => 0);
-
-
-    const gameVinti =
-        Array.isArray(dati.gameVinti)
-            ? dati.gameVinti
-            : giocatori.map(() => 0);
-
-
-    const setVinti =
-        Array.isArray(dati.setVinti)
-            ? dati.setVinti
-            : giocatori.map(() => 0);
-
-
+    const immagine = LOGHI_GIOCHI[dati.giocoScelto];
+    const giocatori = Array.isArray(dati.giocatori) ? dati.giocatori : [];
+    const puntiGame = Array.isArray(dati.puntiGame) ? dati.puntiGame : giocatori.map(() => 0);
+    const gameVinti = Array.isArray(dati.gameVinti) ? dati.gameVinti : giocatori.map(() => 0);
+    const setVinti = Array.isArray(dati.setVinti) ? dati.setVinti : giocatori.map(() => 0);
     card.innerHTML = `
 
         <div class="saved-game-heading">
@@ -2722,16 +2092,12 @@ function aggiornaPartitaSalvata() {
 
             <div class="saved-game-icon">
 
-                ${
-                    immagine
-                        ? `
+                ${ immagine ? `
                             <img
-                                src="${immagine}"
-                                alt="${dati.giocoScelto || "Gioco"}"
+                                src="${ escapeHTML(immagine) }"
+                                alt="${ escapeHTML(dati.giocoScelto || "Gioco") }"
                             >
-                          `
-                        : "🃏"
-                }
+                          ` : "\uD83C\uDCCF" }
 
             </div>
 
@@ -2741,13 +2107,11 @@ function aggiornaPartitaSalvata() {
                 <div class="saved-game-header">
 
                     <h3>
-                        ${escapeHTML(
-                            dati.giocoScelto || "Partita"
-                        )}
+                        ${ escapeHTML(dati.giocoScelto || "Partita") }
                     </h3>
 
                     <span class="saved-game-turn">
-                        Turno ${dati.numeroTurno || 0}
+                        Turno ${ dati.numeroTurno || 0 }
                     </span>
 
                 </div>
@@ -2755,398 +2119,152 @@ function aggiornaPartitaSalvata() {
 
                 <div class="saved-game-info">
 
-                    ${
-                        giocatori
-                            .map((nome, indice) => {
-
-                                const punti =
-                                    Number(
-                                        puntiGame[indice]
-                                    ) || 0;
-
-                                const games =
-                                    Number(
-                                        gameVinti[indice]
-                                    ) || 0;
-
-                                const sets =
-                                    Number(
-                                        setVinti[indice]
-                                    ) || 0;
-
-
-                                return `
+                    ${ giocatori.map((nome, indice) => {
+        const punti = Number(puntiGame[indice]) || 0;
+        const games = Number(gameVinti[indice]) || 0;
+        const sets = Number(setVinti[indice]) || 0;
+        return `
                                     <div class="saved-player-score">
 
                                         <span>
-                                            ${escapeHTML(nome)}
+                                            ${ escapeHTML(nome) }
                                         </span>
 
                                         <strong>
-                                            Game ${games}
-                                            · Set ${sets}
-                                            · ${punti} punti
+                                            Game ${ games }
+                                            · Set ${ sets }
+                                            · ${ punti } punti
                                         </strong>
 
                                     </div>
                                 `;
-
-                            })
-                            .join("")
-                    }
+    }).join("") }
 
                 </div>
 
             </div>
 
-            <button
+
+            <div
                 class="saved-game-arrow"
-                type="button"
-                onclick="continuaPartita()"
+                role="button"
+                tabindex="0"
                 aria-label="Continua partita"
+                onclick="continuaPartita()"
+                onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); continuaPartita(); }"
             >
                 ›
-            </button>
+            </div>
 
         </div>
 
     `;
 }
-
-
 /* =========================================================
    CONTINUA PARTITA
 ========================================================= */
-
 function continuaPartita() {
-
     let dati = null;
-
-
     try {
-
-        const salvata =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
-
-
+        const salvata = localStorage.getItem(STORAGE_KEY);
         if (!salvata) {
-
-            alert(
-                "Non c'è nessuna partita salvata."
-            );
-
+            alert("Non c'è nessuna partita salvata.");
             return;
         }
-
-
-        dati =
-            JSON.parse(salvata);
-
+        dati = JSON.parse(salvata);
     } catch (errore) {
-
-        console.error(
-            "Errore caricamento:",
-            errore
-        );
-
-        alert(
-            "Impossibile caricare la partita."
-        );
-
+        console.error("Errore caricamento:", errore);
+        alert("Impossibile caricare la partita.");
         return;
     }
-
-
-    giocoScelto =
-        dati.giocoScelto || "";
-
-
-    giocatori =
-        Array.isArray(dati.giocatori)
-            ? dati.giocatori
-            : [];
-
-
-    punteggi =
-        Array.isArray(dati.punteggi)
-            ? dati.punteggi
-            : giocatori.map(() => 0);
-
-
-    storico =
-        Array.isArray(dati.storico)
-            ? dati.storico
-            : [];
-
-
-    numeroTurno =
-        Number.isFinite(Number(dati.numeroTurno))
-            ? Number(dati.numeroTurno)
-            : storico.length;
-
-
-    sistemaPunteggio =
-        dati.sistemaPunteggio ||
-        "semplice";
-
-
-    obiettivoPartita =
-        Number(dati.obiettivoPartita) ||
-        500;
-
-
-    puntiPerGame =
-        Number(dati.puntiPerGame) ||
-        21;
-
-
-    gamePerSet =
-        Number(dati.gamePerSet) ||
-        3;
-
-
-    setPerMatch =
-        Number(dati.setPerMatch) ||
-        2;
-
-
-    puntiGame =
-        Array.isArray(dati.puntiGame)
-            ? dati.puntiGame
-            : giocatori.map(() => 0);
-
-
-    gameVinti =
-        Array.isArray(dati.gameVinti)
-            ? dati.gameVinti
-            : giocatori.map(() => 0);
-
-
-    setVinti =
-        Array.isArray(dati.setVinti)
-            ? dati.setVinti
-            : giocatori.map(() => 0);
-
-
-    matchVinti =
-        Array.isArray(dati.matchVinti)
-            ? dati.matchVinti
-            : giocatori.map(() => 0);
-
-
-    storicoGame =
-        Array.isArray(dati.storicoGame)
-            ? dati.storicoGame
-            : [];
-
-
-    storicoSet =
-        Array.isArray(dati.storicoSet)
-            ? dati.storicoSet
-            : [];
-
-
-    partitaIniziata =
-        dati.partitaIniziata ||
-        Date.now();
-
+    giocoScelto = dati.giocoScelto || "";
+    giocatori = Array.isArray(dati.giocatori) ? dati.giocatori : [];
+    punteggi = Array.isArray(dati.punteggi) ? dati.punteggi : giocatori.map(() => 0);
+    storico = Array.isArray(dati.storico) ? dati.storico : [];
+    numeroTurno = Number.isFinite(Number(dati.numeroTurno)) ? Number(dati.numeroTurno) : storico.length;
+    sistemaPunteggio = dati.sistemaPunteggio || "semplice";
+    obiettivoPartita = Number(dati.obiettivoPartita) || 500;
+    puntiPerGame = Number(dati.puntiPerGame) || 21;
+    gamePerSet = Number(dati.gamePerSet) || 3;
+    setPerMatch = Number(dati.setPerMatch) || 2;
+    puntiGame = Array.isArray(dati.puntiGame) ? dati.puntiGame : giocatori.map(() => 0);
+    gameVinti = Array.isArray(dati.gameVinti) ? dati.gameVinti : giocatori.map(() => 0);
+    setVinti = Array.isArray(dati.setVinti) ? dati.setVinti : giocatori.map(() => 0);
+    matchVinti = Array.isArray(dati.matchVinti) ? dati.matchVinti : giocatori.map(() => 0);
+    storicoGame = Array.isArray(dati.storicoGame) ? dati.storicoGame : [];
+    storicoSet = Array.isArray(dati.storicoSet) ? dati.storicoSet : [];
+    partitaIniziata = dati.partitaIniziata || Date.now();
     partitaTerminata = false;
-    
-    giocatoreAttivo =
-    Number.isInteger(Number(dati.giocatoreAttivo))
-        ? Number(dati.giocatoreAttivo)
-        : null;
-
-
+    giocatoreAttivo = dati.giocatoreAttivo === null || dati.giocatoreAttivo === undefined || !Number.isInteger(Number(dati.giocatoreAttivo)) ? null : Number(dati.giocatoreAttivo);
     /*
        Sincronizziamo anche il menu HTML.
     */
-
-    const select =
-        elemento("sistema-punteggio");
-
+    const select = elemento("sistema-punteggio");
     if (select) {
         select.value = sistemaPunteggio;
     }
-
-
     mostraPagina("partita");
-
     aggiornaSchermataPartita();
+    if (sistemaPunteggio === "game-set" && giocatoreAttivo === null && !partitaTerminata) {
+        setTimeout(() => {
+            apriPopupInizioGame();
+        }, 150);
+    }
 }
-
-
 /* =========================================================
    ESCI PARTITA
 ========================================================= */
-
 function esciPartita() {
-
     salvaPartita();
-
     mostraPagina("home");
-
     aggiornaPartitaSalvata();
 }
-
-
 /* =========================================================
    CONFETTI
 ========================================================= */
-
 function lanciaConfetti() {
-
-    let canvas =
-        elemento("confetti-canvas");
-
-
+    let canvas = elemento("confetti-canvas");
     if (!canvas) {
-
-        canvas =
-            document.createElement("canvas");
-
-        canvas.id =
-            "confetti-canvas";
-
+        canvas = document.createElement("canvas");
+        canvas.id = "confetti-canvas";
         document.body.appendChild(canvas);
     }
-
-
-    const ctx =
-        canvas.getContext("2d");
-
-
-    const dpr =
-        window.devicePixelRatio || 1;
-
-
-    canvas.width =
-        window.innerWidth * dpr;
-
-    canvas.height =
-        window.innerHeight * dpr;
-
-    canvas.style.width =
-        `${window.innerWidth}px`;
-
-    canvas.style.height =
-        `${window.innerHeight}px`;
-
-
-    ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
-
-
+    const ctx = canvas.getContext("2d");
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = `${ window.innerWidth }px`;
+    canvas.style.height = `${ window.innerHeight }px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const pezzi = [];
-
-
     for (let i = 0; i < 140; i++) {
-
         pezzi.push({
-
-            x:
-                Math.random() *
-                window.innerWidth,
-
-            y:
-                -20 -
-                Math.random() *
-                200,
-
-            size:
-                5 +
-                Math.random() *
-                7,
-
-            speed:
-                2 +
-                Math.random() *
-                4,
-
-            angle:
-                Math.random() *
-                Math.PI *
-                2,
-
-            rotation:
-                Math.random() *
-                0.2 -
-                0.1,
-
-            gravity:
-                0.08 +
-                Math.random() *
-                0.08,
-
+            x: Math.random() * window.innerWidth,
+            y: -20 - Math.random() * 200,
+            size: 5 + Math.random() * 7,
+            speed: 2 + Math.random() * 4,
+            angle: Math.random() * Math.PI * 2,
+            rotation: Math.random() * 0.2 - 0.1,
+            gravity: 0.08 + Math.random() * 0.08,
             opacity: 1
         });
     }
-
-
     let frame;
-
-
     function animazione() {
-
-        ctx.clearRect(
-            0,
-            0,
-            window.innerWidth,
-            window.innerHeight
-        );
-
-
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         let ancora = false;
-
-
         pezzi.forEach(pezzo => {
-
             pezzo.y += pezzo.speed;
-
             pezzo.speed += pezzo.gravity;
-
-            pezzo.x +=
-                Math.sin(pezzo.angle) *
-                1.2;
-
-            pezzo.angle +=
-                pezzo.rotation;
-
-            pezzo.opacity -=
-                0.003;
-
-
-            if (
-                pezzo.y <
-                    window.innerHeight + 30 &&
-                pezzo.opacity > 0
-            ) {
-
+            pezzo.x += Math.sin(pezzo.angle) * 1.2;
+            pezzo.angle += pezzo.rotation;
+            pezzo.opacity -= 0.003;
+            if (pezzo.y < window.innerHeight + 30 && pezzo.opacity > 0) {
                 ancora = true;
-
                 ctx.save();
-
-                ctx.globalAlpha =
-                    pezzo.opacity;
-
-                ctx.translate(
-                    pezzo.x,
-                    pezzo.y
-                );
-
-                ctx.rotate(
-                    pezzo.angle
-                );
-
-
+                ctx.globalAlpha = pezzo.opacity;
+                ctx.translate(pezzo.x, pezzo.y);
+                ctx.rotate(pezzo.angle);
                 const colori = [
                     "#1f6043",
                     "#f9dfa0",
@@ -3154,272 +2272,701 @@ function lanciaConfetti() {
                     "#e7d9ee",
                     "#ffffff"
                 ];
-
-
-                ctx.fillStyle =
-                    colori[
-                        Math.floor(
-                            Math.random() *
-                            colori.length
-                        )
-                    ];
-
-
-                ctx.fillRect(
-                    -pezzo.size / 2,
-                    -pezzo.size / 2,
-                    pezzo.size,
-                    pezzo.size * 1.5
-                );
-
-
+                ctx.fillStyle = colori[Math.floor(Math.random() * colori.length)];
+                ctx.fillRect(-pezzo.size / 2, -pezzo.size / 2, pezzo.size, pezzo.size * 1.5);
                 ctx.restore();
             }
         });
-
-
         if (ancora) {
-
-            frame =
-                requestAnimationFrame(
-                    animazione
-                );
-
+            frame = requestAnimationFrame(animazione);
         } else {
-
             cancelAnimationFrame(frame);
-
-            ctx.clearRect(
-                0,
-                0,
-                window.innerWidth,
-                window.innerHeight
-            );
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         }
     }
-
-
     animazione();
 }
-
-
 /* =========================================================
    INIZIALIZZAZIONE
 ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        const addButton =
-            elemento("aggiungi-giocatore");
-
-
-        if (addButton) {
-
-            addButton.addEventListener(
-                "click",
-                aggiungiGiocatore
-            );
-        }
-
-
-        /*
+document.addEventListener("DOMContentLoaded", function () {
+    const addButton = elemento("aggiungi-giocatore");
+    if (addButton) {
+        addButton.addEventListener("click", aggiungiGiocatore);
+    }
+    /*
            Due giocatori iniziali.
         */
-
-        if (giocatori.length === 0) {
-
-            giocatori = [
-                "",
-                ""
-            ];
-
-            aggiornaListaGiocatori();
-        }
-
-
-        cambiaSistemaPunteggio();
-
-        aggiornaPartitaSalvata();
+    if (giocatori.length === 0) {
+        giocatori = [
+            "",
+            ""
+        ];
+        aggiornaListaGiocatori();
     }
-);
+    cambiaSistemaPunteggio();
+    aggiornaPartitaSalvata();
+});
 /* =========================================================
    EFFETTO PRESSIONE 3D UNIVERSALE
    ========================================================= */
-
 document.addEventListener("pointerdown", function (evento) {
-
     const bottone = evento.target.closest("button");
-
     if (!bottone || bottone.disabled) {
         return;
     }
-
     bottone.classList.add("is-pressed");
 });
-
-
 function rimuoviPressione3D(evento) {
-
     const bottone = evento.target.closest("button");
-
     if (bottone) {
         bottone.classList.remove("is-pressed");
     }
 }
-
-
-document.addEventListener(
-    "pointerup",
-    rimuoviPressione3D
-);
-
-document.addEventListener(
-    "pointercancel",
-    rimuoviPressione3D
-);
-
-window.addEventListener(
-    "blur",
-    function () {
-
-        document
-            .querySelectorAll("button.is-pressed")
-            .forEach(function (bottone) {
-
-                bottone.classList.remove("is-pressed");
-
-            });
-    }
-);
-
-
+document.addEventListener("pointerup", rimuoviPressione3D);
+document.addEventListener("pointercancel", rimuoviPressione3D);
+window.addEventListener("blur", function () {
+    document.querySelectorAll("button.is-pressed").forEach(function (bottone) {
+        bottone.classList.remove("is-pressed");
+    });
+});
 /* =========================================================
    PWA - REGISTRAZIONE SERVICE WORKER
    Permette all'app di funzionare offline e di essere
    installata sulla schermata Home come app standalone.
 ========================================================= */
-
 if ("serviceWorker" in navigator) {
-
     window.addEventListener("load", function () {
-
-        navigator.serviceWorker
-            .register("sw.js")
-            .catch(function () {
-                // Se la registrazione fallisce l'app continua
-                // a funzionare normalmente, solo senza offline.
-            });
+        navigator.serviceWorker.register("sw.js").catch(function () {
+            // Se la registrazione fallisce l'app continua
+            // a funzionare normalmente, solo senza offline.
+        });
     });
 }
 /* =========================================================
    POPUP SCELTA GIOCATORE CHE INIZIA
+   Sorteggio a schermo intero: il nome scorre rapidamente
+   per 5 secondi e poi si ferma sul vincitore.
 ========================================================= */
-
 function apriPopupInizioGame() {
+    if (partitaTerminata || !giocatori.length) {
+        return;
+    }
 
-    if (partitaTerminata) return;
-
-    // Chiudiamo eventuali popup precedenti
     chiudiPopupInizioGame();
 
     const overlay = document.createElement("div");
-    overlay.className = "starting-player-overlay";
+    overlay.className = "starting-draw-overlay";
 
     const popup = document.createElement("div");
-    popup.className = "starting-player-popup";
+    popup.className = "starting-draw-popup";
 
     popup.innerHTML = `
-        <div class="starting-player-icon">
-            🎯
+        <div class="starting-draw-badge">
+            🎰
         </div>
 
-        <div class="starting-player-label">
-            NUOVO GAME
+        <div class="starting-draw-label">
+            SORTEGGIO
         </div>
 
         <h2>
             Chi inizia?
         </h2>
 
-        <p>
-            Scegli il giocatore che parte per primo
+        <p class="starting-draw-subtitle">
+            Estraiamo casualmente il primo giocatore
         </p>
 
-        <div class="starting-player-buttons">
-            ${giocatori.map((nome, indice) => `
-                <button
-                    type="button"
-                    class="starting-player-button"
-                    data-player="${indice}"
-                >
-                    <span class="starting-player-number">
-                        ${indice + 1}
-                    </span>
+        <div class="starting-draw-slot">
+            <div class="starting-draw-slot-payline"></div>
+            <div class="starting-draw-reel">
+                <div class="starting-draw-reel-strip"></div>
+            </div>
+            <div class="starting-draw-reel">
+                <div class="starting-draw-reel-strip"></div>
+            </div>
+            <div class="starting-draw-reel">
+                <div class="starting-draw-reel-strip"></div>
+            </div>
+        </div>
 
-                    <strong>
-                        ${escapeHTML(nome)}
-                    </strong>
-                </button>
-            `).join("")}
+        <div class="starting-draw-progress">
+            <div class="starting-draw-progress-fill"></div>
+        </div>
+
+        <div class="starting-draw-countdown">
+            Estrazione in corso…
+        </div>
+
+        <div class="starting-draw-result hidden">
+            <div class="starting-draw-result-label">
+                HA VINTO IL SORTEGGIO
+            </div>
+            <div class="starting-draw-winner"></div>
+            <button
+                type="button"
+                class="starting-draw-start-button"
+            >
+                <span>▶</span>
+                Inizia partita
+            </button>
         </div>
     `;
 
     overlay.appendChild(popup);
     document.body.appendChild(overlay);
 
-    popup.querySelectorAll(".starting-player-button")
-        .forEach(button => {
+    const progress = popup.querySelector(".starting-draw-progress-fill");
+    const countdown = popup.querySelector(".starting-draw-countdown");
+    const result = popup.querySelector(".starting-draw-result");
+    const winnerEl = popup.querySelector(".starting-draw-winner");
+    const startButton = popup.querySelector(".starting-draw-start-button");
+    const rulli = Array.from(popup.querySelectorAll(".starting-draw-reel"));
 
-            button.addEventListener("click", () => {
+    // Il vincitore viene estratto casualmente una sola volta:
+    // tutti e tre i rulli si fermeranno su questo stesso nome.
+    const indiceVincitore = Math.floor(Math.random() * giocatori.length);
+    const nomeVincitore = giocatori[indiceVincitore];
 
-                const indice =
-                    Number(button.dataset.player);
+    // L'altezza viene letta dal DOM così il movimento del rullo
+    // resta sempre perfettamente sincronizzato con il CSS.
+    // IMPORTANTE: va misurata DOPO aver riempito i rulli con i
+    // nomi, altrimenti non esiste ancora nessuna riga da misurare
+    // e si otterrebbe sempre il valore di riserva (sbagliato).
+    const durateRulli = [3000, 3900, 4800];
+    const lunghezzeRulli = [30, 40, 50];
 
-                scegliGiocatoreInizio(indice);
-            });
+    function generaSequenzaRullo(lunghezza) {
+        /*
+           Costruiamo il rullo come una vera slot: ogni ciclo contiene
+           tutti i giocatori una volta, ma l'ordine viene mescolato.
+           Ripetiamo più cicli fino a riempire il rullo e aggiungiamo
+           infine il vincitore nella posizione di arresto.
 
-        });
-}
+           In questo modo durante la rotazione si vedono continuamente
+           nomi diversi, come i diversi simboli di una slot, senza
+           favorire accidentalmente un giocatore perché il suo nome
+           è stato pescato più volte del necessario.
+        */
+        const sequenza = [];
 
+        while (sequenza.length < lunghezza - 1) {
+            const ciclo = [...giocatori];
 
-function scegliGiocatoreInizio(indice) {
+            for (let i = ciclo.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [ciclo[i], ciclo[j]] = [ciclo[j], ciclo[i]];
+            }
 
-    if (
-        !Number.isInteger(indice) ||
-        indice < 0 ||
-        indice >= giocatori.length
-    ) {
-        return;
+            for (const nome of ciclo) {
+                if (sequenza.length >= lunghezza - 1) {
+                    break;
+                }
+                sequenza.push(nome);
+            }
+        }
+
+        // L'ultima posizione di ogni rullo è sempre il vincitore.
+        sequenza.push(nomeVincitore);
+        return sequenza;
     }
 
-    giocatoreAttivo = indice;
+    const strisce = rulli.map((rullo, indice) => {
+        const strip = rullo.querySelector(".starting-draw-reel-strip");
+        const sequenza = generaSequenzaRullo(lunghezzeRulli[indice]);
+        strip.innerHTML = sequenza
+            .map(nome => `<div class="starting-draw-reel-item">${ escapeHTML(nome) }</div>`)
+            .join("");
+        return strip;
+    });
+
+    const ALTEZZA_RIGA = rulli[0]?.querySelector(".starting-draw-reel-item")
+        ?.getBoundingClientRect().height || 192;
+
+    const durataMassimaMs = Math.max(...durateRulli);
+
+    if (progress) {
+        progress.style.animationDuration = (durataMassimaMs + 650) + "ms";
+    }
+
+    const terminaSorteggio = () => {
+        if (!document.body.contains(overlay) || popup.classList.contains("draw-complete")) {
+            return;
+        }
+
+        if (progress) {
+            progress.style.width = "100%";
+        }
+
+        if (countdown) {
+            countdown.textContent = "Sorteggio completato";
+        }
+
+        if (winnerEl) {
+            winnerEl.textContent = nomeVincitore;
+        }
+
+        if (result) {
+            result.classList.remove("hidden");
+            result.classList.add("is-visible");
+        }
+
+        popup.classList.add("draw-complete");
+
+        startButton?.addEventListener("click", () => {
+            giocatoreAttivo = indiceVincitore;
+            partitaIniziata = Date.now();
+            partitaTerminata = false;
+
+            chiudiPopupInizioGame();
+            aggiornaSchermataPartita();
+            salvaPartita();
+        }, { once: true });
+    };
 
     /*
-       Chiude il popup normale
+       Il rullo viene animato aggiornando "transform" ad ogni
+       fotogramma con requestAnimationFrame, invece di usare
+       una CSS transition: su Safari/iOS le transition lunghe
+       su elementi con del testo dentro possono far sparire il
+       testo a metà animazione (bug noto del motore grafico).
+       Aggiornando noi stessi la posizione, il testo resta
+       sempre disegnato normalmente, fotogramma per fotogramma.
+       La curva "ease out" pronunciata dà la sensazione di un
+       vero rullo che rallenta e si ferma.
+    */
+    function easeOutRullo(progresso) {
+        return 1 - Math.pow(1 - progresso, 4);
+    }
+
+    function animaRullo(strip, rullo, offsetFinale, durataMs, alTermine) {
+        const preferenzaRidotta = window.matchMedia
+            && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        rullo.classList.add("is-spinning");
+
+        if (preferenzaRidotta) {
+            strip.style.transform = `translate3d(0, -${ offsetFinale }px, 0)`;
+            rullo.classList.remove("is-spinning");
+            alTermine();
+            return;
+        }
+
+        const partenza = performance.now();
+
+        function fotogramma(adesso) {
+            const trascorso = adesso - partenza;
+            const progresso = Math.min(trascorso / durataMs, 1);
+            const distanza = offsetFinale * easeOutRullo(progresso);
+
+            strip.style.transform = `translate3d(0, -${ distanza }px, 0)`;
+
+            if (progresso < 1) {
+                requestAnimationFrame(fotogramma);
+            } else {
+                // Forziamo il valore finale esatto per evitare anche
+                // micro-disallineamenti dovuti ai decimali dei frame.
+                strip.style.transform = `translate3d(0, -${ offsetFinale }px, 0)`;
+                rullo.classList.remove("is-spinning");
+                alTermine();
+            }
+        }
+
+        requestAnimationFrame(fotogramma);
+    }
+
+    let rulliFermi = 0;
+    strisce.forEach((strip, indice) => {
+        const offset = (lunghezzeRulli[indice] - 1) * ALTEZZA_RIGA;
+        animaRullo(strip, rulli[indice], offset, durateRulli[indice], () => {
+            rulli[indice].classList.add("is-winning");
+            rulliFermi++;
+            if (rulliFermi === rulli.length) {
+                // Lasciamo bene in vista i tre rulli verdi
+                // per un istante prima di aprire il popup.
+                sorteggioInizialeInterval = setTimeout(terminaSorteggio, 200);
+            }
+        });
+    });
+
+    // Rete di sicurezza, nel caso qualcosa impedisse ai rulli
+    // di completare l'animazione.
+    setTimeout(() => {
+        if (!popup.classList.contains("draw-complete")) {
+            terminaSorteggio();
+        }
+    }, durataMassimaMs + 1600);
+}
+function scegliGiocatoreInizio(indice) {
+    if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
+        return;
+    }
+    giocatoreAttivo = indice;
+    /*
+       Chiude il popup del sorteggio
     */
     chiudiPopupInizioGame();
-
     /*
        Chiude anche il popup GAME
        dopo la rotazione
     */
-    const flipPopup =
-        document.querySelector(".game-flip-card");
-
-    const flipOverlay =
-        document.querySelector(".cardscore-overlay");
-
+    const flipPopup = document.querySelector(".game-flip-card");
+    const flipOverlay = document.querySelector(".cardscore-overlay");
     if (flipPopup) {
         flipPopup.remove();
     }
-
     if (flipOverlay) {
         flipOverlay.remove();
     }
-
     aggiornaSchermataPartita();
-
     salvaPartita();
+}
+function chiudiPopupInizioGame() {
+    if (sorteggioInizialeInterval) {
+        clearTimeout(sorteggioInizialeInterval);
+        sorteggioInizialeInterval = null;
+    }
+    const overlay = document.querySelector(".starting-draw-overlay");
+    if (overlay) {
+        overlay.remove();
+    }
+    if (timerSceltaGiocatore) {
+        clearTimeout(timerSceltaGiocatore);
+        timerSceltaGiocatore = null;
+    }
+}
+/* =========================================================
+   MENU PARTITA
+   Per ora solo estetico
+   ========================================================= */
+
+function toggleMatchMenu(event) {
+
+    if (event) {
+        event.stopPropagation();
+    }
+
+    const menu = document.getElementById("match-menu");
+
+    if (!menu) return;
+
+    menu.classList.toggle("hidden");
+}
+
+
+function chiudiMenuPartita() {
+
+    const menu = document.getElementById("match-menu");
+
+    if (!menu) return;
+
+    menu.classList.add("hidden");
+}
+
+
+/* Chiude il menu toccando fuori */
+document.addEventListener("click", function(event) {
+
+    const contenitore =
+        document.querySelector(".match-menu-wrap");
+
+    const menu =
+        document.getElementById("match-menu");
+
+    if (!contenitore || !menu) return;
+
+    if (!contenitore.contains(event.target)) {
+        menu.classList.add("hidden");
+    }
+});
+
+
+/* =========================================================
+   TIMER TURNO (solo Pili Pili)
+   Accessibile dal menu a tre puntini: permette di avviare
+   un conto alla rovescia di 3 o 5 secondi.
+   ========================================================= */
+function apriPopupTimer() {
+    chiudiMenuPartita();
+    chiudiPopupTimer();
+    const overlay = document.createElement("div");
+    overlay.className = "cardscore-overlay timer-popup-overlay";
+    overlay.addEventListener("click", chiudiPopupTimer);
+    const popup = document.createElement("div");
+    popup.className = "timer-popup";
+    popup.addEventListener("click", evento => evento.stopPropagation());
+    popup.innerHTML = `
+        <div class="custom-score-label">
+            TIMER TURNO
+        </div>
+
+        <h2>
+            Quanto tempo?
+        </h2>
+
+        <p>
+            Scegli la durata del timer
+        </p>
+
+        <div class="timer-options">
+
+            <button
+                type="button"
+                class="timer-option-button"
+                data-secondi="3"
+            >
+                3 secondi
+            </button>
+
+            <button
+                type="button"
+                class="timer-option-button"
+                data-secondi="5"
+            >
+                5 secondi
+            </button>
+
+        </div>
+
+        <button
+            type="button"
+            class="timer-cancel"
+        >
+            Annulla
+        </button>
+    `;
+    document.body.appendChild(overlay);
+    document.body.appendChild(popup);
+    popup.querySelectorAll(".timer-option-button").forEach(bottone => {
+        bottone.addEventListener("click", () => {
+            const secondi = parseInt(bottone.dataset.secondi, 10);
+            chiudiPopupTimer();
+            avviaTimerTurno(secondi);
+        });
+    });
+    popup.querySelector(".timer-cancel").addEventListener("click", chiudiPopupTimer);
+}
+function chiudiPopupTimer() {
+    document.querySelectorAll(".timer-popup-overlay").forEach(nodo => nodo.remove());
+    document.querySelectorAll(".timer-popup").forEach(nodo => nodo.remove());
+}
+function avviaTimerTurno(secondiTotali) {
+    chiudiPopupTimerConto();
+    /*
+       IMPORTANTE PER IOS: l'audio va "sbloccato" qui, dentro
+       alla stessa chiamata sincrona generata dal tocco
+       dell'utente su "3 secondi" / "5 secondi". Se creassimo
+       l'AudioContext solo più avanti (quando il timer scade
+       da solo, dentro un setInterval) Safari su iPhone lo
+       terrebbe bloccato e non si sentirebbe alcun suono.
+    */
+    sbloccaAudioTimer();
+    richiediWakeLockTimer();
+    let rimanenti = secondiTotali;
+    const overlay = document.createElement("div");
+    overlay.className = "cardscore-overlay timer-countdown-overlay";
+    const popup = document.createElement("div");
+    popup.id = "timer-countdown-popup";
+    popup.className = "timer-countdown-popup";
+    popup.innerHTML = `
+        <div
+            id="timer-countdown-numero"
+            class="timer-countdown-number"
+        >
+            ${ rimanenti }
+        </div>
+
+        <div class="timer-scaduto-contenuto">
+
+            <div class="timer-scaduto-icon">
+                ⏰
+            </div>
+
+            <div class="timer-scaduto-label">
+                TEMPO SCADUTO
+            </div>
+
+        </div>
+    `;
+    document.body.appendChild(overlay);
+    document.body.appendChild(popup);
+    if (navigator.vibrate) {
+        navigator.vibrate(20);
+    }
+    /*
+       Il popup resta a schermo finché non si tocca in un
+       punto qualsiasi dello schermo: qui chiudiamo timer,
+       allarme e popup insieme.
+    */
+    popupTimerTocco = function () {
+        chiudiPopupTimerConto();
+    };
+    document.addEventListener("pointerdown", popupTimerTocco);
+    timerCountdownInterval = setInterval(() => {
+        rimanenti--;
+        const numeroEl = elemento("timer-countdown-numero");
+        if (rimanenti <= 0) {
+            clearInterval(timerCountdownInterval);
+            timerCountdownInterval = null;
+            if (numeroEl) {
+                numeroEl.textContent = "0";
+            }
+            popup.classList.add("timer-scaduto");
+            avviaAllarmeTimer();
+            return;
+        }
+        if (numeroEl) {
+            numeroEl.textContent = rimanenti;
+        }
+    }, 1000);
+}
+function fermaTimerTurno() {
+    if (timerCountdownInterval) {
+        clearInterval(timerCountdownInterval);
+        timerCountdownInterval = null;
+    }
+}
+/*
+   Chiude il popup del conto alla rovescia: ferma anche
+   il conteggio, l'allarme sonoro/vibrazione e il gestore
+   del tocco sullo schermo.
+*/
+function chiudiPopupTimerConto() {
+    fermaTimerTurno();
+    fermaAllarmeTimer();
+    rilasciaWakeLockTimer();
+    if (popupTimerTocco) {
+        document.removeEventListener("pointerdown", popupTimerTocco);
+        popupTimerTocco = null;
+    }
+    document.querySelectorAll(".timer-countdown-overlay").forEach(nodo => nodo.remove());
+    document.querySelectorAll(".timer-countdown-popup").forEach(nodo => nodo.remove());
+}
+/*
+   WAKE LOCK
+   Mantiene lo schermo acceso durante il conto alla rovescia,
+   cosi' il flash finale resta sempre visibile. Se il browser
+   non lo supporta l'app continua a funzionare normalmente.
+*/
+async function richiediWakeLockTimer() {
+    try {
+        if ("wakeLock" in navigator) {
+            timerWakeLock = await navigator.wakeLock.request("screen");
+        }
+    } catch (errore) {
+        timerWakeLock = null;
+    }
+}
+function rilasciaWakeLockTimer() {
+    if (timerWakeLock) {
+        try {
+            timerWakeLock.release();
+        } catch (errore) {
+            /* Ignoriamo: il wake lock potrebbe essere già scaduto */
+        }
+        timerWakeLock = null;
+    }
+}
+/*
+   Se il telefono viene bloccato/sbloccato o l'app va in
+   background e poi torna visibile mentre il timer è ancora
+   attivo, riproviamo a richiedere il Wake Lock: il sistema lo
+   rilascia automaticamente ogni volta che la pagina perde la
+   visibilità.
+*/
+document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && (timerCountdownInterval || timerSuonoInterval)) {
+        richiediWakeLockTimer();
+    }
+});
+/*
+   ALLARME SONORO + VIBRAZIONE
+   Si ripete finché l'utente non tocca lo schermo
+   (vedi popupTimerTocco in avviaTimerTurno).
+*/
+/*
+   SBLOCCO AUDIO (necessario su iOS/Safari)
+   Va chiamata SEMPRE dentro a un tocco diretto dell'utente:
+   crea/riattiva l'AudioContext e riproduce un suono a volume
+   zero, cosi' il browser lo considera "sbloccato" e permette
+   di riprodurre suoni anche più avanti, in modo automatico
+   (es. quando il timer scade da solo).
+*/
+function sbloccaAudioTimer() {
+    try {
+        const AudioContextClasse = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClasse) {
+            return;
+        }
+        if (!timerAudioCtx) {
+            timerAudioCtx = new AudioContextClasse();
+        }
+        if (timerAudioCtx.state === "suspended") {
+            timerAudioCtx.resume();
+        }
+        const oscillatoreSblocco = timerAudioCtx.createOscillator();
+        const guadagnoSblocco = timerAudioCtx.createGain();
+        guadagnoSblocco.gain.value = 0;
+        oscillatoreSblocco.connect(guadagnoSblocco);
+        guadagnoSblocco.connect(timerAudioCtx.destination);
+        oscillatoreSblocco.start();
+        oscillatoreSblocco.stop(timerAudioCtx.currentTime + 0.05);
+    } catch (errore) {
+        /* Audio non disponibile: l'app continua comunque a funzionare */
+    }
+}
+function suonaBeepTimer() {
+    try {
+        if (!timerAudioCtx) {
+            const AudioContextClasse = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClasse) {
+                return;
+            }
+            timerAudioCtx = new AudioContextClasse();
+        }
+        if (timerAudioCtx.state === "suspended") {
+            timerAudioCtx.resume();
+        }
+        const oscillatore = timerAudioCtx.createOscillator();
+        const guadagno = timerAudioCtx.createGain();
+        oscillatore.type = "sine";
+        oscillatore.frequency.value = 880;
+        guadagno.gain.value = 0.3;
+        oscillatore.connect(guadagno);
+        guadagno.connect(timerAudioCtx.destination);
+        oscillatore.start();
+        oscillatore.stop(timerAudioCtx.currentTime + 0.35);
+    } catch (errore) {
+        /* Audio non disponibile: l'app continua comunque a funzionare */
+    }
+}
+function avviaAllarmeTimer() {
+    fermaAllarmeTimer();
+    if (!document.getElementById("timer-flash-overlay")) {
+        const flash = document.createElement("div");
+        flash.id = "timer-flash-overlay";
+        flash.className = "timer-flash-overlay";
+        document.body.appendChild(flash);
+    }
+    suonaBeepTimer();
+    if (navigator.vibrate) {
+        navigator.vibrate([250, 120, 250, 120, 250]);
+    }
+    timerSuonoInterval = setInterval(() => {
+        suonaBeepTimer();
+        if (navigator.vibrate) {
+            navigator.vibrate([250, 120, 250, 120, 250]);
+        }
+    }, 900);
+}
+function fermaAllarmeTimer() {
+    if (timerSuonoInterval) {
+        clearInterval(timerSuonoInterval);
+        timerSuonoInterval = null;
+    }
+    if (navigator.vibrate) {
+        navigator.vibrate(0);
+    }
+    document.querySelectorAll(".timer-flash-overlay").forEach(nodo => nodo.remove());
 }
