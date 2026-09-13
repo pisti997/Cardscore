@@ -6696,3 +6696,59 @@ button.is-pressed {
 #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
     transform: translateY(-50%) scale(0.90) !important;
 }
+
+
+/* =========================================================
+   CARDSCORE — RIFINITURA PARTITA IN CORSO v6
+   ========================================================= */
+
+/* Il blocco contenuto occupa tutta la card e mantiene il logo centrato */
+#home .saved-game-card:not(.empty-state) .saved-game-content {
+    position: relative !important;
+    grid-template-columns: 84px minmax(0, 1fr) !important;
+    gap: 5px !important;
+    padding-left: 0 !important;
+    padding-right: 58px !important;
+    align-items: center !important;
+}
+
+/* Logo: leggermente più grande e centrato verticalmente */
+#home .saved-game-card:not(.empty-state) .saved-game-icon {
+    width: 88px !important;
+    height: 88px !important;
+    margin: 0 !important;
+    transform: translateX(-3px) !important;
+    align-self: center !important;
+}
+
+/* Separatore verticale tra logo e testi */
+#home .saved-game-card:not(.empty-state) .saved-game-main {
+    min-width: 0 !important;
+    border-left: 1px solid rgba(31, 96, 67, 0.16) !important;
+    padding-left: 7px !important;
+}
+
+/* Titolo del gioco più vicino al logo */
+#home .saved-game-card:not(.empty-state) .saved-game-header {
+    margin-left: 0 !important;
+    gap: 5px !important;
+}
+
+/* Nomi completi: niente abbreviazione/troncamento */
+#home .saved-game-card:not(.empty-state) .saved-player-score span {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+}
+
+/* Freccia: stessa distanza dal bordo destro che ha il logo dal bordo sinistro */
+#home .saved-game-card:not(.empty-state) .saved-game-arrow {
+    right: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+/* Feedback al tocco senza spostare la freccia */
+#home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
+    transform: translateY(-50%) scale(0.90) !important;
+}
