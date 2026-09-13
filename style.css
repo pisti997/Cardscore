@@ -6550,3 +6550,69 @@ button.is-pressed {
 #home .saved-game-card:not(.empty-state) .saved-game-info {
     margin-top: 3px !important;
 }
+
+
+/* =========================================================
+   CARDSCORE — MODIFICHE RICHIESTE — VERSIONE DEFINITIVA
+   ========================================================= */
+
+/* UNO giallo come PILI PILI */
+#home .game-card.game-uno,
+#home .game-uno {
+    background: #fae3aa !important;
+}
+
+/* PILI PILI rosso pastello */
+#home .game-card.game-pili-pili,
+#home .game-pili-pili {
+    background: #f4c6c6 !important;
+}
+
+/* Logo partita in corso: più grande e praticamente sul bordo sinistro */
+#home .saved-game-card:not(.empty-state) .saved-game-content {
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+    gap: 6px !important;
+    padding-left: 0 !important;
+    padding-right: 58px !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon {
+    width: 92px !important;
+    height: 92px !important;
+    margin-left: -8px !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon img {
+    width: 92px !important;
+    height: 92px !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="pili-pili.png"] {
+    width: 86px !important;
+    height: 86px !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scala40.png"] {
+    width: 92px !important;
+    height: 76px !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scopa.png"] {
+    width: 90px !important;
+    height: 78px !important;
+}
+
+/* PARTITA IN CORSO: stesso colore di SCEGLI IL GIOCO */
+#home .saved-game-card:not(.empty-state) .saved-game-heading h2 {
+    color: #173f31 !important;
+}
