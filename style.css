@@ -6752,3 +6752,82 @@ button.is-pressed {
 #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
     transform: translateY(-50%) scale(0.90) !important;
 }
+
+
+/* =========================================================
+   CARDSCORE — RIFINITURA PARTITA IN CORSO v7
+   ========================================================= */
+
+/* Logo: colonna più compatta, logo centrato verticalmente */
+#home .saved-game-card:not(.empty-state) .saved-game-content {
+    grid-template-columns: 78px minmax(0, 1fr) !important;
+    gap: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 54px !important;
+    align-items: stretch !important;
+}
+
+/* Il logo è centrato rispetto all'intera altezza del riquadro */
+#home .saved-game-card:not(.empty-state) .saved-game-icon {
+    width: 88px !important;
+    height: 88px !important;
+    margin: auto 0 !important;
+    align-self: center !important;
+    transform: translateX(-2px) !important;
+}
+
+/* Testi immediatamente accanto al logo, con divisore */
+#home .saved-game-card:not(.empty-state) .saved-game-main {
+    min-width: 0 !important;
+    align-self: center !important;
+    border-left: 1px solid rgba(31, 96, 67, 0.16) !important;
+    padding-left: 8px !important;
+    padding-right: 0 !important;
+}
+
+/* Titolo gioco vicino al logo */
+#home .saved-game-card:not(.empty-state) .saved-game-header {
+    gap: 5px !important;
+    margin: 0 !important;
+}
+
+/* Righe giocatori: nome separato nettamente dal punteggio */
+#home .saved-game-card:not(.empty-state) .saved-player-score {
+    display: grid !important;
+    grid-template-columns: max-content minmax(0, 1fr) !important;
+    align-items: center !important;
+    justify-content: initial !important;
+    gap: 7px !important;
+    min-width: 0 !important;
+}
+
+/* Nomi completi senza sovrapposizione */
+#home .saved-game-card:not(.empty-state) .saved-player-score span {
+    min-width: 0 !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+}
+
+/* Punteggio sempre separato dal nome */
+#home .saved-game-card:not(.empty-state) .saved-player-score strong {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+}
+
+/* Freccia: centrata verticalmente e spostata più verso l'interno */
+#home .saved-game-card:not(.empty-state) .saved-game-arrow {
+    right: 13px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+}
+
+/* Alone CardScore nero */
+#home .brand-text h1 {
+    text-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.28),
+        0 0 14px rgba(0, 0, 0, 0.16) !important;
+}
