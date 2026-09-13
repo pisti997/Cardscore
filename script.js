@@ -2577,10 +2577,10 @@ function apriPopupInizioGame() {
             // assumono progressivamente profondità, come una vera slot.
             const scala = 1 - (intensita * 0.10);
             const opacita = 1 - (intensita * 0.38);
-            const blur = 0;
+            const blur = intensita * 1.05;
 
             elemento.style.opacity = opacita.toFixed(3);
-            elemento.style.filter = "none";
+            elemento.style.filter = `blur(${blur.toFixed(2)}px)`;
             elemento.style.transform = `scale(${scala.toFixed(3)})`;
         }
     }
@@ -2645,7 +2645,7 @@ function apriPopupInizioGame() {
                 slot?.classList.add("all-reels-winning");
                 // Dopo che tutti e tre i rulli sono evidenziati,
                 // facciamo vedere l'effetto di zoom prima del popup.
-                sorteggioInizialeInterval = setTimeout(terminaSorteggio, 1000);
+                sorteggioInizialeInterval = setTimeout(terminaSorteggio, 2000);
             }
         });
     });
@@ -2656,7 +2656,7 @@ function apriPopupInizioGame() {
         if (!popup.classList.contains("draw-complete")) {
             terminaSorteggio();
         }
-    }, durataMassimaMs + 2200);
+    }, durataMassimaMs + 3200);
 }
 function scegliGiocatoreInizio(indice) {
     if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
