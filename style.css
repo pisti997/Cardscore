@@ -6616,3 +6616,83 @@ button.is-pressed {
 #home .saved-game-card:not(.empty-state) .saved-game-heading h2 {
     color: #173f31 !important;
 }
+
+/* =========================================================
+   CARDSCORE — RIFINITURA PARTITA IN CORSO V5
+   ========================================================= */
+
+/* Pili Pili: rosso più acceso, ma ancora nello stesso stile pastello */
+#home .game-card.game-pili-pili,
+#home .game-pili-pili {
+    background: #f3a3a3 !important;
+}
+
+/* Logo leggermente più grande, ma con il testo molto più vicino */
+#home .saved-game-card:not(.empty-state) .saved-game-content {
+    grid-template-columns: 98px minmax(0, 1fr) !important;
+    gap: 2px !important;
+    padding-left: 0 !important;
+    padding-right: 52px !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon {
+    width: 98px !important;
+    height: 98px !important;
+    margin-left: -8px !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon img {
+    width: 98px !important;
+    height: 98px !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="pili-pili.png"] {
+    width: 92px !important;
+    height: 92px !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scala40.png"] {
+    width: 98px !important;
+    height: 81px !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scopa.png"] {
+    width: 96px !important;
+    height: 83px !important;
+}
+
+/* Il nome del giocatore non viene più troncato con i puntini */
+#home .saved-game-card:not(.empty-state) .saved-player-score span {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+    min-width: 0 !important;
+}
+
+/* Riduce ulteriormente la distanza tra nome e relativo punteggio */
+#home .saved-game-card:not(.empty-state) .saved-player-score {
+    gap: 4px !important;
+}
+
+/* Titolo del gioco più vicino al logo */
+#home .saved-game-card:not(.empty-state) .saved-game-header {
+    gap: 4px !important;
+}
+
+/* Freccia: la punta arriva esattamente sul centro del bordo destro */
+#home .saved-game-card:not(.empty-state) .saved-game-arrow {
+    right: -1px !important;
+    width: 40px !important;
+    height: 64px !important;
+    padding: 0 !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    text-align: right !important;
+    font-size: 60px !important;
+    line-height: 1 !important;
+    transform: translateY(-50%) !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
+    transform: translateY(-50%) scale(0.90) !important;
+}
