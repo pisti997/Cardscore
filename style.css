@@ -6009,3 +6009,79 @@ button.is-pressed {
         animation: none !important;
     }
 }
+
+/* =========================================================
+   SORTEGGIO v4 — SFONDO BLUR + RIMOZIONE RIGHE LATERALI
+========================================================= */
+
+/* L'overlay lascia intravedere la schermata sottostante e la sfoca,
+   come l'effetto Sfocatura di iOS. */
+.starting-draw-overlay {
+    background: rgba(247, 249, 246, 0.48) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(115%) !important;
+    backdrop-filter: blur(22px) saturate(115%) !important;
+}
+
+/* Il pannello centrale resta leggero e trasparente: non crea un
+   secondo rettangolo bianco sopra allo sfondo sfocato. */
+.starting-draw-popup {
+    background: transparent !important;
+}
+
+/* Sopra/sotto il rullo niente maschere bianche: usiamo una sfumatura
+   trasparente così il blur rimane uniforme. */
+.starting-draw-slot::before,
+.starting-draw-slot::after {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(255,255,255,0)) !important;
+}
+
+.starting-draw-slot::after {
+    background: linear-gradient(to top, rgba(255,255,255,0.02), rgba(255,255,255,0)) !important;
+}
+
+/* Rimuove in modo assoluto le righe rosa/separatori che possono
+   provenire da bordi, pseudo-elementi, outline, decorazioni o
+   residui di stile sulle singole righe. */
+.starting-draw-reel,
+.starting-draw-reel-strip,
+.starting-draw-reel-item,
+.starting-draw-reel-item::before,
+.starting-draw-reel-item::after {
+    border: 0 !important;
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0 !important;
+    border-left: 0 !important;
+    outline: 0 !important;
+    background-image: none !important;
+    text-decoration: none !important;
+    -webkit-text-decoration: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    caret-color: transparent !important;
+}
+
+/* Nessuna linea verticale interna: ogni rullo deve essere una singola
+   superficie continua. Il bordo esterno resta quello neutro/verde
+   previsto dalle animazioni di vittoria. */
+.starting-draw-reel-strip {
+    box-shadow: none !important;
+}
+
+.starting-draw-reel-item {
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* La casella vincente mantiene esclusivamente il suo fondo verde e
+   il bordo verde, senza alcuna riga laterale. */
+.starting-draw-reel-item.is-center-winner {
+    border: 0 !important;
+    box-shadow: 0 0 0 2px var(--green) inset,
+                0 5px 14px rgba(35,104,68,.12) !important;
+}
+
+/* La sola linea ammessa è la payline verde centrale. */
+.starting-draw-slot-payline {
+    border: 0 !important;
+    box-shadow: none !important;
+}
