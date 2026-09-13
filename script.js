@@ -2428,6 +2428,7 @@ function apriPopupInizioGame() {
     const winnerEl = popup.querySelector(".starting-draw-winner");
     const startButton = popup.querySelector(".starting-draw-start-button");
     const rulli = Array.from(popup.querySelectorAll(".starting-draw-reel"));
+    const slot = popup.querySelector(".starting-draw-slot");
 
     // Estrazione totalmente casuale: il vincitore NON dipende
     // dalla posizione del nome nella schermata di inserimento.
@@ -2641,7 +2642,10 @@ function apriPopupInizioGame() {
             if (rulliFermi === rulli.length) {
                 // Lasciamo bene in vista i tre rulli verdi
                 // per un istante prima di aprire il popup.
-                sorteggioInizialeInterval = setTimeout(terminaSorteggio, 200);
+                slot?.classList.add("all-reels-winning");
+                // Dopo che tutti e tre i rulli sono evidenziati,
+                // facciamo vedere l'effetto di zoom prima del popup.
+                sorteggioInizialeInterval = setTimeout(terminaSorteggio, 2000);
             }
         });
     });
@@ -2652,7 +2656,7 @@ function apriPopupInizioGame() {
         if (!popup.classList.contains("draw-complete")) {
             terminaSorteggio();
         }
-    }, durataMassimaMs + 1600);
+    }, durataMassimaMs + 3200);
 }
 function scegliGiocatoreInizio(indice) {
     if (!Number.isInteger(indice) || indice < 0 || indice >= giocatori.length) {
