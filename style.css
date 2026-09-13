@@ -5210,7 +5210,7 @@ button.is-pressed {
 /* Leggero blur solo mentre il rullo gira: il nome resta leggibile
    ma comunica velocità, senza l'effetto di testo che scompare. */
 .starting-draw-reel.is-spinning .starting-draw-reel-item {
-    filter: none !important;
+    filter: blur(0.55px);
     opacity: 0.88;
 }
 
@@ -6084,27 +6084,4 @@ button.is-pressed {
 .starting-draw-slot-payline {
     border: 0 !important;
     box-shadow: none !important;
-}
-
-
-/* =========================================================
-   SORTEGGIO v5 — PULIZIA DEFINITIVA ARTEFATTI ROSA
-   ========================================================= */
-.starting-draw-reel-item,
-.starting-draw-reel-item::before,
-.starting-draw-reel-item::after {
-    border: 0 !important;
-    outline: 0 !important;
-    background-image: none !important;
-    text-decoration: none !important;
-    -webkit-text-decoration: none !important;
-    box-shadow: none !important;
-    filter: none !important;
-    -webkit-filter: none !important;
-    caret-color: transparent !important;
-}
-
-.starting-draw-reel.is-spinning .starting-draw-reel-item {
-    filter: none !important;
-    -webkit-filter: none !important;
 }
