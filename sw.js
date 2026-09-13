@@ -5,7 +5,7 @@
    forzare il refresh della cache sui dispositivi.
 ========================================================= */
 
-const CACHE_NAME = "cardscore-cache-v119";
+const CACHE_NAME = "cardscore-cache-v120";
 
 const FILE_DA_CACHARE = [
     "./",
