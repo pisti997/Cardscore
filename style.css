@@ -6114,3 +6114,179 @@ button.is-pressed {
     filter: blur(0.55px) !important;
     -webkit-filter: blur(0.55px) !important;
 }
+
+/* =========================================================
+   CARDSCORE HOME — NUOVO RESTYLING
+   Richiesto: logo/titolo più grandi, sfondo bordeaux tenue,
+   card giochi più profonde, stato vuoto compatto.
+   ========================================================= */
+#home.active {
+    position: relative;
+    isolation: isolate;
+    overflow-x: hidden;
+    background: #f8f4f4;
+}
+
+/* Effetto bordeaux molto leggero + alone sfocato */
+#home.active::before {
+    content: "";
+    position: absolute;
+    inset: -45px;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 12% 16%, rgba(112, 34, 58, 0.105) 0, rgba(112, 34, 58, 0) 34%),
+        radial-gradient(circle at 88% 42%, rgba(112, 34, 58, 0.075) 0, rgba(112, 34, 58, 0) 38%),
+        radial-gradient(circle at 45% 100%, rgba(112, 34, 58, 0.06) 0, rgba(112, 34, 58, 0) 42%);
+    filter: blur(24px);
+    transform: scale(1.05);
+}
+
+#home .home-header,
+#home .home-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* LOGO + TITOLO */
+#home .home-header {
+    padding-top: calc(env(safe-area-inset-top) + 8px);
+    padding-bottom: 0;
+}
+
+#home .brand {
+    gap: 12px;
+    align-items: center;
+}
+
+#home .brand-icon {
+    width: 86px;
+    height: 86px;
+    flex: 0 0 86px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: transparent;
+    box-shadow: 0 10px 24px rgba(46, 25, 31, 0.13);
+}
+
+#home .brand-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 24px;
+}
+
+#home .brand-text {
+    text-align: left;
+}
+
+#home .brand-text h1 {
+    margin: 0;
+    font-size: 58px;
+    line-height: 0.94;
+    letter-spacing: -2.4px;
+    font-weight: 800;
+    color: #1f6043;
+}
+
+/* Sottotitolo eliminato */
+#home .brand-text p {
+    display: none !important;
+}
+
+/* Titolo sezione */
+#home .home-section-heading {
+    margin-bottom: 14px;
+}
+
+#home .home-section-heading h2 {
+    font-size: 18px;
+    letter-spacing: 0.35px;
+}
+
+/* CARD DEI GIOCHI */
+#home .games-grid {
+    gap: 11px;
+}
+
+#home .game-card {
+    min-height: 164px;
+    border-radius: 25px;
+    box-shadow:
+        0 12px 30px rgba(45, 29, 34, 0.13),
+        0 3px 8px rgba(45, 29, 34, 0.07);
+}
+
+#home .game-card:active {
+    box-shadow:
+        0 5px 14px rgba(45, 29, 34, 0.12),
+        0 2px 5px rgba(45, 29, 34, 0.08);
+}
+
+#home .game-card-image {
+    height: 104px;
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#home .game-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+}
+
+#home .game-card-info {
+    min-height: 60px;
+    padding: 5px 8px 9px;
+}
+
+#home .game-card-info h3 {
+    font-size: 15px;
+}
+
+/* Riquadro "Nessuna partita in corso": circa metà dell'altezza */
+#home .saved-game-card.empty-state {
+    min-height: 70px !important;
+    height: 70px;
+    margin-top: 16px;
+    padding: 10px 14px !important;
+    border-radius: 23px;
+    box-shadow:
+        0 10px 25px rgba(45, 29, 34, 0.10),
+        0 2px 7px rgba(45, 29, 34, 0.05);
+}
+
+#home .saved-game-card.empty-state .saved-game-info,
+#home .saved-game-card.empty-state .saved-game-empty {
+    font-size: 18px !important;
+    line-height: 1 !important;
+}
+
+/* Privacy eliminata */
+#home .privacy-note {
+    display: none !important;
+}
+
+@media (max-width: 375px) {
+    #home .brand-icon {
+        width: 76px;
+        height: 76px;
+        flex-basis: 76px;
+        border-radius: 22px;
+    }
+    #home .brand-icon img { border-radius: 22px; }
+    #home .brand-text h1 {
+        font-size: 51px;
+        letter-spacing: -2.1px;
+    }
+    #home .game-card { min-height: 154px; }
+    #home .game-card-image { height: 96px; }
+    #home .saved-game-card.empty-state {
+        min-height: 66px !important;
+        height: 66px;
+    }
+}
