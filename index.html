@@ -10,7 +10,7 @@
 
     <meta
         name="theme-color"
-        content="#f7f3f4"
+        content="#f7f8f4"
     >
 
     <meta
@@ -35,9 +35,9 @@
 
     <link rel="manifest" href="manifest.json">
 
-    <link rel="icon" href="icone/icon-192.png" type="image/png">
-<link rel="apple-touch-icon" href="icone/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="icone/apple-touch-icon.png">
+    <link rel="icon" href="icone/icon-192.png">
+    <link rel="apple-touch-icon" href="icone/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icone/icon-192.png">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -62,7 +62,7 @@
 
             <div class="brand-icon">
                 <img
-                    src="icone/icon-192.png"
+                    src="icone/icon-513.JPG"
                     alt="CardScore"
                 >
             </div>
@@ -73,6 +73,9 @@
                     CardScore
                 </h1>
 
+                <p>
+                    Il tuo punteggio, ogni partita.
+                </p>
 
             </div>
 
@@ -313,20 +316,31 @@
                 </div>
 
 
-                <!-- FRECCIA: continua la partita -->
-                <button
+                <!-- FRECCIA -->
+
+                <div
                     class="saved-game-arrow"
-                    type="button"
-                    onclick="continuaPartita()"
+                    role="button"
+                    tabindex="0"
                     aria-label="Continua partita"
+                    onclick="continuaPartita()"
+                    onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); continuaPartita(); }"
                 >
                     ›
-                </button>
+                </div>
 
             </div>
+</div>
 
-        </div>
-</main>
+
+        <!-- PRIVACY -->
+
+        <p class="privacy-note">
+            🔒 I tuoi dati restano sul dispositivo
+        </p>
+
+
+    </main>
 
 </section>
 
