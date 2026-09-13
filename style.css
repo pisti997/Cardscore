@@ -5672,3 +5672,154 @@ button.is-pressed {
         font-size: 30px !important;
     }
 }
+
+
+/* =========================================================
+   SORTeggio PREMIUM - effetto slot / profondita'
+   Override finale: prevale anche sulle vecchie regole responsive.
+========================================================= */
+.starting-draw-reel {
+    height: 192px !important;
+    min-height: 192px !important;
+    max-height: 192px !important;
+    overflow: hidden !important;
+    perspective: 700px;
+    background: linear-gradient(180deg, rgba(243,245,241,.92), rgba(250,251,249,.98)) !important;
+    border: 1px solid rgba(40,65,48,.08) !important;
+    box-shadow: inset 0 12px 18px rgba(35,55,42,.045),
+                inset 0 -12px 18px rgba(35,55,42,.045) !important;
+}
+
+.starting-draw-reel.is-spinning {
+    background: linear-gradient(180deg, rgba(238,241,236,.96), rgba(248,250,247,.98)) !important;
+    box-shadow: inset 0 14px 22px rgba(35,55,42,.07),
+                inset 0 -14px 22px rgba(35,55,42,.07) !important;
+}
+
+.starting-draw-reel-strip {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+.starting-draw-reel-item {
+    height: 64px !important;
+    min-height: 64px !important;
+    max-height: 64px !important;
+    flex: 0 0 64px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 8px !important;
+    color: var(--green-dark) !important;
+    font-size: 31px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    letter-spacing: -0.9px !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    transform-origin: center center;
+    transition: background .22s ease, box-shadow .22s ease;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* La vittoria evidenzia SOLO la casella centrale, non tutto il rullo. */
+.starting-draw-reel.is-winning {
+    background: linear-gradient(180deg, rgba(243,246,241,.96), rgba(250,251,249,.98)) !important;
+    box-shadow: inset 0 12px 18px rgba(35,55,42,.045),
+                inset 0 -12px 18px rgba(35,55,42,.045) !important;
+}
+
+.starting-draw-reel-item.is-center-winner {
+    position: relative;
+    z-index: 5;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: scale(1.02) !important;
+    color: var(--green-dark) !important;
+    background: var(--green-soft) !important;
+    border-radius: 13px;
+    box-shadow: 0 0 0 2px var(--green) inset,
+                0 5px 14px rgba(35,104,68,.12);
+}
+
+/* Piccoli indicatori laterali sulla payline. */
+.starting-draw-slot-payline {
+    z-index: 10 !important;
+    height: 2px !important;
+    background: rgba(111,177,115,.48) !important;
+}
+
+.starting-draw-slot-payline::before,
+.starting-draw-slot-payline::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform: translateY(-50%);
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+}
+
+.starting-draw-slot-payline::before {
+    left: -1px;
+    border-right: 7px solid rgba(54,119,78,.72);
+}
+
+.starting-draw-slot-payline::after {
+    right: -1px;
+    border-left: 7px solid rgba(54,119,78,.72);
+}
+
+/* Risultato finale piu' compatto e piu' coerente con il sorteggio. */
+.starting-draw-result-icon {
+    width: 66px;
+    height: 66px;
+    margin-bottom: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--green-soft);
+    font-size: 32px;
+    box-shadow: 0 10px 25px rgba(35,104,68,.10);
+    animation: startingDrawResultIcon .55s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.starting-draw-result-label {
+    margin-bottom: 8px !important;
+    font-size: 11px !important;
+    letter-spacing: 1.7px !important;
+}
+
+.starting-draw-winner {
+    font-size: clamp(38px, 10vw, 54px) !important;
+    letter-spacing: -1.4px !important;
+}
+
+@keyframes startingDrawResultIcon {
+    0% { opacity: 0; transform: scale(.65) rotate(-8deg); }
+    70% { opacity: 1; transform: scale(1.08) rotate(2deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@media (max-width: 390px) {
+    .starting-draw-reel {
+        height: 192px !important;
+        min-height: 192px !important;
+        max-height: 192px !important;
+    }
+    .starting-draw-reel-item {
+        height: 64px !important;
+        min-height: 64px !important;
+        max-height: 64px !important;
+        flex-basis: 64px !important;
+        font-size: 28px !important;
+    }
+}
