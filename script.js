@@ -2145,23 +2145,16 @@ function aggiornaPartitaSalvata() {
             </div>
 
 
-            <div class="saved-game-arrow">
+            <button
+                class="saved-game-arrow"
+                type="button"
+                onclick="continuaPartita()"
+                aria-label="Continua partita"
+            >
                 ›
-            </div>
+            </button>
 
         </div>
-
-
-        <button
-            id="continua-partita-btn"
-            class="primary-button"
-            type="button"
-            onclick="continuaPartita()"
-        >
-            <span>▶</span>
-            Continua partita
-        </button>
-
     `;
 }
 /* =========================================================
