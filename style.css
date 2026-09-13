@@ -6439,3 +6439,91 @@ button.is-pressed {
     transform: translate(-50%, -50%) !important;
     text-align: center !important;
 }
+
+
+/* =========================================================
+   PARTITA IN CORSO — NUOVO LAYOUT
+   ========================================================= */
+@media (max-width: 430px) {
+    #home .saved-game-card:not(.empty-state) {
+        margin-top: 30px !important;
+        padding: 0 0 14px !important;
+        border-radius: 25px !important;
+        box-shadow:
+            0 12px 30px rgba(45, 29, 34, 0.13),
+            0 3px 8px rgba(45, 29, 34, 0.07) !important;
+        overflow: hidden;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-heading {
+        margin: 0 !important;
+        padding: 13px 18px 4px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-content {
+        grid-template-columns: 76px minmax(0, 1fr) 42px !important;
+        align-items: center !important;
+        gap: 10px !important;
+        padding: 0 16px 0 18px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-icon {
+        width: 76px !important;
+        height: 76px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-icon img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        display: block !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="uno.png"],
+    #home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="pili-pili.png"],
+    #home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scala40.png"],
+    #home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scopa.png"] {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-heading + .saved-game-content {
+        margin-top: 0 !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-arrow {
+        width: 42px !important;
+        height: 64px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        outline: 0 !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        background: transparent !important;
+        color: #173f31 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-family: inherit !important;
+        font-size: 60px !important;
+        font-weight: 400 !important;
+        line-height: 1 !important;
+        cursor: pointer;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
+        transform: scale(0.90);
+    }
+
+    #home .saved-game-card:not(.empty-state) #continua-partita-btn {
+        display: none !important;
+    }
+}
