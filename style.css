@@ -6085,3 +6085,32 @@ button.is-pressed {
     border: 0 !important;
     box-shadow: none !important;
 }
+/* =========================================
+   FIX RIGHE ROSA / CURSORE TESTO SU SAFARI
+   ========================================= */
+
+.starting-draw-reel,
+.starting-draw-reel-strip,
+.starting-draw-reel-item {
+    -webkit-user-select: none !important;
+    user-select: none !important;
+
+    -webkit-touch-callout: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+
+    caret-color: transparent !important;
+    outline: none !important;
+    text-decoration: none !important;
+}
+
+.starting-draw-reel-item::before,
+.starting-draw-reel-item::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* Manteniamo il blur durante il movimento */
+.starting-draw-reel.is-spinning .starting-draw-reel-item {
+    filter: blur(0.55px) !important;
+    -webkit-filter: blur(0.55px) !important;
+}
