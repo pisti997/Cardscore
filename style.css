@@ -5823,3 +5823,76 @@ button.is-pressed {
         font-size: 28px !important;
     }
 }
+
+
+/* =========================================================
+   SORTEGGIO — FINISH ZOOM + PULIZIA RIGHE
+   ========================================================= */
+
+/* Nessuna riga/separatore colorato sulle singole caselle. */
+.starting-draw-reel-item,
+.starting-draw-reel-item::before,
+.starting-draw-reel-item::after {
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0 !important;
+    border-left: 0 !important;
+    text-decoration: none !important;
+    background-image: none !important;
+}
+
+/* Manteniamo la sola payline verde centrale. */
+.starting-draw-slot-payline {
+    background: rgba(111,177,115,.48) !important;
+}
+
+/* Quando tutti e tre i rulli hanno trovato il vincitore,
+   il bordo verde fa un doppio "zoom" come un simbolo vincente
+   di una slot: si ingrandisce, emette un glow e torna in posizione. */
+.starting-draw-slot.all-reels-winning .starting-draw-reel {
+    animation: slotWinningZoom 1.05s cubic-bezier(.2,.8,.2,1) 0s 2;
+    z-index: 6;
+}
+
+.starting-draw-slot.all-reels-winning .starting-draw-reel-item.is-center-winner {
+    animation: slotWinnerZoom 1.05s cubic-bezier(.2,.8,.2,1) 0s 2;
+}
+
+@keyframes slotWinningZoom {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 2px var(--green) inset,
+                    0 8px 18px rgba(35,104,68,.12);
+    }
+    45% {
+        transform: scale(1.045);
+        box-shadow: 0 0 0 3px var(--green) inset,
+                    0 0 0 7px rgba(54,119,78,.10),
+                    0 14px 30px rgba(35,104,68,.20);
+    }
+    70% {
+        transform: scale(1.015);
+        box-shadow: 0 0 0 2px var(--green) inset,
+                    0 0 0 4px rgba(54,119,78,.07),
+                    0 10px 22px rgba(35,104,68,.15);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 2px var(--green) inset,
+                    0 8px 18px rgba(35,104,68,.12);
+    }
+}
+
+@keyframes slotWinnerZoom {
+    0% { transform: scale(1.02); }
+    45% { transform: scale(1.10); }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .starting-draw-slot.all-reels-winning .starting-draw-reel,
+    .starting-draw-slot.all-reels-winning .starting-draw-reel-item.is-center-winner {
+        animation: none !important;
+    }
+}
