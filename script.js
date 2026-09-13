@@ -2428,68 +2428,72 @@ function apriPopupInizioGame() {
     const startButton = popup.querySelector(".starting-draw-start-button");
     const rulli = Array.from(popup.querySelectorAll(".starting-draw-reel"));
 
-    // Il vincitore viene estratto casualmente una sola volta:
-    // tutti e tre i rulli si fermeranno su questo stesso nome.
-    // Estrazione realmente casuale, indipendente dalla posizione del giocatore nel form.
-    const arrayCasuale = new Uint32Array(1);
-    crypto.getRandomValues(arrayCasuale);
-    const indiceVincitore = arrayCasuale[0] % giocatori.length;
+    // Estrazione totalmente casuale: il vincitore NON dipende
+    // dalla posizione del nome nella schermata di inserimento.
+    const indiceVincitore = Math.floor(Math.random() * giocatori.length);
     const nomeVincitore = giocatori[indiceVincitore];
 
-    // L'altezza viene letta dal DOM così il movimento del rullo
-    // resta sempre perfettamente sincronizzato con il CSS.
-    // IMPORTANTE: va misurata DOPO aver riempito i rulli con i
-    // nomi, altrimenti non esiste ancora nessuna riga da misurare
-    // e si otterrebbe sempre il valore di riserva (sbagliato).
+    // Ogni rullo è alto 192px e mostra 3 nomi da 64px.
+    const ALTEZZA_RIGA = 64;
+    const ALTEZZA_FINEStra = 192;
     const durateRulli = [3000, 3900, 4800];
-    const lunghezzeRulli = [30, 40, 50];
+    const lunghezzeRulli = [42, 54, 66];
+
+    function mescola(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
 
     function generaSequenzaRullo(lunghezza) {
-        /*
-           Costruiamo il rullo come una vera slot: ogni ciclo contiene
-           tutti i giocatori una volta, ma l'ordine viene mescolato.
-           Ripetiamo più cicli fino a riempire il rullo e aggiungiamo
-           infine il vincitore nella posizione di arresto.
-
-           In questo modo durante la rotazione si vedono continuamente
-           nomi diversi, come i diversi simboli di una slot, senza
-           favorire accidentalmente un giocatore perché il suo nome
-           è stato pescato più volte del necessario.
-        */
+        // Il vincitore viene inserito in una posizione interna al rullo,
+        // non semplicemente nell'ultima riga. In questo modo ha sempre
+        // un nome sopra e uno sotto quando il rullo si ferma.
+        const posizioneVincitore = lunghezza - 2;
         const sequenza = [];
 
-        while (sequenza.length < lunghezza - 1) {
-            const ciclo = [...giocatori];
-
-            for (let i = ciclo.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [ciclo[i], ciclo[j]] = [ciclo[j], ciclo[i]];
-            }
-
+        while (sequenza.length < posizioneVincitore) {
+            const ciclo = mescola([...giocatori]);
             for (const nome of ciclo) {
-                if (sequenza.length >= lunghezza - 1) {
-                    break;
-                }
+                if (sequenza.length >= posizioneVincitore) break;
                 sequenza.push(nome);
             }
         }
 
-        // L'ultima posizione di ogni rullo è sempre il vincitore.
+        // Evitiamo che il vincitore compaia già immediatamente prima
+        // della posizione finale: la fermata deve sembrare un vero sorteggio.
+        if (sequenza.length > 0 && sequenza[sequenza.length - 1] === nomeVincitore) {
+            const altro = sequenza.findIndex(nome => nome !== nomeVincitore);
+            if (altro >= 0) {
+                [sequenza[sequenza.length - 1], sequenza[altro]] =
+                    [sequenza[altro], sequenza[sequenza.length - 1]];
+            }
+        }
+
         sequenza.push(nomeVincitore);
-        return sequenza;
+
+        // Aggiungiamo una riga successiva, così il vincitore ha
+        // sicuramente anche un nome visibile sotto la payline.
+        const sotto = giocatori.filter(nome => nome !== nomeVincitore);
+        if (sotto.length) {
+            sequenza.push(sotto[Math.floor(Math.random() * sotto.length)]);
+        } else {
+            sequenza.push(nomeVincitore);
+        }
+
+        return { sequenza, posizioneVincitore };
     }
 
-    const strisce = rulli.map((rullo, indice) => {
+    const datiRulli = rulli.map((rullo, indice) => {
         const strip = rullo.querySelector(".starting-draw-reel-strip");
-        const sequenza = generaSequenzaRullo(lunghezzeRulli[indice]);
-        strip.innerHTML = sequenza
+        const dati = generaSequenzaRullo(lunghezzeRulli[indice]);
+        strip.innerHTML = dati.sequenza
             .map(nome => `<div class="starting-draw-reel-item">${ escapeHTML(nome) }</div>`)
             .join("");
-        return strip;
+        return { rullo, strip, posizioneVincitore: dati.posizioneVincitore };
     });
-
-    const ALTEZZA_RIGA = rulli[0]?.querySelector(".starting-draw-reel-item")
-        ?.getBoundingClientRect().height || 192;
 
     const durataMassimaMs = Math.max(...durateRulli);
 
@@ -2584,14 +2588,14 @@ function apriPopupInizioGame() {
     }
 
     let rulliFermi = 0;
-    strisce.forEach((strip, indice) => {
-        // Il rullo è alto 192px e ogni nome 64px: così restano
-        // visibili 3 nomi contemporaneamente. Fermiamo il vincitore
-        // al centro della finestra, non in cima al rullo.
-        const altezzaFinestra = rulli[indice].getBoundingClientRect().height || 192;
-        const offset = (lunghezzeRulli[indice] - 1) * ALTEZZA_RIGA
+    datiRulli.forEach((dati, indice) => {
+        // Fermiamo il vincitore ESATTAMENTE sulla payline centrale.
+        // Con 3 righe visibili (64 + 64 + 64) resta quindi sempre:
+        // nome sopra / VINCITORE / nome sotto.
+        const altezzaFinestra = rulli[indice].getBoundingClientRect().height || ALTEZZA_FINEStra;
+        const offset = dati.posizioneVincitore * ALTEZZA_RIGA
             - (altezzaFinestra - ALTEZZA_RIGA) / 2;
-        animaRullo(strip, rulli[indice], offset, durateRulli[indice], () => {
+        animaRullo(dati.strip, rulli[indice], offset, durateRulli[indice], () => {
             rulli[indice].classList.add("is-winning");
             rulliFermi++;
             if (rulliFermi === rulli.length) {
