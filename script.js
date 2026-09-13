@@ -2065,8 +2065,13 @@ function aggiornaPartitaSalvata() {
         card.classList.remove("hidden");
         card.classList.add("empty-state");
         card.innerHTML = `
-            <div class="saved-game-empty">
-                Nessuna partita in corso
+            <div class="saved-game-empty-content">
+                <div class="saved-game-empty-icon" aria-hidden="true">🏆</div>
+                <div class="saved-game-empty-text">
+                    <strong>Nessuna partita in corso</strong>
+                    <span>Inizia una nuova sfida!</span>
+                </div>
+                <div class="saved-game-empty-arrow" aria-hidden="true">›</div>
             </div>
         `;
         return;
