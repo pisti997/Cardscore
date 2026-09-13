@@ -2404,6 +2404,7 @@ function apriPopupInizioGame() {
         </div>
 
         <div class="starting-draw-result hidden">
+            <div class="starting-draw-result-icon">🏆</div>
             <div class="starting-draw-result-label">
                 HA VINTO IL SORTEGGIO
             </div>
@@ -2430,7 +2431,17 @@ function apriPopupInizioGame() {
 
     // Estrazione totalmente casuale: il vincitore NON dipende
     // dalla posizione del nome nella schermata di inserimento.
-    const indiceVincitore = Math.floor(Math.random() * giocatori.length);
+    // Estrazione indipendente dall'ordine dei giocatori.
+    // Usiamo crypto quando disponibile per evitare qualsiasi legame
+    // percepibile con la posizione del primo nome.
+    const indiceVincitore = (() => {
+        if (window.crypto?.getRandomValues) {
+            const buffer = new Uint32Array(1);
+            window.crypto.getRandomValues(buffer);
+            return buffer[0] % giocatori.length;
+        }
+        return Math.floor(Math.random() * giocatori.length);
+    })();
     const nomeVincitore = giocatori[indiceVincitore];
 
     // Ogni rullo è alto 192px e mostra 3 nomi da 64px.
@@ -2551,16 +2562,49 @@ function apriPopupInizioGame() {
         return 1 - Math.pow(1 - progresso, 4);
     }
 
-    function animaRullo(strip, rullo, offsetFinale, durataMs, alTermine) {
+    function aggiornaEffettoProfonditaRullo(strip, rullo, distanza) {
+        const centroFinestra = ALTEZZA_FINEStra / 2;
+        const elementi = strip.children;
+
+        for (let i = 0; i < elementi.length; i++) {
+            const elemento = elementi[i];
+            const centroElemento = (i * ALTEZZA_RIGA) + (ALTEZZA_RIGA / 2) - distanza;
+            const distanzaDalCentro = Math.abs(centroElemento - centroFinestra);
+            const intensita = Math.min(distanzaDalCentro / centroFinestra, 1);
+
+            // Il nome centrale è nitido e pieno; quelli sopra e sotto
+            // assumono progressivamente profondità, come una vera slot.
+            const scala = 1 - (intensita * 0.10);
+            const opacita = 1 - (intensita * 0.38);
+            const blur = intensita * 1.05;
+
+            elemento.style.opacity = opacita.toFixed(3);
+            elemento.style.filter = `blur(${blur.toFixed(2)}px)`;
+            elemento.style.transform = `scale(${scala.toFixed(3)})`;
+        }
+    }
+
+    function animaRullo(strip, rullo, offsetFinale, durataMs, indiceVincitoreRullo, alTermine) {
         const preferenzaRidotta = window.matchMedia
             && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
         rullo.classList.add("is-spinning");
 
-        if (preferenzaRidotta) {
+        const completa = () => {
             strip.style.transform = `translate3d(0, -${ offsetFinale }px, 0)`;
+            aggiornaEffettoProfonditaRullo(strip, rullo, offsetFinale);
+
+            const elementi = strip.querySelectorAll(".starting-draw-reel-item");
+            elementi.forEach(el => el.classList.remove("is-center-winner"));
+            elementi[indiceVincitoreRullo]?.classList.add("is-center-winner");
+
             rullo.classList.remove("is-spinning");
+            rullo.classList.add("is-winning");
             alTermine();
+        };
+
+        if (preferenzaRidotta) {
+            completa();
             return;
         }
 
@@ -2572,15 +2616,12 @@ function apriPopupInizioGame() {
             const distanza = offsetFinale * easeOutRullo(progresso);
 
             strip.style.transform = `translate3d(0, -${ distanza }px, 0)`;
+            aggiornaEffettoProfonditaRullo(strip, rullo, distanza);
 
             if (progresso < 1) {
                 requestAnimationFrame(fotogramma);
             } else {
-                // Forziamo il valore finale esatto per evitare anche
-                // micro-disallineamenti dovuti ai decimali dei frame.
-                strip.style.transform = `translate3d(0, -${ offsetFinale }px, 0)`;
-                rullo.classList.remove("is-spinning");
-                alTermine();
+                completa();
             }
         }
 
@@ -2595,8 +2636,7 @@ function apriPopupInizioGame() {
         const altezzaFinestra = rulli[indice].getBoundingClientRect().height || ALTEZZA_FINEStra;
         const offset = dati.posizioneVincitore * ALTEZZA_RIGA
             - (altezzaFinestra - ALTEZZA_RIGA) / 2;
-        animaRullo(dati.strip, rulli[indice], offset, durateRulli[indice], () => {
-            rulli[indice].classList.add("is-winning");
+        animaRullo(dati.strip, rulli[indice], offset, durateRulli[indice], dati.posizioneVincitore, () => {
             rulliFermi++;
             if (rulliFermi === rulli.length) {
                 // Lasciamo bene in vista i tre rulli verdi
