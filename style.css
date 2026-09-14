@@ -5207,11 +5207,15 @@ button.is-pressed {
                 inset 0 -8px 12px rgba(24,85,55,0.04) !important;
 }
 
-/* Mentre il rullo gira comunichiamo velocità solo con l'opacità:
-   NIENTE filter/blur su testo animato con transform, perché su
-   Safari/iOS questa combinazione genera artefatti di rendering
-   (righe/rettangoli rosa nella zona di composizione GPU). */
+/* Blur mentre il rullo gira: un valore FISSO applicato una sola
+   volta tramite classe (quando parte/finisce lo spin), non
+   ricalcolato ad ogni fotogramma. Era proprio il ricalcolo
+   continuo del blur ad ogni frame — insieme al transform che
+   si muove in continuazione — a generare le righe rosa su
+   Safari/iOS. Un valore statico è sicuro. */
 .starting-draw-reel.is-spinning .starting-draw-reel-item {
+    filter: blur(0.6px) !important;
+    -webkit-filter: blur(0.6px) !important;
     opacity: 0.88;
 }
 
@@ -6112,15 +6116,10 @@ button.is-pressed {
     display: none !important;
 }
 
-/* NIENTE blur durante il movimento: su Safari/iOS il filter blur
-   applicato a testo in transform animato è la causa reale delle
-   righe rosa, non i bordi. La velocità resta comunicata solo da
-   opacità/scala (vedi regola .is-spinning .starting-draw-reel-item
-   più sopra e lo script che anima i rulli). */
-.starting-draw-reel.is-spinning .starting-draw-reel-item {
-    filter: none !important;
-    -webkit-filter: none !important;
-}
+/* Il blur durante lo spin è definito una sola volta, più sopra,
+   con un valore fisso (vedi commento su .is-spinning
+   .starting-draw-reel-item): niente da ripetere qui, per evitare
+   di ridefinirlo due volte in punti diversi del file. */
 
 /* =========================================================
    CARDSCORE HOME — NUOVO RESTYLING
@@ -6505,17 +6504,17 @@ button.is-pressed {
    al centro verticale l'uno rispetto all'altro. */
 #home .saved-game-card:not(.empty-state) .saved-game-content {
     display: grid !important;
-    grid-template-columns: 74px minmax(0, 1fr) 26px !important;
+    grid-template-columns: 104px minmax(0, 1fr) 36px !important;
     align-items: center !important;
-    gap: 10px !important;
+    gap: 6px !important;
     width: 100% !important;
-    padding: 0 16px 16px !important;
+    padding: 0 8px 14px 6px !important;
 }
 
-/* Logo del gioco */
+/* Logo del gioco: grande e vicino al bordo sinistro */
 #home .saved-game-card:not(.empty-state) .saved-game-icon {
-    width: 74px !important;
-    height: 74px !important;
+    width: 104px !important;
+    height: 104px !important;
     margin: 0 !important;
     padding: 0 !important;
     border-radius: 0 !important;
@@ -6548,11 +6547,12 @@ button.is-pressed {
     height: 84% !important;
 }
 
-/* Colonna testo, separata dal logo da una linea verticale sottile */
+/* Colonna testo, separata dal logo da una linea verticale sottile
+   molto vicina al logo */
 #home .saved-game-card:not(.empty-state) .saved-game-main {
     min-width: 0 !important;
     border-left: 1px solid rgba(31, 96, 67, 0.16) !important;
-    padding-left: 10px !important;
+    padding-left: 5px !important;
     margin: 0 !important;
 }
 
@@ -6594,11 +6594,12 @@ button.is-pressed {
     text-overflow: clip !important;
 }
 
-/* Freccia: sempre centrata verticalmente sull'intera card */
+/* Freccia: grande, sempre centrata verticalmente sull'intera card,
+   vicina al bordo destro */
 #home .saved-game-card:not(.empty-state) .saved-game-arrow {
     justify-self: end !important;
     align-self: center !important;
-    width: 26px !important;
+    width: 36px !important;
     height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -6607,7 +6608,7 @@ button.is-pressed {
     background: transparent !important;
     color: #173f31 !important;
     font-family: inherit !important;
-    font-size: 42px !important;
+    font-size: 58px !important;
     font-weight: 400 !important;
     line-height: 1 !important;
     display: flex !important;
