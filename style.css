@@ -6260,7 +6260,7 @@ button.is-pressed {
 
     #home .saved-game-card:not(.empty-state) .saved-game-header {
         grid-template-columns: 48px minmax(0, 1fr) !important;
-        column-gap: 4px !important;
+        column-gap: 3px !important;
     }
 
     #home .saved-game-card:not(.empty-state) .saved-game-arrow {
@@ -6318,12 +6318,12 @@ button.is-pressed {
     }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 400px) {
     #home .saved-game-card:not(.empty-state) .saved-game-arrow {
-        transform: translate(4px, -11px) !important;
+        transform: translate(3px, -14px) !important;
     }
 
     #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
-        transform: translate(4px, -11px) scale(0.90) !important;
+        transform: translate(3px, -14px) scale(0.90) !important;
     }
 }
