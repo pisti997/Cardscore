@@ -2085,6 +2085,29 @@ function aggiornaPartitaSalvata() {
 
         <div class="saved-game-heading">
             <h2>PARTITA IN CORSO</h2>
+
+            <div class="saved-game-menu-wrap">
+                <button
+                    type="button"
+                    class="saved-game-menu-button"
+                    onclick="toggleSavedGameMenu(event)"
+                    aria-label="Menu partita"
+                    aria-expanded="false"
+                >
+                    <span>•••</span>
+                </button>
+
+                <div class="saved-game-menu hidden">
+                    <button
+                        type="button"
+                        class="saved-game-menu-item danger"
+                        onclick="terminaPartitaSalvata(event)"
+                    >
+                        <span>⏹</span>
+                        <strong>Termina partita</strong>
+                    </button>
+                </div>
+            </div>
         </div>
 
 
@@ -2157,6 +2180,64 @@ function aggiornaPartitaSalvata() {
         </div>
     `;
 }
+/* =========================================================
+   MENU PARTITA SALVATA (HOME)
+========================================================= */
+function toggleSavedGameMenu(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    const wrap = event?.currentTarget?.closest(".saved-game-menu-wrap");
+    if (!wrap) return;
+
+    const menu = wrap.querySelector(".saved-game-menu");
+    const button = wrap.querySelector(".saved-game-menu-button");
+    if (!menu) return;
+
+    document.querySelectorAll(".saved-game-menu").forEach(altro => {
+        if (altro !== menu) {
+            altro.classList.add("hidden");
+            const altroButton = altro.closest(".saved-game-menu-wrap")?.querySelector(".saved-game-menu-button");
+            if (altroButton) altroButton.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    const aperto = !menu.classList.contains("hidden");
+    menu.classList.toggle("hidden", aperto);
+    if (button) {
+        button.setAttribute("aria-expanded", String(!aperto));
+    }
+}
+
+function chiudiSavedGameMenu() {
+    document.querySelectorAll(".saved-game-menu").forEach(menu => {
+        menu.classList.add("hidden");
+        const button = menu.closest(".saved-game-menu-wrap")?.querySelector(".saved-game-menu-button");
+        if (button) button.setAttribute("aria-expanded", "false");
+    });
+}
+
+function terminaPartitaSalvata(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    chiudiSavedGameMenu();
+
+    const conferma = window.confirm("Vuoi terminare la partita in corso? Il punteggio salvato verrà eliminato.");
+    if (!conferma) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+    aggiornaPartitaSalvata();
+}
+
+document.addEventListener("click", function(event) {
+    if (!event.target.closest(".saved-game-menu-wrap")) {
+        chiudiSavedGameMenu();
+    }
+});
+
 /* =========================================================
    CONTINUA PARTITA
 ========================================================= */
