@@ -6985,3 +6985,16 @@ button.is-pressed {
 #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
     transform: translateY(-50%) scale(0.90) !important;
 }
+
+/* =========================================================
+   CARDSCORE — POSIZIONE FINALE FRECCIA
+   ========================================================= */
+
+#home .saved-game-card:not(.empty-state) .saved-game-arrow {
+    top: calc(50% + 2px) !important;
+    transform: translateY(-50%) !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
+    transform: translateY(-50%) scale(0.90) !important;
+}
