@@ -6327,3 +6327,100 @@ button.is-pressed {
         transform: translate(3px, -14px) scale(0.90) !important;
     }
 }
+
+
+/* ===== HOME — Riquadro "PARTITA IN CORSO" compatto ===== */
+@media (max-width: 430px) {
+    #home .saved-game-card:not(.empty-state) {
+        height: 128px !important;
+        min-height: 128px !important;
+        margin-top: 14px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-heading {
+        height: 27px !important;
+        padding: 6px 14px 4px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-heading h2 {
+        font-size: 16px !important;
+        line-height: 1 !important;
+        letter-spacing: 1.2px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-content {
+        height: 101px !important;
+        min-height: 101px !important;
+        padding: 0 4px 4px 6px !important;
+        grid-template-columns: 62px minmax(0, 1fr) 34px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-icon {
+        width: 78px !important;
+        height: 78px !important;
+        transform: translateX(-9px) !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-main {
+        height: 72px !important;
+        padding-left: 9px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-header h3 {
+        font-size: 17px !important;
+        line-height: 1 !important;
+        margin: -2px 0 0 0 !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-info {
+        margin-top: 3px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-player-score {
+        min-height: 21px !important;
+        padding: 1px 0 !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-player-score span,
+    #home .saved-game-card:not(.empty-state) .saved-player-score strong {
+        font-size: 10.5px !important;
+        line-height: 1.1 !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-arrow {
+        transform: translate(3px, -8px) !important;
+        font-size: 44px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
+        transform: translate(3px, -8px) scale(0.90) !important;
+    }
+}
+
+@media (max-width: 375px) {
+    #home .saved-game-card:not(.empty-state) {
+        height: 126px !important;
+        min-height: 126px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-content {
+        height: 99px !important;
+        min-height: 99px !important;
+        grid-template-columns: 58px minmax(0, 1fr) 32px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-icon {
+        width: 74px !important;
+        height: 74px !important;
+        transform: translateX(-9px) !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-arrow {
+        transform: translate(2px, -8px) !important;
+        font-size: 42px !important;
+    }
+
+    #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
+        transform: translate(2px, -8px) scale(0.90) !important;
+    }
+}
