@@ -7333,156 +7333,56 @@ button.is-pressed {
 }
 
 /* =========================================================
-   CARDSCORE — HOME MICRO ALIGNMENT V2
-   Ultime regolazioni richieste
+   CARDSCORE — HOME SAVED GAME V4
+   - Riduce almeno della metà lo spazio tra intestazione e contenuto
+   - Freccia raddoppiata e più vicina al bordo destro
    ========================================================= */
 @media (max-width: 430px) {
-    /* Alone del titolo: più leggibile ma sempre leggero */
-    #home .brand-text h1 {
-        text-shadow:
-            0 0 6px rgba(31, 96, 67, 0.24),
-            0 0 12px rgba(31, 96, 67, 0.14),
-            0 2px 7px rgba(31, 96, 67, 0.12) !important;
-        filter: drop-shadow(0 0 2px rgba(31, 96, 67, 0.10)) !important;
+    #home .saved-game-card:not(.empty-state) .saved-game-heading {
+        height: 25px !important;
+        padding: 5px 16px 3px !important;
     }
 
-    /* Logo partita in corso: altri 3px verso sinistra */
-    #home .saved-game-card:not(.empty-state) .saved-game-icon {
-        transform: translateX(-13px) !important;
+    #home .saved-game-card:not(.empty-state) .saved-game-content {
+        height: 120px !important;
+        min-height: 120px !important;
     }
 
-    /*
-       Header e righe giocatori condividono la stessa griglia:
-       il titolo parte esattamente sopra i nomi e il Turno termina
-       esattamente sul bordo destro della colonna dei punteggi.
-    */
-    #home .saved-game-card:not(.empty-state) .saved-game-header {
-        display: grid !important;
-        grid-template-columns: 53px minmax(0, 1fr) !important;
-        column-gap: 4px !important;
-        align-items: center !important;
-        justify-content: initial !important;
-        width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    #home .saved-game-card:not(.empty-state) .saved-game-header h3 {
-        grid-column: 1 / 2 !important;
-        justify-self: start !important;
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        text-align: left !important;
-    }
-
-    #home .saved-game-card:not(.empty-state) .saved-game-turn {
-        grid-column: 2 / 3 !important;
+    #home .saved-game-card:not(.empty-state) .saved-game-arrow {
+        width: 42px !important;
+        font-size: 100px !important;
+        line-height: 0.8 !important;
+        transform: translate(10px, -8px) !important;
+        height: 76px !important;
+        min-height: 76px !important;
+        align-self: center !important;
         justify-self: end !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        text-align: right !important;
-    }
-
-    /* Freccia: 3px più in alto rispetto alla versione precedente,
-       mantenendo il suo centro verticale nel riquadro */
-    #home .saved-game-card:not(.empty-state) .saved-game-arrow {
-        transform: translate(5px, -8px) !important;
-        align-self: center !important;
     }
 
     #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
-        transform: translate(5px, -8px) scale(0.90) !important;
+        transform: translate(10px, -8px) scale(0.90) !important;
     }
 }
 
 @media (max-width: 375px) {
-    #home .saved-game-card:not(.empty-state) .saved-game-icon {
-        transform: translateX(-12px) !important;
+    #home .saved-game-card:not(.empty-state) .saved-game-heading {
+        height: 25px !important;
+        padding: 5px 14px 3px !important;
     }
 
-    #home .saved-game-card:not(.empty-state) .saved-game-header {
-        grid-template-columns: 48px minmax(0, 1fr) !important;
-        column-gap: 4px !important;
+    #home .saved-game-card:not(.empty-state) .saved-game-content {
+        height: 116px !important;
+        min-height: 116px !important;
+        grid-template-columns: 68px minmax(0, 1fr) 42px !important;
     }
 
     #home .saved-game-card:not(.empty-state) .saved-game-arrow {
-        transform: translate(4px, -8px) !important;
+        width: 42px !important;
+        font-size: 96px !important;
+        transform: translate(9px, -8px) !important;
     }
 
     #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
-        transform: translate(4px, -8px) scale(0.90) !important;
-    }
-}
-
-/* =========================================================
-   CARDSCORE — HOME SAVED GAME FINAL V3
-   Correzioni finali richieste:
-   - alone CardScore più evidente
-   - titolo del gioco sempre completo, senza ellissi
-   - freccia 3px più in alto
-   - rimozione visuale del Turno
-   - titolo gioco allineato ai nomi dei giocatori
-   ========================================================= */
-@media (max-width: 430px) {
-    /* Alone più evidente sul titolo principale */
-    #home .brand-text h1 {
-        text-shadow:
-            0 0 5px rgba(31, 96, 67, 0.32),
-            0 0 10px rgba(31, 96, 67, 0.24),
-            0 0 18px rgba(31, 96, 67, 0.16),
-            0 2px 8px rgba(31, 96, 67, 0.18) !important;
-        filter: drop-shadow(0 0 3px rgba(31, 96, 67, 0.14)) !important;
-    }
-
-    /* Il Turno non deve più essere mostrato */
-    #home .saved-game-card:not(.empty-state) .saved-game-turn {
-        display: none !important;
-    }
-
-    /*
-       Header: una sola colonna.
-       Il titolo parte esattamente dalla stessa x dei nomi giocatori
-       e può occupare tutto lo spazio disponibile.
-    */
-    #home .saved-game-card:not(.empty-state) .saved-game-header {
-        display: block !important;
-        width: 100% !important;
-        min-width: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    #home .saved-game-card:not(.empty-state) .saved-game-header h3 {
-        display: block !important;
-        width: 100% !important;
-        max-width: none !important;
-        min-width: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        text-align: left !important;
-        white-space: nowrap !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-    }
-
-    /* Freccia: altri 3px verso l'alto */
-    #home .saved-game-card:not(.empty-state) .saved-game-arrow {
-        transform: translate(5px, -11px) !important;
-        align-self: center !important;
-    }
-
-    #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
-        transform: translate(5px, -11px) scale(0.90) !important;
-    }
-}
-
-@media (max-width: 375px) {
-    #home .saved-game-card:not(.empty-state) .saved-game-arrow {
-        transform: translate(4px, -11px) !important;
-    }
-
-    #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
-        transform: translate(4px, -11px) scale(0.90) !important;
+        transform: translate(9px, -8px) scale(0.90) !important;
     }
 }
