@@ -372,9 +372,8 @@ select {
 /* =========================================================
    SAFE AREA
    ========================================================= */
-@supports (padding: max(0px)) {
-
-    .match-topbar {
+@supports(padding: max(0px)) {
+.match-topbar {
         padding-top:
         max(
         18px,
@@ -389,18 +388,16 @@ select {
         calc(env(safe-area-inset-bottom) + 20px)
         );
     }
-
 }
 
 /* =========================================================
    RIDUZIONE ANIMAZIONI
    ========================================================= */
-@media (prefers-reduced-motion: reduce) {
-    * {
+@media(prefers-reduced-motion: reduce) {
+* {
         animation: none !important;
         transition: none !important;
     }
-
 }
 
 /* =========================================================
@@ -1485,8 +1482,8 @@ select {
 /* =========================================================
    RESPONSIVE HOME
    ========================================================= */
-@media (max-width: 390px) {
-    .match-content {
+@media(max-width: 390px) {
+.match-content {
         padding-left: 18px;
         padding-right: 18px;
     }
@@ -1563,7 +1560,6 @@ select {
     .game-card-info span {
         font-size: 9px;
     }
-
 }
 
 /* =========================================================
@@ -2328,8 +2324,8 @@ select {
     to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 390px) {
-    .starting-draw-popup {
+@media(max-width: 390px) {
+.starting-draw-popup {
         padding-left: 14px;
         padding-right: 14px;
     }
@@ -2358,8 +2354,8 @@ select {
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .starting-draw-overlay,
+@media(prefers-reduced-motion: reduce) {
+.starting-draw-overlay,
     .starting-draw-badge,
     .starting-draw-progress-fill,
     .starting-draw-winner,
@@ -2766,9 +2762,7 @@ button.is-pressed {
    CARDSCORE - NUOVA HOME
    ========================================================= */
 /* ---------- HOME ---------- */
-#home .brand-text {
-    text-align: left;
-}
+
 
 /* ---------- CONTENUTO ---------- */
 /* ---------- TITOLO ---------- */
@@ -2780,332 +2774,12 @@ button.is-pressed {
 /* Titolo */
 /* Contenuto partita */
 /* Icona */
-#home .saved-game-icon span {
-    font-size: 18px;
-}
+
 
 /* Informazioni */
 /* Freccia */
 /* ---------- CONTINUA PARTITA ---------- */
 /* ---------- PRIVACY ---------- */
-/* =========================================================
-   MOBILE
-   ========================================================= */
-/* =========================================================
-   CARD SCORE - HOME FINALE
-   ========================================================= */
-/* HOME */
-#home.active {
-    background: #f7f8f4;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100dvh;
-}
-
-#home .home-header {
-    padding: calc(env(safe-area-inset-top) + 18px)
-    20px
-    6px;
-}
-
-#home .brand {
-    max-width: none;
-    justify-content: center;
-    gap: 10px;
-}
-
-#home .brand-icon {
-    width: 58px;
-    height: 58px;
-    background: transparent;
-    box-shadow: none;
-    border-radius: 0;
-}
-
-#home .brand-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-}
-
-#home .brand-text p {
-    margin-top: 6px;
-    font-size: 12px;
-    color: #687168;
-}
-
-/* CONTENUTO */
-#home .home-content {
-    max-width: 430px;
-    padding: 22px 20px
-    calc(30px + env(safe-area-inset-bottom));
-}
-
-/* TITOLO */
-#home .home-section-heading {
-    justify-content: center;
-    margin-bottom: 15px;
-    text-align: center;
-    display: block;
-}
-
-#home .home-section-heading h2 {
-    margin: 0;
-    color: #173f31;
-    font-size: 15px;
-    line-height: 1.1;
-    font-weight: 800;
-    letter-spacing: 0.2px;
-    text-transform: uppercase;
-}
-
-/* =========================================================
-   GIOCHI
-   ========================================================= */
-#home .games-grid {
-    gap: 10px;
-}
-
-#home .game-card {
-    min-height: 176px;
-    border-radius: 18px;
-    box-shadow: 0 7px 18px rgba(28, 42, 32, 0.07);
-    /* Mantiene l'animazione */
-    transition: transform 0.18s ease,
-    box-shadow 0.18s ease;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.18s ease,
-    box-shadow 0.18s ease;
-}
-
-/* Mantiene il tuo effetto di pressione */
-#home .game-card:active {
-    transform: scale(0.97);
-}
-
-/* Immagini */
-#home .game-card-image {
-    height: 112px;
-    flex-shrink: 0;
-}
-
-#home .game-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Testo */
-#home .game-card-info {
-    min-height: 64px;
-    padding: 7px 8px 10px;
-    justify-content: center;
-    text-align: center;
-    flex: 1;
-    display: flex;
-    align-items: center;
-}
-
-#home .game-card-info > div {
-    width: 100%;
-}
-
-#home .game-card-info h3 {
-    font-size: 16px;
-    line-height: 1.1;
-    font-weight: 800;
-    color: #173f31;
-    margin: 0;
-}
-
-#home .game-card-info span {
-    margin-top: 5px;
-    font-size: 10px;
-    color: rgba(32, 37, 31, 0.62);
-    font-weight: 500;
-    display: block;
-    line-height: 1.2;
-}
-
-/* Nascondiamo le vecchie frecce */
-#home .game-card-arrow {
-    display: none;
-}
-
-/* Colori */
-#home .game-uno {
-    background: #dcefd5;
-}
-
-#home .game-pili-pili {
-    background: #fae3aa;
-}
-
-#home .game-scala {
-    background: #d5ebf1;
-}
-
-#home .game-scopa {
-    background: #e8daef;
-}
-
-/* =========================================================
-   PARTITA IN CORSO
-   ========================================================= */
-#home .saved-game-card {
-    margin-top: 30px;
-    padding: 0;
-    border-radius: 20px;
-    background: #edf7e9;
-    border: 1px solid #dcebd7;
-    box-shadow: 0 7px 20px rgba(28, 42, 32, 0.06);
-    width: 100%;
-    overflow: hidden;
-}
-
-/* Titolo */
-#home .saved-game-heading {
-    margin-bottom: 13px;
-    text-align: center;
-    padding: 0 18px 10px;
-}
-
-#home .saved-game-heading h2 {
-    margin: 0;
-    color: #1f6043;
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    line-height: 1.1;
-}
-
-/* Contenuto */
-#home .saved-game-content {
-    display: grid;
-    grid-template-columns: 50px minmax(0, 1fr) 22px;
-    align-items: center;
-    gap: 11px;
-    padding: 0 18px;
-}
-
-/* Icona */
-#home .saved-game-icon {
-    width: 50px;
-    height: 50px;
-    margin: 0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #4d9963;
-    color: white;
-    box-shadow: 0 5px 12px rgba(31, 96, 67, 0.14);
-    padding: 0;
-    overflow: hidden;
-}
-
-/* Testata partita */
-#home .saved-game-main {
-    min-width: 0;
-}
-
-#home .saved-game-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-#home .saved-game-header h3 {
-    margin: 0;
-    color: #173f31;
-    font-size: 20px;
-    font-weight: 800;
-    line-height: 1.1;
-}
-
-#home .saved-game-turn {
-    color: #69726b;
-    font-size: 12px;
-    white-space: nowrap;
-    line-height: 1;
-}
-
-/* =========================================================
-   GIOCATORI
-   ========================================================= */
-#home .saved-game-info {
-    margin-top: 8px;
-    color: #345746;
-    font-size: 12px;
-    line-height: 1.45;
-    font-weight: 500;
-}
-
-#home .saved-player-score {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 4px 0;
-    border-bottom: 1px solid rgba(31, 96, 67, 0.14);
-}
-
-#home .saved-player-score:last-child {
-    border-bottom: 0;
-}
-
-#home .saved-player-score span {
-    color: #345746;
-}
-
-#home .saved-player-score strong {
-    color: #1f6043;
-    font-weight: 700;
-}
-
-/* Freccia */
-#home .saved-game-arrow {
-    color: #173f31;
-    font-size: 30px;
-    line-height: 1;
-    text-align: center;
-}
-
-/* =========================================================
-   PULSANTE CONTINUA
-   ========================================================= */
-#home .saved-game-card .primary-button {
-    margin-top: 15px;
-    min-height: 50px;
-    border-radius: 26px;
-    background: #3f8a55;
-    font-size: 15px;
-    font-weight: 750;
-    box-shadow: 0 7px 16px rgba(31, 96, 67, 0.18);
-    width: calc(100% - 36px);
-    margin: 15px 18px 18px;
-    padding: 13px 18px;
-    color: white;
-}
-
-#home .saved-game-card .primary-button span {
-    margin-right: 7px;
-    font-size: 13px;
-}
-
-/* =========================================================
-   PRIVACY
-   ========================================================= */
-#home .privacy-note {
-    margin-top: 18px;
-    text-align: center;
-    font-size: 10px;
-    color: #8b928b;
-}
 
 /* =========================================================
    SCHERMI PICCOLI
@@ -3119,8 +2793,8 @@ button.is-pressed {
 /* =========================================================
    CARDSCORE HOME - RIFINITURA FINALE MOBILE
    ========================================================= */
-@media (max-width: 430px) {
-    /* HOME */
+@media(max-width: 430px) {
+/* HOME */
     /* CONTENUTO */
     /* TITOLO */
     /* =====================================================
@@ -3144,436 +2818,146 @@ button.is-pressed {
     /* =====================================================
        SFONDO
        ===================================================== */
-    #home {
-        background: #f7f8f4;
-    }
+    
 
     /* =====================================================
        HEADER / LOGO
        ===================================================== */
-    #home .home-header {
-        padding-top: calc(env(safe-area-inset-top) + 8px);
-        padding-bottom: 0;
-        padding: calc(env(safe-area-inset-top) + 7px)
-        16px
-        0;
-    }
+    
 
-    #home .brand {
-        gap: 7px;
-        width: 100%;
-        max-width: none;
-        justify-content: center;
-        align-items: center;
-    }
+    
 
-    #home .brand-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 0;
-        background: transparent;
-        box-shadow: none;
-        flex-shrink: 0;
-    }
+    
 
-    #home .brand-icon img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        display: block;
-    }
+    
 
-    #home .brand-text h1 {
-        font-size: 29px;
-        letter-spacing: -1.2px;
-        line-height: 1;
-        color: #1f6043;
-    }
+    
 
-    #home .brand-text p {
-        font-size: 10px;
-        margin-top: 4px;
-        line-height: 1.15;
-        color: #747a72;
-    }
+    
 
     /* =====================================================
        CONTENUTO
        ===================================================== */
-    #home .home-content {
-        padding-left: 16px;
-        padding-right: 16px;
-        padding: 11px 16px
-        calc(12px + env(safe-area-inset-bottom));
-        max-width: 430px;
-    }
+    
 
     /* =====================================================
        TITOLO
        ===================================================== */
-    #home .home-section-heading {
-        margin-bottom: 9px;
-        text-align: center;
-    }
+    
 
-    #home .home-section-heading h2 {
-        font-size: 13px;
-        line-height: 1.1;
-        letter-spacing: 0.3px;
-    }
+    
 
     /* =====================================================
        CARTE GIOCHI
        ===================================================== */
-    #home .games-grid {
-        gap: 8px;
-    }
+    
 
-    #home .game-card {
-        min-height: 146px;
-        border-radius: 17px;
-        box-shadow: 0 6px 17px rgba(28, 42, 32, 0.065);
-        overflow: hidden;
-        /* mantiene l'animazione */
-        transition: transform 0.12s ease,
-        box-shadow 0.12s ease;
-    }
+    
 
-    #home .game-card:active {
-        transform: translateY(3px)
-        scale(0.975);
-        box-shadow: 0 2px 7px rgba(28, 42, 32, 0.10);
-    }
+    
 
     /* IMMAGINI */
-    #home .game-card-image {
-        height: 91px;
-    }
+    
 
-    #home .game-card-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+    
 
     /* TESTO CARTE */
-    #home .game-card-info {
-        min-height: 55px;
-        padding: 5px 7px 7px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
+    
 
-    #home .game-card-info > div {
-        width: 100%;
-    }
+    
 
-    #home .game-card-info h3 {
-        font-size: 14px;
-        line-height: 1.1;
-        color: #173f31;
-    }
+    
 
-    #home .game-card-info span {
-        margin-top: 3px;
-        font-size: 9px;
-        line-height: 1.1;
-        color: rgba(32, 37, 31, 0.60);
-    }
+    
 
-    #home .game-card-arrow {
-        display: none;
-    }
+    
 
     /* =====================================================
        PARTITA IN CORSO
        ===================================================== */
-    #home .saved-game-card {
-        padding: 0;
-        margin-top: 17px;
-        border-radius: 19px;
-        padding-bottom: 1px;
-        border: 1px solid #d9e9d4;
-        box-shadow: 0 6px 17px rgba(28, 42, 32, 0.055);
-        width: 100%;
-        background: #edf7e9;
-        overflow: hidden;
-    }
+    
 
     /* TITOLO */
-    #home .saved-game-heading {
-        padding: 7px 14px 6px;
-        text-align: center;
-    }
+    
 
-    #home .saved-game-heading h2 {
-        font-size: 12px;
-        letter-spacing: 0.8px;
-        margin: 0;
-        line-height: 1.1;
-        color: #286548;
-    }
+    
 
     /* CONTENUTO */
-    #home .saved-game-content {
-        padding: 0 14px;
-        grid-template-columns: 48px
-        minmax(0, 1fr)
-        17px;
-        gap: 10px;
-        display: grid;
-        align-items: center;
-    }
+    
 
     /* ICONA GIOCO */
-    #home .saved-game-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        box-shadow: 0 4px 9px rgba(31, 96, 67, 0.12);
-        overflow: hidden;
-        background: #4d9963;
-    }
+    
 
-    #home .saved-game-icon img {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: cover;
-    }
+    
 
     /* NOME + TURNO */
-    #home .saved-game-header {
-        align-items: center;
-        min-width: 0;
-        display: flex;
-        justify-content: space-between;
-        gap: 8px;
-    }
+    
 
-    #home .saved-game-header h3 {
-        font-size: 18px;
-        font-weight: 800;
-        margin: 0;
-        line-height: 1.05;
-        color: #173f31;
-    }
+    
 
-    #home .saved-game-turn {
-        font-size: 11px;
-        line-height: 1;
-        color: #69726b;
-        white-space: nowrap;
-    }
+    
 
     /* =====================================================
        GIOCATORI / PUNTEGGI
        ===================================================== */
-    #home .saved-game-info {
-        margin-top: 4px;
-        font-size: 11px;
-        line-height: 1.25;
-        color: #345746;
-    }
+    
 
-    #home .saved-player-score {
-        padding: 2px 0;
-        border-bottom: 1px solid rgba(31, 96, 67, 0.13);
-        min-height: 22px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-    }
+    
 
-    #home .saved-player-score:last-child {
-        border-bottom: 0;
-    }
+    
 
-    #home .saved-player-score span {
-        color: #345746;
-        font-size: 11px;
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+    
 
-    #home .saved-player-score strong {
-        color: #287047;
-        font-size: 11px;
-        font-weight: 750;
-        flex-shrink: 0;
-    }
+    
 
     /* FRECCIA */
-    #home .saved-game-arrow {
-        font-size: 27px;
-        font-weight: 400;
-        transform: translateY(-1px);
-        line-height: 1;
-        color: #173f31;
-    }
+    
 
     /* =====================================================
        CONTINUA PARTITA
        ===================================================== */
-    #home .saved-game-card .primary-button {
-        width: calc(100% - 28px);
-        min-height: 44px;
-        margin: 10px 14px 12px;
-        padding: 9px 14px;
-        border-radius: 23px;
-        font-size: 14px;
-        font-weight: 750;
-        box-shadow: 0 5px 12px rgba(31, 96, 67, 0.15);
-        background: #3f8f56;
-        line-height: 1;
-        transition: transform 0.10s ease,
-        box-shadow 0.10s ease;
-    }
+    
 
-    #home .saved-game-card .primary-button:active {
-        transform: translateY(3px)
-        scale(0.98);
-        box-shadow: 0 2px 5px rgba(31, 96, 67, 0.12);
-    }
+    
 
-    #home .saved-game-card .primary-button span {
-        margin-right: 6px;
-        font-size: 13px;
-    }
+    
 
     /* =====================================================
        PRIVACY
        ===================================================== */
-    #home .privacy-note {
-        margin-top: 10px;
-        font-size: 9px;
-        margin: 9px 0 0;
-        line-height: 1.2;
-        color: #8b928b;
-    }
-
 }
 
 /* =========================================================
    SCHERMI MOLTO PICCOLI
    ========================================================= */
-@media (max-width: 375px) {
-    #home .brand-icon {
-        width: 44px;
-        height: 44px;
-    }
 
-    #home .brand-text h1 {
-        font-size: 27px;
-    }
-
-    #home .game-card {
-        min-height: 140px;
-    }
-
-    #home .game-card-image {
-        height: 86px;
-    }
-
-    #home .saved-game-card {
-        margin-top: 14px;
-    }
-
-}
 /* =========================================================
    CARD SCORE - HEADER COME FOTO DI RIFERIMENTO
    ========================================================= */
 
-@media (max-width: 430px) {
+@media(max-width: 430px) {
+/* ICONA */
+    
 
-    #home .home-header {
-        padding:
-            calc(env(safe-area-inset-top) + 8px)
-            16px
-            0;
-    }
-
-    #home .brand {
-        width: 100%;
-        max-width: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 18px;
-    }
-
-    /* ICONA */
-    #home .brand-icon {
-        width: 72px;
-        height: 72px;
-        flex: 0 0 72px;
-        padding: 0;
-        margin: 0;
-        background: transparent;
-        border-radius: 0;
-        box-shadow: none;
-    }
-
-    #home .brand-icon img {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: contain;
-    }
+    
 
     /* SCRITTA CARDSCORE */
-    #home .brand-text {
-        text-align: left;
-    }
+    
 
-    #home .brand-text h1 {
-        margin: 0;
-        font-size: 43px;
-        line-height: 0.95;
-        letter-spacing: -2px;
-        font-weight: 800;
-        color: #216b4d;
-    }
+    
 
     /* SOTTOTITOLO */
-    #home .brand-text p {
-        margin-top: 10px;
-        font-size: 15px;
-        line-height: 1;
-        letter-spacing: 0;
-        color: #777b77;
-        white-space: nowrap;
-    }
+    
 
     /* SPAZIO SOTTO L'HEADER */
-    #home .home-content {
-        padding-top: 18px;
-    }
 }
 /* Font SS Safari solo per il titolo Home */
 
-@font-face {
-    font-family: "SS Safari";
-    src: url("SS Safari.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
+
 /* =========================================================
    FONT APP - SS SAFARI SOLO SUL TITOLO
    ========================================================= */
-#home .brand-text h1 {
-    font-size: 34px;
-    line-height: 1;
-    letter-spacing: -1.2px;
-    color: #1f6043;
-    font-family: "SS Safari", sans-serif !important;
-}
+
 
 /* Tutto il resto torna al font di sistema */
 #home,
@@ -3606,26 +2990,7 @@ button.is-pressed {
    LOGHI GIOCHI - VISIBILI COMPLETAMENTE
    ========================================================= */
 
-@media (max-width: 430px) {
 
-    #home .game-card-image {
-        height: 91px;
-        padding: 6px;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #home .game-card-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        object-position: center;
-        display: block;
-    }
-
-}
 /* =========================================================
    LOGHI GIOCHI - PARTITA IN CORSO + NUOVA PARTITA
    ========================================================= */
@@ -3659,9 +3024,8 @@ button.is-pressed {
     background: rgba(255,255,255,0.68);
     font-size: 23px;
 }
-@media (max-width: 430px) {
-
-    .saved-game-icon {
+@media(max-width: 430px) {
+.saved-game-icon {
         padding: 3px;
         box-sizing: border-box;
     }
@@ -3670,7 +3034,6 @@ button.is-pressed {
         padding: 4px;
         box-sizing: border-box;
     }
-
 }
 /* =========================================================
    LOGHI GIOCHI - DIMENSIONI PERSONALIZZATE
@@ -3714,191 +3077,41 @@ button.is-pressed {
 /* =========================================================
    LOGHI PARTITA IN CORSO - HOME
    ========================================================= */
-#home .saved-game-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    object-position: center;
-}
+
 
 /* UNO */
-#home .saved-game-icon img[src*="uno.png"] {
-    width: 72%;
-    height: 72%;
-}
+
 
 /* PILI PILI */
-#home .saved-game-icon img[src*="pili-pili.png"] {
-    width: 58%;
-    height: 58%;
-}
+
 
 /* SCALA 40 */
-#home .saved-game-icon img[src*="scala40.png"] {
-    width: 72%;
-    height: 58%;
-}
+
 
 /* SCOPA */
-#home .saved-game-icon img[src*="scopa.png"] {
-    width: 68%;
-    height: 58%;
-}
+
 /* =========================================================
    PARTITA IN CORSO - HOME
    ========================================================= */
 
-@media (max-width: 430px) {
 
-    #home .saved-game-heading {
-        padding: 10px 14px 9px;
-    }
-
-    #home .saved-game-heading h2 {
-        font-size: 17px !important;
-        line-height: 1.1;
-        font-weight: 900;
-        letter-spacing: 1.4px;
-        text-align: center;
-    }
-
-    #home .saved-game-info {
-        margin-top: 5px;
-    }
-
-    #home .saved-player-score {
-        min-height: 27px;
-        padding: 3px 0;
-    }
-
-    #home .saved-player-score span {
-        font-size: 12px;
-    }
-
-    #home .saved-player-score strong {
-        font-size: 11px;
-        font-weight: 750;
-    }
-}
 /* =========================================================
    NESSUNA PARTITA IN CORSO - HOME
    ========================================================= */
 
-@media (max-width: 430px) {
-
-    #home .saved-game-card.empty-state {
-        min-height: 135px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    /* Nasconde completamente intestazione e contenuto normale */
-    #home .saved-game-card.empty-state .saved-game-heading {
-        display: none !important;
-    }
-
-    #home .saved-game-card.empty-state .saved-game-content {
-        width: 100%;
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        padding: 0 !important;
-    }
-
-    #home .saved-game-card.empty-state .saved-game-icon {
-        display: none !important;
-    }
-
-    #home .saved-game-card.empty-state .saved-game-main {
-        width: 100%;
-        min-width: 0;
-        text-align: center;
-    }
-
-    #home .saved-game-card.empty-state .saved-game-header {
-        display: none !important;
-    }
-
-    #home .saved-game-card.empty-state .saved-game-info {
-        width: 100%;
-        margin: 0 !important;
-        padding: 0 !important;
-
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-
-        white-space: nowrap;
-        text-align: center;
-
-        color: #286548;
-        font-size: 17px;
-        line-height: 1;
-        font-weight: 800;
-
-        text-decoration: underline;
-        text-decoration-thickness: 1.5px;
-        text-underline-offset: 4px;
-
-        text-shadow:
-            0 2px 2px rgba(31, 96, 67, 0.18);
-    }
-
-    #home .saved-game-card.empty-state .saved-game-arrow {
-        display: none !important;
-    }
-
-    #home .saved-game-card.empty-state .primary-button {
-        display: none !important;
-    }
+@media(max-width: 430px) {
+/* Nasconde completamente intestazione e contenuto normale */
 }
 /* NESSUNA PARTITA - TESTO SU UNA RIGA */
 
-@media (max-width: 430px) {
 
-    #home .saved-game-card.empty-state .saved-game-info {
-        white-space: nowrap;
-        font-size: 30px;
-        line-height: 1;
-        text-align: center;
-    }
-
-}
 /* =========================================================
    NESSUNA PARTITA IN CORSO
    ========================================================= */
 
-#home .saved-game-card.empty-state {
-    min-height: 135px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
 
-#home .saved-game-card.empty-state .saved-game-empty {
-    width: 100%;
-    text-align: center;
 
-    white-space: nowrap;
 
-    color: #286548;
-    font-size: 17px;
-    line-height: 1.2;
-    font-weight: 800;
-
-    text-decoration: underline;
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 4px;
-
-    text-shadow:
-        0 2px 2px rgba(31, 96, 67, 0.18);
-}
 /* =========================================================
    GIOCATORE ATTIVO
 ========================================================= */
@@ -4670,9 +3883,8 @@ button.is-pressed {
    STESSO MARGINE LATERALE DEI RIQUADRI
    ========================================================= */
 
-@media (max-width: 430px) {
-
-    .match-topbar {
+@media(max-width: 430px) {
+.match-topbar {
         padding-left: 13px !important;
         padding-right: 13px !important;
     }
@@ -4697,17 +3909,6 @@ button.is-pressed {
     align-self: center !important;
 
     margin: 0 !important;
-}
-
-/* Freccia perfettamente centrata */
-.match-topbar .back-button .back-arrow {
-    margin: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    line-height: 1 !important;
 }
 
 /* UNO: centro matematico dello schermo */
@@ -4756,12 +3957,6 @@ button.is-pressed {
 .match-topbar {
     padding-left: 18px !important;
     padding-right: 18px !important;
-}
-
-/* Esci */
-.match-topbar .back-button {
-    justify-self: start !important;
-    margin-left: 0 !important;
 }
 
 /* Tre puntini */
@@ -5244,8 +4439,8 @@ button.is-pressed {
 
 /* Anche sui display piccoli ogni riga resta di 64px: il rullo
    da 192px mostra quindi tre nomi contemporaneamente. */
-@media (max-width: 390px) {
-    .starting-draw-reel {
+@media(max-width: 390px) {
+.starting-draw-reel {
         height: 192px !important;
         min-height: 192px !important;
         max-height: 192px !important;
@@ -5515,8 +4710,8 @@ button.is-pressed {
     font-weight: 650;
 }
 
-@media (max-width: 390px) {
-    .match-row::before {
+@media(max-width: 390px) {
+.match-row::before {
         right: 143px !important;
     }
 
@@ -5620,8 +4815,8 @@ button.is-pressed {
 }
 
 /* Su schermi piccoli lasciamo più spazio utile al popup. */
-@media (max-width: 390px) {
-    .score-card-menu {
+@media(max-width: 390px) {
+.score-card-menu {
         width: 188px !important;
     }
 
@@ -5665,8 +4860,8 @@ button.is-pressed {
     white-space: nowrap !important;
 }
 
-@media (max-width: 390px) {
-    .starting-draw-reel {
+@media(max-width: 390px) {
+.starting-draw-reel {
         height: 192px !important;
         min-height: 192px !important;
         max-height: 192px !important;
@@ -5816,13 +5011,8 @@ button.is-pressed {
     100% { opacity: 1; transform: scale(1) rotate(0); }
 }
 
-@media (max-width: 390px) {
-    .starting-draw-reel {
-        height: 192px !important;
-        min-height: 192px !important;
-        max-height: 192px !important;
-    }
-    .starting-draw-reel-item {
+@media(max-width: 390px) {
+.starting-draw-reel-item {
         height: 64px !important;
         min-height: 64px !important;
         max-height: 64px !important;
@@ -5897,8 +5087,8 @@ button.is-pressed {
     100% { transform: scale(1.02); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .starting-draw-slot.all-reels-winning .starting-draw-reel,
+@media(prefers-reduced-motion: reduce) {
+.starting-draw-slot.all-reels-winning .starting-draw-reel,
     .starting-draw-slot.all-reels-winning .starting-draw-reel-item.is-center-winner {
         animation: none !important;
     }
@@ -6008,8 +5198,8 @@ button.is-pressed {
     100% { transform: scale(1.02); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .starting-draw-reel.is-winning,
+@media(prefers-reduced-motion: reduce) {
+.starting-draw-reel.is-winning,
     .starting-draw-reel.is-winning .starting-draw-reel-item.is-center-winner,
     .starting-draw-slot.all-reels-winning .starting-draw-reel,
     .starting-draw-slot.all-reels-winning .starting-draw-reel-item.is-center-winner {
@@ -6126,6 +5316,973 @@ button.is-pressed {
    Richiesto: logo/titolo più grandi, sfondo bordeaux tenue,
    card giochi più profonde, stato vuoto compatto.
    ========================================================= */
+
+
+/* Effetto bordeaux molto leggero + alone sfocato */
+
+
+
+
+/* LOGO + TITOLO */
+
+
+
+
+
+
+
+
+
+
+/* Sottotitolo eliminato */
+
+
+/* Titolo sezione */
+
+
+
+
+/* CARD DEI GIOCHI */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Riquadro "Nessuna partita in corso": circa metà dell'altezza */
+
+
+
+
+/* Privacy eliminata */
+
+
+
+
+/* =========================================================
+   CARDSCORE HOME — RIFINITURA 2
+   ========================================================= */
+
+/* Logo più grande + ombra morbida */
+
+
+
+
+/* Leggero alone attorno al titolo */
+
+
+/* Loghi dei giochi: centratura geometrica e dimensione leggermente maggiore */
+
+
+
+
+/* Piccole correzioni ottiche per i diversi loghi */
+
+
+
+
+
+
+
+
+/* Stato vuoto: leggermente più grande e perfettamente centrato */
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   CARDSCORE HOME — CENTRATURA PERFETTA STATO VUOTO
+   ========================================================= */
+
+
+
+
+
+
+
+
+/* =========================================================
+   CARDSCORE — PARTITA IN CORSO (HOME) — LAYOUT DEFINITIVO
+   Un solo blocco di regole al posto delle vecchie patch
+   sovrapposte (REVISIONE / V5 / v6 / v7 / v8 / v9 / v10),
+   che si annullavano a vicenda e causavano il posizionamento
+   sbagliato. Il layout usa CSS grid, non posizionamenti
+   assoluti "a occhio": logo, testo e freccia restano sempre
+   centrati verticalmente tra loro, qualunque sia il numero
+   di giocatori o la lunghezza dei nomi.
+   ========================================================= */
+
+/* UNO giallo, PILI PILI rosso pastello (colori definitivi) */
+
+
+
+
+/* Alone morbido verde attorno al titolo CardScore */
+
+
+/* Card */
+
+
+/* Titolo "PARTITA IN CORSO" */
+
+
+
+
+/* Riga principale: logo | testo | freccia, sempre allineati
+   al centro verticale l'uno rispetto all'altro. */
+
+
+/* Logo del gioco: vicino al bordo sinistro, dimensione equilibrata
+   con lo spazio che serve al testo per non andare mai in overflow */
+
+
+
+
+/* Correzioni ottiche per i loghi non perfettamente quadrati */
+
+
+
+
+/* Colonna testo, separata dal logo da una linea verticale sottile
+   vicina al logo */
+
+
+/* Nome gioco + turno, sulla stessa riga */
+
+
+
+
+/* Righe giocatore: nome in colonna fissa, punteggio subito dopo */
+
+
+
+
+
+
+/* Freccia: leggermente più grande dell'originale, centrata
+   verticalmente sull'intera card, vicina al bordo destro —
+   ma senza invadere lo spazio del testo */
+
+
+
+
+/* Nessun residuo del vecchio pulsante "Continua" */
+
+
+
+/* =========================================================
+   CARDSCORE — HOME FINALE
+   Allineamento alla schermata di riferimento fornita.
+   Questa sezione è intenzionalmente in fondo al CSS per
+   prevalere sulle vecchie patch della Home.
+   ========================================================= */
+
+/* Sfondo della Home */
+
+
+/* Titolo "SCEGLI IL GIOCO" */
+
+
+
+
+/* Griglia: due colonne con lo stesso respiro della foto */
+
+
+/* Quattro colori della schermata di riferimento */
+
+
+
+
+
+
+
+
+/* Dimensioni delle card */
+
+
+/* Area logo */
+
+
+
+
+/* Correzioni ottiche dei quattro loghi */
+
+
+
+
+
+
+
+
+/* Nome gioco + sottotitolo centrati */
+
+
+
+
+
+
+
+
+/* =========================================================
+   PARTITA IN CORSO
+   ========================================================= */
+
+
+
+/* Intestazione */
+
+
+
+
+/* Logo | linea | informazioni | freccia */
+
+
+/* Colonna centrale con la linea verticale */
+
+
+/* Nome gioco + turno */
+
+
+
+
+
+
+/* Righe punteggio */
+
+
+
+
+
+
+
+
+
+
+/* Freccia a destra, centrata verticalmente */
+
+
+/* Mantieni il layout sui telefoni stretti, riducendo solo la scala */
+
+/* =========================================================
+   CARDSCORE — HOME MASTER
+   Tutte le regole specifiche della Home sono raccolte qui.
+   Questa sezione resta in fondo al CSS per rendere il cascade
+   della Home prevedibile e semplice da modificare.
+   Le regole con override diversi restano nel loro ordine
+   originale per non alterare il risultato visivo.
+   ========================================================= */
+
+#home .brand-text {
+    text-align: left;
+}
+
+#home .saved-game-icon span {
+    font-size: 18px;
+}
+
+@media(max-width: 430px) {
+#home {
+        background: #f7f8f4;
+    }
+}
+
+@media(max-width: 430px) {
+#home .home-header {
+        padding-top: calc(env(safe-area-inset-top) + 8px);
+        padding-bottom: 0;
+        padding: calc(env(safe-area-inset-top) + 7px)
+        16px
+        0;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand {
+        gap: 7px;
+        width: 100%;
+        max-width: none;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        flex-shrink: 0;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand-text h1 {
+        font-size: 29px;
+        letter-spacing: -1.2px;
+        line-height: 1;
+        color: #1f6043;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand-text p {
+        font-size: 10px;
+        margin-top: 4px;
+        line-height: 1.15;
+        color: #747a72;
+    }
+}
+
+@media(max-width: 430px) {
+#home .home-content {
+        padding-left: 16px;
+        padding-right: 16px;
+        padding: 11px 16px
+        calc(12px + env(safe-area-inset-bottom));
+        max-width: 430px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .home-section-heading {
+        margin-bottom: 9px;
+        text-align: center;
+    }
+}
+
+@media(max-width: 430px) {
+#home .home-section-heading h2 {
+        font-size: 13px;
+        line-height: 1.1;
+        letter-spacing: 0.3px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .games-grid {
+        gap: 8px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .game-card {
+        min-height: 146px;
+        border-radius: 17px;
+        box-shadow: 0 6px 17px rgba(28, 42, 32, 0.065);
+        overflow: hidden;
+        /* mantiene l'animazione */
+        transition: transform 0.12s ease,
+        box-shadow 0.12s ease;
+    }
+}
+
+@media(max-width: 430px) {
+#home .game-card:active {
+        transform: translateY(3px)
+        scale(0.975);
+        box-shadow: 0 2px 7px rgba(28, 42, 32, 0.10);
+    }
+}
+
+@media(max-width: 430px) {
+#home .game-card-image {
+        height: 91px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .game-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+@media(max-width: 430px) {
+#home .game-card-info {
+        min-height: 55px;
+        padding: 5px 7px 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+@media(max-width: 430px) {
+#home .game-card-info > div {
+        width: 100%;
+    }
+}
+
+@media(max-width: 430px) {
+#home .game-card-info h3 {
+        font-size: 14px;
+        line-height: 1.1;
+        color: #173f31;
+    }
+}
+
+@media(max-width: 430px) {
+#home .game-card-info span {
+        margin-top: 3px;
+        font-size: 9px;
+        line-height: 1.1;
+        color: rgba(32, 37, 31, 0.60);
+    }
+}
+
+@media(max-width: 430px) {
+#home .game-card-arrow {
+        display: none;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card {
+        padding: 0;
+        margin-top: 17px;
+        border-radius: 19px;
+        padding-bottom: 1px;
+        border: 1px solid #d9e9d4;
+        box-shadow: 0 6px 17px rgba(28, 42, 32, 0.055);
+        width: 100%;
+        background: #edf7e9;
+        overflow: hidden;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-heading {
+        padding: 7px 14px 6px;
+        text-align: center;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-heading h2 {
+        font-size: 12px;
+        letter-spacing: 0.8px;
+        margin: 0;
+        line-height: 1.1;
+        color: #286548;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-content {
+        padding: 0 14px;
+        grid-template-columns: 48px
+        minmax(0, 1fr)
+        17px;
+        gap: 10px;
+        display: grid;
+        align-items: center;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        box-shadow: 0 4px 9px rgba(31, 96, 67, 0.12);
+        overflow: hidden;
+        background: #4d9963;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-icon img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-header {
+        align-items: center;
+        min-width: 0;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-header h3 {
+        font-size: 18px;
+        font-weight: 800;
+        margin: 0;
+        line-height: 1.05;
+        color: #173f31;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-turn {
+        font-size: 11px;
+        line-height: 1;
+        color: #69726b;
+        white-space: nowrap;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-info {
+        margin-top: 4px;
+        font-size: 11px;
+        line-height: 1.25;
+        color: #345746;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-player-score {
+        padding: 2px 0;
+        border-bottom: 1px solid rgba(31, 96, 67, 0.13);
+        min-height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-player-score:last-child {
+        border-bottom: 0;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-player-score span {
+        color: #345746;
+        font-size: 11px;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-player-score strong {
+        color: #287047;
+        font-size: 11px;
+        font-weight: 750;
+        flex-shrink: 0;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-arrow {
+        font-size: 27px;
+        font-weight: 400;
+        transform: translateY(-1px);
+        line-height: 1;
+        color: #173f31;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card .primary-button {
+        width: calc(100% - 28px);
+        min-height: 44px;
+        margin: 10px 14px 12px;
+        padding: 9px 14px;
+        border-radius: 23px;
+        font-size: 14px;
+        font-weight: 750;
+        box-shadow: 0 5px 12px rgba(31, 96, 67, 0.15);
+        background: #3f8f56;
+        line-height: 1;
+        transition: transform 0.10s ease,
+        box-shadow 0.10s ease;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card .primary-button:active {
+        transform: translateY(3px)
+        scale(0.98);
+        box-shadow: 0 2px 5px rgba(31, 96, 67, 0.12);
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card .primary-button span {
+        margin-right: 6px;
+        font-size: 13px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .privacy-note {
+        margin-top: 10px;
+        font-size: 9px;
+        margin: 9px 0 0;
+        line-height: 1.2;
+        color: #8b928b;
+    }
+}
+
+@media(max-width: 375px) {
+#home .brand-icon {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+@media(max-width: 375px) {
+#home .brand-text h1 {
+        font-size: 27px;
+    }
+}
+
+@media(max-width: 375px) {
+#home .game-card {
+        min-height: 140px;
+    }
+}
+
+@media(max-width: 375px) {
+#home .game-card-image {
+        height: 86px;
+    }
+}
+
+@media(max-width: 375px) {
+#home .saved-game-card {
+        margin-top: 14px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .home-header {
+        padding:
+            calc(env(safe-area-inset-top) + 8px)
+            16px
+            0;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand {
+        width: 100%;
+        max-width: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 18px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand-icon {
+        width: 72px;
+        height: 72px;
+        flex: 0 0 72px;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand-icon img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand-text {
+        text-align: left;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand-text h1 {
+        margin: 0;
+        font-size: 43px;
+        line-height: 0.95;
+        letter-spacing: -2px;
+        font-weight: 800;
+        color: #216b4d;
+    }
+}
+
+@media(max-width: 430px) {
+#home .brand-text p {
+        margin-top: 10px;
+        font-size: 15px;
+        line-height: 1;
+        letter-spacing: 0;
+        color: #777b77;
+        white-space: nowrap;
+    }
+}
+
+@media(max-width: 430px) {
+#home .home-content {
+        padding-top: 18px;
+    }
+}
+
+#home .brand-text h1 {
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -1.2px;
+    color: #1f6043;
+    font-family: "SS Safari", sans-serif !important;
+}
+
+@media(max-width: 430px) {
+#home .game-card-image {
+        height: 91px;
+        padding: 6px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media(max-width: 430px) {
+#home .game-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+    }
+}
+
+#home .saved-game-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    object-position: center;
+}
+
+#home .saved-game-icon img[src*="uno.png"] {
+    width: 72%;
+    height: 72%;
+}
+
+#home .saved-game-icon img[src*="pili-pili.png"] {
+    width: 58%;
+    height: 58%;
+}
+
+#home .saved-game-icon img[src*="scala40.png"] {
+    width: 72%;
+    height: 58%;
+}
+
+#home .saved-game-icon img[src*="scopa.png"] {
+    width: 68%;
+    height: 58%;
+}
+
+@media(max-width: 430px) {
+#home .saved-game-heading {
+        padding: 10px 14px 9px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-heading h2 {
+        font-size: 17px !important;
+        line-height: 1.1;
+        font-weight: 900;
+        letter-spacing: 1.4px;
+        text-align: center;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-info {
+        margin-top: 5px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-player-score {
+        min-height: 27px;
+        padding: 3px 0;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-player-score span {
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-player-score strong {
+        font-size: 11px;
+        font-weight: 750;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card.empty-state {
+        min-height: 135px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card.empty-state .saved-game-heading {
+        display: none !important;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card.empty-state .saved-game-content {
+        width: 100%;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        padding: 0 !important;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card.empty-state .saved-game-icon {
+        display: none !important;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card.empty-state .saved-game-main {
+        width: 100%;
+        min-width: 0;
+        text-align: center;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card.empty-state .saved-game-header {
+        display: none !important;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card.empty-state .saved-game-info {
+        width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+
+        white-space: nowrap;
+        text-align: center;
+
+        color: #286548;
+        font-size: 17px;
+        line-height: 1;
+        font-weight: 800;
+
+        text-decoration: underline;
+        text-decoration-thickness: 1.5px;
+        text-underline-offset: 4px;
+
+        text-shadow:
+            0 2px 2px rgba(31, 96, 67, 0.18);
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card.empty-state .saved-game-arrow {
+        display: none !important;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card.empty-state .primary-button {
+        display: none !important;
+    }
+}
+
+@media(max-width: 430px) {
+#home .saved-game-card.empty-state .saved-game-info {
+        white-space: nowrap;
+        font-size: 30px;
+        line-height: 1;
+        text-align: center;
+    }
+}
+
+#home .saved-game-card.empty-state {
+    min-height: 135px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#home .saved-game-card.empty-state .saved-game-empty {
+    width: 100%;
+    text-align: center;
+
+    white-space: nowrap;
+
+    color: #286548;
+    font-size: 17px;
+    line-height: 1.2;
+    font-weight: 800;
+
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+
+    text-shadow:
+        0 2px 2px rgba(31, 96, 67, 0.18);
+}
+
 #home.active {
     position: relative;
     isolation: isolate;
@@ -6133,7 +6290,6 @@ button.is-pressed {
     background: #f8f4f4;
 }
 
-/* Effetto bordeaux molto leggero + alone sfocato */
 #home.active::before {
     content: "";
     position: absolute;
@@ -6154,7 +6310,6 @@ button.is-pressed {
     z-index: 1;
 }
 
-/* LOGO + TITOLO */
 #home .home-header {
     padding-top: calc(env(safe-area-inset-top) + 8px);
     padding-bottom: 0;
@@ -6182,10 +6337,6 @@ button.is-pressed {
     border-radius: 24px;
 }
 
-#home .brand-text {
-    text-align: left;
-}
-
 #home .brand-text h1 {
     margin: 0;
     font-size: 58px;
@@ -6195,12 +6346,10 @@ button.is-pressed {
     color: #1f6043;
 }
 
-/* Sottotitolo eliminato */
 #home .brand-text p {
     display: none !important;
 }
 
-/* Titolo sezione */
 #home .home-section-heading {
     margin-bottom: 14px;
 }
@@ -6210,7 +6359,6 @@ button.is-pressed {
     letter-spacing: 0.35px;
 }
 
-/* CARD DEI GIOCHI */
 #home .games-grid {
     gap: 11px;
 }
@@ -6254,7 +6402,6 @@ button.is-pressed {
     font-size: 15px;
 }
 
-/* Riquadro "Nessuna partita in corso": circa metà dell'altezza */
 #home .saved-game-card.empty-state {
     min-height: 70px !important;
     height: 70px;
@@ -6272,36 +6419,45 @@ button.is-pressed {
     line-height: 1 !important;
 }
 
-/* Privacy eliminata */
 #home .privacy-note {
     display: none !important;
 }
 
-@media (max-width: 375px) {
-    #home .brand-icon {
+@media(max-width: 375px) {
+#home .brand-icon {
         width: 76px;
         height: 76px;
         flex-basis: 76px;
         border-radius: 22px;
     }
-    #home .brand-icon img { border-radius: 22px; }
-    #home .brand-text h1 {
+}
+
+@media(max-width: 375px) {
+#home .brand-icon img { border-radius: 22px; }
+}
+
+@media(max-width: 375px) {
+#home .brand-text h1 {
         font-size: 51px;
         letter-spacing: -2.1px;
     }
-    #home .game-card { min-height: 154px; }
-    #home .game-card-image { height: 96px; }
-    #home .saved-game-card.empty-state {
+}
+
+@media(max-width: 375px) {
+#home .game-card { min-height: 154px; }
+}
+
+@media(max-width: 375px) {
+#home .game-card-image { height: 96px; }
+}
+
+@media(max-width: 375px) {
+#home .saved-game-card.empty-state {
         min-height: 66px !important;
         height: 66px;
     }
 }
 
-/* =========================================================
-   CARDSCORE HOME — RIFINITURA 2
-   ========================================================= */
-
-/* Logo più grande + ombra morbida */
 #home .brand-icon {
     width: 96px;
     height: 96px;
@@ -6320,14 +6476,12 @@ button.is-pressed {
     object-fit: contain;
 }
 
-/* Leggero alone attorno al titolo */
 #home .brand-text h1 {
     text-shadow:
         0 2px 7px rgba(31, 96, 67, 0.16),
         0 0 14px rgba(31, 96, 67, 0.08);
 }
 
-/* Loghi dei giochi: centratura geometrica e dimensione leggermente maggiore */
 #home .game-card-image {
     display: flex;
     align-items: center;
@@ -6344,7 +6498,6 @@ button.is-pressed {
     transform-origin: center center;
 }
 
-/* Piccole correzioni ottiche per i diversi loghi */
 #home .game-uno .game-card-image img {
     transform: scale(1.08);
 }
@@ -6361,7 +6514,6 @@ button.is-pressed {
     transform: scale(1.11);
 }
 
-/* Stato vuoto: leggermente più grande e perfettamente centrato */
 #home .saved-game-card.empty-state {
     min-height: 86px !important;
     height: 86px;
@@ -6401,27 +6553,28 @@ button.is-pressed {
     transform: translateY(0) !important;
 }
 
-@media (max-width: 375px) {
-    #home .brand-icon {
+@media(max-width: 375px) {
+#home .brand-icon {
         width: 84px;
         height: 84px;
         flex-basis: 84px;
         border-radius: 25px;
     }
+}
 
-    #home .brand-icon img {
+@media(max-width: 375px) {
+#home .brand-icon img {
         border-radius: 25px;
     }
+}
 
-    #home .saved-game-card.empty-state {
+@media(max-width: 375px) {
+#home .saved-game-card.empty-state {
         min-height: 82px !important;
         height: 82px;
     }
 }
 
-/* =========================================================
-   CARDSCORE HOME — CENTRATURA PERFETTA STATO VUOTO
-   ========================================================= */
 #home .saved-game-card.empty-state {
     position: relative !important;
     display: block !important;
@@ -6446,20 +6599,6 @@ button.is-pressed {
     text-align: center !important;
 }
 
-
-
-/* =========================================================
-   CARDSCORE — PARTITA IN CORSO (HOME) — LAYOUT DEFINITIVO
-   Un solo blocco di regole al posto delle vecchie patch
-   sovrapposte (REVISIONE / V5 / v6 / v7 / v8 / v9 / v10),
-   che si annullavano a vicenda e causavano il posizionamento
-   sbagliato. Il layout usa CSS grid, non posizionamenti
-   assoluti "a occhio": logo, testo e freccia restano sempre
-   centrati verticalmente tra loro, qualunque sia il numero
-   di giocatori o la lunghezza dei nomi.
-   ========================================================= */
-
-/* UNO giallo, PILI PILI rosso pastello (colori definitivi) */
 #home .game-card.game-uno,
 #home .game-uno {
     background: #fae3aa !important;
@@ -6470,14 +6609,12 @@ button.is-pressed {
     background: #f3a3a3 !important;
 }
 
-/* Alone morbido verde attorno al titolo CardScore */
 #home .brand-text h1 {
     text-shadow:
         0 2px 7px rgba(31, 96, 67, 0.16),
         0 0 14px rgba(31, 96, 67, 0.08) !important;
 }
 
-/* Card */
 #home .saved-game-card:not(.empty-state) {
     position: relative !important;
     height: auto !important;
@@ -6489,7 +6626,6 @@ button.is-pressed {
     box-shadow: 0 8px 25px rgba(28, 42, 32, 0.07) !important;
 }
 
-/* Titolo "PARTITA IN CORSO" */
 #home .saved-game-card:not(.empty-state) .saved-game-heading {
     margin: 0 !important;
     padding: 12px 16px 8px !important;
@@ -6500,8 +6636,6 @@ button.is-pressed {
     color: #173f31 !important;
 }
 
-/* Riga principale: logo | testo | freccia, sempre allineati
-   al centro verticale l'uno rispetto all'altro. */
 #home .saved-game-card:not(.empty-state) .saved-game-content {
     display: grid !important;
     grid-template-columns: 78px minmax(0, 1fr) 28px !important;
@@ -6511,8 +6645,6 @@ button.is-pressed {
     padding: 0 14px 14px 10px !important;
 }
 
-/* Logo del gioco: vicino al bordo sinistro, dimensione equilibrata
-   con lo spazio che serve al testo per non andare mai in overflow */
 #home .saved-game-card:not(.empty-state) .saved-game-icon {
     width: 78px !important;
     height: 78px !important;
@@ -6536,20 +6668,19 @@ button.is-pressed {
     display: block !important;
 }
 
-/* Correzioni ottiche per i loghi non perfettamente quadrati */
 #home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="pili-pili.png"] {
     width: 90% !important;
     height: 90% !important;
 }
+
 #home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scala40.png"] {
     height: 82% !important;
 }
+
 #home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scopa.png"] {
     height: 84% !important;
 }
 
-/* Colonna testo, separata dal logo da una linea verticale sottile
-   vicina al logo */
 #home .saved-game-card:not(.empty-state) .saved-game-main {
     min-width: 0 !important;
     border-left: 1px solid rgba(31, 96, 67, 0.16) !important;
@@ -6557,7 +6688,6 @@ button.is-pressed {
     margin: 0 !important;
 }
 
-/* Nome gioco + turno, sulla stessa riga */
 #home .saved-game-card:not(.empty-state) .saved-game-header {
     display: flex !important;
     align-items: center !important;
@@ -6571,7 +6701,6 @@ button.is-pressed {
     margin-top: 3px !important;
 }
 
-/* Righe giocatore: nome in colonna fissa, punteggio subito dopo */
 #home .saved-game-card:not(.empty-state) .saved-player-score {
     display: grid !important;
     grid-template-columns: 56px minmax(0, 1fr) !important;
@@ -6595,9 +6724,6 @@ button.is-pressed {
     text-overflow: clip !important;
 }
 
-/* Freccia: leggermente più grande dell'originale, centrata
-   verticalmente sull'intera card, vicina al bordo destro —
-   ma senza invadere lo spazio del testo */
 #home .saved-game-card:not(.empty-state) .saved-game-arrow {
     justify-self: end !important;
     align-self: center !important;
@@ -6625,25 +6751,14 @@ button.is-pressed {
     transform: scale(0.90) !important;
 }
 
-/* Nessun residuo del vecchio pulsante "Continua" */
 #home .saved-game-card:not(.empty-state) .primary-button {
     display: none !important;
 }
 
-
-/* =========================================================
-   CARDSCORE — HOME FINALE
-   Allineamento alla schermata di riferimento fornita.
-   Questa sezione è intenzionalmente in fondo al CSS per
-   prevalere sulle vecchie patch della Home.
-   ========================================================= */
-
-/* Sfondo della Home */
 #home.active {
     background: #f8f4f4 !important;
 }
 
-/* Titolo "SCEGLI IL GIOCO" */
 #home .home-section-heading {
     justify-content: center !important;
     margin-bottom: 14px !important;
@@ -6661,13 +6776,11 @@ button.is-pressed {
     letter-spacing: 0.35px !important;
 }
 
-/* Griglia: due colonne con lo stesso respiro della foto */
 #home .games-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 13px !important;
 }
 
-/* Quattro colori della schermata di riferimento */
 #home .game-card.game-uno,
 #home .game-uno {
     background: #fbe2ac !important;
@@ -6688,7 +6801,6 @@ button.is-pressed {
     background: #ebdcf3 !important;
 }
 
-/* Dimensioni delle card */
 #home .game-card {
     min-height: 173px !important;
     height: 173px !important;
@@ -6699,7 +6811,6 @@ button.is-pressed {
         0 3px 8px rgba(45, 29, 34, 0.06) !important;
 }
 
-/* Area logo */
 #home .game-card-image {
     height: 113px !important;
     padding: 7px 10px !important;
@@ -6717,7 +6828,6 @@ button.is-pressed {
     display: block !important;
 }
 
-/* Correzioni ottiche dei quattro loghi */
 #home .game-uno .game-card-image img {
     transform: scale(1.08) !important;
 }
@@ -6734,7 +6844,6 @@ button.is-pressed {
     transform: scale(1.11) !important;
 }
 
-/* Nome gioco + sottotitolo centrati */
 #home .game-card-info {
     min-height: 60px !important;
     height: 60px !important;
@@ -6768,10 +6877,6 @@ button.is-pressed {
     font-weight: 600 !important;
 }
 
-/* =========================================================
-   PARTITA IN CORSO
-   ========================================================= */
-
 #home .saved-game-card:not(.empty-state) {
     margin-top: 17px !important;
     min-height: 153px !important;
@@ -6785,7 +6890,6 @@ button.is-pressed {
         0 8px 25px rgba(28, 42, 32, 0.07) !important;
 }
 
-/* Intestazione */
 #home .saved-game-card:not(.empty-state) .saved-game-heading {
     margin: 0 !important;
     padding: 14px 16px 13px !important;
@@ -6801,7 +6905,6 @@ button.is-pressed {
     letter-spacing: 1.4px !important;
 }
 
-/* Logo | linea | informazioni | freccia */
 #home .saved-game-card:not(.empty-state) .saved-game-content {
     display: grid !important;
     grid-template-columns: 78px minmax(0, 1fr) 28px !important;
@@ -6814,36 +6917,6 @@ button.is-pressed {
     padding: 0 7px 12px 10px !important;
 }
 
-/* Logo: dimensione della foto di riferimento */
-#home .saved-game-card:not(.empty-state) .saved-game-icon {
-    width: 78px !important;
-    height: 78px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    overflow: visible !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: none !important;
-    max-height: none !important;
-    object-fit: contain !important;
-    display: block !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="pili-pili.png"] {
-    width: 90% !important;
-    height: 90% !important;
-}
-
-/* Colonna centrale con la linea verticale */
 #home .saved-game-card:not(.empty-state) .saved-game-main {
     min-width: 0 !important;
     height: 89px !important;
@@ -6855,7 +6928,6 @@ button.is-pressed {
     justify-content: center !important;
 }
 
-/* Nome gioco + turno */
 #home .saved-game-card:not(.empty-state) .saved-game-header {
     display: flex !important;
     align-items: center !important;
@@ -6880,7 +6952,6 @@ button.is-pressed {
     white-space: nowrap !important;
 }
 
-/* Righe punteggio */
 #home .saved-game-card:not(.empty-state) .saved-game-info {
     margin-top: 4px !important;
     color: #345746 !important;
@@ -6922,7 +6993,6 @@ button.is-pressed {
     text-overflow: clip !important;
 }
 
-/* Freccia a destra, centrata verticalmente */
 #home .saved-game-card:not(.empty-state) .saved-game-arrow {
     justify-self: end !important;
     align-self: center !important;
@@ -6943,23 +7013,21 @@ button.is-pressed {
     justify-content: center !important;
 }
 
-/* Nessun pulsante aggiuntivo */
-#home .saved-game-card:not(.empty-state) .primary-button {
-    display: none !important;
-}
-
-/* Mantieni il layout sui telefoni stretti, riducendo solo la scala */
-@media (max-width: 375px) {
-    #home .game-card {
+@media(max-width: 375px) {
+#home .game-card {
         height: 154px !important;
         min-height: 154px !important;
     }
+}
 
-    #home .game-card-image {
+@media(max-width: 375px) {
+#home .game-card-image {
         height: 96px !important;
     }
+}
 
-    #home .game-card-info {
+@media(max-width: 375px) {
+#home .game-card-info {
         height: 58px !important;
         min-height: 58px !important;
     }
