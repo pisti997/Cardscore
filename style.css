@@ -5207,10 +5207,11 @@ button.is-pressed {
                 inset 0 -8px 12px rgba(24,85,55,0.04) !important;
 }
 
-/* Leggero blur solo mentre il rullo gira: il nome resta leggibile
-   ma comunica velocità, senza l'effetto di testo che scompare. */
+/* Mentre il rullo gira comunichiamo velocità solo con l'opacità:
+   NIENTE filter/blur su testo animato con transform, perché su
+   Safari/iOS questa combinazione genera artefatti di rendering
+   (righe/rettangoli rosa nella zona di composizione GPU). */
 .starting-draw-reel.is-spinning .starting-draw-reel-item {
-    filter: blur(0.55px);
     opacity: 0.88;
 }
 
@@ -5226,7 +5227,9 @@ button.is-pressed {
     line-height: 1 !important;
     font-weight: 800 !important;
     letter-spacing: -1.2px !important;
-    transition: filter 0.12s ease, opacity 0.12s ease;
+    filter: none !important;
+    -webkit-filter: none !important;
+    transition: opacity 0.12s ease;
 }
 
 .starting-draw-reel.is-winning {
@@ -6109,10 +6112,14 @@ button.is-pressed {
     display: none !important;
 }
 
-/* Manteniamo il blur durante il movimento */
+/* NIENTE blur durante il movimento: su Safari/iOS il filter blur
+   applicato a testo in transform animato è la causa reale delle
+   righe rosa, non i bordi. La velocità resta comunicata solo da
+   opacità/scala (vedi regola .is-spinning .starting-draw-reel-item
+   più sopra e lo script che anima i rulli). */
 .starting-draw-reel.is-spinning .starting-draw-reel-item {
-    filter: blur(0.55px) !important;
-    -webkit-filter: blur(0.55px) !important;
+    filter: none !important;
+    -webkit-filter: none !important;
 }
 
 /* =========================================================
@@ -6441,624 +6448,115 @@ button.is-pressed {
 }
 
 
-/* =========================================================
-   CARDSCORE — PARTITA IN CORSO / HOME — REVISIONE
-   ========================================================= */
-
-#home .saved-game-card:not(.empty-state) {
-    position: relative !important;
-    height: auto !important;
-    min-height: 0 !important;
-    margin-top: 17px !important;
-    padding: 0 !important;
-    border-radius: 24px !important;
-    overflow: visible !important;
-    box-shadow: 0 8px 25px rgba(28, 42, 32, 0.07) !important;
-}
-
-/* Titolo: distanza ridotta */
-#home .saved-game-card:not(.empty-state) .saved-game-heading {
-    margin: 0 !important;
-    padding: 10px 14px 6px !important;
-}
-
-/* Contenuto: colonna logo + testo; spazio riservato alla freccia */
-#home .saved-game-card:not(.empty-state) .saved-game-content {
-    display: grid !important;
-    grid-template-columns: 72px minmax(0, 1fr) !important;
-    align-items: center !important;
-    gap: 12px !important;
-    width: 100% !important;
-    padding: 0 58px 13px 16px !important;
-}
-
-/* Logo senza cerchio verde, più grande */
-#home .saved-game-card:not(.empty-state) .saved-game-icon {
-    width: 72px !important;
-    height: 72px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    overflow: visible !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img {
-    width: 72px !important;
-    height: 72px !important;
-    max-width: none !important;
-    max-height: none !important;
-    object-fit: contain !important;
-    display: block !important;
-}
-
-/* Correzioni ottiche dei loghi */
-#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="pili-pili.png"] {
-    width: 66px !important;
-    height: 66px !important;
-}
-#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scala40.png"] {
-    width: 72px !important;
-    height: 60px !important;
-}
-#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scopa.png"] {
-    width: 70px !important;
-    height: 61px !important;
-}
-
-/* Freccia: circa il doppio, al centro verticale del margine destro */
-#home .saved-game-card:not(.empty-state) .saved-game-arrow {
-    position: absolute !important;
-    top: 50% !important;
-    right: 7px !important;
-    transform: translateY(-50%) !important;
-    width: 42px !important;
-    height: 64px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    color: #173f31 !important;
-    font-family: inherit !important;
-    font-size: 56px !important;
-    font-weight: 400 !important;
-    line-height: 1 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    cursor: pointer !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
-    transform: translateY(-50%) scale(0.90) !important;
-}
-
-/* Nessun residuo del vecchio pulsante */
-#home .saved-game-card:not(.empty-state) .primary-button {
-    display: none !important;
-}
-
-/* Rifinitura della distanza tra titolo e dati */
-#home .saved-game-card:not(.empty-state) .saved-game-info {
-    margin-top: 3px !important;
-}
-
 
 /* =========================================================
-   CARDSCORE — MODIFICHE RICHIESTE — VERSIONE DEFINITIVA
+   CARDSCORE — PARTITA IN CORSO (HOME) — LAYOUT DEFINITIVO
+   Un solo blocco di regole al posto delle vecchie patch
+   sovrapposte (REVISIONE / V5 / v6 / v7 / v8 / v9 / v10),
+   che si annullavano a vicenda e causavano il posizionamento
+   sbagliato. Il layout usa CSS grid, non posizionamenti
+   assoluti "a occhio": logo, testo e freccia restano sempre
+   centrati verticalmente tra loro, qualunque sia il numero
+   di giocatori o la lunghezza dei nomi.
    ========================================================= */
 
-/* UNO giallo come PILI PILI */
+/* UNO giallo, PILI PILI rosso pastello (colori definitivi) */
 #home .game-card.game-uno,
 #home .game-uno {
     background: #fae3aa !important;
 }
 
-/* PILI PILI rosso pastello */
-#home .game-card.game-pili-pili,
-#home .game-pili-pili {
-    background: #f4c6c6 !important;
-}
-
-/* Logo partita in corso: più grande e praticamente sul bordo sinistro */
-#home .saved-game-card:not(.empty-state) .saved-game-content {
-    grid-template-columns: 92px minmax(0, 1fr) !important;
-    gap: 6px !important;
-    padding-left: 0 !important;
-    padding-right: 58px !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon {
-    width: 92px !important;
-    height: 92px !important;
-    margin-left: -8px !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    overflow: visible !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img {
-    width: 92px !important;
-    height: 92px !important;
-    max-width: none !important;
-    max-height: none !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    transform: none !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="pili-pili.png"] {
-    width: 86px !important;
-    height: 86px !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scala40.png"] {
-    width: 92px !important;
-    height: 76px !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scopa.png"] {
-    width: 90px !important;
-    height: 78px !important;
-}
-
-/* PARTITA IN CORSO: stesso colore di SCEGLI IL GIOCO */
-#home .saved-game-card:not(.empty-state) .saved-game-heading h2 {
-    color: #173f31 !important;
-}
-
-/* =========================================================
-   CARDSCORE — RIFINITURA PARTITA IN CORSO V5
-   ========================================================= */
-
-/* Pili Pili: rosso più acceso, ma ancora nello stesso stile pastello */
 #home .game-card.game-pili-pili,
 #home .game-pili-pili {
     background: #f3a3a3 !important;
 }
 
-/* Logo leggermente più grande, ma con il testo molto più vicino */
-#home .saved-game-card:not(.empty-state) .saved-game-content {
-    grid-template-columns: 98px minmax(0, 1fr) !important;
-    gap: 2px !important;
-    padding-left: 0 !important;
-    padding-right: 52px !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon {
-    width: 98px !important;
-    height: 98px !important;
-    margin-left: -8px !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img {
-    width: 98px !important;
-    height: 98px !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="pili-pili.png"] {
-    width: 92px !important;
-    height: 92px !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scala40.png"] {
-    width: 98px !important;
-    height: 81px !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scopa.png"] {
-    width: 96px !important;
-    height: 83px !important;
-}
-
-/* Il nome del giocatore non viene più troncato con i puntini */
-#home .saved-game-card:not(.empty-state) .saved-player-score span {
-    overflow: visible !important;
-    text-overflow: clip !important;
-    white-space: nowrap !important;
-    min-width: 0 !important;
-}
-
-/* Riduce ulteriormente la distanza tra nome e relativo punteggio */
-#home .saved-game-card:not(.empty-state) .saved-player-score {
-    gap: 4px !important;
-}
-
-/* Titolo del gioco più vicino al logo */
-#home .saved-game-card:not(.empty-state) .saved-game-header {
-    gap: 4px !important;
-}
-
-/* Freccia: la punta arriva esattamente sul centro del bordo destro */
-#home .saved-game-card:not(.empty-state) .saved-game-arrow {
-    right: -1px !important;
-    width: 40px !important;
-    height: 64px !important;
-    padding: 0 !important;
-    justify-content: flex-end !important;
-    align-items: center !important;
-    text-align: right !important;
-    font-size: 60px !important;
-    line-height: 1 !important;
-    transform: translateY(-50%) !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
-    transform: translateY(-50%) scale(0.90) !important;
-}
-
-
-/* =========================================================
-   CARDSCORE — RIFINITURA PARTITA IN CORSO v6
-   ========================================================= */
-
-/* Il blocco contenuto occupa tutta la card e mantiene il logo centrato */
-#home .saved-game-card:not(.empty-state) .saved-game-content {
-    position: relative !important;
-    grid-template-columns: 84px minmax(0, 1fr) !important;
-    gap: 5px !important;
-    padding-left: 0 !important;
-    padding-right: 58px !important;
-    align-items: center !important;
-}
-
-/* Logo: leggermente più grande e centrato verticalmente */
-#home .saved-game-card:not(.empty-state) .saved-game-icon {
-    width: 88px !important;
-    height: 88px !important;
-    margin: 0 !important;
-    transform: translateX(-3px) !important;
-    align-self: center !important;
-}
-
-/* Separatore verticale tra logo e testi */
-#home .saved-game-card:not(.empty-state) .saved-game-main {
-    min-width: 0 !important;
-    border-left: 1px solid rgba(31, 96, 67, 0.16) !important;
-    padding-left: 7px !important;
-}
-
-/* Titolo del gioco più vicino al logo */
-#home .saved-game-card:not(.empty-state) .saved-game-header {
-    margin-left: 0 !important;
-    gap: 5px !important;
-}
-
-/* Nomi completi: niente abbreviazione/troncamento */
-#home .saved-game-card:not(.empty-state) .saved-player-score span {
-    overflow: visible !important;
-    text-overflow: clip !important;
-    white-space: nowrap !important;
-}
-
-/* Freccia: stessa distanza dal bordo destro che ha il logo dal bordo sinistro */
-#home .saved-game-card:not(.empty-state) .saved-game-arrow {
-    right: 0 !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-}
-
-/* Feedback al tocco senza spostare la freccia */
-#home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
-    transform: translateY(-50%) scale(0.90) !important;
-}
-
-
-/* =========================================================
-   CARDSCORE — RIFINITURA PARTITA IN CORSO v7
-   ========================================================= */
-
-/* Logo: colonna più compatta, logo centrato verticalmente */
-#home .saved-game-card:not(.empty-state) .saved-game-content {
-    grid-template-columns: 78px minmax(0, 1fr) !important;
-    gap: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 54px !important;
-    align-items: stretch !important;
-}
-
-/* Il logo è centrato rispetto all'intera altezza del riquadro */
-#home .saved-game-card:not(.empty-state) .saved-game-icon {
-    width: 88px !important;
-    height: 88px !important;
-    margin: auto 0 !important;
-    align-self: center !important;
-    transform: translateX(-2px) !important;
-}
-
-/* Testi immediatamente accanto al logo, con divisore */
-#home .saved-game-card:not(.empty-state) .saved-game-main {
-    min-width: 0 !important;
-    align-self: center !important;
-    border-left: 1px solid rgba(31, 96, 67, 0.16) !important;
-    padding-left: 8px !important;
-    padding-right: 0 !important;
-}
-
-/* Titolo gioco vicino al logo */
-#home .saved-game-card:not(.empty-state) .saved-game-header {
-    gap: 5px !important;
-    margin: 0 !important;
-}
-
-/* Righe giocatori: nome separato nettamente dal punteggio */
-#home .saved-game-card:not(.empty-state) .saved-player-score {
-    display: grid !important;
-    grid-template-columns: max-content minmax(0, 1fr) !important;
-    align-items: center !important;
-    justify-content: initial !important;
-    gap: 7px !important;
-    min-width: 0 !important;
-}
-
-/* Nomi completi senza sovrapposizione */
-#home .saved-game-card:not(.empty-state) .saved-player-score span {
-    min-width: 0 !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
-    white-space: nowrap !important;
-}
-
-/* Punteggio sempre separato dal nome */
-#home .saved-game-card:not(.empty-state) .saved-player-score strong {
-    min-width: 0 !important;
-    overflow: hidden !important;
-    text-overflow: clip !important;
-    white-space: nowrap !important;
-}
-
-/* Freccia: centrata verticalmente e spostata più verso l'interno */
-#home .saved-game-card:not(.empty-state) .saved-game-arrow {
-    right: 13px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    margin: 0 !important;
-}
-
-/* Alone CardScore nero */
-#home .brand-text h1 {
-    text-shadow:
-        0 2px 7px rgba(0, 0, 0, 0.28),
-        0 0 14px rgba(0, 0, 0, 0.16) !important;
-}
-
-
-/* =========================================================
-   CARDSCORE — RIFINITURA PARTITA IN CORSO v8
-   ========================================================= */
-
-/* Card: altezza determinata dal contenuto e spazi verticali equilibrati */
-#home .saved-game-card:not(.empty-state) {
-    padding-bottom: 0 !important;
-}
-
-/* Titolo: margine superiore/inferiore equilibrato */
-#home .saved-game-card:not(.empty-state) .saved-game-heading {
-    padding: 10px 14px 9px !important;
-}
-
-/* Contenuto: spazio laterale sufficiente al testo e al punteggio */
-#home .saved-game-card:not(.empty-state) .saved-game-content {
-    display: block !important;
-    position: relative !important;
-    width: 100% !important;
-    min-height: 88px !important;
-    box-sizing: border-box !important;
-    padding: 0 58px 12px 82px !important;
-}
-
-/* Logo: centrato verticalmente rispetto ALL'INTERO riquadro verde */
-#home .saved-game-card:not(.empty-state) .saved-game-icon {
-    position: absolute !important;
-    left: 0 !important;
-    top: 50% !important;
-    width: 88px !important;
-    height: 88px !important;
-    margin: 0 !important;
-    transform: translateY(-50%) !important;
-    align-self: auto !important;
-}
-
-/* Testi immediatamente dopo il divisore */
-#home .saved-game-card:not(.empty-state) .saved-game-main {
-    width: 100% !important;
-    min-width: 0 !important;
-    border-left: 1px solid rgba(31, 96, 67, 0.16) !important;
-    padding-left: 8px !important;
-    box-sizing: border-box !important;
-    align-self: auto !important;
-}
-
-/* Nome del gioco vicino al logo */
-#home .saved-game-card:not(.empty-state) .saved-game-header {
-    width: 100% !important;
-    margin: 0 !important;
-    gap: 5px !important;
-}
-
-/* Nomi e punteggi: colonne fisse.
-   Il punto di partenza di "Game/Set/punti" NON cambia con il nome. */
-#home .saved-game-card:not(.empty-state) .saved-player-score {
-    display: grid !important;
-    grid-template-columns: 72px minmax(0, 1fr) !important;
-    column-gap: 8px !important;
-    align-items: center !important;
-    justify-content: initial !important;
-}
-
-/* Nomi completi nella colonna fissa */
-#home .saved-game-card:not(.empty-state) .saved-player-score span {
-    width: 72px !important;
-    min-width: 0 !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
-    white-space: nowrap !important;
-}
-
-/* Punteggi tutti sulla stessa verticale e senza troncamento */
-#home .saved-game-card:not(.empty-state) .saved-player-score strong {
-    min-width: max-content !important;
-    width: max-content !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
-    white-space: nowrap !important;
-    font-size: 11px !important;
-}
-
-/* Più spazio utile a destra per il punteggio */
-#home .saved-game-card:not(.empty-state) .saved-game-content {
-    padding-right: 48px !important;
-}
-
-/* Freccia: centro geometrico del grande riquadro verde */
-#home .saved-game-card:not(.empty-state) .saved-game-arrow {
-    top: 50% !important;
-    right: 9px !important;
-    transform: translateY(-50%) !important;
-}
-
-/* Alone originale di CardScore: ripristinato l'effetto verde morbido */
+/* Alone morbido verde attorno al titolo CardScore */
 #home .brand-text h1 {
     text-shadow:
         0 2px 7px rgba(31, 96, 67, 0.16),
         0 0 14px rgba(31, 96, 67, 0.08) !important;
 }
 
-
-/* =========================================================
-   CARDSCORE — RIFINITURA PARTITA IN CORSO v9
-   ========================================================= */
-
-#home .saved-game-card:not(.empty-state) .saved-game-content {
-    padding-left: 0 !important;
-    padding-right: 52px !important;
-}
-
-/* Logo centrato verticalmente rispetto alla card verde */
-#home .saved-game-card:not(.empty-state) .saved-game-icon {
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-}
-
-/* Testo più vicino al logo */
-#home .saved-game-card:not(.empty-state) .saved-game-main {
-    padding-left: 7px !important;
-}
-
-/* Nome e punteggio ravvicinati */
-#home .saved-game-card:not(.empty-state) .saved-player-score {
-    grid-template-columns: max-content minmax(0, 1fr) !important;
-    column-gap: 6px !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-player-score span {
-    width: auto !important;
-    max-width: 100px !important;
-    overflow: visible !important;
-    white-space: nowrap !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-player-score strong {
-    justify-self: start !important;
-    width: max-content !important;
-    min-width: max-content !important;
-    white-space: nowrap !important;
-}
-
-/* Freccia centrata verticalmente */
-#home .saved-game-card:not(.empty-state) .saved-game-arrow {
-    top: 50% !important;
-    right: 7px !important;
-    transform: translateY(-50%) !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
-    transform: translateY(-50%) scale(0.90) !important;
-}
-
-
-/* =========================================================
-   CARDSCORE — LAYOUT FINALE PARTITA IN CORSO v10
-   ========================================================= */
-
-/* La card è il riferimento geometrico per logo e freccia */
+/* Card */
 #home .saved-game-card:not(.empty-state) {
     position: relative !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin-top: 17px !important;
+    padding: 0 !important;
+    border-radius: 22px !important;
     overflow: hidden !important;
+    box-shadow: 0 8px 25px rgba(28, 42, 32, 0.07) !important;
 }
 
-/* Titolo */
+/* Titolo "PARTITA IN CORSO" */
 #home .saved-game-card:not(.empty-state) .saved-game-heading {
     margin: 0 !important;
-    padding: 10px 14px 9px !important;
+    padding: 12px 16px 8px !important;
+    text-align: center !important;
 }
 
-/* Area informazioni */
+#home .saved-game-card:not(.empty-state) .saved-game-heading h2 {
+    color: #173f31 !important;
+}
+
+/* Riga principale: logo | testo | freccia, sempre allineati
+   al centro verticale l'uno rispetto all'altro. */
 #home .saved-game-card:not(.empty-state) .saved-game-content {
-    position: relative !important;
-    display: block !important;
+    display: grid !important;
+    grid-template-columns: 74px minmax(0, 1fr) 26px !important;
+    align-items: center !important;
+    gap: 10px !important;
     width: 100% !important;
-    min-height: 92px !important;
-    box-sizing: border-box !important;
-    padding: 0 50px 13px 92px !important;
+    padding: 0 16px 16px !important;
 }
 
-/* Logo: centrato verticalmente rispetto ALLA CARD, titolo compreso */
+/* Logo del gioco */
 #home .saved-game-card:not(.empty-state) .saved-game-icon {
-    position: absolute !important;
-    left: 13px !important;
-    top: 50% !important;
-    width: 78px !important;
-    height: 78px !important;
+    width: 74px !important;
+    height: 74px !important;
     margin: 0 !important;
-    transform: translateY(-50%) !important;
+    padding: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-    padding: 0 !important;
     overflow: visible !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
 }
 
-/* Immagine del logo */
 #home .saved-game-card:not(.empty-state) .saved-game-icon img {
-    width: 78px !important;
-    height: 78px !important;
+    width: 100% !important;
+    height: 100% !important;
     max-width: none !important;
     max-height: none !important;
     object-fit: contain !important;
     display: block !important;
 }
 
-/* Pili Pili mantiene una proporzione leggermente più compatta */
+/* Correzioni ottiche per i loghi non perfettamente quadrati */
 #home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="pili-pili.png"] {
-    width: 74px !important;
-    height: 74px !important;
+    width: 90% !important;
+    height: 90% !important;
+}
+#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scala40.png"] {
+    height: 82% !important;
+}
+#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="scopa.png"] {
+    height: 84% !important;
 }
 
-/* Colonna testi: vicina al logo */
+/* Colonna testo, separata dal logo da una linea verticale sottile */
 #home .saved-game-card:not(.empty-state) .saved-game-main {
-    width: 100% !important;
     min-width: 0 !important;
-    box-sizing: border-box !important;
     border-left: 1px solid rgba(31, 96, 67, 0.16) !important;
-    padding-left: 7px !important;
+    padding-left: 10px !important;
     margin: 0 !important;
 }
 
-/* Nome gioco e turno */
+/* Nome gioco + turno, sulla stessa riga */
 #home .saved-game-card:not(.empty-state) .saved-game-header {
     display: flex !important;
     align-items: center !important;
@@ -7068,99 +6566,63 @@ button.is-pressed {
     margin: 0 !important;
 }
 
-/* Righe: nome + punteggio, con posizione del punteggio fissa */
+#home .saved-game-card:not(.empty-state) .saved-game-info {
+    margin-top: 3px !important;
+}
+
+/* Righe giocatore: nome in colonna fissa, punteggio subito dopo */
 #home .saved-game-card:not(.empty-state) .saved-player-score {
     display: grid !important;
-    grid-template-columns: 58px max-content !important;
-    column-gap: 6px !important;
+    grid-template-columns: 56px minmax(0, 1fr) !important;
+    column-gap: 8px !important;
     align-items: center !important;
-    justify-content: start !important;
     width: 100% !important;
-    box-sizing: border-box !important;
 }
 
-/* Nomi */
 #home .saved-game-card:not(.empty-state) .saved-player-score span {
-    width: 58px !important;
-    min-width: 58px !important;
+    width: auto !important;
+    min-width: 0 !important;
     overflow: visible !important;
     text-overflow: clip !important;
     white-space: nowrap !important;
 }
 
-/* Game / Set / punti: stessa identica colonna per tutti */
 #home .saved-game-card:not(.empty-state) .saved-player-score strong {
-    width: max-content !important;
-    min-width: max-content !important;
+    justify-self: start !important;
+    white-space: nowrap !important;
     overflow: visible !important;
     text-overflow: clip !important;
-    white-space: nowrap !important;
-    justify-self: start !important;
 }
 
-/* Freccia: centrata geometricamente sulla CARD INTERA,
-   non solo sulla zona dei punteggi; 2px più in basso */
+/* Freccia: sempre centrata verticalmente sull'intera card */
 #home .saved-game-card:not(.empty-state) .saved-game-arrow {
-    position: absolute !important;
-    right: 9px !important;
-    top: calc(50% + 2px) !important;
-    transform: translateY(-50%) !important;
-    width: 38px !important;
-    height: 58px !important;
+    justify-self: end !important;
+    align-self: center !important;
+    width: 26px !important;
+    height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #173f31 !important;
+    font-family: inherit !important;
+    font-size: 42px !important;
+    font-weight: 400 !important;
+    line-height: 1 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 52px !important;
-    line-height: 1 !important;
-    z-index: 5 !important;
-}
-
-/* Alone CardScore originale */
-#home .brand-text h1 {
-    text-shadow:
-        0 2px 7px rgba(31, 96, 67, 0.16),
-        0 0 14px rgba(31, 96, 67, 0.08) !important;
-}
-
-
-/* =========================================================
-   CARDSCORE — RIFINITURA v11
-   ========================================================= */
-
-/* Più spazio laterale per il logo: il logo occupa quasi tutta
-   la fascia sinistra della card */
-#home .saved-game-card:not(.empty-state) .saved-game-content {
-    padding-left: 76px !important;
-    padding-right: 42px !important;
-}
-
-/* Logo: riduzione netta dei margini laterali */
-#home .saved-game-card:not(.empty-state) .saved-game-icon {
-    left: 2px !important;
-    width: 84px !important;
-    height: 84px !important;
-}
-
-/* Testo più vicino al logo/divisore */
-#home .saved-game-card:not(.empty-state) .saved-game-main {
-    padding-left: 4px !important;
-}
-
-/* Game/Set più vicino al nome */
-#home .saved-game-card:not(.empty-state) .saved-player-score {
-    grid-template-columns: max-content max-content !important;
-    column-gap: 4px !important;
-}
-
-/* Freccia: molto più in alto del centro precedente e vicina al margine destro */
-#home .saved-game-card:not(.empty-state) .saved-game-arrow {
-    right: 4px !important;
-    top: calc(50% - 18px) !important;
-    transform: translateY(-50%) !important;
+    cursor: pointer !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
 }
 
 #home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
-    transform: translateY(-50%) scale(0.90) !important;
+    transform: scale(0.90) !important;
+}
+
+/* Nessun residuo del vecchio pulsante "Continua" */
+#home .saved-game-card:not(.empty-state) .primary-button {
+    display: none !important;
 }
