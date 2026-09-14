@@ -7123,3 +7123,44 @@ button.is-pressed {
         0 2px 7px rgba(31, 96, 67, 0.16),
         0 0 14px rgba(31, 96, 67, 0.08) !important;
 }
+
+
+/* =========================================================
+   CARDSCORE — RIFINITURA v11
+   ========================================================= */
+
+/* Più spazio laterale per il logo: il logo occupa quasi tutta
+   la fascia sinistra della card */
+#home .saved-game-card:not(.empty-state) .saved-game-content {
+    padding-left: 76px !important;
+    padding-right: 42px !important;
+}
+
+/* Logo: riduzione netta dei margini laterali */
+#home .saved-game-card:not(.empty-state) .saved-game-icon {
+    left: 2px !important;
+    width: 84px !important;
+    height: 84px !important;
+}
+
+/* Testo più vicino al logo/divisore */
+#home .saved-game-card:not(.empty-state) .saved-game-main {
+    padding-left: 4px !important;
+}
+
+/* Game/Set più vicino al nome */
+#home .saved-game-card:not(.empty-state) .saved-player-score {
+    grid-template-columns: max-content max-content !important;
+    column-gap: 4px !important;
+}
+
+/* Freccia: molto più in alto del centro precedente e vicina al margine destro */
+#home .saved-game-card:not(.empty-state) .saved-game-arrow {
+    right: 4px !important;
+    top: calc(50% - 18px) !important;
+    transform: translateY(-50%) !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
+    transform: translateY(-50%) scale(0.90) !important;
+}
