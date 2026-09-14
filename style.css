@@ -6504,17 +6504,18 @@ button.is-pressed {
    al centro verticale l'uno rispetto all'altro. */
 #home .saved-game-card:not(.empty-state) .saved-game-content {
     display: grid !important;
-    grid-template-columns: 104px minmax(0, 1fr) 36px !important;
+    grid-template-columns: 78px minmax(0, 1fr) 28px !important;
     align-items: center !important;
-    gap: 6px !important;
+    gap: 8px !important;
     width: 100% !important;
-    padding: 0 8px 14px 6px !important;
+    padding: 0 14px 14px 10px !important;
 }
 
-/* Logo del gioco: grande e vicino al bordo sinistro */
+/* Logo del gioco: vicino al bordo sinistro, dimensione equilibrata
+   con lo spazio che serve al testo per non andare mai in overflow */
 #home .saved-game-card:not(.empty-state) .saved-game-icon {
-    width: 104px !important;
-    height: 104px !important;
+    width: 78px !important;
+    height: 78px !important;
     margin: 0 !important;
     padding: 0 !important;
     border-radius: 0 !important;
@@ -6548,11 +6549,11 @@ button.is-pressed {
 }
 
 /* Colonna testo, separata dal logo da una linea verticale sottile
-   molto vicina al logo */
+   vicina al logo */
 #home .saved-game-card:not(.empty-state) .saved-game-main {
     min-width: 0 !important;
     border-left: 1px solid rgba(31, 96, 67, 0.16) !important;
-    padding-left: 5px !important;
+    padding-left: 8px !important;
     margin: 0 !important;
 }
 
@@ -6594,12 +6595,13 @@ button.is-pressed {
     text-overflow: clip !important;
 }
 
-/* Freccia: grande, sempre centrata verticalmente sull'intera card,
-   vicina al bordo destro */
+/* Freccia: leggermente più grande dell'originale, centrata
+   verticalmente sull'intera card, vicina al bordo destro —
+   ma senza invadere lo spazio del testo */
 #home .saved-game-card:not(.empty-state) .saved-game-arrow {
     justify-self: end !important;
     align-self: center !important;
-    width: 36px !important;
+    width: 28px !important;
     height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -6608,7 +6610,7 @@ button.is-pressed {
     background: transparent !important;
     color: #173f31 !important;
     font-family: inherit !important;
-    font-size: 58px !important;
+    font-size: 38px !important;
     font-weight: 400 !important;
     line-height: 1 !important;
     display: flex !important;
