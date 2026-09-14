@@ -6933,3 +6933,55 @@ button.is-pressed {
         0 2px 7px rgba(31, 96, 67, 0.16),
         0 0 14px rgba(31, 96, 67, 0.08) !important;
 }
+
+
+/* =========================================================
+   CARDSCORE — RIFINITURA PARTITA IN CORSO v9
+   ========================================================= */
+
+#home .saved-game-card:not(.empty-state) .saved-game-content {
+    padding-left: 0 !important;
+    padding-right: 52px !important;
+}
+
+/* Logo centrato verticalmente rispetto alla card verde */
+#home .saved-game-card:not(.empty-state) .saved-game-icon {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+/* Testo più vicino al logo */
+#home .saved-game-card:not(.empty-state) .saved-game-main {
+    padding-left: 7px !important;
+}
+
+/* Nome e punteggio ravvicinati */
+#home .saved-game-card:not(.empty-state) .saved-player-score {
+    grid-template-columns: max-content minmax(0, 1fr) !important;
+    column-gap: 6px !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-player-score span {
+    width: auto !important;
+    max-width: 100px !important;
+    overflow: visible !important;
+    white-space: nowrap !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-player-score strong {
+    justify-self: start !important;
+    width: max-content !important;
+    min-width: max-content !important;
+    white-space: nowrap !important;
+}
+
+/* Freccia centrata verticalmente */
+#home .saved-game-card:not(.empty-state) .saved-game-arrow {
+    top: 50% !important;
+    right: 7px !important;
+    transform: translateY(-50%) !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-arrow:active {
+    transform: translateY(-50%) scale(0.90) !important;
+}
