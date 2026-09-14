@@ -6629,3 +6629,338 @@ button.is-pressed {
 #home .saved-game-card:not(.empty-state) .primary-button {
     display: none !important;
 }
+
+
+/* =========================================================
+   CARDSCORE — HOME FINALE
+   Allineamento alla schermata di riferimento fornita.
+   Questa sezione è intenzionalmente in fondo al CSS per
+   prevalere sulle vecchie patch della Home.
+   ========================================================= */
+
+/* Sfondo della Home */
+#home.active {
+    background: #f8f4f4 !important;
+}
+
+/* Titolo "SCEGLI IL GIOCO" */
+#home .home-section-heading {
+    justify-content: center !important;
+    margin-bottom: 14px !important;
+    text-align: center !important;
+}
+
+#home .home-section-heading h2 {
+    width: 100% !important;
+    margin: 0 !important;
+    text-align: center !important;
+    color: #173f31 !important;
+    font-size: 18px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.35px !important;
+}
+
+/* Griglia: due colonne con lo stesso respiro della foto */
+#home .games-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 13px !important;
+}
+
+/* Quattro colori della schermata di riferimento */
+#home .game-card.game-uno,
+#home .game-uno {
+    background: #fbe2ac !important;
+}
+
+#home .game-card.game-pili-pili,
+#home .game-pili-pili {
+    background: #f3a1a7 !important;
+}
+
+#home .game-card.game-scala,
+#home .game-scala {
+    background: #d8ecf3 !important;
+}
+
+#home .game-card.game-scopa,
+#home .game-scopa {
+    background: #ebdcf3 !important;
+}
+
+/* Dimensioni delle card */
+#home .game-card {
+    min-height: 173px !important;
+    height: 173px !important;
+    border-radius: 25px !important;
+    overflow: hidden !important;
+    box-shadow:
+        0 12px 30px rgba(45, 29, 34, 0.12),
+        0 3px 8px rgba(45, 29, 34, 0.06) !important;
+}
+
+/* Area logo */
+#home .game-card-image {
+    height: 113px !important;
+    padding: 7px 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+}
+
+#home .game-card-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    display: block !important;
+}
+
+/* Correzioni ottiche dei quattro loghi */
+#home .game-uno .game-card-image img {
+    transform: scale(1.08) !important;
+}
+
+#home .game-pili-pili .game-card-image img {
+    transform: scale(1.10) !important;
+}
+
+#home .game-scala .game-card-image img {
+    transform: scale(1.12) !important;
+}
+
+#home .game-scopa .game-card-image img {
+    transform: scale(1.11) !important;
+}
+
+/* Nome gioco + sottotitolo centrati */
+#home .game-card-info {
+    min-height: 60px !important;
+    height: 60px !important;
+    padding: 5px 8px 9px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+#home .game-card-info > div {
+    width: 100% !important;
+    text-align: center !important;
+}
+
+#home .game-card-info h3 {
+    margin: 0 !important;
+    color: #20251f !important;
+    font-size: 15px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.2px !important;
+}
+
+#home .game-card-info span {
+    display: block !important;
+    margin-top: 4px !important;
+    color: rgba(32, 37, 31, 0.58) !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    font-weight: 600 !important;
+}
+
+/* =========================================================
+   PARTITA IN CORSO
+   ========================================================= */
+
+#home .saved-game-card:not(.empty-state) {
+    margin-top: 17px !important;
+    min-height: 153px !important;
+    height: 153px !important;
+    padding: 0 !important;
+    border-radius: 22px !important;
+    background: #edf7ec !important;
+    border: 1px solid #dcebd7 !important;
+    overflow: hidden !important;
+    box-shadow:
+        0 8px 25px rgba(28, 42, 32, 0.07) !important;
+}
+
+/* Intestazione */
+#home .saved-game-card:not(.empty-state) .saved-game-heading {
+    margin: 0 !important;
+    padding: 14px 16px 13px !important;
+    text-align: center !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-heading h2 {
+    margin: 0 !important;
+    color: #173f31 !important;
+    font-size: 17px !important;
+    line-height: 1.1 !important;
+    font-weight: 900 !important;
+    letter-spacing: 1.4px !important;
+}
+
+/* Logo | linea | informazioni | freccia */
+#home .saved-game-card:not(.empty-state) .saved-game-content {
+    display: grid !important;
+    grid-template-columns: 78px minmax(0, 1fr) 28px !important;
+    column-gap: 0 !important;
+    row-gap: 0 !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-height: 107px !important;
+    height: 107px !important;
+    padding: 0 7px 12px 10px !important;
+}
+
+/* Logo: dimensione della foto di riferimento */
+#home .saved-game-card:not(.empty-state) .saved-game-icon {
+    width: 78px !important;
+    height: 78px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="pili-pili.png"] {
+    width: 90% !important;
+    height: 90% !important;
+}
+
+/* Colonna centrale con la linea verticale */
+#home .saved-game-card:not(.empty-state) .saved-game-main {
+    min-width: 0 !important;
+    height: 89px !important;
+    border-left: 1px solid rgba(31, 96, 67, 0.16) !important;
+    padding-left: 12px !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+/* Nome gioco + turno */
+#home .saved-game-card:not(.empty-state) .saved-game-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-header h3 {
+    margin: 0 !important;
+    color: #173f31 !important;
+    font-size: 18px !important;
+    line-height: 1.05 !important;
+    font-weight: 800 !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-turn {
+    color: #69726b !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+/* Righe punteggio */
+#home .saved-game-card:not(.empty-state) .saved-game-info {
+    margin-top: 4px !important;
+    color: #345746 !important;
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-player-score {
+    display: grid !important;
+    grid-template-columns: 56px minmax(0, 1fr) !important;
+    column-gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-height: 22px !important;
+    padding: 2px 0 !important;
+    border-bottom: 1px solid rgba(31, 96, 67, 0.13) !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-player-score:last-child {
+    border-bottom: 0 !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-player-score span {
+    min-width: 0 !important;
+    color: #345746 !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-player-score strong {
+    justify-self: start !important;
+    color: #1f6043 !important;
+    font-size: 11px !important;
+    font-weight: 750 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+
+/* Freccia a destra, centrata verticalmente */
+#home .saved-game-card:not(.empty-state) .saved-game-arrow {
+    justify-self: end !important;
+    align-self: center !important;
+    width: 28px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #173f31 !important;
+    font-family: inherit !important;
+    font-size: 38px !important;
+    font-weight: 400 !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Nessun pulsante aggiuntivo */
+#home .saved-game-card:not(.empty-state) .primary-button {
+    display: none !important;
+}
+
+/* Mantieni il layout sui telefoni stretti, riducendo solo la scala */
+@media (max-width: 375px) {
+    #home .game-card {
+        height: 154px !important;
+        min-height: 154px !important;
+    }
+
+    #home .game-card-image {
+        height: 96px !important;
+    }
+
+    #home .game-card-info {
+        height: 58px !important;
+        min-height: 58px !important;
+    }
+}
