@@ -1,9 +1,5 @@
 @import url('https://fonts.cdnfonts.com/css/ss-safari');
 
-/* =========================================================
-   CARDSCORE — MATCH SCREEN
-   Replica stile schermata di riferimento
-   ========================================================= */
 :root {
     --bg: #f8f8f4;
     --white: #ffffff;
@@ -21,9 +17,6 @@
     --radius-card: 20px;
 }
 
-/* =========================================================
-   RESET
-   ========================================================= */
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -43,7 +36,6 @@ body {
     overscroll-behavior: none;
 }
 
-/* Riabilita la selezione solo dove serve davvero (campi di input) */
 input,
 textarea,
 select {
@@ -73,9 +65,6 @@ select {
     display: none !important;
 }
 
-/* =========================================================
-   PAGINE
-   ========================================================= */
 .page {
     display: none;
     width: 100%;
@@ -87,12 +76,6 @@ select {
     display: block;
 }
 
-/* =========================================================
-   MATCH TOPBAR
-   ========================================================= */
-
-/* Esci */
-
 .match-topbar .back-arrow {
     margin-top: -2px;
     font-size: 34px;
@@ -100,9 +83,6 @@ select {
     font-weight: 300;
 }
 
-/* =========================================================
-   MATCH CONTENT
-   ========================================================= */
 .match-content {
     width: 100%;
     max-width: 520px;
@@ -111,11 +91,6 @@ select {
     calc(28px + env(safe-area-inset-bottom));
 }
 
-/* =========================================================
-   BANNER GAME / SET / MATCH
-   ========================================================= */
-/* Trofeo sovrapposto */
-/* Testo banner */
 .match-title-text {
     width: 100%;
     display: flex;
@@ -136,10 +111,6 @@ select {
     letter-spacing: -0.6px;
 }
 
-/* Turno dentro il banner */
-/* =========================================================
-   OBIETTIVO (sistema punteggio semplice)
-   ========================================================= */
 .objective-text {
     width: 100%;
     margin: 18px 0 14px;
@@ -158,9 +129,6 @@ select {
     font-weight: 800;
 }
 
-/* =========================================================
-   TABELLONE PUNTEGGIO SEMPLICE
-   ========================================================= */
 .simple-scoreboard {
     width: 100%;
     display: flex;
@@ -225,32 +193,18 @@ select {
     font-variant-numeric: tabular-nums;
 }
 
-/* =========================================================
-   SCOREBOARD
-   ========================================================= */
-/* =========================================================
-   INTESTAZIONI
-   ========================================================= */
 .scoreboard-labels {
     display: none;
 }
 
-/* =========================================================
-   PLAYER CARD
-   ========================================================= */
-/* Prima card */
 .match-row:nth-child(2) {
     background: var(--green-card);
 }
 
-/* Seconda card */
 .match-row:nth-child(3) {
     background: var(--yellow-card);
 }
 
-/* =========================================================
-   NOME
-   ========================================================= */
 .match-player {
     grid-column: 1;
     grid-row: 1;
@@ -271,32 +225,16 @@ select {
     letter-spacing: -0.7px;
 }
 
-/* =========================================================
-   PUNTI GAME CORRENTE
-   ========================================================= */
 .match-player span {
     display: none;
 }
 
-/* =========================================================
-   MENU ...
-   ========================================================= */
-/* =========================================================
-   GAMES / SETS / MATCH
-   ========================================================= */
-/* GAMES */
-/* SETS */
-/* MATCH */
-/* Giallo per seconda card */
 .match-row:nth-child(3) > .match-stat {
     background: var(--yellow-box);
     color: #b88b17;
     border-color: rgba(184, 139, 23, 0.08);
 }
 
-/* =========================================================
-   ETICHETTE SOPRA I BOX
-   ========================================================= */
 .match-row > .match-stat:nth-child(2)::before {
     content: "GAME";
 }
@@ -328,52 +266,27 @@ select {
     color: #4f5139;
 }
 
-/* =========================================================
-   PUNTEGGIO GRANDE
-   ========================================================= */
 .match-row:nth-child(3) .score-big {
     color: #176340;
 }
 
-/* "punti" sotto il punteggio */
-/* =========================================================
-   NUOVO TURNO
-   ========================================================= */
-/* =========================================================
-   TITOLO NUOVO TURNO
-   ========================================================= */
 .turn-section .section-heading {
     display: none;
 }
 
-/* =========================================================
-   QUICK BUTTONS
-   ========================================================= */
 .quick-button:nth-child(2) {
     background: #fff2cd;
     color: #d39d16;
 }
 
-/* =========================================================
-   NASCONDI INSERIMENTO MANUALE
-   ========================================================= */
 .manual-score-card {
     display: none !important;
 }
 
-/* =========================================================
-   ANNULLA
-   ========================================================= */
 .undo-button:active {
     transform: scale(0.97);
 }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-/* =========================================================
-   SAFE AREA
-   ========================================================= */
 @supports(padding: max(0px)) {
 .match-topbar {
         padding-top:
@@ -392,9 +305,6 @@ select {
     }
 }
 
-/* =========================================================
-   RIDUZIONE ANIMAZIONI
-   ========================================================= */
 @media(prefers-reduced-motion: reduce) {
 * {
         animation: none !important;
@@ -402,12 +312,6 @@ select {
     }
 }
 
-/* =========================================================
-   RIPRISTINO HOME + NUOVA PARTITA
-   ========================================================= */
-/* =========================
-   HOME
-   ========================= */
 .home-header {
     width: 100%;
     padding: calc(env(safe-area-inset-top) + 24px)
@@ -462,9 +366,6 @@ select {
     calc(30px + env(safe-area-inset-bottom));
 }
 
-/* =========================
-   TITOLI
-   ========================= */
 .section-heading {
     width: 100%;
     display: flex;
@@ -496,9 +397,6 @@ select {
     letter-spacing: -0.45px;
 }
 
-/* =========================
-   GAME GRID
-   ========================= */
 .games-grid {
     width: 100%;
     display: grid;
@@ -540,7 +438,6 @@ select {
     display: block;
 }
 
-/* Colori */
 .game-uno {
     background: #dcefd5;
 }
@@ -598,9 +495,6 @@ select {
     font-weight: 700;
 }
 
-/* =========================
-   PARTITA IN CORSO
-   ========================= */
 .saved-game-card {
     width: 100%;
     margin-top: 18px;
@@ -643,9 +537,6 @@ select {
     font-weight: 500;
 }
 
-/* =========================
-   BUTTONS HOME
-   ========================= */
 .primary-button {
     width: 100%;
     min-height: 52px;
@@ -685,9 +576,6 @@ select {
     box-shadow: 0 8px 25px rgba(28,42,32,0.06);
 }
 
-/* =========================
-   PRIVACY
-   ========================= */
 .privacy-note {
     margin: 17px 0 0;
     text-align: center;
@@ -697,9 +585,6 @@ select {
     font-weight: 500;
 }
 
-/* =========================================================
-   NUOVA PARTITA
-   ========================================================= */
 .topbar {
     position: relative;
     width: 100%;
@@ -755,7 +640,6 @@ select {
     calc(35px + env(safe-area-inset-bottom));
 }
 
-/* Gioco selezionato */
 .selected-game-card {
     width: 100%;
     margin-bottom: 14px;
@@ -780,7 +664,6 @@ select {
     font-weight: 800;
 }
 
-/* Setup cards */
 .setup-card {
     width: 100%;
     margin-bottom: 13px;
@@ -830,7 +713,6 @@ select {
     font-weight: 800;
 }
 
-/* Giocatori */
 .players-list {
     width: 100%;
     display: flex;
@@ -887,7 +769,6 @@ select {
     font-weight: 750;
 }
 
-/* Form */
 .field-label {
     display: block;
     margin-bottom: 8px;
@@ -938,7 +819,6 @@ select {
     font-size: 12px;
 }
 
-/* Game / Set */
 .settings-row {
     width: 100%;
     display: grid;
@@ -974,14 +854,6 @@ select {
     margin-top: 4px;
 }
 
-/* =========================================================
-   NUOVA PARTITA - RESTYLE
-   ========================================================= */
-
-/* La pagina scorre nella sua interezza (non più un
-   pannello interno bloccato): l'header può comunque
-   sconfinare nella safe-area grazie al margine negativo
-   che ha per conto suo, più sotto. */
 #nuova-partita.page.active {
     min-height: 100vh;
     min-height: 100dvh;
@@ -989,12 +861,6 @@ select {
     flex-direction: column;
 }
 
-/* -----------------------------------------------------
-   INTESTAZIONE VERDE (gioco + barra superiore unite)
-   Risale sopra la safe-area (margine negativo) e la
-   ripaga con altrettanto padding, cosi' il verde arriva
-   fino al bordo dello schermo, sotto l'orologio/notch.
------------------------------------------------------ */
 #nuova-partita .game-header-card {
     flex-shrink: 0;
     margin-top: calc(-1 * env(safe-area-inset-top));
@@ -1012,8 +878,6 @@ select {
     padding: 0 8px;
 }
 
-/* Pulsante indietro e "···": stessa ombra soft dei
-   riquadri sotto, niente più effetto "3D" */
 #nuova-partita .game-header-back,
 #nuova-partita .game-header-dots {
     width: 36px;
@@ -1079,8 +943,6 @@ select {
     padding-left: 2px;
 }
 
-/* Logo del gioco: dimezzato rispetto a prima, quasi
-   attaccato al bordo sinistro, con un sottile alone */
 #nuova-partita .selected-game-icon {
     width: 92px;
     height: 92px;
@@ -1091,8 +953,6 @@ select {
     border-radius: 0;
 }
 
-/* Stessa grandezza percepita del logo di UNO (100% del
-   contenitore, non più ridotto all'82%) */
 #nuova-partita .selected-game-icon img[src*="pili-pili.png"] {
     width: 100%;
     height: 100%;
@@ -1107,10 +967,6 @@ select {
     letter-spacing: -0.8px;
 }
 
-/* -----------------------------------------------------
-   CONTENUTO: scrollabile, cosi' si può sempre raggiungere
-   il fondo della pagina qualunque sia il contenuto aperto
------------------------------------------------------ */
 #nuova-partita .setup-content {
     flex: 1 1 auto;
     display: flex;
@@ -1125,9 +981,6 @@ select {
     margin: 0;
 }
 
-/* -----------------------------------------------------
-   GIOCATORI
------------------------------------------------------ */
 #nuova-partita .setup-card {
     padding: 15px;
     border: 1px solid #ececea;
@@ -1201,11 +1054,6 @@ select {
     box-shadow: none;
 }
 
-/* -----------------------------------------------------
-   SISTEMA DI PUNTEGGIO - etichetta dentro al riquadro,
-   riga riassuntiva con menu personalizzato a comparsa
-   (niente più selettore nativo di iOS)
------------------------------------------------------ */
 #nuova-partita .setup-card > .small-label {
     margin-bottom: 10px;
 }
@@ -1214,10 +1062,6 @@ select {
     position: relative;
 }
 
-/* Il select nativo resta nel codice solo per tenere lo
-   stato (compatibilità con il resto della logica), ma
-   non è mai visibile né toccabile: il tocco va tutto
-   alla riga disegnata sotto e al menu personalizzato. */
 #nuova-partita .scoring-type-select-hidden {
     position: absolute;
     width: 1px;
@@ -1295,8 +1139,6 @@ select {
     transform: rotate(180deg);
 }
 
-/* Menu a comparsa con le due modalità di punteggio,
-   attaccato al riquadro che lo apre (un unico blocco) */
 #nuova-partita .scoring-type-options {
     width: 100%;
     margin-top: 0;
@@ -1376,12 +1218,6 @@ select {
     box-shadow: none;
 }
 
-/* -----------------------------------------------------
-   INIZIA PARTITA - piu' dinamico: pulsa leggermente
-   e ha un riflesso che lo attraversa, per invitare
-   al tocco. Al tocco l'animazione si ferma per lasciare
-   spazio al solo feedback di pressione.
------------------------------------------------------ */
 #nuova-partita .start-button {
     position: relative;
     overflow: hidden;
@@ -1447,9 +1283,6 @@ select {
     }
 }
 
-/* =========================================================
-   PAGINA STORICO COMPLETO
-   ========================================================= */
 .history-page-content {
     width: 100%;
     max-width: 520px;
@@ -1457,10 +1290,6 @@ select {
     padding: 17px 20px
     calc(30px + env(safe-area-inset-bottom));
 }
-
-/* =========================================================
-   STORICO
-   ========================================================= */
 
 .history-list,
 .history-full-list {
@@ -1481,9 +1310,6 @@ select {
     font-size: 11px;
 }
 
-/* =========================================================
-   RESPONSIVE HOME
-   ========================================================= */
 @media(max-width: 390px) {
 .match-content {
         padding-left: 18px;
@@ -1564,14 +1390,6 @@ select {
     }
 }
 
-/* =========================================================
-   RIQUADRI COMPATTI (versione consolidata)
-   Nota: qui prima esistevano 3 blocchi quasi identici che si
-   sovrascrivevano a vicenda con !important. Sono stati uniti
-   in un unico blocco con i valori finali effettivamente
-   applicati, per evitare confusione e regole morte.
-   ========================================================= */
-/* Banner GAME / SET / MATCH */
 .match-title {
     position: relative;
     width: 100%;
@@ -1621,7 +1439,6 @@ select {
     font-weight: 500;
 }
 
-/* Contenitore giocatori */
 .game-set-scoreboard {
     width: 100%;
     margin: 0;
@@ -1630,7 +1447,6 @@ select {
     gap: 9px !important;
 }
 
-/* Card giocatore */
 .match-row {
     position: relative;
     width: 100%;
@@ -1649,7 +1465,6 @@ select {
     overflow: hidden;
 }
 
-/* Nasconde i tre puntini del menu card */
 .match-row::after {
     content: "•••";
     position: absolute;
@@ -1663,12 +1478,10 @@ select {
     display: none !important;
 }
 
-/* Nome giocatore */
 .match-row strong {
     font-size: 20px !important;
 }
 
-/* Piccole caselle GAME / SET / MATCH */
 .match-row span {
     width: 40px !important;
     height: 40px !important;
@@ -1696,14 +1509,12 @@ select {
     font-size: 9px !important;
 }
 
-/* Almeno un Game/Set vinto: riquadro evidenziato */
 .match-stat.active {
     background: var(--green);
     color: #ffffff;
     border-color: var(--green-dark);
 }
 
-/* Match vinto: riquadro evidenziato con enfasi massima */
 .match-stat.won {
     background: var(--green-dark);
     color: #ffffff;
@@ -1723,7 +1534,6 @@ select {
     bottom: 8px !important;
 }
 
-/* Punteggio grande (valori finali) */
 .match-row .score-big::after {
     content: "punti";
     display: block;
@@ -1735,7 +1545,6 @@ select {
     font-weight: 550;
 }
 
-/* Pulsanti rapidi + annulla */
 .turn-section {
     width: 100%;
     margin-top: 10px !important;
@@ -1812,9 +1621,6 @@ select {
     margin-bottom: 3px !important;
 }
 
-/* =========================================================
-   OVERLAY DI SFONDO (usato da popup GAME/SET e VITTORIA)
-   ========================================================= */
 .cardscore-overlay {
     position: fixed;
     inset: 0;
@@ -1823,9 +1629,6 @@ select {
     animation: cardscoreFadeIn 0.2s ease;
 }
 
-/* =========================================================
-   POPUP GAME / SET (toast centrale temporaneo)
-   ========================================================= */
 .match-message {
     position: fixed;
     top: 50%;
@@ -1878,9 +1681,6 @@ select {
     font-weight: 500;
 }
 
-/* =========================================================
-   SCHERMATA DI VITTORIA (fine partita)
-   ========================================================= */
 .victory-screen {
     position: fixed;
     inset: 0;
@@ -2035,9 +1835,6 @@ select {
     color: #ffffff;
 }
 
-/* =========================================================
-   CANVAS CORIANDOLI
-   ========================================================= */
 #confetti-canvas {
     position: fixed;
     inset: 0;
@@ -2047,11 +1844,6 @@ select {
     z-index: 980;
 }
 
-/* =========================================================
-   SORTEGGIO INIZIALE - FULL SCREEN
-   Mostrato dopo "Inizia partita" al posto della scelta manuale.
-   Durata animazione: 5 secondi.
-   ========================================================= */
 .starting-draw-overlay {
     position: fixed;
     inset: 0;
@@ -2281,7 +2073,6 @@ select {
     transform: scale(0.98);
 }
 
-/* Quando il sorteggio termina lasciamo solo il risultato. */
 .starting-draw-popup.draw-complete .starting-draw-badge,
 .starting-draw-popup.draw-complete .starting-draw-label,
 .starting-draw-popup.draw-complete h2,
@@ -2367,9 +2158,6 @@ select {
     }
 }
 
-/* =========================================================
-   ANIMAZIONI POPUP
-   ========================================================= */
 @keyframes cardscoreFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -2397,9 +2185,6 @@ select {
     }
 }
 
-/* =========================================================
-   POPUP PUNTEGGIO PERSONALIZZATO (pressione prolungata)
-   ========================================================= */
 .custom-score-overlay {
     z-index: 960;
 }
@@ -2420,7 +2205,7 @@ select {
     box-shadow: 0 20px 45px rgba(20, 40, 25, 0.25);
     z-index: 970;
     animation: cardscoreMessagePopIn 0.2s ease;
-    /* Si adatta automaticamente quando compare la tastiera */
+    
     max-height: calc(100dvh - 32px);
     overflow-y: auto;
 }
@@ -2459,7 +2244,7 @@ select {
     font-weight: 800;
     text-align: center;
     font-variant-numeric: tabular-nums;
-    /* Rimuove le frecce dell'input number su alcuni browser */
+    
     -moz-appearance: textfield;
 }
 
@@ -2501,9 +2286,6 @@ select {
     color: #ffffff;
 }
 
-/* =========================================================
-   POPUP TIMER (solo Pili Pili)
-   ========================================================= */
 .timer-popup {
     position: fixed;
     top: 50%;
@@ -2598,9 +2380,6 @@ select {
     display: none;
 }
 
-/* =========================================================
-   TIMER SCADUTO - POPUP INGRANDITO
-   ========================================================= */
 .timer-countdown-popup.timer-scaduto {
     width: min(300px, 84vw);
     aspect-ratio: auto;
@@ -2642,9 +2421,6 @@ select {
     }
 }
 
-/* =========================================================
-   FLASH A SCHERMO INTERO QUANDO IL TIMER SCADE
-   ========================================================= */
 .timer-flash-overlay {
     position: fixed;
     inset: 0;
@@ -2662,10 +2438,6 @@ select {
     }
 }
 
-/* =========================================================
-   EFFETTO PRESSIONE 3D - PULSANTI PUNTEGGIO
-   ========================================================= */
-/* Pulsanti +1 / -1 durante la partita */
 .quick-button,
 .quick-button:focus {
     transition: transform 0.08s ease,
@@ -2677,7 +2449,6 @@ select {
     box-shadow: 0 1px 2px rgba(20, 40, 25, 0.18);
 }
 
-/* Pulsanti + / - del punteggio personalizzato */
 .custom-score-step,
 .custom-score-step:focus {
     transition: transform 0.08s ease,
@@ -2689,7 +2460,6 @@ select {
     box-shadow: 0 1px 2px rgba(20, 40, 25, 0.18);
 }
 
-/* Annulla / Aggiungi punti */
 .custom-score-cancel,
 .custom-score-confirm {
     flex: 1;
@@ -2707,20 +2477,11 @@ select {
     box-shadow: 0 1px 2px rgba(20, 40, 25, 0.18);
 }
 
-/* =========================================================
-   EFFETTO PRESSIONE 3D - TUTTI I PULSANTI
-   ========================================================= */
 button:active {
     transform: translateY(4px) scale(0.98) !important;
     box-shadow: 0 1px 2px rgba(20, 40, 25, 0.18) !important;
 }
 
-/* =========================================================
-   EFFETTO PRESSIONE 3D - TUTTI I PULSANTI
-   ========================================================= */
-/* =========================================================
-   EFFETTO PRESSIONE 3D UNIVERSALE
-   ========================================================= */
 button {
     border: 0;
     outline: none;
@@ -2734,14 +2495,12 @@ button.is-pressed {
     box-shadow: 0 1px 3px rgba(20, 40, 25, 0.20) !important;
 }
 
-/* Pulsanti trasparenti */
 .back-button.is-pressed,
 .remove-player.is-pressed {
     transform: translateY(2px) scale(0.96) !important;
     box-shadow: none !important;
 }
 
-/* POSIZIONE PUNTEGGIO */
 .match-row .score-big {
     width: 115px !important;
     font-size: 52px !important;
@@ -2752,7 +2511,6 @@ button.is-pressed {
     right: 28px !important;
 }
 
-/* RIMUOVE CASELLA MATCH */
 .match-row > .match-stat:nth-child(4) {
     position: absolute;
     left: 126px !important;
@@ -2760,208 +2518,6 @@ button.is-pressed {
     display: none !important;
 }
 
-/* =========================================================
-   CARDSCORE - NUOVA HOME
-   ========================================================= */
-/* ---------- HOME ---------- */
-
-
-/* ---------- CONTENUTO ---------- */
-/* ---------- TITOLO ---------- */
-/* ---------- CARTE GIOCHI ---------- */
-/* ---------- COLORI CARTE ---------- */
-/* =========================================================
-   PARTITA IN CORSO
-   ========================================================= */
-/* Titolo */
-/* Contenuto partita */
-/* Icona */
-
-
-/* Informazioni */
-/* Freccia */
-/* ---------- CONTINUA PARTITA ---------- */
-/* ---------- PRIVACY ---------- */
-
-/* =========================================================
-   SCHERMI PICCOLI
-   ========================================================= */
-/* =========================================================
-   HOME - VERSIONE COMPATTA MOBILE
-   ========================================================= */
-/* =========================================================
-   PARTITA IN CORSO - RIFINITURA
-   ========================================================= */
-/* =========================================================
-   CARDSCORE HOME - RIFINITURA FINALE MOBILE
-   ========================================================= */
-@media(max-width: 430px) {
-/* HOME */
-    /* CONTENUTO */
-    /* TITOLO */
-    /* =====================================================
-       CARTE GIOCHI
-       ===================================================== */
-    /* =====================================================
-       PARTITA IN CORSO
-       ===================================================== */
-    /* CONTENUTO PARTITA */
-    /* ICONA */
-    /* TESTO */
-    /* PULSANTE */
-    /* PRIVACY */
-    /* TITOLO */
-    /* CONTENUTO */
-    /* ICONA */
-    /* NOME + TURNO */
-    /* PUNTEGGI */
-    /* FRECCIA */
-    /* PULSANTE */
-    /* =====================================================
-       SFONDO
-       ===================================================== */
-    
-
-    /* =====================================================
-       HEADER / LOGO
-       ===================================================== */
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    /* =====================================================
-       CONTENUTO
-       ===================================================== */
-    
-
-    /* =====================================================
-       TITOLO
-       ===================================================== */
-    
-
-    
-
-    /* =====================================================
-       CARTE GIOCHI
-       ===================================================== */
-    
-
-    
-
-    
-
-    /* IMMAGINI */
-    
-
-    
-
-    /* TESTO CARTE */
-    
-
-    
-
-    
-
-    
-
-    
-
-    /* =====================================================
-       PARTITA IN CORSO
-       ===================================================== */
-    
-
-    /* TITOLO */
-    
-
-    
-
-    /* CONTENUTO */
-    
-
-    /* ICONA GIOCO */
-    
-
-    
-
-    /* NOME + TURNO */
-    
-
-    
-
-    
-
-    /* =====================================================
-       GIOCATORI / PUNTEGGI
-       ===================================================== */
-    
-
-    
-
-    
-
-    
-
-    
-
-    /* FRECCIA */
-    
-
-    /* =====================================================
-       CONTINUA PARTITA
-       ===================================================== */
-    
-
-    
-
-    
-
-    /* =====================================================
-       PRIVACY
-       ===================================================== */
-}
-
-/* =========================================================
-   SCHERMI MOLTO PICCOLI
-   ========================================================= */
-
-/* =========================================================
-   CARD SCORE - HEADER COME FOTO DI RIFERIMENTO
-   ========================================================= */
-
-@media(max-width: 430px) {
-/* ICONA */
-    
-
-    
-
-    /* SCRITTA CARDSCORE */
-    
-
-    
-
-    /* SOTTOTITOLO */
-    
-
-    /* SPAZIO SOTTO L'HEADER */
-}
-/* Font SS Safari solo per il titolo Home */
-
-
-/* =========================================================
-   FONT APP - SS SAFARI SOLO SUL TITOLO
-   ========================================================= */
-
-
-/* Tutto il resto torna al font di sistema */
 #home,
 #home button,
 #home input,
@@ -2988,16 +2544,7 @@ button.is-pressed {
         "Segoe UI",
         sans-serif !important;
 }
-/* =========================================================
-   LOGHI GIOCHI - VISIBILI COMPLETAMENTE
-   ========================================================= */
 
-
-/* =========================================================
-   LOGHI GIOCHI - PARTITA IN CORSO + NUOVA PARTITA
-   ========================================================= */
-
-/* PARTITA IN CORSO */
 .saved-game-icon {
     width: 42px;
     height: 42px;
@@ -3013,7 +2560,6 @@ button.is-pressed {
     overflow: hidden;
 }
 
-/* RIQUADRO GIOCO SELEZIONATO */
 .selected-game-icon {
     width: 48px;
     height: 48px;
@@ -3037,9 +2583,7 @@ button.is-pressed {
         box-sizing: border-box;
     }
 }
-/* =========================================================
-   LOGHI GIOCHI - DIMENSIONI PERSONALIZZATE
-   ========================================================= */
+
 .saved-game-icon img,
 .selected-game-icon img {
     width: 100%;
@@ -3049,72 +2593,29 @@ button.is-pressed {
     object-position: center;
 }
 
-/* UNO */
 .saved-game-icon img[src*="uno.png"],
 .selected-game-icon img[src*="uno.png"] {
     width: 100%;
     height: 100%;
 }
 
-/* PILI PILI */
 .saved-game-icon img[src*="pili-pili.png"],
 .selected-game-icon img[src*="pili-pili.png"] {
     width: 82%;
     height: 82%;
 }
 
-/* SCALA 40 */
 .saved-game-icon img[src*="scala40.png"],
 .selected-game-icon img[src*="scala40.png"] {
     width: 100%;
     height: 82%;
 }
 
-/* SCOPA */
 .saved-game-icon img[src*="scopa.png"],
 .selected-game-icon img[src*="scopa.png"] {
     width: 94%;
     height: 82%;
 }
-/* =========================================================
-   LOGHI PARTITA IN CORSO - HOME
-   ========================================================= */
-
-
-/* UNO */
-
-
-/* PILI PILI */
-
-
-/* SCALA 40 */
-
-
-/* SCOPA */
-
-/* =========================================================
-   PARTITA IN CORSO - HOME
-   ========================================================= */
-
-
-/* =========================================================
-   NESSUNA PARTITA IN CORSO - HOME
-   ========================================================= */
-
-@media(max-width: 430px) {
-/* Nasconde completamente intestazione e contenuto normale */
-}
-/* NESSUNA PARTITA - TESTO SU UNA RIGA */
-
-
-/* =========================================================
-   NESSUNA PARTITA IN CORSO
-   ========================================================= */
-
-
-/* =========================================================
-   GIOCATORE ATTIVO
-========================================================= */
 
 .match-row.active-turn {
     transform: translateY(-2px) scale(1.015);
@@ -3141,10 +2642,6 @@ button.is-pressed {
     text-shadow:
         0 1px 2px rgba(20, 60, 35, 0.15);
 }
-
-/* =========================================================
-   POPUP SCELTA GIOCATORE
-========================================================= */
 
 .starting-player-overlay {
     position: fixed;
@@ -3292,9 +2789,6 @@ button.is-pressed {
     font-size: 16px;
     font-weight: 900;
 }
-/* =========================================================
-   ROTAZIONE POPUP GAME → SCELTA GIOCATORE
-   ========================================================= */
 
 .game-flip-card {
     perspective: 1200px;
@@ -3302,10 +2796,8 @@ button.is-pressed {
     transform-origin: center center;
     animation: none !important;
 
-    /* Stessa larghezza del popup "Chi inizia?" iniziale */
     width: min(360px, 88vw) !important;
 
-    /* Nessun riquadro esterno: lo sfondo è solo sulle facce della carta */
     padding: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -3326,10 +2818,7 @@ button.is-pressed {
 }
 
 .game-flip-face {
-    /* Le due facce condividono la stessa cella di griglia:
-       il contenitore si adatta sempre all'altezza della
-       faccia più alta, evitando che il contenuto (es. molti
-       giocatori) fuoriesca dal riquadro bianco. */
+    
     grid-area: 1 / 1;
 
     width: 100%;
@@ -3357,10 +2846,6 @@ button.is-pressed {
     transform: rotateY(0deg);
 }
 
-/* =========================================================
-   POPUP GAME / SET - RETRO DELLA CARTA 3D
-   NON MODIFICA IL POPUP INIZIA PARTITA
-   ========================================================= */
 .game-flip-back {
     transform: rotateY(180deg);
     box-sizing: border-box;
@@ -3370,7 +2855,6 @@ button.is-pressed {
     text-align: center;
 }
 
-/* Spaziatura identica al popup iniziale */
 .game-flip-back .starting-player-icon {
     width: 58px;
     height: 58px;
@@ -3404,7 +2888,6 @@ button.is-pressed {
     font-weight: 500;
 }
 
-/* Riquadri verdi identici al popup iniziale (regola base già coerente) */
 .game-flip-back .starting-player-buttons {
     width: 100%;
 
@@ -3412,14 +2895,10 @@ button.is-pressed {
     flex-direction: column;
     gap: 10px;
 }
-/* =========================================================
-   ULTIMO TURNO - NUOVO DESIGN
-   ========================================================= */
+
 .history-heading .small-label {
     display: none;
 }
-
-/* CONTENITORE ULTIMO TURNO */
 
 .history-list {
     width: 100%;
@@ -3430,11 +2909,6 @@ button.is-pressed {
     gap: 7px;
 }
 
-/* =========================================================
-   TITOLO PARTITA - DESIGN
-   ========================================================= */
-
-/* Nasconde "Turno 1" sotto il titolo */
 .match-heading span {
     display: none !important;
     margin-top: 11px;
@@ -3444,7 +2918,7 @@ button.is-pressed {
     font-weight: 650;
     letter-spacing: -0.2px;
 }
-/* Riquadri GAME / SET senza verde scuro */
+
 .match-stat {
     width: 39px !important;
     height: 39px !important;
@@ -3459,9 +2933,7 @@ button.is-pressed {
     border: 1px solid rgba(47, 106, 63, 0.08);
     border-color: rgba(47, 106, 63, 0.08) !important;
 }
-/* =========================================================
-   TITOLO GIOCO + ESCI
-   ========================================================= */
+
 .match-topbar {
     position: relative;
     width: 100%;
@@ -3497,9 +2969,7 @@ button.is-pressed {
     font-weight: 850;
     letter-spacing: -0.8px;
 }
-/* =========================================================
-   STORICO TURNI - VERSIONE DEFINITIVA
-   ========================================================= */
+
 .history-section {
     width: 100% !important;
     margin-top: 25px !important;
@@ -3524,20 +2994,6 @@ button.is-pressed {
     line-height: 1;
 }
 
-/* =========================================================
-   STORICO TURNI - RIQUADRI COMPATTI E UNIFORMI
-
-   NB: le regole di base (sfondo, bordo, dimensioni) sono
-   applicate direttamente su .history-row / .history-empty,
-   SENZA richiedere un genitore con classe .history-list o
-   .history-full-list. Così il riquadro resta visibile anche
-   se il contenitore nell'HTML non ha esattamente quella
-   classe (causa del bug per cui il riquadro spariva quando
-   veniva inserito un punteggio: mancavano sfondo e bordo).
-   ========================================================= */
-
-/* DIMENSIONE COMUNE + SFONDO (stessi per riquadro vuoto e pieno,
-   sia in "Ultimo turno" che in "Storico turni") */
 .history-empty,
 .history-row {
     width: 100% !important;
@@ -3552,7 +3008,6 @@ button.is-pressed {
     overflow: hidden !important;
 }
 
-/* Testo del riquadro vuoto centrato come il contenuto del riquadro pieno */
 .history-empty {
     display: flex !important;
     align-items: center !important;
@@ -3560,7 +3015,6 @@ button.is-pressed {
     padding: 0 12px !important;
 }
 
-/* ULTIMO TURNO + STORICO CON PUNTEGGIO */
 .history-row {
     padding: 6px 12px !important;
 
@@ -3571,7 +3025,6 @@ button.is-pressed {
     gap: 8px !important;
 }
 
-/* CONTENUTO CENTRALE */
 .history-details {
     min-width: 0 !important;
 
@@ -3581,44 +3034,32 @@ button.is-pressed {
     align-items: center !important;
 }
 
-/* TURNO */
 .history-turn {
     width: auto !important;
     font-size: 10px !important;
 }
 
-/* NOME GIOCATORE */
 .history-player {
     font-size: 15px !important;
     line-height: 1.1 !important;
 }
 
-/* PUNTEGGIO */
 .history-points {
     margin-top: 2px !important;
     font-size: 11px !important;
     line-height: 1 !important;
 }
 
-/* FRECCIA */
 .history-arrow {
     font-size: 18px !important;
 }
-
-/* =========================================================
-   SFONDO AZZURRINO SOLO PER LO STORICO COMPLETO
-   ========================================================= */
 
 .history-full-list .history-row {
     background: #eaf1f6 !important;
     border: 1px solid #dbe5ec !important;
     box-shadow: none !important;
 }
-/* =========================================================
-   TOPBAR PARTITA - PULSANTI STILE IPHONE
-   ========================================================= */
 
-/* PULSANTE ESCI */
 .match-topbar .back-button {
     height: 44px !important;
     min-height: 44px !important;
@@ -3646,14 +3087,12 @@ button.is-pressed {
         box-shadow 0.08s ease !important;
 }
 
-/* Freccia Esci */
 .match-topbar .back-button .back-arrow {
     margin: 0 !important;
     font-size: 29px !important;
     line-height: 1 !important;
 }
 
-/* Effetto pressione */
 .match-topbar .back-button:active {
     transform: translateY(3px) !important;
 
@@ -3661,11 +3100,6 @@ button.is-pressed {
         0 1px 0 #d9ded9,
         0 3px 7px rgba(25, 45, 32, 0.08) !important;
 }
-
-
-/* =========================================================
-   CONTENITORE MENU
-   ========================================================= */
 
 .match-menu-wrap {
     position: relative;
@@ -3677,11 +3111,6 @@ button.is-pressed {
 
     z-index: 50;
 }
-
-
-/* =========================================================
-   PULSANTE TRE PUNTINI
-   ========================================================= */
 
 .match-menu-button {
     width: 44px !important;
@@ -3730,11 +3159,6 @@ button.is-pressed {
         0 3px 7px rgba(25, 45, 32, 0.08) !important;
 }
 
-
-/* =========================================================
-   MENU A COMPARSA
-   ========================================================= */
-
 .match-menu {
     position: absolute;
 
@@ -3759,9 +3183,6 @@ button.is-pressed {
 
     transform-origin: top right;
 }
-
-
-/* Elementi del menu */
 
 .match-menu-item {
     width: 100%;
@@ -3808,8 +3229,6 @@ button.is-pressed {
     transform: scale(0.98);
 }
 
-
-/* Termina partita */
 .match-menu-item.danger {
     color: #b54848;
 }
@@ -3817,9 +3236,6 @@ button.is-pressed {
 .match-menu-item.danger:active {
     background: #fbeeee;
 }
-
-
-/* Animazione */
 
 @keyframes matchMenuIn {
     from {
@@ -3832,11 +3248,7 @@ button.is-pressed {
         transform: scale(1) translateY(0);
     }
 }
-/* =========================================================
-   TOPBAR PARTITA - ALLINEAMENTO DEFINITIVO
-   ========================================================= */
 
-/* UNO: centro esatto della pagina */
 .match-topbar {
     position: relative !important;
 }
@@ -3855,7 +3267,6 @@ button.is-pressed {
     justify-content: center !important;
 }
 
-/* PULSANTE ESCI */
 .match-topbar .back-button {
     justify-self: start !important;
     align-self: center !important;
@@ -3868,7 +3279,6 @@ button.is-pressed {
     justify-content: center !important;
 }
 
-/* Freccia perfettamente centrata */
 .match-topbar .back-button .back-arrow {
     margin: 0 !important;
 
@@ -3878,10 +3288,6 @@ button.is-pressed {
 
     line-height: 1 !important;
 }
-
-/* =========================================================
-   STESSO MARGINE LATERALE DEI RIQUADRI
-   ========================================================= */
 
 @media(max-width: 430px) {
 .match-topbar {
@@ -3893,9 +3299,6 @@ button.is-pressed {
         margin-left: 0 !important;
     }
 }
-/* =========================================================
-   TOPBAR PARTITA - POSIZIONE FINALE
-   ========================================================= */
 
 .match-topbar {
     padding-left: 27px !important;
@@ -3903,7 +3306,6 @@ button.is-pressed {
     align-items: center !important;
 }
 
-/* ESCI: allineato al margine dei riquadri */
 .match-topbar .back-button {
     justify-self: start !important;
     align-self: center !important;
@@ -3911,7 +3313,6 @@ button.is-pressed {
     margin: 0 !important;
 }
 
-/* UNO: centro matematico dello schermo */
 .match-topbar .match-heading {
     position: absolute !important;
 
@@ -3922,56 +3323,42 @@ button.is-pressed {
 
     margin: 0 !important;
 }
-/* =========================================================
-   TOPBAR - ALLINEAMENTO AI RIQUADRI DELLA PARTITA
-   ========================================================= */
 
 .match-topbar {
     padding-left: 27px !important;
     padding-right: 27px !important;
 }
 
-/* ESci: stesso margine sinistro dei riquadri */
 .match-topbar .back-button {
     justify-self: start !important;
     margin-left: 0 !important;
 }
 
-/* TRE PUNTINI: stesso margine destro dei riquadri */
 .match-menu-wrap {
     justify-self: end !important;
     margin-right: 0 !important;
 }
 
-/* Mantiene UNO esattamente al centro */
 .match-topbar .match-heading {
     position: static !important;
     transform: none !important;
     margin: 0 !important;
     justify-self: center !important;
 }
-/* =========================================================
-   TOPBAR - ALLINEAMENTO ESATTO AI RIQUADRI
-   ========================================================= */
 
 .match-topbar {
     padding-left: 18px !important;
     padding-right: 18px !important;
 }
 
-/* Tre puntini */
 .match-topbar .match-menu-wrap {
     justify-self: end !important;
     margin-right: 0 !important;
 }
 
-/* UNO esattamente al centro */
 .match-topbar .match-heading {
     justify-self: center !important;
 }
-/* =========================================================
-   PULSANTE ESCI - FRECCIA E TESTO INDIPENDENTI
-   ========================================================= */
 
 .match-topbar .back-button {
     position: relative !important;
@@ -3984,7 +3371,6 @@ button.is-pressed {
     padding-right: 42px !important;
 }
 
-/* Freccia vicina al bordo sinistro */
 .match-topbar .back-button .back-arrow {
     position: absolute !important;
 
@@ -4003,7 +3389,6 @@ button.is-pressed {
     line-height: 1 !important;
 }
 
-/* Scritta ESci esattamente al centro */
 .match-topbar .back-button > span:last-child {
     position: absolute !important;
 
@@ -4051,15 +3436,11 @@ button.is-pressed {
     font-size: 42px !important;
     line-height: 1 !important;
 }
-/* =========================================================
-   TOPBAR - PULSANTI COMPATTI ALLINEATI A UNO
-   ========================================================= */
 
 .match-topbar {
     align-items: center !important;
 }
 
-/* Dimensione pulsanti */
 .match-topbar .back-button,
 .match-topbar .match-menu-button {
     width: 40px !important;
@@ -4071,7 +3452,6 @@ button.is-pressed {
     border-radius: 50% !important;
 }
 
-/* Freccia */
 .match-topbar .back-button .back-arrow {
     width: 100% !important;
     height: 100% !important;
@@ -4079,27 +3459,21 @@ button.is-pressed {
     font-size: 29px !important;
 }
 
-/* Tre puntini */
 .match-topbar .match-menu-button span {
     font-size: 13px !important;
     letter-spacing: 3px !important;
 }
 
-/* Allineamento verticale */
 .match-topbar .back-button,
 .match-topbar .match-menu-wrap {
     align-self: center !important;
 }
-/* =========================================================
-   TOPBAR PARTITA - PULSANTI FINALI
-   ========================================================= */
 
 #partita .match-topbar {
     position: relative !important;
     align-items: center !important;
 }
 
-/* CERCHIO SINISTRO */
 #partita .match-topbar .back-button {
     position: absolute !important;
 
@@ -4123,7 +3497,6 @@ button.is-pressed {
     border-radius: 50% !important;
 }
 
-/* FRECCIA */
 #partita .match-topbar .back-button .back-arrow {
     position: static !important;
 
@@ -4143,8 +3516,6 @@ button.is-pressed {
     line-height: 1 !important;
 }
 
-
-/* CERCHIO DESTRO */
 #partita .match-topbar .match-menu-wrap {
     position: absolute !important;
 
@@ -4159,7 +3530,6 @@ button.is-pressed {
     transform: translateY(-50%) !important;
 }
 
-/* PULSANTE TRE PUNTINI */
 #partita .match-topbar .match-menu-button {
     width: 36px !important;
     height: 36px !important;
@@ -4176,18 +3546,12 @@ button.is-pressed {
     justify-content: center !important;
 }
 
-/* TRE PUNTINI */
 #partita .match-topbar .match-menu-button span {
     font-size: 11px !important;
     letter-spacing: 2px !important;
 
     transform: none !important;
 }
-
-
-/* =========================================================
-   UNO - CENTRO ESATTO
-   ========================================================= */
 
 #partita .match-topbar .match-heading {
     position: absolute !important;
@@ -4200,11 +3564,7 @@ button.is-pressed {
 
     transform: translate(-50%, -50%) !important;
 }
-/* =========================================================
-   SIMBOLI TOPBAR - CENTRATI PERFETTAMENTE NEI CERCHI
-   ========================================================= */
 
-/* FRECCIA SINISTRA */
 #partita .match-topbar .back-button .back-arrow {
     position: absolute !important;
 
@@ -4227,7 +3587,6 @@ button.is-pressed {
     line-height: 1 !important;
 }
 
-/* TRE PUNTINI DESTRA */
 #partita .match-topbar .match-menu-button span {
     width: 100% !important;
     height: 100% !important;
@@ -4245,11 +3604,7 @@ button.is-pressed {
 
     transform: none !important;
 }
-/* =========================================================
-   CENTRATURA DEFINITIVA SIMBOLI NEI PULSANTI
-   ========================================================= */
 
-/* FRECCIA */
 #partita .match-topbar .back-button .back-arrow {
     position: absolute !important;
     inset: 0 !important;
@@ -4280,8 +3635,6 @@ button.is-pressed {
     transform: translateY(-1px);
 }
 
-
-/* TRE PUNTINI */
 #partita .match-topbar .match-menu-button span {
     position: absolute !important;
     inset: 0 !important;
@@ -4312,9 +3665,6 @@ button.is-pressed {
 
     transform: translateX(1px);
 }
-/* =========================================================
-   FRECCIA ESCI - CENTRATURA GEOMETRICA
-   ========================================================= */
 
 #partita .match-topbar .back-button .back-arrow {
     position: absolute !important;
@@ -4332,7 +3682,6 @@ button.is-pressed {
     font-size: 0 !important;
 }
 
-/* Disegna la freccia */
 #partita .match-topbar .back-button .back-arrow::before {
     content: "";
 
@@ -4352,16 +3701,11 @@ button.is-pressed {
     border-radius: 2px;
 }
 
-/* =========================================================
-   SORTEGGIO — EFFETTO SLOT MACHINE REALISTICO
-   ========================================================= */
-
 .starting-draw-slot {
     position: relative !important;
     overflow: hidden !important;
 }
 
-/* Maschera morbida sopra e sotto i rulli, come una vera slot. */
 .starting-draw-slot::before,
 .starting-draw-slot::after {
     content: "";
@@ -4402,12 +3746,6 @@ button.is-pressed {
                 inset 0 -8px 12px rgba(24,85,55,0.04) !important;
 }
 
-/* Blur mentre il rullo gira: un valore FISSO applicato una sola
-   volta tramite classe (quando parte/finisce lo spin), non
-   ricalcolato ad ogni fotogramma. Era proprio il ricalcolo
-   continuo del blur ad ogni frame — insieme al transform che
-   si muove in continuazione — a generare le righe rosa su
-   Safari/iOS. Un valore statico è sicuro. */
 .starting-draw-reel.is-spinning .starting-draw-reel-item {
     filter: blur(0.6px) !important;
     -webkit-filter: blur(0.6px) !important;
@@ -4415,9 +3753,7 @@ button.is-pressed {
 }
 
 .starting-draw-reel-item {
-    /* Il rullo è alto 192px e contiene 3 righe da 64px:
-       così si vedono sempre un nome sopra, uno sulla linea centrale
-       e uno sotto. */
+    
     height: 64px !important;
     min-height: 64px !important;
     max-height: 64px !important;
@@ -4437,8 +3773,6 @@ button.is-pressed {
                 0 8px 18px rgba(35,104,68,0.12) !important;
 }
 
-/* Anche sui display piccoli ogni riga resta di 64px: il rullo
-   da 192px mostra quindi tre nomi contemporaneamente. */
 @media(max-width: 390px) {
 .starting-draw-reel {
         height: 192px !important;
@@ -4454,17 +3788,11 @@ button.is-pressed {
     }
 }
 
-/* =========================================================
-   FIX RIQUADRI PUNTEGGIO + MENU GIOCATORE
-   ========================================================= */
-
-/* Il riquadro attivo resta stabile e il badge TURNO non copre il nome. */
 .match-row {
     position: relative !important;
     overflow: visible !important;
 }
 
-/* Linea verticale sottile tra Game/Set e Punti */
 .match-row::before {
     content: "" !important;
     display: block !important;
@@ -4479,7 +3807,6 @@ button.is-pressed {
     pointer-events: none !important;
 }
 
-/* Badge del turno: spazio riservato sopra al nome */
 .match-row.active-turn {
     z-index: 5 !important;
 }
@@ -4506,7 +3833,6 @@ button.is-pressed {
     padding-top: 16px !important;
 }
 
-/* Puntini piccoli e più vicini all'angolo */
 .score-card-menu-wrap {
     position: absolute !important;
     top: 6px !important;
@@ -4544,7 +3870,6 @@ button.is-pressed {
     font-weight: 700 !important;
 }
 
-/* Menu compatto */
 .score-card-menu {
     position: absolute !important;
     top: 29px !important;
@@ -4608,7 +3933,6 @@ button.is-pressed {
     transform: none !important;
 }
 
-/* Popup modifica punteggio */
 .edit-score-popup {
     position: fixed;
     top: 50%;
@@ -4725,19 +4049,11 @@ button.is-pressed {
     }
 }
 
-
-/* =========================================================
-   FIX FINALE RIQUADRI PUNTEGGIO
-   ========================================================= */
-
-/* Il nome mantiene esattamente la sua posizione normale
-   anche quando il riquadro diventa attivo. */
 .match-row.active-turn .match-player {
     padding-top: 0 !important;
     transform: none !important;
 }
 
-/* L'indicatore TURNO resta fuori dal flusso del nome. */
 .match-row.active-turn::after {
     top: -10px !important;
     left: 14px !important;
@@ -4750,7 +4066,6 @@ button.is-pressed {
     letter-spacing: 0.7px !important;
 }
 
-/* Matita piccola nell'angolo della card */
 .score-card-menu-wrap {
     top: 4px !important;
     right: 4px !important;
@@ -4773,7 +4088,6 @@ button.is-pressed {
     font-weight: 400 !important;
 }
 
-/* Menu leggermente più leggibile, ma non in grassetto */
 .score-card-menu {
     top: 27px !important;
     width: 188px !important;
@@ -4803,10 +4117,6 @@ button.is-pressed {
     font-weight: 400 !important;
 }
 
-/* =========================================================
-   POPUP MODIFICA: POSIZIONAMENTO SOPRA LA TASTIERA
-   ========================================================= */
-
 .edit-score-popup {
     transform: translateX(-50%) !important;
     max-height: calc(100dvh - 24px) !important;
@@ -4814,7 +4124,6 @@ button.is-pressed {
     overscroll-behavior: contain !important;
 }
 
-/* Su schermi piccoli lasciamo più spazio utile al popup. */
 @media(max-width: 390px) {
 .score-card-menu {
         width: 188px !important;
@@ -4830,10 +4139,6 @@ button.is-pressed {
     }
 }
 
-/* =========================================================
-   SLOT SORTEGGIO - CONFIGURAZIONE DEFINITIVA
-   3 righe visibili: nome sopra / vincitore / nome sotto.
-========================================================= */
 .starting-draw-reel {
     height: 192px !important;
     min-height: 192px !important;
@@ -4875,11 +4180,6 @@ button.is-pressed {
     }
 }
 
-
-/* =========================================================
-   SORTeggio PREMIUM - effetto slot / profondita'
-   Override finale: prevale anche sulle vecchie regole responsive.
-========================================================= */
 .starting-draw-reel {
     height: 192px !important;
     min-height: 192px !important;
@@ -4930,7 +4230,6 @@ button.is-pressed {
     backface-visibility: hidden;
 }
 
-/* La vittoria evidenzia SOLO la casella centrale, non tutto il rullo. */
 .starting-draw-reel.is-winning {
     background: linear-gradient(180deg, rgba(243,246,241,.96), rgba(250,251,249,.98)) !important;
     box-shadow: inset 0 12px 18px rgba(35,55,42,.045),
@@ -4950,7 +4249,6 @@ button.is-pressed {
                 0 5px 14px rgba(35,104,68,.12);
 }
 
-/* Piccoli indicatori laterali sulla payline. */
 .starting-draw-slot-payline {
     z-index: 10 !important;
     height: 2px !important;
@@ -4979,7 +4277,6 @@ button.is-pressed {
     border-left: 7px solid rgba(54,119,78,.72);
 }
 
-/* Risultato finale piu' compatto e piu' coerente con il sorteggio. */
 .starting-draw-result-icon {
     width: 66px;
     height: 66px;
@@ -5021,12 +4318,6 @@ button.is-pressed {
     }
 }
 
-
-/* =========================================================
-   SORTEGGIO — FINISH ZOOM + PULIZIA RIGHE
-   ========================================================= */
-
-/* Nessuna riga/separatore colorato sulle singole caselle. */
 .starting-draw-reel-item,
 .starting-draw-reel-item::before,
 .starting-draw-reel-item::after {
@@ -5038,14 +4329,10 @@ button.is-pressed {
     background-image: none !important;
 }
 
-/* Manteniamo la sola payline verde centrale. */
 .starting-draw-slot-payline {
     background: rgba(111,177,115,.48) !important;
 }
 
-/* Quando tutti e tre i rulli hanno trovato il vincitore,
-   il bordo verde fa un doppio "zoom" come un simbolo vincente
-   di una slot: si ingrandisce, emette un glow e torna in posizione. */
 .starting-draw-slot.all-reels-winning .starting-draw-reel {
     animation: slotWinningZoom 1.05s cubic-bezier(.2,.8,.2,1) 0s 2;
     z-index: 6;
@@ -5094,12 +4381,6 @@ button.is-pressed {
     }
 }
 
-/* =========================================================
-   SORTEGGIO v3 — PULIZIA RIGHE + ZOOM SINGOLO PER RULLO
-========================================================= */
-
-/* Elimina completamente qualsiasi riga/separatore interno ai rulli.
-   La sola linea visibile è la payline verde centrale. */
 .starting-draw-reel,
 .starting-draw-reel-item,
 .starting-draw-reel-item::before,
@@ -5116,16 +4397,12 @@ button.is-pressed {
     box-shadow: none !important;
 }
 
-/* Il bordo del rullo torna neutro mentre gira. */
 .starting-draw-reel {
     border: 1px solid rgba(40,65,48,.08) !important;
     box-shadow: inset 0 12px 18px rgba(35,55,42,.045),
                 inset 0 -12px 18px rgba(35,55,42,.045) !important;
 }
 
-/* =========================================================
-   1) OGNI RULLO: singolo zoom quando si ferma
-========================================================= */
 .starting-draw-reel.is-winning {
     animation: slotReelWinSingle .62s cubic-bezier(.18,.82,.24,1) 1 both !important;
     z-index: 7 !important;
@@ -5161,9 +4438,6 @@ button.is-pressed {
     100% { transform: scale(1.02); }
 }
 
-/* =========================================================
-   2) TUTTI I RULLI: singolo zoom finale, leggermente maggiore
-========================================================= */
 .starting-draw-slot.all-reels-winning .starting-draw-reel {
     animation: slotAllReelsWin .88s cubic-bezier(.16,.84,.22,1) 1 both !important;
     z-index: 9 !important;
@@ -5207,26 +4481,16 @@ button.is-pressed {
     }
 }
 
-/* =========================================================
-   SORTEGGIO v4 — SFONDO BLUR + RIMOZIONE RIGHE LATERALI
-========================================================= */
-
-/* L'overlay lascia intravedere la schermata sottostante e la sfoca,
-   come l'effetto Sfocatura di iOS. */
 .starting-draw-overlay {
     background: rgba(247, 249, 246, 0.48) !important;
     -webkit-backdrop-filter: blur(22px) saturate(115%) !important;
     backdrop-filter: blur(22px) saturate(115%) !important;
 }
 
-/* Il pannello centrale resta leggero e trasparente: non crea un
-   secondo rettangolo bianco sopra allo sfondo sfocato. */
 .starting-draw-popup {
     background: transparent !important;
 }
 
-/* Sopra/sotto il rullo niente maschere bianche: usiamo una sfumatura
-   trasparente così il blur rimane uniforme. */
 .starting-draw-slot::before,
 .starting-draw-slot::after {
     background: linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(255,255,255,0)) !important;
@@ -5236,9 +4500,6 @@ button.is-pressed {
     background: linear-gradient(to top, rgba(255,255,255,0.02), rgba(255,255,255,0)) !important;
 }
 
-/* Rimuove in modo assoluto le righe rosa/separatori che possono
-   provenire da bordi, pseudo-elementi, outline, decorazioni o
-   residui di stile sulle singole righe. */
 .starting-draw-reel,
 .starting-draw-reel-strip,
 .starting-draw-reel-item,
@@ -5257,9 +4518,6 @@ button.is-pressed {
     caret-color: transparent !important;
 }
 
-/* Nessuna linea verticale interna: ogni rullo deve essere una singola
-   superficie continua. Il bordo esterno resta quello neutro/verde
-   previsto dalle animazioni di vittoria. */
 .starting-draw-reel-strip {
     box-shadow: none !important;
 }
@@ -5269,22 +4527,16 @@ button.is-pressed {
     background: transparent !important;
 }
 
-/* La casella vincente mantiene esclusivamente il suo fondo verde e
-   il bordo verde, senza alcuna riga laterale. */
 .starting-draw-reel-item.is-center-winner {
     border: 0 !important;
     box-shadow: 0 0 0 2px var(--green) inset,
                 0 5px 14px rgba(35,104,68,.12) !important;
 }
 
-/* La sola linea ammessa è la payline verde centrale. */
 .starting-draw-slot-payline {
     border: 0 !important;
     box-shadow: none !important;
 }
-/* =========================================
-   FIX RIGHE ROSA / CURSORE TESTO SU SAFARI
-   ========================================= */
 
 .starting-draw-reel,
 .starting-draw-reel-strip,
@@ -5306,184 +4558,9 @@ button.is-pressed {
     display: none !important;
 }
 
-/* Il blur durante lo spin è definito una sola volta, più sopra,
-   con un valore fisso (vedi commento su .is-spinning
-   .starting-draw-reel-item): niente da ripetere qui, per evitare
-   di ridefinirlo due volte in punti diversi del file. */
-
-/* =========================================================
-   CARDSCORE HOME — NUOVO RESTYLING
-   Richiesto: logo/titolo più grandi, sfondo bordeaux tenue,
-   card giochi più profonde, stato vuoto compatto.
-   ========================================================= */
-
-
-/* Effetto bordeaux molto leggero + alone sfocato */
-
-
-/* LOGO + TITOLO */
-
-
-/* Sottotitolo eliminato */
-
-
-/* Titolo sezione */
-
-
-/* CARD DEI GIOCHI */
-
-
-/* Riquadro "Nessuna partita in corso": circa metà dell'altezza */
-
-
-/* Privacy eliminata */
-
-
-/* =========================================================
-   CARDSCORE HOME — RIFINITURA 2
-   ========================================================= */
-
-/* Logo più grande + ombra morbida */
-
-
-/* Leggero alone attorno al titolo */
-
-
-/* Loghi dei giochi: centratura geometrica e dimensione leggermente maggiore */
-
-
-/* Piccole correzioni ottiche per i diversi loghi */
-
-
-/* Stato vuoto: leggermente più grande e perfettamente centrato */
-
-
-/* =========================================================
-   CARDSCORE HOME — CENTRATURA PERFETTA STATO VUOTO
-   ========================================================= */
-
-
-/* =========================================================
-   CARDSCORE — PARTITA IN CORSO (HOME) — LAYOUT DEFINITIVO
-   Un solo blocco di regole al posto delle vecchie patch
-   sovrapposte (REVISIONE / V5 / v6 / v7 / v8 / v9 / v10),
-   che si annullavano a vicenda e causavano il posizionamento
-   sbagliato. Il layout usa CSS grid, non posizionamenti
-   assoluti "a occhio": logo, testo e freccia restano sempre
-   centrati verticalmente tra loro, qualunque sia il numero
-   di giocatori o la lunghezza dei nomi.
-   ========================================================= */
-
-/* UNO giallo, PILI PILI rosso pastello (colori definitivi) */
-
-
-/* Alone morbido verde attorno al titolo CardScore */
-
-
-/* Card */
-
-
-/* Titolo "PARTITA IN CORSO" */
-
-
-/* Riga principale: logo | testo | freccia, sempre allineati
-   al centro verticale l'uno rispetto all'altro. */
-
-
-/* Logo del gioco: vicino al bordo sinistro, dimensione equilibrata
-   con lo spazio che serve al testo per non andare mai in overflow */
-
-
-/* Correzioni ottiche per i loghi non perfettamente quadrati */
-
-
-/* Colonna testo, separata dal logo da una linea verticale sottile
-   vicina al logo */
-
-
-/* Nome gioco + turno, sulla stessa riga */
-
-
-/* Righe giocatore: nome in colonna fissa, punteggio subito dopo */
-
-
-/* Freccia: leggermente più grande dell'originale, centrata
-   verticalmente sull'intera card, vicina al bordo destro —
-   ma senza invadere lo spazio del testo */
-
-
-/* Nessun residuo del vecchio pulsante "Continua" */
-
-
-/* =========================================================
-   CARDSCORE — HOME FINALE
-   Allineamento alla schermata di riferimento fornita.
-   Questa sezione è intenzionalmente in fondo al CSS per
-   prevalere sulle vecchie patch della Home.
-   ========================================================= */
-
-/* Sfondo della Home */
-
-
-/* Titolo "SCEGLI IL GIOCO" */
-
-
-/* Griglia: due colonne con lo stesso respiro della foto */
-
-
-/* Quattro colori della schermata di riferimento */
-
-
-/* Dimensioni delle card */
-
-
-/* Area logo */
-
-
-/* Correzioni ottiche dei quattro loghi */
-
-
-/* Nome gioco + sottotitolo centrati */
-
-
-/* =========================================================
-   PARTITA IN CORSO
-   ========================================================= */
-
-
-/* Intestazione */
-
-
-/* Logo | linea | informazioni | freccia */
-
-
-/* Colonna centrale con la linea verticale */
-
-
-/* Nome gioco + turno */
-
-
-/* Righe punteggio */
-
-
-/* Freccia a destra, centrata verticalmente */
-
-
-/* Mantieni il layout sui telefoni stretti, riducendo solo la scala */
-
-/* =========================================================
-   CARDSCORE — HOME MASTER
-   Tutte le regole specifiche della Home sono raccolte qui.
-   Questa sezione resta in fondo al CSS per rendere il cascade
-   della Home prevedibile e semplice da modificare.
-   Le regole con override diversi restano nel loro ordine
-   originale per non alterare il risultato visivo.
-   ========================================================= */
-
 #home .brand-text {
     text-align: left;
 }
-
 
 @media(max-width: 430px) {
 #home {
@@ -5586,7 +4663,7 @@ button.is-pressed {
         border-radius: 17px;
         box-shadow: 0 6px 17px rgba(28, 42, 32, 0.065);
         overflow: hidden;
-        /* mantiene l'animazione */
+        
         transition: transform 0.12s ease,
         box-shadow 0.12s ease;
     }
@@ -5655,46 +4732,6 @@ button.is-pressed {
 }
 
 @media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
 #home .saved-player-score {
         padding: 2px 0;
         border-bottom: 1px solid rgba(31, 96, 67, 0.13);
@@ -5733,22 +4770,6 @@ button.is-pressed {
 }
 
 @media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
 #home .privacy-note {
         margin-top: 10px;
         font-size: 9px;
@@ -5781,10 +4802,6 @@ button.is-pressed {
 #home .game-card-image {
         height: 86px;
     }
-}
-
-@media(max-width: 375px) {
-
 }
 
 @media(max-width: 430px) {
@@ -5892,19 +4909,6 @@ button.is-pressed {
     }
 }
 
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
 @media(max-width: 430px) {
 #home .saved-player-score {
         min-height: 27px;
@@ -5924,47 +4928,6 @@ button.is-pressed {
         font-weight: 750;
     }
 }
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
-@media(max-width: 430px) {
-
-}
-
 
 #home.active {
     position: relative;
@@ -6085,7 +5048,6 @@ button.is-pressed {
     font-size: 15px;
 }
 
-
 #home .privacy-note {
     display: none !important;
 }
@@ -6116,10 +5078,6 @@ button.is-pressed {
 
 @media(max-width: 375px) {
 #home .game-card-image { height: 96px; }
-}
-
-@media(max-width: 375px) {
-
 }
 
 #home .brand-icon {
@@ -6178,7 +5136,6 @@ button.is-pressed {
     transform: scale(1.11);
 }
 
-
 @media(max-width: 375px) {
 #home .brand-icon {
         width: 84px;
@@ -6193,11 +5150,6 @@ button.is-pressed {
         border-radius: 25px;
     }
 }
-
-@media(max-width: 375px) {
-
-}
-
 
 #home .game-card.game-uno,
 #home .game-uno {
@@ -6214,7 +5166,6 @@ button.is-pressed {
         0 2px 7px rgba(31, 96, 67, 0.16),
         0 0 14px rgba(31, 96, 67, 0.08) !important;
 }
-
 
 #home.active {
     background: #f8f4f4 !important;
@@ -6338,7 +5289,6 @@ button.is-pressed {
     font-weight: 600 !important;
 }
 
-
 @media(max-width: 375px) {
 #home .game-card {
         height: 154px !important;
@@ -6358,12 +5308,6 @@ button.is-pressed {
         min-height: 58px !important;
     }
 }
-
-/* =========================================================
-   CARDSCORE — HOME REFERENCE MATCH
-   Rifinitura finale per la schermata Home di riferimento.
-   Applicata al viewport mobile mostrato nel riferimento.
-   ========================================================= */
 
 #home .brand-text h1 {
     font-family: "SS Safari", sans-serif !important;
@@ -6448,50 +5392,8 @@ button.is-pressed {
         line-height: 1.2 !important;
     }
 
-    /* PARTITA IN CORSO — struttura aderente al riferimento */
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
 }
 
-/* =========================================================
-   CARDSCORE — HOME SAVED GAME MASTER
-   Unica definizione della sezione "Partita in corso".
-   Stati separati: partita presente / nessuna partita.
-   Questa sezione è intenzionalmente in fondo al CSS.
-   ========================================================= */
-
-/* ---------------------------------------------------------
-   STATO VUOTO — "Nessuna partita in corso"
-   --------------------------------------------------------- */
 #home .saved-game-card.empty-state {
     position: relative !important;
     width: 100% !important;
@@ -6563,11 +5465,6 @@ button.is-pressed {
     transform: none !important;
 }
 
-/* ---------------------------------------------------------
-   STATO CON PARTITA — "PARTITA IN CORSO"
-   Layout a 3 colonne:
-   [logo] [informazioni] [freccia]
-   --------------------------------------------------------- */
 #home .saved-game-card:not(.empty-state) {
     position: relative !important;
     width: 100% !important;
@@ -6643,7 +5540,6 @@ button.is-pressed {
     display: block !important;
 }
 
-/* Il separatore è legato al blocco informazioni, non al logo. */
 #home .saved-game-card:not(.empty-state) .saved-game-main {
     width: 100% !important;
     min-width: 0 !important;
@@ -6743,7 +5639,6 @@ button.is-pressed {
     text-overflow: clip !important;
 }
 
-/* Freccia indipendente dal contenuto testuale e centrata nella colonna. */
 #home .saved-game-card:not(.empty-state) .saved-game-arrow {
     width: 34px !important;
     height: 100% !important;
@@ -6777,9 +5672,6 @@ button.is-pressed {
     display: none !important;
 }
 
-/* ---------------------------------------------------------
-   Schermi piccoli: riduciamo leggermente solo ciò che serve.
-   --------------------------------------------------------- */
 @media (max-width: 375px) {
     #home .saved-game-card.empty-state {
         height: 82px !important;
@@ -6831,16 +5723,8 @@ button.is-pressed {
     }
 }
 
-
-/* =========================================================
-   CARDSCORE — HOME REFERENCE FINAL
-   Allineamento 1:1 al riferimento mobile fornito.
-   SOLO CSS: HTML e JavaScript restano invariati.
-   ========================================================= */
-
 @media (max-width: 430px) {
 
-    /* ---------- HEADER ---------- */
     #home .home-header {
         padding-top: calc(env(safe-area-inset-top) + 7px) !important;
         padding-bottom: 0 !important;
@@ -6887,7 +5771,6 @@ button.is-pressed {
             0 0 14px rgba(31, 96, 67, 0.08) !important;
     }
 
-    /* ---------- HOME CONTENT ---------- */
     #home .home-content {
         padding-top: 16px !important;
         padding-left: 16px !important;
@@ -6909,7 +5792,6 @@ button.is-pressed {
         font-weight: 800 !important;
     }
 
-    /* ---------- GIOCHI ---------- */
     #home .games-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: 13px !important;
@@ -6970,7 +5852,6 @@ button.is-pressed {
         line-height: 1.2 !important;
     }
 
-    /* ---------- STATO VUOTO ---------- */
     #home .saved-game-card.empty-state {
         height: 86px !important;
         min-height: 86px !important;
@@ -6995,7 +5876,6 @@ button.is-pressed {
         text-shadow: 0 2px 2px rgba(31, 96, 67, 0.18) !important;
     }
 
-    /* ---------- STATO CON PARTITA ---------- */
     #home .saved-game-card:not(.empty-state) {
         height: 144px !important;
         min-height: 144px !important;
@@ -7255,28 +6135,20 @@ button.is-pressed {
     }
 }
 
-/* =========================================================
-   CARDSCORE — HOME FINAL MICRO-ADJUSTMENTS
-   Richieste: descrizioni più piccole, alone sul titolo,
-   logo partita più a sinistra, freccia centrata e più a destra,
-   allineamento titolo/nomi e turno/punteggi.
-   ========================================================= */
 @media (max-width: 430px) {
-    /* Descrizione sotto i nomi dei giochi */
+    
     #home .game-card-info span {
         font-size: 9px !important;
         line-height: 1.15 !important;
         margin-top: 3px !important;
     }
 
-    /* Leggero alone sul titolo CardScore */
     #home .brand-text h1 {
         text-shadow:
             0 0 5px rgba(31, 96, 67, 0.16),
             0 2px 8px rgba(31, 96, 67, 0.10) !important;
     }
 
-    /* Titolo gioco e nomi sulla stessa verticale */
     #home .saved-game-card:not(.empty-state) .saved-game-main {
         padding-left: 12px !important;
     }
@@ -7286,7 +6158,6 @@ button.is-pressed {
         text-align: left !important;
     }
 
-    /* Turno: bordo destro coincidente con quello dei punteggi */
     #home .saved-game-card:not(.empty-state) .saved-game-header {
         padding-right: 0 !important;
     }
@@ -7296,12 +6167,10 @@ button.is-pressed {
         text-align: right !important;
     }
 
-    /* Logo più vicino al margine sinistro */
     #home .saved-game-card:not(.empty-state) .saved-game-icon {
         transform: translateX(-10px) !important;
     }
 
-    /* Freccia: centro ottico verticale + leggermente più a destra */
     #home .saved-game-card:not(.empty-state) .saved-game-arrow {
         transform: translate(5px, -5px) !important;
         align-self: center !important;
@@ -7332,12 +6201,8 @@ button.is-pressed {
     }
 }
 
-/* =========================================================
-   CARDSCORE — HOME MICRO ALIGNMENT V2
-   Ultime regolazioni richieste
-   ========================================================= */
 @media (max-width: 430px) {
-    /* Alone del titolo: più leggibile ma sempre leggero */
+    
     #home .brand-text h1 {
         text-shadow:
             0 0 6px rgba(31, 96, 67, 0.24),
@@ -7346,16 +6211,10 @@ button.is-pressed {
         filter: drop-shadow(0 0 2px rgba(31, 96, 67, 0.10)) !important;
     }
 
-    /* Logo partita in corso: altri 3px verso sinistra */
     #home .saved-game-card:not(.empty-state) .saved-game-icon {
         transform: translateX(-13px) !important;
     }
 
-    /*
-       Header e righe giocatori condividono la stessa griglia:
-       il titolo parte esattamente sopra i nomi e il Turno termina
-       esattamente sul bordo destro della colonna dei punteggi.
-    */
     #home .saved-game-card:not(.empty-state) .saved-game-header {
         display: grid !important;
         grid-template-columns: 53px minmax(0, 1fr) !important;
@@ -7384,8 +6243,6 @@ button.is-pressed {
         text-align: right !important;
     }
 
-    /* Freccia: 3px più in alto rispetto alla versione precedente,
-       mantenendo il suo centro verticale nel riquadro */
     #home .saved-game-card:not(.empty-state) .saved-game-arrow {
         transform: translate(5px, -8px) !important;
         align-self: center !important;
@@ -7415,17 +6272,8 @@ button.is-pressed {
     }
 }
 
-/* =========================================================
-   CARDSCORE — HOME SAVED GAME FINAL V3
-   Correzioni finali richieste:
-   - alone CardScore più evidente
-   - titolo del gioco sempre completo, senza ellissi
-   - freccia 3px più in alto
-   - rimozione visuale del Turno
-   - titolo gioco allineato ai nomi dei giocatori
-   ========================================================= */
 @media (max-width: 430px) {
-    /* Alone più evidente sul titolo principale */
+    
     #home .brand-text h1 {
         text-shadow:
             0 0 5px rgba(31, 96, 67, 0.32),
@@ -7435,16 +6283,10 @@ button.is-pressed {
         filter: drop-shadow(0 0 3px rgba(31, 96, 67, 0.14)) !important;
     }
 
-    /* Il Turno non deve più essere mostrato */
     #home .saved-game-card:not(.empty-state) .saved-game-turn {
         display: none !important;
     }
 
-    /*
-       Header: una sola colonna.
-       Il titolo parte esattamente dalla stessa x dei nomi giocatori
-       e può occupare tutto lo spazio disponibile.
-    */
     #home .saved-game-card:not(.empty-state) .saved-game-header {
         display: block !important;
         width: 100% !important;
@@ -7466,7 +6308,6 @@ button.is-pressed {
         text-overflow: clip !important;
     }
 
-    /* Freccia: altri 3px verso l'alto */
     #home .saved-game-card:not(.empty-state) .saved-game-arrow {
         transform: translate(5px, -11px) !important;
         align-self: center !important;
