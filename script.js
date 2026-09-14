@@ -2568,12 +2568,17 @@ function apriPopupInizioGame() {
 
             // Il nome centrale è nitido e pieno; quelli sopra e sotto
             // assumono progressivamente profondità, come una vera slot.
+            // NIENTE filter/blur qui: su Safari/iOS applicare un blur
+            // a del testo mentre l'elemento è animato con transform
+            // genera artefatti di rendering (righe rosa nella zona di
+            // composizione GPU). La profondità è comunicata solo con
+            // opacità e scala, che sono sicure da animare frame per
+            // frame insieme al transform.
             const scala = 1 - (intensita * 0.10);
-            const opacita = 1 - (intensita * 0.38);
-            const blur = intensita * 1.05;
+            const opacita = 1 - (intensita * 0.42);
 
             elemento.style.opacity = opacita.toFixed(3);
-            elemento.style.filter = `blur(${blur.toFixed(2)}px)`;
+            elemento.style.filter = "none";
             elemento.style.transform = `scale(${scala.toFixed(3)})`;
         }
     }
