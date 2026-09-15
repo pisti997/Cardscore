@@ -1969,7 +1969,6 @@ select {
     transform: translateY(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    will-change: transform;
 }
 
 .starting-draw-reel-item {
@@ -1988,8 +1987,6 @@ select {
     line-height: 1.1;
     font-weight: 800;
     text-align: center;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
 }
 
 .starting-draw-progress {
@@ -2941,12 +2938,10 @@ button.is-pressed {
     padding: calc(env(safe-area-inset-top) + 18px) 27px 8px;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    align-items: center !important;
     background: var(--bg);
     border: 0;
 }.match-topbar .back-button {
     justify-self: start;
-    margin-top: 0 !important;
     padding: 0;
     display: flex;
     align-items: center;
@@ -2955,7 +2950,6 @@ button.is-pressed {
     color: #17251d;
     font-size: 16px;
     font-weight: 600;
-    align-self: center !important;
 }.match-heading {
     min-width: 140px;
     text-align: center;
@@ -3067,8 +3061,6 @@ button.is-pressed {
     padding: 0 14px !important;
 
     display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
 
     gap: 6px !important;
 
@@ -3085,12 +3077,6 @@ button.is-pressed {
     transition:
         transform 0.08s ease,
         box-shadow 0.08s ease !important;
-}
-
-.match-topbar .back-button .back-arrow {
-    margin: 0 !important;
-    font-size: 29px !important;
-    line-height: 1 !important;
 }
 
 .match-topbar .back-button:active {
@@ -3255,11 +3241,7 @@ button.is-pressed {
 
 .match-topbar .match-heading {
     position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
     transform: translate(-50%, -50%) !important;
-
-    margin: 0 !important;
 
     display: flex !important;
     flex-direction: column !important;
@@ -3268,25 +3250,9 @@ button.is-pressed {
 }
 
 .match-topbar .back-button {
-    justify-self: start !important;
-    align-self: center !important;
-
-    margin-left: 0 !important;
     margin-top: 0 !important;
 
     display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-.match-topbar .back-button .back-arrow {
-    margin: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    line-height: 1 !important;
 }
 
 @media(max-width: 430px) {
@@ -3303,11 +3269,9 @@ button.is-pressed {
 .match-topbar {
     padding-left: 27px !important;
     padding-right: 27px !important;
-    align-items: center !important;
 }
 
 .match-topbar .back-button {
-    justify-self: start !important;
     align-self: center !important;
 
     margin: 0 !important;
@@ -3320,8 +3284,6 @@ button.is-pressed {
     top: 50% !important;
 
     transform: translate(-50%, -50%) !important;
-
-    margin: 0 !important;
 }
 
 .match-topbar {
@@ -3343,7 +3305,6 @@ button.is-pressed {
     position: static !important;
     transform: none !important;
     margin: 0 !important;
-    justify-self: center !important;
 }
 
 .match-topbar {
@@ -3372,21 +3333,13 @@ button.is-pressed {
 }
 
 .match-topbar .back-button .back-arrow {
-    position: absolute !important;
 
     left: 7px !important;
     top: calc(50% - 4px) !important;
 
-    margin: 0 !important;
-
     transform: translateY(-50%) !important;
 
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
     font-size: 34px !important;
-    line-height: 1 !important;
 }
 
 .match-topbar .back-button > span:last-child {
@@ -3408,13 +3361,9 @@ button.is-pressed {
     min-width: 64px !important;
     min-height: 64px !important;
 
-    padding: 0 !important;
-
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-
-    border-radius: 50% !important;
 }
 .match-topbar .back-button .back-arrow {
     position: absolute !important;
@@ -3425,9 +3374,6 @@ button.is-pressed {
     margin: 0 !important;
 
     transform: translate(-50%, -50%) !important;
-
-    width: 100% !important;
-    height: 100% !important;
 
     display: flex !important;
     align-items: center !important;
@@ -3503,17 +3449,9 @@ button.is-pressed {
     width: auto !important;
     height: auto !important;
 
-    margin: 0 !important;
-    padding: 0 !important;
-
-    transform: none !important;
-
     display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
 
     font-size: 27px !important;
-    line-height: 1 !important;
 }
 
 #partita .match-topbar .match-menu-wrap {
@@ -3549,8 +3487,6 @@ button.is-pressed {
 #partita .match-topbar .match-menu-button span {
     font-size: 11px !important;
     letter-spacing: 2px !important;
-
-    transform: none !important;
 }
 
 #partita .match-topbar .match-heading {
@@ -3566,60 +3502,28 @@ button.is-pressed {
 }
 
 #partita .match-topbar .back-button .back-arrow {
-    position: absolute !important;
-
-    left: 0 !important;
-    top: 0 !important;
-
-    width: 100% !important;
-    height: 100% !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
 
     transform: none !important;
 
     display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
 
     font-size: 27px !important;
-    line-height: 1 !important;
 }
 
 #partita .match-topbar .match-menu-button span {
-    width: 100% !important;
-    height: 100% !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
 
     font-size: 11px !important;
-    line-height: 1 !important;
     letter-spacing: 2px !important;
 
     transform: none !important;
 }
 
 #partita .match-topbar .back-button .back-arrow {
-    position: absolute !important;
     inset: 0 !important;
-
-    width: 100% !important;
-    height: 100% !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
 
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-
-    font-size: 0 !important;
     line-height: 1 !important;
 }
 
@@ -3728,9 +3632,6 @@ button.is-pressed {
 }
 
 .starting-draw-reel {
-    height: 192px !important;
-    min-height: 192px !important;
-    max-height: 192px !important;
     border-radius: 18px !important;
     background: #f7f8f4 !important;
 }
@@ -3753,14 +3654,8 @@ button.is-pressed {
 }
 
 .starting-draw-reel-item {
-    
-    height: 64px !important;
-    min-height: 64px !important;
-    max-height: 64px !important;
     padding: 0 6px !important;
     font-size: 34px !important;
-    line-height: 1 !important;
-    font-weight: 800 !important;
     letter-spacing: -1.2px !important;
     filter: none !important;
     -webkit-filter: none !important;
@@ -3815,13 +3710,10 @@ button.is-pressed {
     content: "●  TURNO" !important;
     position: absolute !important;
     top: 8px !important;
-    left: 14px !important;
     margin: 0 !important;
     padding: 0 !important;
     color: var(--green-dark) !important;
     background: transparent !important;
-    font-size: 8px !important;
-    line-height: 1 !important;
     font-weight: 850 !important;
     letter-spacing: 0.8px !important;
     text-shadow: none !important;
@@ -3865,7 +3757,6 @@ button.is-pressed {
     display: block !important;
     color: #52715e !important;
     font-size: 8px !important;
-    line-height: 1 !important;
     letter-spacing: 1.2px !important;
     font-weight: 700 !important;
 }
@@ -3898,8 +3789,6 @@ button.is-pressed {
     color: #26362d !important;
     text-align: left !important;
     font-size: 10px !important;
-    line-height: 1.1 !important;
-    font-weight: 400 !important;
 }
 
 .score-card-menu-item + .score-card-menu-item {
@@ -3918,13 +3807,10 @@ button.is-pressed {
     color: #698172 !important;
     font-size: 13px !important;
     line-height: 1 !important;
-    font-weight: 400 !important;
 }
 
 .score-card-menu-item strong {
     font-size: 10px !important;
-    line-height: 1.1 !important;
-    font-weight: 400 !important;
     letter-spacing: -0.1px !important;
 }
 
@@ -4139,32 +4025,6 @@ button.is-pressed {
     }
 }
 
-.starting-draw-reel {
-    height: 192px !important;
-    min-height: 192px !important;
-    max-height: 192px !important;
-    overflow: hidden !important;
-}
-
-.starting-draw-reel-strip {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-}
-
-.starting-draw-reel-item {
-    height: 64px !important;
-    min-height: 64px !important;
-    max-height: 64px !important;
-    flex: 0 0 64px !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow: hidden !important;
-    white-space: nowrap !important;
-}
-
 @media(max-width: 390px) {
 .starting-draw-reel {
         height: 192px !important;
@@ -4187,9 +4047,6 @@ button.is-pressed {
     overflow: hidden !important;
     perspective: 700px;
     background: linear-gradient(180deg, rgba(243,245,241,.92), rgba(250,251,249,.98)) !important;
-    border: 1px solid rgba(40,65,48,.08) !important;
-    box-shadow: inset 0 12px 18px rgba(35,55,42,.045),
-                inset 0 -12px 18px rgba(35,55,42,.045) !important;
 }
 
 .starting-draw-reel.is-spinning {
@@ -4252,7 +4109,6 @@ button.is-pressed {
 .starting-draw-slot-payline {
     z-index: 10 !important;
     height: 2px !important;
-    background: rgba(111,177,115,.48) !important;
 }
 
 .starting-draw-slot-payline::before,
@@ -4391,10 +4247,6 @@ button.is-pressed {
     border-left: 0 !important;
     border-image: none !important;
     background-image: none !important;
-}
-
-.starting-draw-reel-item {
-    box-shadow: none !important;
 }
 
 .starting-draw-reel {
@@ -4885,7 +4737,6 @@ button.is-pressed {
     line-height: 1;
     letter-spacing: -1.2px;
     color: #1f6043;
-    font-family: "SS Safari", sans-serif !important;
 }
 
 @media(max-width: 430px) {
@@ -4971,15 +4822,11 @@ button.is-pressed {
     height: 86px;
     flex: 0 0 86px;
     border-radius: 24px;
-    overflow: hidden;
     background: transparent;
     box-shadow: 0 10px 24px rgba(46, 25, 31, 0.13);
 }
 
 #home .brand-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
     border-radius: 24px;
 }
 
@@ -6327,7 +6174,6 @@ button.is-pressed {
         transform: translate(3px, -14px) scale(0.90) !important;
     }
 }
-
 
 /* ===== HOME — Riquadro "PARTITA IN CORSO" compatto v2 ===== */
 @media (max-width: 430px) {
