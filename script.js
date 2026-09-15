@@ -2325,7 +2325,7 @@ function apriPopupRegole(event) {
 
     const frame = document.createElement("iframe");
     frame.className = "rules-popup-frame";
-    frame.src = "bgg454590.pdf#view=FitH";
+    frame.src = "./bgg454590.pdf#view=FitH";
     frame.title = "Regole del gioco";
     frame.setAttribute("loading", "eager");
 
