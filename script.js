@@ -121,6 +121,8 @@ function tornaHome() {
    NUOVA PARTITA
 ========================================================= */
 function nuovaPartita() {
+    document.documentElement.style.setProperty("--selected-game-color", "#236844");
+    document.documentElement.style.setProperty("--selected-game-color-text", "#ffffff");
     giocoScelto = "";
     giocatori = ["", ""];
     punteggi = [];
@@ -175,6 +177,15 @@ const LOGHI_GIOCHI = {
 };
 function scegliGioco(gioco) {
     nuovaPartita();
+    const coloriGioco = {
+        "UNO": "#fbe2ac",
+        "Pili Pili": "#f3a1a7",
+        "Scala 40": "#d8ecf3",
+        "Scopa": "#ebdcf3"
+    };
+    const coloreSelezionato = coloriGioco[gioco] || "#236844";
+    document.documentElement.style.setProperty("--selected-game-color", coloreSelezionato);
+    document.documentElement.style.setProperty("--selected-game-color-text", "#173f31");
     giocoScelto = gioco;
     const elementoGioco = elemento("gioco-selezionato");
     if (elementoGioco) {
