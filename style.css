@@ -5052,7 +5052,7 @@ button.is-pressed {
 
 #home .game-card.game-pili-pili,
 #home .game-pili-pili {
-    background: #f3a1a7 !important;
+    background: #e84b5f !important;
 }
 
 #home .game-card.game-scala,
@@ -5097,15 +5097,15 @@ button.is-pressed {
 }
 
 #home .game-pili-pili .game-card-image img {
-    transform: scale(1.10) !important;
-}
-
-#home .game-scala .game-card-image img {
     transform: scale(1.12) !important;
 }
 
+#home .game-scala .game-card-image img {
+    transform: scale(1.13) !important;
+}
+
 #home .game-scopa .game-card-image img {
-    transform: scale(1.11) !important;
+    transform: scale(1.12) !important;
 }
 
 #home .game-card-info {
@@ -5677,9 +5677,9 @@ button.is-pressed {
     }
 
     #home .game-uno .game-card-image img { transform: scale(1.08) !important; }
-    #home .game-pili-pili .game-card-image img { transform: scale(1.10) !important; }
-    #home .game-scala .game-card-image img { transform: scale(1.12) !important; }
-    #home .game-scopa .game-card-image img { transform: scale(1.11) !important; }
+    #home .game-pili-pili .game-card-image img { transform: scale(1.12) !important; }
+    #home .game-scala .game-card-image img { transform: scale(1.13) !important; }
+    #home .game-scopa .game-card-image img { transform: scale(1.12) !important; }
 
     #home .game-card-info {
         height: 60px !important;
