@@ -416,6 +416,7 @@
                     <span
                         id="numero-giocatori"
                         class="counter"
+                        aria-hidden="true"
                     >
                         0
                     </span>
@@ -559,12 +560,14 @@
                         <div class="setting-item">
 
                             <span>
-                                Punti per Game
+                                Punti
                             </span>
 
                             <input
                                 id="punti-per-game"
-                                type="number"
+                                type="text"
+                                readonly
+                                inputmode="none"
                                 value="21"
                                 min="1"
                                 inputmode="numeric"
@@ -576,12 +579,14 @@
                         <div class="setting-item">
 
                             <span>
-                                Game per Set
+                                Game
                             </span>
 
                             <input
                                 id="game-per-set"
-                                type="number"
+                                type="text"
+                                readonly
+                                inputmode="none"
                                 value="3"
                                 min="1"
                                 inputmode="numeric"
@@ -593,12 +598,14 @@
                         <div class="setting-item">
 
                             <span>
-                                Set per Match
+                                Set
                             </span>
 
                             <input
                                 id="set-per-match"
-                                type="number"
+                                type="text"
+                                readonly
+                                inputmode="none"
                                 value="2"
                                 min="1"
                                 inputmode="numeric"
