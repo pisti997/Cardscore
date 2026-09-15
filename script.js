@@ -2855,6 +2855,11 @@ function toggleMatchMenu(event) {
     }
 }
 
+function chiudiMenuPartitaSalvata() {
+    // Il menu della partita salvata nella Home è stato rimosso.
+    // Manteniamo questa funzione come compatibilità per mostraPagina().
+}
+
 function chiudiMenuPartita() {
     const menu = document.getElementById("match-menu");
     if (menu) {
