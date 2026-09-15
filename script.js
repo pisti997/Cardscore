@@ -178,7 +178,7 @@ const LOGHI_GIOCHI = {
 
 const COLORI_GIOCHI = {
     "UNO": "#fbe2ac",
-    "Pili Pili": "#f3a1a7",
+    "Pili Pili": "#e84b5f",
     "Scala 40": "#d8ecf3",
     "Scopa": "#ebdcf3"
 };
@@ -378,6 +378,114 @@ document.addEventListener("click", function (event) {
         chiudiTipoPunteggioMenu();
     }
 });
+/* =========================================================
+   ROTELLA NUMERICA STILE iOS
+   Sostituisce la tastiera per Punti / Game / Set.
+========================================================= */
+let selettoreNumericoAperto = null;
+let valoreSelettoreNumerico = 1;
+
+function apriSelettoreNumerico(idCampo) {
+    const campo = elemento(idCampo);
+    if (!campo) return;
+
+    chiudiSelettoreNumerico();
+    selettoreNumericoAperto = idCampo;
+    valoreSelettoreNumerico = Math.max(1, Math.min(250, parseInt(campo.value, 10) || 1));
+
+    const overlay = document.createElement("div");
+    overlay.className = "ios-number-picker-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+
+    const sheet = document.createElement("div");
+    sheet.className = "ios-number-picker-sheet";
+    sheet.innerHTML = `
+        <div class="ios-number-picker-toolbar">
+            <button type="button" class="ios-number-picker-cancel">Annulla</button>
+            <strong class="ios-number-picker-title">${idCampo === "punti-per-game" ? "Punti" : idCampo === "game-per-set" ? "Game" : "Set"}</strong>
+            <button type="button" class="ios-number-picker-done">Fine</button>
+        </div>
+        <div class="ios-number-picker-wheel-wrap">
+            <div class="ios-number-picker-highlight"></div>
+            <div class="ios-number-picker-fade ios-number-picker-fade-top"></div>
+            <div class="ios-number-picker-fade ios-number-picker-fade-bottom"></div>
+            <div class="ios-number-picker-wheel" tabindex="0"></div>
+        </div>
+    `;
+
+    overlay.appendChild(sheet);
+    document.body.appendChild(overlay);
+
+    const wheel = sheet.querySelector(".ios-number-picker-wheel");
+    for (let n = 1; n <= 250; n++) {
+        const item = document.createElement("div");
+        item.className = "ios-number-picker-item";
+        item.dataset.value = String(n);
+        item.textContent = String(n);
+        wheel.appendChild(item);
+    }
+
+    const altezzaRiga = 44;
+    wheel.scrollTop = (valoreSelettoreNumerico - 1) * altezzaRiga;
+    aggiornaValoreSelettoreNumerico(wheel, altezzaRiga);
+
+    let scrollTimer = null;
+    wheel.addEventListener("scroll", function () {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => aggiornaValoreSelettoreNumerico(wheel, altezzaRiga), 35);
+    }, { passive: true });
+
+    sheet.querySelector(".ios-number-picker-cancel").addEventListener("click", chiudiSelettoreNumerico);
+    sheet.querySelector(".ios-number-picker-done").addEventListener("click", confermaSelettoreNumerico);
+    overlay.addEventListener("click", function (event) {
+        if (event.target === overlay) chiudiSelettoreNumerico();
+    });
+
+    requestAnimationFrame(() => overlay.classList.add("is-visible"));
+}
+
+function aggiornaValoreSelettoreNumerico(wheel, altezzaRiga) {
+    const indice = Math.max(0, Math.min(249, Math.round(wheel.scrollTop / altezzaRiga)));
+    valoreSelettoreNumerico = indice + 1;
+    wheel.querySelectorAll(".ios-number-picker-item").forEach((item, i) => {
+        item.classList.toggle("is-selected", i === indice);
+    });
+}
+
+function confermaSelettoreNumerico() {
+    if (!selettoreNumericoAperto) return;
+    const campo = elemento(selettoreNumericoAperto);
+    if (campo) {
+        campo.value = valoreSelettoreNumerico;
+        campo.dispatchEvent(new Event("input", { bubbles: true }));
+        campo.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+    chiudiSelettoreNumerico();
+}
+
+function chiudiSelettoreNumerico() {
+    const overlay = document.querySelector(".ios-number-picker-overlay");
+    selettoreNumericoAperto = null;
+    if (!overlay) return;
+    overlay.classList.remove("is-visible");
+    setTimeout(() => overlay.remove(), 180);
+}
+
+["punti-per-game", "game-per-set", "set-per-match"].forEach(function (idCampo) {
+    document.addEventListener("click", function (event) {
+        const campo = elemento(idCampo);
+        if (campo && event.target === campo) {
+            event.preventDefault();
+            apriSelettoreNumerico(idCampo);
+        }
+    });
+});
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") chiudiSelettoreNumerico();
+});
+
 /* =========================================================
    INIZIA PARTITA
 ========================================================= */
