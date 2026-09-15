@@ -6583,3 +6583,113 @@ body.rules-popup-open {
         padding-top: 16px;
     }
 }
+
+/* =========================================================
+   NUOVA PARTITA - RIFINITURA HEADER v2
+   ========================================================= */
+#nuova-partita .game-header-card {
+    /* header verde più basso */
+    padding: calc(env(safe-area-inset-top) + 4px) 12px 8px 4px;
+    border-radius: 0 0 24px 24px;
+}
+
+#nuova-partita .game-header-topbar {
+    margin-bottom: -2px;
+    padding: 0 4px;
+}
+
+#nuova-partita .game-header-main {
+    /* porta logo e titolo verso l'alto e li avvicina */
+    gap: 2px;
+    padding: 0;
+    margin-top: -1px;
+    align-items: center;
+    transform: translateY(-2px);
+}
+
+#nuova-partita .selected-game-icon {
+    /* mantiene il logo grande ma lo porta molto vicino al bordo sinistro */
+    width: 150px;
+    height: 150px;
+    margin-left: -2px;
+}
+
+#nuova-partita .game-header-name {
+    /* titolo più vicino al logo, alone più contenuto */
+    margin-left: -1px;
+    text-shadow:
+        0 0 3px rgba(255,255,255,0.88),
+        0 0 7px rgba(255,255,255,0.48),
+        0 0 12px rgba(255,255,255,0.20);
+}
+
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    /* grigio iPhone, stessa dimensione */
+    width: 36px;
+    height: 36px;
+    background: rgba(235,235,235,0.94);
+    border-color: rgba(215,215,215,0.98);
+    box-shadow:
+        0 2px 4px rgba(20,30,24,0.14),
+        0 7px 16px rgba(20,30,24,0.17),
+        inset 0 1px 1px rgba(255,255,255,0.95);
+}
+
+#nuova-partita .game-header-back .back-arrow::before {
+    border-left-width: 3.5px;
+    border-bottom-width: 3.5px;
+}
+
+#nuova-partita .game-header-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 36px;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-align: center;
+    transform: translateY(0);
+}
+
+#nuova-partita .game-header-dots span {
+    display: block;
+    line-height: 1;
+    font-weight: 900;
+}
+
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    color: #333833;
+    font-weight: 900;
+}
+
+@media (max-width: 430px) {
+    #nuova-partita .game-header-card {
+        padding: calc(env(safe-area-inset-top) + 3px) 10px 6px 2px;
+    }
+
+    #nuova-partita .game-header-topbar {
+        margin-bottom: -4px;
+        padding: 0 3px;
+    }
+
+    #nuova-partita .game-header-main {
+        gap: 1px;
+        margin-top: -2px;
+        transform: translateY(-3px);
+    }
+
+    #nuova-partita .selected-game-icon {
+        width: 145px;
+        height: 145px;
+        margin-left: -3px;
+    }
+
+    #nuova-partita .game-header-name {
+        margin-left: -2px;
+        font-size: clamp(29px, 9.5vw, 40px);
+    }
+}
