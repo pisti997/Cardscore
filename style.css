@@ -6674,3 +6674,207 @@ body.rules-popup-open {
         font-size: clamp(28px, 10.8vw, 38px) !important;
     }
 }
+
+/* =========================================================
+   NUOVA PARTITA — IMPLEMENTAZIONE FINALE DEL RENDER
+   ========================================================= */
+#nuova-partita {
+    min-height: 100dvh !important;
+    background:
+        radial-gradient(circle at 8% 20%, rgba(255, 215, 225, .38) 0, rgba(255, 215, 225, 0) 34%),
+        radial-gradient(circle at 92% 52%, rgba(255, 226, 231, .34) 0, rgba(255, 226, 231, 0) 34%),
+        radial-gradient(circle at 50% 100%, rgba(220, 239, 220, .28) 0, rgba(220, 239, 220, 0) 40%),
+        #f7f9f6 !important;
+    -webkit-backdrop-filter: blur(22px) saturate(115%);
+    backdrop-filter: blur(22px) saturate(115%);
+}
+
+#nuova-partita .game-header-card {
+    height: 110px !important;
+    min-height: 110px !important;
+    margin-top: calc(-1 * env(safe-area-inset-top));
+    padding: calc(env(safe-area-inset-top) + 7px) 21px 8px 21px !important;
+    background: var(--selected-game-color) !important;
+    border-radius: 0 0 30px 30px !important;
+    box-shadow:
+        0 18px 38px rgba(31, 42, 35, .22),
+        0 7px 16px rgba(31, 42, 35, .14) !important;
+}
+
+#nuova-partita .game-header-topbar {
+    width: 100% !important;
+    height: 41px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: 41px 1fr 41px !important;
+    align-items: center !important;
+    justify-items: center !important;
+}
+
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    width: 41px !important;
+    height: 41px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: rgba(255,255,255,.97) !important;
+    border: 1px solid rgba(255,255,255,.82) !important;
+    box-shadow:
+        0 8px 18px rgba(25, 42, 33, .18),
+        0 2px 5px rgba(25, 42, 33, .10) !important;
+}
+
+#nuova-partita .game-header-back {
+    grid-column: 1 !important;
+    justify-self: start !important;
+}
+
+#nuova-partita .game-header-dots {
+    grid-column: 3 !important;
+    justify-self: end !important;
+    color: #173f31 !important;
+    font-size: 17px !important;
+    line-height: 41px !important;
+    letter-spacing: 1px !important;
+    font-weight: 950 !important;
+    text-align: center !important;
+    text-indent: 0 !important;
+    padding: 0 0 2px 0 !important;
+}
+
+#nuova-partita .game-header-back .back-arrow::before {
+    width: 13px !important;
+    height: 13px !important;
+    border-left: 3px solid #17251d !important;
+    border-bottom: 3px solid #17251d !important;
+    transform: translate(-38%, -50%) rotate(45deg) !important;
+}
+
+#nuova-partita .game-header-label {
+    grid-column: 2 !important;
+    justify-self: center !important;
+    color: rgba(23,63,49,.62) !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.35px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+#nuova-partita .game-header-main {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 10px !important;
+    transform: translateX(-50%) !important;
+    width: max-content !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 14px !important;
+}
+
+#nuova-partita .selected-game-icon {
+    width: 51px !important;
+    height: 51px !important;
+    flex: 0 0 51px !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    box-shadow: 0 5px 12px rgba(20,35,27,.12) !important;
+}
+
+#nuova-partita .selected-game-icon img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+#nuova-partita .game-header-name {
+    margin: 0 !important;
+    color: var(--selected-game-color-text) !important;
+    font-size: 33px !important;
+    line-height: 1 !important;
+    font-weight: 850 !important;
+    letter-spacing: -1.15px !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    text-shadow: 0 2px 8px rgba(20,45,30,.08) !important;
+}
+
+/* Il render usa testo scuro sui colori pastello della Home. */
+#nuova-partita .setup-card,
+#nuova-partita .player-row,
+#nuova-partita .scoring-type-summary,
+#nuova-partita .setting-item input,
+#nuova-partita .number-field,
+#nuova-partita .add-player-button {
+    box-shadow:
+        0 18px 34px rgba(30, 40, 34, .15),
+        0 5px 12px rgba(30, 40, 34, .09) !important;
+}
+
+#nuova-partita .setup-card {
+    border: 1px solid rgba(30,50,39,.075) !important;
+    border-radius: 27px !important;
+    background: rgba(255,255,255,.96) !important;
+}
+
+#nuova-partita .player-row {
+    min-height: 54px !important;
+    border-radius: 17px !important;
+}
+
+#nuova-partita .add-player-button {
+    min-height: 51px !important;
+    border-radius: 17px !important;
+}
+
+#nuova-partita .scoring-type-summary {
+    min-height: 66px !important;
+    border-radius: 17px !important;
+}
+
+#nuova-partita .setting-item input,
+#nuova-partita .number-field {
+    min-height: 55px !important;
+    border-radius: 17px !important;
+}
+
+#nuova-partita .start-button {
+    min-height: 65px !important;
+    border-radius: 25px !important;
+    box-shadow:
+        0 7px 0 #164a34,
+        0 18px 34px rgba(31,96,67,.28),
+        0 6px 14px rgba(31,96,67,.16) !important;
+}
+
+/* Render: contenuto con gli stessi margini laterali e spazi verticali. */
+#nuova-partita .setup-content {
+    gap: 15px !important;
+    padding: 19px 26px calc(11px + env(safe-area-inset-bottom)) !important;
+}
+
+@media (max-width: 390px) {
+    #nuova-partita .game-header-card {
+        height: 110px !important;
+        min-height: 110px !important;
+    }
+    #nuova-partita .game-header-main {
+        bottom: 9px !important;
+    }
+    #nuova-partita .selected-game-icon {
+        width: 50px !important;
+        height: 50px !important;
+        flex-basis: 50px !important;
+    }
+    #nuova-partita .game-header-name {
+        font-size: 32px !important;
+    }
+}
