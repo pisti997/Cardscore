@@ -6470,3 +6470,207 @@ body.rules-popup-open {
     background: rgba(31, 48, 38, 0.08);
     pointer-events: none;
 }
+
+
+/* =========================================================
+   NUOVA PARTITA — REVISIONE UI
+   - Colore header uguale alla card del gioco in Home
+   - Header circa dimezzato
+   - Pulsanti perfettamente simmetrici
+   - Dots più centrati e marcati
+   - Ombre più pronunciate sui riquadri
+   - Sfondo effetto "slot machine" / frosted glass
+========================================================= */
+
+:root {
+    --selected-game-color: #236844;
+    --selected-game-color-text: #ffffff;
+}
+
+/* Sfondo frosted glass, coerente con la schermata del sorteggio slot. */
+#nuova-partita {
+    background:
+        radial-gradient(circle at 18% 12%, rgba(255,255,255,.82) 0, rgba(255,255,255,0) 32%),
+        radial-gradient(circle at 82% 22%, rgba(215,236,218,.30) 0, rgba(215,236,218,0) 34%),
+        rgba(247,249,246,.48) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(115%);
+    backdrop-filter: blur(22px) saturate(115%);
+}
+
+/* Header ridotto a circa metà dell'altezza precedente. */
+#nuova-partita .game-header-card {
+    position: relative;
+    height: 195px !important;
+    min-height: 195px !important;
+    margin-top: calc(-1 * env(safe-area-inset-top));
+    padding:
+        calc(env(safe-area-inset-top) + 8px)
+        18px
+        10px !important;
+    box-sizing: border-box;
+    background: var(--selected-game-color) !important;
+    border-radius: 0 0 26px 26px !important;
+    box-shadow:
+        0 16px 34px rgba(24, 48, 34, .24),
+        0 5px 12px rgba(24, 48, 34, .13) !important;
+}
+
+/* Topbar simmetrica: stesso spazio utile a sinistra e destra. */
+#nuova-partita .game-header-topbar {
+    position: relative;
+    width: 100%;
+    height: 36px;
+    margin: 0 0 0 !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: 36px 1fr 36px !important;
+    align-items: center !important;
+    justify-items: center !important;
+}
+
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    width: 36px !important;
+    height: 36px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    justify-self: center !important;
+}
+
+/* Freccia: posizione invariata visivamente, senza spostare il pulsante. */
+#nuova-partita .game-header-back {
+    grid-column: 1;
+}
+
+/* Titolo "NUOVA PARTITA" perfettamente centrato nella larghezza della card. */
+#nuova-partita .game-header-label {
+    grid-column: 2;
+    justify-self: center;
+    color: rgba(23,63,49,.72) !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.2px !important;
+    white-space: nowrap;
+}
+
+/* Pulsante destra: ora ha esattamente la stessa distanza del sinistro. */
+#nuova-partita .game-header-dots {
+    grid-column: 3;
+    color: #173f31 !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    letter-spacing: 1px !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    text-indent: 0 !important;
+    padding-bottom: 3px !important;
+}
+
+/* Dots più pieni e centrati nel cerchio. */
+#nuova-partita .game-header-dots::first-letter {
+    font-weight: 900;
+}
+
+/* Area gioco: centrata verticalmente nella porzione libera dell'header. */
+#nuova-partita .game-header-main {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 15px !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 36px) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+}
+
+/* Logo ridotto per accompagnare il nuovo header compatto. */
+#nuova-partita .selected-game-icon {
+    width: 72px !important;
+    height: 72px !important;
+    flex: 0 0 72px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Titolo gioco sempre leggibile sul colore della card Home. */
+#nuova-partita .game-header-name {
+    margin: 0 !important;
+    color: var(--selected-game-color-text) !important;
+    font-size: clamp(29px, 10.5vw, 40px) !important;
+    line-height: 1 !important;
+    font-weight: 850 !important;
+    letter-spacing: -1px !important;
+    text-align: left !important;
+    text-shadow: 0 2px 8px rgba(20,45,30,.10);
+}
+
+/* Ombreggiature pronunciate su tutti i riquadri della schermata. */
+#nuova-partita .setup-card {
+    border: 1px solid rgba(30,50,39,.08) !important;
+    box-shadow:
+        0 16px 34px rgba(28,42,32,.16),
+        0 5px 12px rgba(28,42,32,.10) !important;
+}
+
+#nuova-partita .player-row {
+    box-shadow:
+        0 7px 18px rgba(28,42,32,.11),
+        0 2px 5px rgba(28,42,32,.07) !important;
+}
+
+#nuova-partita .add-player-button {
+    box-shadow:
+        0 7px 18px rgba(28,42,32,.08) !important;
+}
+
+#nuova-partita .scoring-type-summary,
+#nuova-partita .scoring-type-options {
+    box-shadow:
+        0 10px 24px rgba(28,42,32,.13),
+        0 3px 8px rgba(28,42,32,.08) !important;
+}
+
+#nuova-partita .setting-item input,
+#nuova-partita .number-field {
+    box-shadow:
+        0 7px 18px rgba(28,42,32,.10),
+        0 2px 5px rgba(28,42,32,.06) !important;
+}
+
+#nuova-partita .start-button {
+    box-shadow:
+        0 4px 0 #164a34,
+        0 14px 30px rgba(31,96,67,.30),
+        0 5px 12px rgba(31,96,67,.16) !important;
+}
+
+/* Su schermi piccoli manteniamo comunque il nuovo header compatto. */
+@media (max-width: 390px) {
+    #nuova-partita .game-header-card {
+        height: 190px !important;
+        min-height: 190px !important;
+    }
+
+    #nuova-partita .game-header-main {
+        bottom: 13px !important;
+        width: calc(100% - 32px) !important;
+    }
+
+    #nuova-partita .selected-game-icon {
+        width: 68px !important;
+        height: 68px !important;
+        flex-basis: 68px !important;
+    }
+
+    #nuova-partita .game-header-name {
+        font-size: clamp(28px, 10.8vw, 38px) !important;
+    }
+}
