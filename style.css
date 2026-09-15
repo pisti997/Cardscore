@@ -6471,106 +6471,811 @@ body.rules-popup-open {
     pointer-events: none;
 }
 
-/* =========================================================
-   PATCH 15/09/2026 - SCHERMATA NUOVA PARTITA
-   ========================================================= */
 
-/* Colore Pili Pili: identico alla card Pili Pili della Home */
-#home .game-card.game-pili-pili,
-#home .game-pili-pili,
+/* =========================================================
+   NUOVA PARTITA — REVISIONE UI
+   - Colore header uguale alla card del gioco in Home
+   - Header circa dimezzato
+   - Pulsanti perfettamente simmetrici
+   - Dots più centrati e marcati
+   - Ombre più pronunciate sui riquadri
+   - Sfondo effetto "slot machine" / frosted glass
+========================================================= */
+
+:root {
+    --selected-game-color: #236844;
+    --selected-game-color-text: #ffffff;
+}
+
+/* Sfondo frosted glass, coerente con la schermata del sorteggio slot. */
+#nuova-partita {
+    background:
+        radial-gradient(circle at 18% 12%, rgba(255,255,255,.82) 0, rgba(255,255,255,0) 32%),
+        radial-gradient(circle at 82% 22%, rgba(215,236,218,.30) 0, rgba(215,236,218,0) 34%),
+        rgba(247,249,246,.48) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(115%);
+    backdrop-filter: blur(22px) saturate(115%);
+}
+
+/* Header ridotto a circa metà dell'altezza precedente. */
 #nuova-partita .game-header-card {
+    position: relative;
+    height: 195px !important;
+    min-height: 195px !important;
+    margin-top: calc(-1 * env(safe-area-inset-top));
+    padding:
+        calc(env(safe-area-inset-top) + 8px)
+        18px
+        10px !important;
+    box-sizing: border-box;
+    background: var(--selected-game-color) !important;
+    border-radius: 0 0 26px 26px !important;
+    box-shadow:
+        0 16px 34px rgba(24, 48, 34, .24),
+        0 5px 12px rgba(24, 48, 34, .13) !important;
+}
+
+/* Topbar simmetrica: stesso spazio utile a sinistra e destra. */
+#nuova-partita .game-header-topbar {
+    position: relative;
+    width: 100%;
+    height: 36px;
+    margin: 0 0 0 !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: 36px 1fr 36px !important;
+    align-items: center !important;
+    justify-items: center !important;
+}
+
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    width: 36px !important;
+    height: 36px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    justify-self: center !important;
+}
+
+/* Freccia: posizione invariata visivamente, senza spostare il pulsante. */
+#nuova-partita .game-header-back {
+    grid-column: 1;
+}
+
+/* Titolo "NUOVA PARTITA" perfettamente centrato nella larghezza della card. */
+#nuova-partita .game-header-label {
+    grid-column: 2;
+    justify-self: center;
+    color: rgba(23,63,49,.72) !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.2px !important;
+    white-space: nowrap;
+}
+
+/* Pulsante destra: ora ha esattamente la stessa distanza del sinistro. */
+#nuova-partita .game-header-dots {
+    grid-column: 3;
+    color: #173f31 !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    letter-spacing: 1px !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    text-indent: 0 !important;
+    padding-bottom: 3px !important;
+}
+
+/* Dots più pieni e centrati nel cerchio. */
+#nuova-partita .game-header-dots::first-letter {
+    font-weight: 900;
+}
+
+/* Area gioco: centrata verticalmente nella porzione libera dell'header. */
+#nuova-partita .game-header-main {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 15px !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 36px) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+}
+
+/* Logo ridotto per accompagnare il nuovo header compatto. */
+#nuova-partita .selected-game-icon {
+    width: 72px !important;
+    height: 72px !important;
+    flex: 0 0 72px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Titolo gioco sempre leggibile sul colore della card Home. */
+#nuova-partita .game-header-name {
+    margin: 0 !important;
+    color: var(--selected-game-color-text) !important;
+    font-size: clamp(29px, 10.5vw, 40px) !important;
+    line-height: 1 !important;
+    font-weight: 850 !important;
+    letter-spacing: -1px !important;
+    text-align: left !important;
+    text-shadow: 0 2px 8px rgba(20,45,30,.10);
+}
+
+/* Ombreggiature pronunciate su tutti i riquadri della schermata. */
+#nuova-partita .setup-card {
+    border: 1px solid rgba(30,50,39,.08) !important;
+    box-shadow:
+        0 16px 34px rgba(28,42,32,.16),
+        0 5px 12px rgba(28,42,32,.10) !important;
+}
+
+#nuova-partita .player-row {
+    box-shadow:
+        0 7px 18px rgba(28,42,32,.11),
+        0 2px 5px rgba(28,42,32,.07) !important;
+}
+
+#nuova-partita .add-player-button {
+    box-shadow:
+        0 7px 18px rgba(28,42,32,.08) !important;
+}
+
+#nuova-partita .scoring-type-summary,
+#nuova-partita .scoring-type-options {
+    box-shadow:
+        0 10px 24px rgba(28,42,32,.13),
+        0 3px 8px rgba(28,42,32,.08) !important;
+}
+
+#nuova-partita .setting-item input,
+#nuova-partita .number-field {
+    box-shadow:
+        0 7px 18px rgba(28,42,32,.10),
+        0 2px 5px rgba(28,42,32,.06) !important;
+}
+
+#nuova-partita .start-button {
+    box-shadow:
+        0 4px 0 #164a34,
+        0 14px 30px rgba(31,96,67,.30),
+        0 5px 12px rgba(31,96,67,.16) !important;
+}
+
+/* Su schermi piccoli manteniamo comunque il nuovo header compatto. */
+@media (max-width: 390px) {
+    #nuova-partita .game-header-card {
+        height: 190px !important;
+        min-height: 190px !important;
+    }
+
+    #nuova-partita .game-header-main {
+        bottom: 13px !important;
+        width: calc(100% - 32px) !important;
+    }
+
+    #nuova-partita .selected-game-icon {
+        width: 68px !important;
+        height: 68px !important;
+        flex-basis: 68px !important;
+    }
+
+    #nuova-partita .game-header-name {
+        font-size: clamp(28px, 10.8vw, 38px) !important;
+    }
+}
+
+/* =========================================================
+   NUOVA PARTITA — IMPLEMENTAZIONE FINALE DEL RENDER
+   ========================================================= */
+#nuova-partita {
+    min-height: 100dvh !important;
+    background:
+        radial-gradient(circle at 8% 20%, rgba(255, 215, 225, .38) 0, rgba(255, 215, 225, 0) 34%),
+        radial-gradient(circle at 92% 52%, rgba(255, 226, 231, .34) 0, rgba(255, 226, 231, 0) 34%),
+        radial-gradient(circle at 50% 100%, rgba(220, 239, 220, .28) 0, rgba(220, 239, 220, 0) 40%),
+        #f7f9f6 !important;
+    -webkit-backdrop-filter: blur(22px) saturate(115%);
+    backdrop-filter: blur(22px) saturate(115%);
+}
+
+#nuova-partita .game-header-card {
+    height: 110px !important;
+    min-height: 110px !important;
+    margin-top: calc(-1 * env(safe-area-inset-top));
+    padding: calc(env(safe-area-inset-top) + 7px) 21px 8px 21px !important;
+    background: var(--selected-game-color) !important;
+    border-radius: 0 0 30px 30px !important;
+    box-shadow:
+        0 18px 38px rgba(31, 42, 35, .22),
+        0 7px 16px rgba(31, 42, 35, .14) !important;
+}
+
+#nuova-partita .game-header-topbar {
+    width: 100% !important;
+    height: 41px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: 41px 1fr 41px !important;
+    align-items: center !important;
+    justify-items: center !important;
+}
+
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    width: 41px !important;
+    height: 41px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: rgba(255,255,255,.97) !important;
+    border: 1px solid rgba(255,255,255,.82) !important;
+    box-shadow:
+        0 8px 18px rgba(25, 42, 33, .18),
+        0 2px 5px rgba(25, 42, 33, .10) !important;
+}
+
+#nuova-partita .game-header-back {
+    grid-column: 1 !important;
+    justify-self: start !important;
+}
+
+#nuova-partita .game-header-dots {
+    grid-column: 3 !important;
+    justify-self: end !important;
+    color: #173f31 !important;
+    font-size: 17px !important;
+    line-height: 41px !important;
+    letter-spacing: 1px !important;
+    font-weight: 950 !important;
+    text-align: center !important;
+    text-indent: 0 !important;
+    padding: 0 0 2px 0 !important;
+}
+
+#nuova-partita .game-header-back .back-arrow::before {
+    width: 13px !important;
+    height: 13px !important;
+    border-left: 3px solid #17251d !important;
+    border-bottom: 3px solid #17251d !important;
+    transform: translate(-38%, -50%) rotate(45deg) !important;
+}
+
+#nuova-partita .game-header-label {
+    grid-column: 2 !important;
+    justify-self: center !important;
+    color: rgba(23,63,49,.62) !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.35px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+#nuova-partita .game-header-main {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 10px !important;
+    transform: translateX(-50%) !important;
+    width: max-content !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 14px !important;
+}
+
+#nuova-partita .selected-game-icon {
+    width: 51px !important;
+    height: 51px !important;
+    flex: 0 0 51px !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    box-shadow: 0 5px 12px rgba(20,35,27,.12) !important;
+}
+
+#nuova-partita .selected-game-icon img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+#nuova-partita .game-header-name {
+    margin: 0 !important;
+    color: var(--selected-game-color-text) !important;
+    font-size: 33px !important;
+    line-height: 1 !important;
+    font-weight: 850 !important;
+    letter-spacing: -1.15px !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    text-shadow: 0 2px 8px rgba(20,45,30,.08) !important;
+}
+
+/* Il render usa testo scuro sui colori pastello della Home. */
+#nuova-partita .setup-card,
+#nuova-partita .player-row,
+#nuova-partita .scoring-type-summary,
+#nuova-partita .setting-item input,
+#nuova-partita .number-field,
+#nuova-partita .add-player-button {
+    box-shadow:
+        0 18px 34px rgba(30, 40, 34, .15),
+        0 5px 12px rgba(30, 40, 34, .09) !important;
+}
+
+#nuova-partita .setup-card {
+    border: 1px solid rgba(30,50,39,.075) !important;
+    border-radius: 27px !important;
+    background: rgba(255,255,255,.96) !important;
+}
+
+#nuova-partita .player-row {
+    min-height: 54px !important;
+    border-radius: 17px !important;
+}
+
+#nuova-partita .add-player-button {
+    min-height: 51px !important;
+    border-radius: 17px !important;
+}
+
+#nuova-partita .scoring-type-summary {
+    min-height: 66px !important;
+    border-radius: 17px !important;
+}
+
+#nuova-partita .setting-item input,
+#nuova-partita .number-field {
+    min-height: 55px !important;
+    border-radius: 17px !important;
+}
+
+#nuova-partita .start-button {
+    min-height: 65px !important;
+    border-radius: 25px !important;
+    box-shadow:
+        0 7px 0 #164a34,
+        0 18px 34px rgba(31,96,67,.28),
+        0 6px 14px rgba(31,96,67,.16) !important;
+}
+
+/* Render: contenuto con gli stessi margini laterali e spazi verticali. */
+#nuova-partita .setup-content {
+    gap: 15px !important;
+    padding: 19px 26px calc(11px + env(safe-area-inset-bottom)) !important;
+}
+
+@media (max-width: 390px) {
+    #nuova-partita .game-header-card {
+        height: 110px !important;
+        min-height: 110px !important;
+    }
+    #nuova-partita .game-header-main {
+        bottom: 9px !important;
+    }
+    #nuova-partita .selected-game-icon {
+        width: 50px !important;
+        height: 50px !important;
+        flex-basis: 50px !important;
+    }
+    #nuova-partita .game-header-name {
+        font-size: 32px !important;
+    }
+}
+
+/* =========================================================
+   NUOVA PARTITA — RIFINITURA DEFINITIVA
+   - card più larghe
+   - header più compatto nei controlli
+   - logo grande, senza contenitore circolare
+   - labels Punti / Game / Set
+   - Pili Pili rosso
+   - counter giocatori nascosto
+   - picker numerico stile rotella iOS
+========================================================= */
+
+/* Il rosso di Pili Pili viene usato anche dalla card Home. */
+#home .game-card.game-pili-pili,
+#home .game-pili-pili {
     background: #e84b5f !important;
 }
 
-/* Header molto più compatto: circa 1/3 dell'altezza precedente */
 #nuova-partita .game-header-card {
-    position: relative;
-    height: 140px !important;
-    min-height: 140px !important;
-    padding: calc(env(safe-area-inset-top) + 7px) 18px 10px !important;
-    border-radius: 28px !important;
-    box-shadow:
-        0 12px 24px rgba(23, 37, 29, 0.18),
-        0 22px 42px rgba(23, 37, 29, 0.16) !important;
+    background: var(--selected-game-color) !important;
 }
 
-/* Pulsanti tondi più vicini ai bordi */
 #nuova-partita .game-header-topbar {
-    width: 100%;
-    margin-bottom: 0 !important;
-    padding: 0 0 !important;
+    grid-template-columns: 36px 1fr 36px !important;
 }
+
 #nuova-partita .game-header-back,
 #nuova-partita .game-header-dots {
     width: 36px !important;
     height: 36px !important;
 }
 
-/* Il titolo "NUOVA PARTITA" resta nero */
-#nuova-partita .game-header-label {
-    color: #000000 !important;
+#nuova-partita .game-header-dots {
+    font-size: 16px !important;
+    line-height: 36px !important;
+    font-weight: 950 !important;
+    padding: 0 0 1px !important;
 }
 
-/* Niente logo nel titolo della partita */
+/* Logo doppio rispetto alla versione precedente e senza cerchio esterno. */
+#nuova-partita .game-header-main {
+    left: 50% !important;
+    bottom: 7px !important;
+    width: max-content !important;
+    gap: 14px !important;
+    transform: translateX(-50%) !important;
+}
+
+#nuova-partita .selected-game-icon {
+    width: 100px !important;
+    height: 100px !important;
+    flex: 0 0 100px !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+#nuova-partita .selected-game-icon img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    border-radius: 0 !important;
+}
+
+#nuova-partita .game-header-name {
+    align-self: center !important;
+    text-align: center !important;
+    color: #173f31 !important;
+    font-size: 34px !important;
+    font-weight: 850 !important;
+    letter-spacing: -1.2px !important;
+    text-shadow: none !important;
+}
+
+/* Card più larghe: meno spazio laterale. */
+#nuova-partita .setup-content {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    gap: 15px !important;
+}
+
+/* Rimuove il piccolo contatore "2" nell'angolo della card giocatori. */
+#nuova-partita #numero-giocatori {
+    display: none !important;
+}
+
+/* Tratteggio più netto e leggibile. */
+#nuova-partita .add-player-button {
+    border: 2px dashed #c7d2c5 !important;
+    box-shadow:
+        0 10px 24px rgba(30,40,34,.09),
+        0 2px 6px rgba(30,40,34,.06) !important;
+}
+
+/* Campi numerici: diventano pulsanti che aprono la rotella. */
+#nuova-partita #punti-per-game,
+#nuova-partita #game-per-set,
+#nuova-partita #set-per-match {
+    cursor: pointer !important;
+    -webkit-user-select: none;
+    user-select: none;
+    caret-color: transparent !important;
+}
+
+/* =========================================================
+   ROTELLA NUMERICA — STILE iOS
+========================================================= */
+.ios-number-picker-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+    background: rgba(18, 27, 22, .18);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+    opacity: 0;
+    transition: opacity .18s ease;
+}
+
+.ios-number-picker-overlay.is-visible {
+    opacity: 1;
+}
+
+.ios-number-picker-sheet {
+    width: min(100%, 520px);
+    padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
+    background: rgba(249, 250, 248, .97);
+    border-radius: 28px 28px 0 0;
+    box-shadow:
+        0 -12px 38px rgba(22, 34, 27, .20),
+        0 -3px 10px rgba(22, 34, 27, .10);
+    transform: translateY(100%);
+    transition: transform .22s cubic-bezier(.2,.8,.2,1);
+    overflow: hidden;
+}
+
+.ios-number-picker-overlay.is-visible .ios-number-picker-sheet {
+    transform: translateY(0);
+}
+
+.ios-number-picker-toolbar {
+    height: 54px;
+    padding: 0 18px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    border-bottom: 1px solid rgba(100,110,103,.14);
+}
+
+.ios-number-picker-toolbar button {
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 8px 4px;
+}
+
+.ios-number-picker-cancel {
+    justify-self: start;
+    color: #7f8780;
+}
+
+.ios-number-picker-done {
+    justify-self: end;
+    color: #1f6043;
+}
+
+.ios-number-picker-title {
+    color: #17251d;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.ios-number-picker-wheel-wrap {
+    position: relative;
+    height: 252px;
+    overflow: hidden;
+}
+
+.ios-number-picker-wheel {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    padding: 104px 0;
+    box-sizing: border-box;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior: contain;
+}
+
+.ios-number-picker-wheel::-webkit-scrollbar {
+    display: none;
+}
+
+.ios-number-picker-item {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: center;
+    color: rgba(23,37,29,.32);
+    font-size: 25px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    transform: scale(.88);
+    transition: color .12s ease, transform .12s ease, font-weight .12s ease;
+}
+
+.ios-number-picker-item.is-selected {
+    color: #17251d;
+    font-size: 34px;
+    font-weight: 800;
+    transform: scale(1);
+}
+
+.ios-number-picker-highlight {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: 104px;
+    height: 44px;
+    border-top: 1px solid rgba(120,130,122,.18);
+    border-bottom: 1px solid rgba(120,130,122,.18);
+    border-radius: 12px;
+    background: rgba(255,255,255,.30);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.ios-number-picker-fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 92px;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.ios-number-picker-fade-top {
+    top: 0;
+    background: linear-gradient(to bottom, rgba(249,250,248,1), rgba(249,250,248,0));
+}
+
+.ios-number-picker-fade-bottom {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(249,250,248,1), rgba(249,250,248,0));
+}
+
+@media (max-width: 390px) {
+    #nuova-partita .game-header-back,
+    #nuova-partita .game-header-dots {
+        width: 35px !important;
+        height: 35px !important;
+    }
+
+    #nuova-partita .game-header-topbar {
+        grid-template-columns: 35px 1fr 35px !important;
+    }
+
+    #nuova-partita .selected-game-icon {
+        width: 94px !important;
+        height: 94px !important;
+        flex-basis: 94px !important;
+    }
+
+    #nuova-partita .game-header-main {
+        bottom: 5px !important;
+        gap: 10px !important;
+    }
+
+    #nuova-partita .game-header-name {
+        font-size: 31px !important;
+    }
+
+    #nuova-partita .setup-content {
+        padding-left: 13px !important;
+        padding-right: 13px !important;
+    }
+}
+
+/* =========================================================
+   NUOVA PARTITA — ULTIME RIFINITURE
+   - logo gioco completamente nascosto
+   - titolo gioco centrato e più in basso
+   - pulsanti header leggermente più piccoli e più vicini ai bordi
+   - Pili Pili bordeaux
+   - start button sottile come i campi giocatore, senza rialzo 3D
+========================================================= */
+
+#home .game-card.game-pili-pili,
+#home .game-pili-pili {
+    background: #7f1d32 !important;
+}
+
+#nuova-partita .game-header-card {
+    background: var(--selected-game-color) !important;
+    /* manteniamo esattamente l'altezza attuale */
+}
+
+/* Più vicini ai margini, senza cambiare la posizione verticale. */
+#nuova-partita .game-header-card {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+}
+
+#nuova-partita .game-header-topbar {
+    grid-template-columns: 34px 1fr 34px !important;
+}
+
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    width: 34px !important;
+    height: 34px !important;
+}
+
+#nuova-partita .game-header-dots {
+    font-size: 15px !important;
+    line-height: 34px !important;
+    letter-spacing: 1px !important;
+    font-weight: 950 !important;
+}
+
+/* Il logo non deve più comparire nell'header. */
 #nuova-partita .selected-game-icon {
     display: none !important;
 }
 
-/* Titolo del gioco centrato */
+/* Il titolo occupa tutta la larghezza e viene centrato nello schermo.
+   Rimane più in basso rispetto a NUOVA PARTITA. */
 #nuova-partita .game-header-main {
-    position: absolute !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 15px !important;
+    left: 50% !important;
+    bottom: 10px !important;
     width: 100% !important;
+    height: 42px !important;
+    padding: 0 !important;
+    margin: 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 0 !important;
+    transform: translateX(-50%) !important;
 }
+
 #nuova-partita .game-header-name {
-    margin: 0 !important;
-    color: #000000 !important;
-    text-align: center !important;
-    font-size: clamp(30px, 11vw, 42px) !important;
-    line-height: 1 !important;
-    font-weight: 850 !important;
-}
-
-/* Card giocatori adattata dopo la rimozione di "Chi gioca?" */
-#nuova-partita .setup-card:first-child .setup-card-title {
-    margin-bottom: 14px !important;
-}
-#nuova-partita .setup-card:first-child .setup-card-title > div {
     width: 100% !important;
-}
-#nuova-partita .setup-card:first-child .counter {
-    display: none !important;
-}
-
-/* Campi Punti / Game / Set più arrotondati */
-#nuova-partita .setting-item input,
-#nuova-partita .number-field {
-    border-radius: 22px !important;
+    margin: 0 !important;
+    text-align: center !important;
+    line-height: 1 !important;
+    color: var(--selected-game-color-text) !important;
+    text-shadow: none !important;
 }
 
-/* Pulsante Inizia partita: stessa altezza dei campi giocatore,
-   senza il rialzo 3D ma con ombra/animazione */
+/* Start: stessa altezza visiva dei campi nome, senza rialzo 3D. */
 #nuova-partita .start-button {
-    min-height: 44px !important;
-    height: 44px !important;
+    height: 54px !important;
+    min-height: 54px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
     box-shadow:
-        0 8px 18px rgba(31, 96, 67, 0.22) !important;
+        0 10px 24px rgba(31, 96, 67, .25),
+        0 3px 8px rgba(31, 96, 67, .12) !important;
 }
+
 #nuova-partita .start-button:active {
     box-shadow:
-        0 4px 10px rgba(31, 96, 67, 0.18) !important;
+        0 5px 14px rgba(31, 96, 67, .20),
+        0 2px 5px rgba(31, 96, 67, .10) !important;
 }
-@keyframes iniziaPartitaPulsa {
-    0%, 100% {
-        box-shadow: 0 8px 18px rgba(31, 96, 67, 0.20);
+
+@media (max-width: 390px) {
+    #nuova-partita .game-header-card {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
     }
-    50% {
-        box-shadow: 0 11px 26px rgba(31, 96, 67, 0.34);
+
+    #nuova-partita .game-header-topbar {
+        grid-template-columns: 33px 1fr 33px !important;
+    }
+
+    #nuova-partita .game-header-back,
+    #nuova-partita .game-header-dots {
+        width: 33px !important;
+        height: 33px !important;
+    }
+
+    #nuova-partita .game-header-main {
+        bottom: 9px !important;
+        width: 100% !important;
+        height: 40px !important;
+    }
+
+    #nuova-partita .game-header-name {
+        font-size: 31px !important;
+        text-align: center !important;
     }
 }
