@@ -6373,7 +6373,7 @@ body.rules-popup-open {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    touch-action: pan-y;
+    touch-action: pan-x pan-y;
     padding: max(14px, env(safe-area-inset-top)) 0 max(18px, env(safe-area-inset-bottom));
 }
 
