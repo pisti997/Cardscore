@@ -6470,3 +6470,116 @@ body.rules-popup-open {
     background: rgba(31, 48, 38, 0.08);
     pointer-events: none;
 }
+
+
+/* =========================================================
+   NUOVA PARTITA - RESTYLING SCHERMATA
+   ========================================================= */
+#nuova-partita {
+    background: #f7f8f4;
+}
+
+/* Riquadro verde più compatto */
+#nuova-partita .game-header-card {
+    padding: calc(env(safe-area-inset-top) + 6px) 18px 18px 10px;
+    border-radius: 0 0 28px 28px;
+    box-shadow:
+        0 18px 38px rgba(20, 45, 30, 0.28),
+        0 5px 12px rgba(20, 45, 30, 0.18);
+}
+
+/* Il titolo piccolo NUOVA PARTITA non viene più mostrato */
+#nuova-partita .game-header-label {
+    display: none;
+}
+
+/* Pulsanti superiori stile iPhone, mantenendo le dimensioni attuali */
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.94);
+    border: 1px solid rgba(255,255,255,0.95);
+    border-radius: 50%;
+    box-shadow:
+        0 2px 4px rgba(20,30,24,0.10),
+        0 7px 18px rgba(20,30,24,0.16),
+        inset 0 1px 1px rgba(255,255,255,0.9);
+    -webkit-backdrop-filter: blur(14px) saturate(1.15);
+    backdrop-filter: blur(14px) saturate(1.15);
+}
+
+/* Logo + titolo più in alto e molto più grandi */
+#nuova-partita .game-header-main {
+    align-items: center;
+    gap: 10px;
+    padding: 2px 0 0 0;
+    margin-top: -2px;
+}
+
+#nuova-partita .selected-game-icon {
+    width: 170px;
+    height: 170px;
+    margin-left: 0;
+    flex-shrink: 0;
+}
+
+#nuova-partita .selected-game-icon img,
+#nuova-partita .selected-game-icon img[src*="pili-pili.png"] {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#nuova-partita .game-header-name {
+    color: #ffffff;
+    font-size: clamp(30px, 10vw, 42px);
+    text-shadow:
+        0 0 4px rgba(255,255,255,0.95),
+        0 0 10px rgba(255,255,255,0.72),
+        0 0 20px rgba(255,255,255,0.42);
+}
+
+/* Ombre più marcate sui due riquadri bianchi */
+#nuova-partita .setup-card {
+    border: 1px solid rgba(220,224,218,0.85);
+    box-shadow:
+        0 12px 28px rgba(28,42,32,0.15),
+        0 3px 8px rgba(28,42,32,0.10);
+}
+
+/* Anche il pulsante Inizia partita deve staccarsi dallo sfondo */
+#nuova-partita .start-button {
+    box-shadow:
+        0 12px 28px rgba(31,96,67,0.24),
+        0 4px 9px rgba(31,96,67,0.14);
+}
+
+@media (max-width: 430px) {
+    #nuova-partita .game-header-card {
+        padding: calc(env(safe-area-inset-top) + 5px) 14px 14px 8px;
+    }
+
+    #nuova-partita .game-header-topbar {
+        margin-bottom: 2px;
+        padding: 0 6px;
+    }
+
+    #nuova-partita .game-header-main {
+        gap: 8px;
+        margin-top: -1px;
+    }
+
+    #nuova-partita .selected-game-icon {
+        width: 150px;
+        height: 150px;
+    }
+
+    #nuova-partita .game-header-name {
+        font-size: clamp(29px, 9.5vw, 40px);
+    }
+
+    #nuova-partita .setup-content {
+        padding-top: 16px;
+    }
+}
