@@ -94,6 +94,9 @@ function escapeHTML(testo) {
 ========================================================= */
 function mostraPagina(id) {
     chiudiPopupPuntiPersonalizzati();
+    chiudiMenuPartita();
+    chiudiMenuPartitaSalvata();
+    chiudiPopupRegole();
     chiudiPopupModificaPunteggio();
     chiudiPopupTimer();
     chiudiPopupTimerConto();
@@ -2085,6 +2088,51 @@ function aggiornaPartitaSalvata() {
 
         <div class="saved-game-heading">
             <h2>PARTITA IN CORSO</h2>
+
+            <div class="saved-game-menu-wrap">
+                <button
+                    id="saved-game-menu-button"
+                    class="saved-game-menu-button"
+                    type="button"
+                    onclick="toggleSavedGameMenu(event)"
+                    aria-label="Menu partita"
+                    aria-expanded="false"
+                >
+                    <span>•••</span>
+                </button>
+
+                <div
+                    id="saved-game-menu"
+                    class="saved-game-menu hidden"
+                >
+                    <button
+                        type="button"
+                        class="saved-game-menu-item"
+                        onclick="apriPopupRegole(event)"
+                    >
+                        <span>⚙️</span>
+                        <strong>Regole</strong>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="saved-game-menu-item"
+                        onclick="apriPopupTimer(event)"
+                    >
+                        <span>⏱️</span>
+                        <strong>Timer</strong>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="saved-game-menu-item danger"
+                        onclick="terminaPartitaSalvata(event)"
+                    >
+                        <span>⏹</span>
+                        <strong>Termina partita</strong>
+                    </button>
+                </div>
+            </div>
         </div>
 
 
@@ -2157,6 +2205,144 @@ function aggiornaPartitaSalvata() {
         </div>
     `;
 }
+/* =========================================================
+   MENU PARTITA SALVATA (HOME)
+   Il menu usa un fade sul contenuto sottostante, in stile
+   slot machine, senza bloccare la carta del menu.
+========================================================= */
+function creaFadeMenu(chiusura) {
+    const precedente = document.querySelector(".menu-fade-backdrop");
+    if (precedente) {
+        precedente.remove();
+    }
+
+    const backdrop = document.createElement("div");
+    backdrop.className = "menu-fade-backdrop";
+    backdrop.addEventListener("click", function (event) {
+        event.stopPropagation();
+        chiusura();
+    });
+    document.body.appendChild(backdrop);
+
+    requestAnimationFrame(() => {
+        backdrop.classList.add("is-visible");
+    });
+}
+
+function rimuoviFadeMenu() {
+    const backdrop = document.querySelector(".menu-fade-backdrop");
+    if (!backdrop) return;
+    backdrop.classList.remove("is-visible");
+    setTimeout(() => {
+        if (backdrop && backdrop.parentNode) {
+            backdrop.remove();
+        }
+    }, 160);
+}
+
+function toggleSavedGameMenu(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    const menu = document.getElementById("saved-game-menu");
+    const button = document.getElementById("saved-game-menu-button");
+    if (!menu) return;
+
+    const staAprendo = menu.classList.contains("hidden");
+
+    if (staAprendo) {
+        menu.classList.remove("hidden");
+        if (button) button.setAttribute("aria-expanded", "true");
+        creaFadeMenu(chiudiMenuPartitaSalvata);
+    } else {
+        chiudiMenuPartitaSalvata();
+    }
+}
+
+function chiudiMenuPartitaSalvata() {
+    const menu = document.getElementById("saved-game-menu");
+    const button = document.getElementById("saved-game-menu-button");
+
+    if (menu) menu.classList.add("hidden");
+    if (button) button.setAttribute("aria-expanded", "false");
+    rimuoviFadeMenu();
+}
+
+function terminaPartitaSalvata(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    chiudiMenuPartitaSalvata();
+
+    if (!confirm("Vuoi davvero terminare la partita in corso? Il salvataggio verrà eliminato.")) {
+        return;
+    }
+
+    localStorage.removeItem(STORAGE_KEY);
+    partitaTerminata = true;
+    aggiornaPartitaSalvata();
+}
+
+/* Chiude il menu salvato toccando fuori. */
+document.addEventListener("click", function (event) {
+    const contenitore = document.querySelector(".saved-game-menu-wrap");
+    const menu = document.getElementById("saved-game-menu");
+
+    if (!contenitore || !menu) return;
+
+    if (!contenitore.contains(event.target)) {
+        chiudiMenuPartitaSalvata();
+    }
+});
+
+/* =========================================================
+   POPUP REGOLE
+   Apre il PDF bgg454590 a tutto schermo.
+========================================================= */
+function apriPopupRegole(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    chiudiMenuPartitaSalvata();
+    chiudiMenuPartita();
+    chiudiPopupRegole();
+
+    const overlay = document.createElement("div");
+    overlay.className = "rules-popup-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Regole del gioco");
+
+    const closeButton = document.createElement("button");
+    closeButton.type = "button";
+    closeButton.className = "rules-popup-close";
+    closeButton.setAttribute("aria-label", "Chiudi regole");
+    closeButton.textContent = "×";
+    closeButton.addEventListener("click", chiudiPopupRegole);
+
+    const frame = document.createElement("iframe");
+    frame.className = "rules-popup-frame";
+    frame.src = "bgg454590.pdf#view=FitH";
+    frame.title = "Regole del gioco";
+    frame.setAttribute("loading", "eager");
+
+    overlay.appendChild(frame);
+    overlay.appendChild(closeButton);
+    document.body.appendChild(overlay);
+    document.body.classList.add("rules-popup-open");
+}
+
+function chiudiPopupRegole() {
+    const popup = document.querySelector(".rules-popup-overlay");
+    if (popup) {
+        popup.remove();
+    }
+    document.body.classList.remove("rules-popup-open");
+}
+
 /* =========================================================
    CONTINUA PARTITA
 ========================================================= */
@@ -2700,26 +2886,47 @@ function chiudiPopupInizioGame() {
    ========================================================= */
 
 function toggleMatchMenu(event) {
-
     if (event) {
         event.stopPropagation();
     }
 
     const menu = document.getElementById("match-menu");
-
     if (!menu) return;
 
-    menu.classList.toggle("hidden");
+    const staAprendo = menu.classList.contains("hidden");
+    if (staAprendo) {
+        menu.classList.remove("hidden");
+        creaFadeMenu(chiudiMenuPartita);
+    } else {
+        chiudiMenuPartita();
+    }
 }
 
-
 function chiudiMenuPartita() {
-
     const menu = document.getElementById("match-menu");
+    if (menu) {
+        menu.classList.add("hidden");
+    }
+    rimuoviFadeMenu();
+}
 
-    if (!menu) return;
+function terminaPartitaInCorso(event) {
+    if (event) {
+        event.stopPropagation();
+    }
 
-    menu.classList.add("hidden");
+    chiudiMenuPartita();
+
+    if (!confirm("Vuoi davvero terminare la partita in corso? Il salvataggio verrà eliminato.")) {
+        return;
+    }
+
+    fermaTimerTurno();
+    chiudiPopupTimerConto();
+    localStorage.removeItem(STORAGE_KEY);
+    partitaTerminata = true;
+    mostraPagina("home");
+    aggiornaPartitaSalvata();
 }
 
 
