@@ -6311,3 +6311,239 @@ button.is-pressed {
         transform: translate(2px, -14.5px) scale(0.90) !important;
     }
 }
+
+/* =========================================================
+   MENU PARTITA SALVATA - FADE + STILE
+========================================================= */
+.saved-game-card:not(.empty-state) {
+    overflow: visible !important;
+}
+
+#home .saved-game-card:not(.empty-state) .saved-game-heading {
+    position: relative !important;
+}
+
+.saved-game-menu-wrap {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 44px;
+    height: 44px;
+    z-index: 1002;
+}
+
+.saved-game-menu-button {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e3e7e2;
+    border-radius: 15px;
+    background: #ffffff;
+    color: #17251d;
+    box-shadow:
+        0 4px 0 #d9ded9,
+        0 6px 12px rgba(25, 45, 32, 0.08);
+    cursor: pointer;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.saved-game-menu-button span {
+    display: block;
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 2px;
+    transform: translateX(1px);
+}
+
+.saved-game-menu-button:active {
+    transform: translateY(3px);
+    box-shadow:
+        0 1px 0 #d9ded9,
+        0 3px 7px rgba(25, 45, 32, 0.08);
+}
+
+.saved-game-menu {
+    position: absolute;
+    top: 52px;
+    right: 0;
+    width: 205px;
+    padding: 7px;
+    background: #ffffff;
+    border: 1px solid #e1e5e0;
+    border-radius: 18px;
+    box-shadow:
+        0 14px 35px rgba(20, 40, 25, 0.16),
+        0 3px 8px rgba(20, 40, 25, 0.06);
+    z-index: 1003;
+    transform-origin: top right;
+    animation: savedGameMenuIn 0.16s ease;
+}
+
+.saved-game-menu-item {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: #1d3025;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.saved-game-menu-item span {
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+}
+
+.saved-game-menu-item strong {
+    font-weight: 650;
+}
+
+.saved-game-menu-item:active {
+    background: #eef4ec;
+    transform: scale(0.98);
+}
+
+.saved-game-menu-item.danger {
+    color: #b54848;
+}
+
+.saved-game-menu-item.danger:active {
+    background: #fbeeee;
+}
+
+.menu-fade-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(20, 31, 25, 0.30);
+    backdrop-filter: blur(2.5px) saturate(0.90);
+    -webkit-backdrop-filter: blur(2.5px) saturate(0.90);
+    opacity: 0;
+    transition: opacity 0.16s ease;
+}
+
+.menu-fade-backdrop.is-visible {
+    opacity: 1;
+}
+
+@keyframes savedGameMenuIn {
+    from {
+        opacity: 0;
+        transform: scale(0.94) translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* =========================================================
+   POPUP REGOLE - PDF A TUTTO SCHERMO
+========================================================= */
+body.rules-popup-open {
+    overflow: hidden;
+}
+
+.rules-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    width: 100vw;
+    height: 100dvh;
+    background: #f7f3f4;
+    animation: rulesPopupIn 0.18s ease;
+}
+
+.rules-popup-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #ffffff;
+}
+
+.rules-popup-close {
+    position: absolute;
+    top: max(12px, env(safe-area-inset-top));
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(30, 50, 38, 0.10);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #173f31;
+    font-size: 31px;
+    line-height: 1;
+    font-weight: 300;
+    box-shadow: 0 6px 18px rgba(20, 40, 25, 0.15);
+    z-index: 2001;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.rules-popup-close:active {
+    transform: scale(0.93);
+}
+
+@keyframes rulesPopupIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .menu-fade-backdrop,
+    .saved-game-menu,
+    .rules-popup-overlay {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Il menu della schermata PARTITA deve rimanere sopra al fade. */
+#partita .match-topbar {
+    z-index: 1001 !important;
+}
+
+#partita .match-menu-wrap {
+    z-index: 1002 !important;
+}
+
+#partita .match-menu {
+    z-index: 1003 !important;
+}
+
+/* Divisori sottili tra le voci del menu. */
+.saved-game-menu-item,
+.match-menu-item {
+    position: relative;
+}
+
+.saved-game-menu-item:not(:last-child)::after,
+.match-menu-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+    height: 1px;
+    background: rgba(31, 48, 38, 0.08);
+    pointer-events: none;
+}
