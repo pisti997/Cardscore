@@ -2089,50 +2089,6 @@ function aggiornaPartitaSalvata() {
         <div class="saved-game-heading">
             <h2>PARTITA IN CORSO</h2>
 
-            <div class="saved-game-menu-wrap">
-                <button
-                    id="saved-game-menu-button"
-                    class="saved-game-menu-button"
-                    type="button"
-                    onclick="toggleSavedGameMenu(event)"
-                    aria-label="Menu partita"
-                    aria-expanded="false"
-                >
-                    <span>•••</span>
-                </button>
-
-                <div
-                    id="saved-game-menu"
-                    class="saved-game-menu hidden"
-                >
-                    <button
-                        type="button"
-                        class="saved-game-menu-item"
-                        onclick="apriPopupRegole(event)"
-                    >
-                        <span>⚙️</span>
-                        <strong>Regole</strong>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="saved-game-menu-item"
-                        onclick="apriPopupTimer(event)"
-                    >
-                        <span>⏱️</span>
-                        <strong>Timer</strong>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="saved-game-menu-item danger"
-                        onclick="terminaPartitaSalvata(event)"
-                    >
-                        <span>⏹</span>
-                        <strong>Termina partita</strong>
-                    </button>
-                </div>
-            </div>
         </div>
 
 
@@ -2240,73 +2196,16 @@ function rimuoviFadeMenu() {
     }, 160);
 }
 
-function toggleSavedGameMenu(event) {
-    if (event) {
-        event.stopPropagation();
-    }
-
-    const menu = document.getElementById("saved-game-menu");
-    const button = document.getElementById("saved-game-menu-button");
-    if (!menu) return;
-
-    const staAprendo = menu.classList.contains("hidden");
-
-    if (staAprendo) {
-        menu.classList.remove("hidden");
-        if (button) button.setAttribute("aria-expanded", "true");
-        creaFadeMenu(chiudiMenuPartitaSalvata);
-    } else {
-        chiudiMenuPartitaSalvata();
-    }
-}
-
-function chiudiMenuPartitaSalvata() {
-    const menu = document.getElementById("saved-game-menu");
-    const button = document.getElementById("saved-game-menu-button");
-
-    if (menu) menu.classList.add("hidden");
-    if (button) button.setAttribute("aria-expanded", "false");
-    rimuoviFadeMenu();
-}
-
-function terminaPartitaSalvata(event) {
-    if (event) {
-        event.stopPropagation();
-    }
-
-    chiudiMenuPartitaSalvata();
-
-    if (!confirm("Vuoi davvero terminare la partita in corso? Il salvataggio verrà eliminato.")) {
-        return;
-    }
-
-    localStorage.removeItem(STORAGE_KEY);
-    partitaTerminata = true;
-    aggiornaPartitaSalvata();
-}
-
-/* Chiude il menu salvato toccando fuori. */
-document.addEventListener("click", function (event) {
-    const contenitore = document.querySelector(".saved-game-menu-wrap");
-    const menu = document.getElementById("saved-game-menu");
-
-    if (!contenitore || !menu) return;
-
-    if (!contenitore.contains(event.target)) {
-        chiudiMenuPartitaSalvata();
-    }
-});
-
 /* =========================================================
    POPUP REGOLE
-   Apre il PDF bgg454590 a tutto schermo.
+   Mostra entrambe le pagine una sopra l'altra.
+   Lo zoom è disponibile solo mentre il popup è aperto.
 ========================================================= */
 function apriPopupRegole(event) {
     if (event) {
         event.stopPropagation();
     }
 
-    chiudiMenuPartitaSalvata();
     chiudiMenuPartita();
     chiudiPopupRegole();
 
@@ -2323,16 +2222,70 @@ function apriPopupRegole(event) {
     closeButton.textContent = "×";
     closeButton.addEventListener("click", chiudiPopupRegole);
 
-    const frame = document.createElement("iframe");
-    frame.className = "rules-popup-frame";
-    frame.src = "./bgg454590.pdf#view=FitH";
-    frame.title = "Regole del gioco";
-    frame.setAttribute("loading", "eager");
+    const viewport = document.createElement("div");
+    viewport.className = "rules-popup-scroll";
 
-    overlay.appendChild(frame);
+    const pages = document.createElement("div");
+    pages.className = "rules-pages";
+    pages.dataset.scale = "1";
+
+    [1, 2].forEach(numero => {
+        const img = document.createElement("img");
+        img.className = "rules-page-image";
+        img.src = `./regole/pagina-${numero}.png`;
+        img.alt = `Regole del gioco - pagina ${numero}`;
+        img.draggable = false;
+        pages.appendChild(img);
+    });
+
+    viewport.appendChild(pages);
+    overlay.appendChild(viewport);
     overlay.appendChild(closeButton);
     document.body.appendChild(overlay);
     document.body.classList.add("rules-popup-open");
+
+    let scale = 1;
+    let initialDistance = 0;
+    let initialScale = 1;
+    let lastTap = 0;
+
+    const distanza = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+
+    const applicaZoom = valore => {
+        scale = Math.min(3, Math.max(1, valore));
+        pages.style.width = `${scale * 100}%`;
+        pages.dataset.scale = String(scale);
+    };
+
+    viewport.addEventListener("touchstart", e => {
+        if (e.touches.length === 2) {
+            initialDistance = distanza(e.touches[0], e.touches[1]);
+            initialScale = scale;
+        } else if (e.touches.length === 1) {
+            const now = Date.now();
+            if (now - lastTap < 280) {
+                applicaZoom(scale > 1 ? 1 : 2);
+                e.preventDefault();
+            }
+            lastTap = now;
+        }
+    }, { passive: false });
+
+    viewport.addEventListener("touchmove", e => {
+        if (e.touches.length === 2 && initialDistance) {
+            e.preventDefault();
+            const currentDistance = distanza(e.touches[0], e.touches[1]);
+            applicaZoom(initialScale * currentDistance / initialDistance);
+        }
+    }, { passive: false });
+
+    viewport.addEventListener("touchend", () => {
+        if (scale <= 1.01) {
+            scale = 1;
+            pages.style.width = "100%";
+        }
+        initialDistance = 0;
+    }, { passive: true });
 }
 
 function chiudiPopupRegole() {
