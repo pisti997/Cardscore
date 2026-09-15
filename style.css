@@ -3170,6 +3170,11 @@ button.is-pressed {
     transform-origin: top right;
 }
 
+.match-menu-item + .match-menu-item {
+    border-top: 1px solid rgba(40, 65, 48, 0.10);
+    border-radius: 0 0 12px 12px;
+}
+
 .match-menu-item {
     width: 100%;
     min-height: 48px;
@@ -6462,6 +6467,7 @@ body.rules-popup-open {
     z-index: 2000;
     width: 100vw;
     height: 100dvh;
+    min-height: -webkit-fill-available;
     background: #f7f3f4;
     animation: rulesPopupIn 0.18s ease;
 }
