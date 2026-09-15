@@ -6792,3 +6792,39 @@ body.rules-popup-open {
         font-size: clamp(28px, 9vw, 38px);
     }
 }
+
+/* =========================================================
+   NUOVA PARTITA - HEADER v4
+   Titolo centrato nel riquadro + pulsante destro simmetrico
+   ========================================================= */
+#nuova-partita .game-header-main {
+    position: relative;
+}
+
+#nuova-partita .game-header-name {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: 0;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    z-index: 2;
+}
+
+/* Porta il pulsante destro verso il bordo per avere lo stesso
+   margine esterno del pulsante sinistro. */
+#nuova-partita .game-header-dots {
+    transform: translateX(8px);
+}
+
+#nuova-partita .game-header-dots:active {
+    transform: translateX(8px) scale(0.92);
+}
+
+@media (max-width: 430px) {
+    #nuova-partita .game-header-name {
+        left: 50%;
+        margin-left: 0;
+        transform: translate(-50%, -50%);
+    }
+}
