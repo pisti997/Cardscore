@@ -6828,3 +6828,45 @@ body.rules-popup-open {
         transform: translate(-50%, -50%);
     }
 }
+
+/* =========================================================
+   NUOVA PARTITA - HEADER v5
+   Pulsanti più distanti dai bordi + titolo centrato sul viewport
+   ========================================================= */
+#nuova-partita .game-header-card {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#nuova-partita .game-header-topbar {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+#nuova-partita .game-header-main {
+    width: 100%;
+}
+
+#nuova-partita .selected-game-icon {
+    margin-left: -8px;
+}
+
+#nuova-partita .game-header-name {
+    left: 50%;
+}
+
+@media (max-width: 430px) {
+    #nuova-partita .game-header-card {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #nuova-partita .game-header-topbar {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    #nuova-partita .selected-game-icon {
+        margin-left: -8px;
+    }
+}
