@@ -175,17 +175,22 @@ const LOGHI_GIOCHI = {
     "Scala 40": "immagini/scala40.png",
     "Scopa": "immagini/scopa.png"
 };
+
+const COLORI_GIOCHI = {
+    "UNO": "#fbe2ac",
+    "Pili Pili": "#f3a1a7",
+    "Scala 40": "#d8ecf3",
+    "Scopa": "#ebdcf3"
+};
+
+function applicaColoreGioco(gioco) {
+    const colore = COLORI_GIOCHI[gioco] || "#236844";
+    document.documentElement.style.setProperty("--selected-game-color", colore);
+    document.documentElement.style.setProperty("--selected-game-color-text", "#173f31");
+}
 function scegliGioco(gioco) {
     nuovaPartita();
-    const coloriGioco = {
-        "UNO": "#fbe2ac",
-        "Pili Pili": "#f3a1a7",
-        "Scala 40": "#d8ecf3",
-        "Scopa": "#ebdcf3"
-    };
-    const coloreSelezionato = coloriGioco[gioco] || "#236844";
-    document.documentElement.style.setProperty("--selected-game-color", coloreSelezionato);
-    document.documentElement.style.setProperty("--selected-game-color-text", "#173f31");
+    applicaColoreGioco(gioco);
     giocoScelto = gioco;
     const elementoGioco = elemento("gioco-selezionato");
     if (elementoGioco) {
@@ -1853,6 +1858,7 @@ function chiudiVittoriaENuova() {
     const giocoPrecedente = giocoScelto;
     nuovaPartita();
     if (giocoPrecedente) {
+        applicaColoreGioco(giocoPrecedente);
         giocoScelto = giocoPrecedente;
         const elementoGioco = elemento("gioco-selezionato");
         if (elementoGioco) {
@@ -2325,6 +2331,7 @@ function continuaPartita() {
         return;
     }
     giocoScelto = dati.giocoScelto || "";
+    applicaColoreGioco(giocoScelto);
     giocatori = Array.isArray(dati.giocatori) ? dati.giocatori : [];
     punteggi = Array.isArray(dati.punteggi) ? dati.punteggi : giocatori.map(() => 0);
     storico = Array.isArray(dati.storico) ? dati.storico : [];
