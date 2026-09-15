@@ -6317,116 +6317,7 @@ button.is-pressed {
     }
 }
 
-/* =========================================================
-   MENU PARTITA SALVATA - FADE + STILE
-========================================================= */
-.saved-game-card:not(.empty-state) {
-    overflow: visible !important;
-}
-
-#home .saved-game-card:not(.empty-state) .saved-game-heading {
-    position: relative !important;
-}
-
-.saved-game-menu-wrap {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 44px;
-    height: 44px;
-    z-index: 1002;
-}
-
-.saved-game-menu-button {
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #e3e7e2;
-    border-radius: 15px;
-    background: #ffffff;
-    color: #17251d;
-    box-shadow:
-        0 4px 0 #d9ded9,
-        0 6px 12px rgba(25, 45, 32, 0.08);
-    cursor: pointer;
-    transition: transform 0.08s ease, box-shadow 0.08s ease;
-}
-
-.saved-game-menu-button span {
-    display: block;
-    font-size: 16px;
-    line-height: 1;
-    letter-spacing: 2px;
-    transform: translateX(1px);
-}
-
-.saved-game-menu-button:active {
-    transform: translateY(3px);
-    box-shadow:
-        0 1px 0 #d9ded9,
-        0 3px 7px rgba(25, 45, 32, 0.08);
-}
-
-.saved-game-menu {
-    position: absolute;
-    top: 52px;
-    right: 0;
-    width: 205px;
-    padding: 7px;
-    background: #ffffff;
-    border: 1px solid #e1e5e0;
-    border-radius: 18px;
-    box-shadow:
-        0 14px 35px rgba(20, 40, 25, 0.16),
-        0 3px 8px rgba(20, 40, 25, 0.06);
-    z-index: 1003;
-    transform-origin: top right;
-    animation: savedGameMenuIn 0.16s ease;
-}
-
-.saved-game-menu-item {
-    width: 100%;
-    min-height: 48px;
-    padding: 0 12px;
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    border: 0;
-    border-radius: 12px;
-    background: transparent;
-    color: #1d3025;
-    text-align: left;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.saved-game-menu-item span {
-    width: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 17px;
-}
-
-.saved-game-menu-item strong {
-    font-weight: 650;
-}
-
-.saved-game-menu-item:active {
-    background: #eef4ec;
-    transform: scale(0.98);
-}
-
-.saved-game-menu-item.danger {
-    color: #b54848;
-}
-
-.saved-game-menu-item.danger:active {
-    background: #fbeeee;
-}
+/* Il menu con i tre puntini della HOME è stato rimosso. */
 
 .menu-fade-backdrop {
     position: fixed;
@@ -6455,10 +6346,11 @@ button.is-pressed {
 }
 
 /* =========================================================
-   POPUP REGOLE - PDF A TUTTO SCHERMO
+   POPUP REGOLE - DUE PAGINE VERTICALI + ZOOM
 ========================================================= */
 body.rules-popup-open {
-    overflow: hidden;
+    overflow: hidden !important;
+    touch-action: none;
 }
 
 .rules-popup-overlay {
@@ -6472,13 +6364,41 @@ body.rules-popup-open {
     animation: rulesPopupIn 0.18s ease;
 }
 
-.rules-popup-frame {
+/* Area interna scorrevole: una pagina sopra l'altra. */
+.rules-popup-scroll {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    border: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    padding: max(14px, env(safe-area-inset-top)) 0 max(18px, env(safe-area-inset-bottom));
+}
+
+.rules-pages {
+    width: 100%;
+    min-height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transform-origin: top center;
+}
+
+.rules-page-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    flex: 0 0 auto;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
     background: #ffffff;
+    box-shadow: 0 2px 10px rgba(20, 40, 25, 0.10);
 }
 
 .rules-popup-close {
@@ -6516,7 +6436,6 @@ body.rules-popup-open {
 
 @media (prefers-reduced-motion: reduce) {
     .menu-fade-backdrop,
-    .saved-game-menu,
     .rules-popup-overlay {
         animation: none !important;
         transition: none !important;
@@ -6537,12 +6456,10 @@ body.rules-popup-open {
 }
 
 /* Divisori sottili tra le voci del menu. */
-.saved-game-menu-item,
 .match-menu-item {
     position: relative;
 }
 
-.saved-game-menu-item:not(:last-child)::after,
 .match-menu-item:not(:last-child)::after {
     content: "";
     position: absolute;
