@@ -7279,3 +7279,340 @@ body.rules-popup-open {
         text-align: center !important;
     }
 }
+
+/* =========================================================
+   NUOVA PARTITA — ULTIMO AGGIORNAMENTO
+   - Pili Pili usa esattamente lo stesso bordeaux della Home
+   - header con quattro angoli arrotondati, senza effetti
+   - titolo gioco nero e più alto
+   - NUOVA PARTITA nero
+   - card giocatori più compatta dopo la rimozione di "Chi gioca?"
+========================================================= */
+:root {
+    --pili-pili-color: #e84b5f;
+}
+
+#home .game-card.game-pili-pili,
+#home .game-pili-pili {
+    background: #e84b5f !important;
+}
+
+#nuova-partita .game-header-card {
+    background: var(--selected-game-color) !important;
+    border-radius: 26px !important;
+    margin-top: 0 !important;
+    box-shadow: 0 10px 24px rgba(20, 45, 30, 0.16) !important;
+}
+
+#nuova-partita .game-header-label {
+    color: #000000 !important;
+}
+
+#nuova-partita .game-header-name {
+    color: #000000 !important;
+    text-shadow: none !important;
+}
+
+#nuova-partita .game-header-main {
+    bottom: 21px !important;
+}
+
+/* La card Giocatori non contiene più il titolo "Chi gioca?". */
+#nuova-partita .setup-card:first-of-type .setup-card-title {
+    margin-bottom: 10px !important;
+}
+
+#nuova-partita .setup-card:first-of-type .setup-card-title > div {
+    width: 100% !important;
+}
+
+#nuova-partita .setup-card:first-of-type .setup-card-title .small-label {
+    display: block !important;
+    margin-bottom: 0 !important;
+}
+
+#nuova-partita .setup-card:first-of-type {
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+}
+
+#nuova-partita .setup-card:first-of-type .players-list {
+    gap: 8px !important;
+}
+
+@media (max-width: 390px) {
+    #nuova-partita .game-header-main {
+        bottom: 17px !important;
+    }
+
+    #nuova-partita .setup-card:first-of-type {
+        padding-top: 17px !important;
+        padding-bottom: 17px !important;
+    }
+}
+
+
+/* =========================================================
+   NUOVA PARTITA — VERSIONE RICHIESTA
+   - Pili Pili bordeaux identico alla Home
+   - titolo gioco nero, senza logo
+   - NUOVA PARTITA nero
+   - header leggermente meno alto, quattro angoli arrotondati
+   - pulsanti superiori: dimensioni/posizione originali (nessuna modifica #10)
+   - card giocatori adattata senza "Chi gioca?"
+========================================================= */
+:root {
+    --pili-pili-color: #7f1d32;
+}
+
+#home .game-card.game-pili-pili,
+#home .game-pili-pili {
+    background: #7f1d32 !important;
+}
+
+#nuova-partita .game-header-card {
+    height: 180px !important;
+    min-height: 180px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    padding-bottom: 10px !important;
+    margin-top: 0 !important;
+    background: var(--selected-game-color) !important;
+    border-radius: 26px !important;
+    box-shadow: 0 10px 24px rgba(20,45,30,.16) !important;
+}
+
+/* Nessuna riduzione/spostamento speciale dei pulsanti superiori. */
+#nuova-partita .game-header-topbar {
+    grid-template-columns: 36px 1fr 36px !important;
+    padding: 0 8px !important;
+}
+
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    width: 36px !important;
+    height: 36px !important;
+}
+
+#nuova-partita .game-header-dots {
+    font-size: 16px !important;
+    line-height: 36px !important;
+    font-weight: 950 !important;
+    letter-spacing: 1px !important;
+    padding: 0 0 1px !important;
+}
+
+#nuova-partita .game-header-label {
+    color: #000000 !important;
+}
+
+#nuova-partita .game-header-main {
+    left: 50% !important;
+    bottom: 12px !important;
+    width: 100% !important;
+    height: 42px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: translateX(-50%) !important;
+}
+
+#nuova-partita .selected-game-icon {
+    display: none !important;
+}
+
+#nuova-partita .game-header-name {
+    width: 100% !important;
+    margin: 0 !important;
+    text-align: center !important;
+    color: #000000 !important;
+    font-size: clamp(29px, 10.5vw, 40px) !important;
+    line-height: 1 !important;
+    font-weight: 850 !important;
+    letter-spacing: -1px !important;
+    text-shadow: none !important;
+}
+
+/* Card giocatori: spazio adattato alla rimozione di "Chi gioca?". */
+#nuova-partita .setup-card:first-of-type {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+}
+
+#nuova-partita .setup-card:first-of-type .setup-card-title {
+    margin-bottom: 8px !important;
+}
+
+#nuova-partita .setup-card:first-of-type .setup-card-title .small-label {
+    margin-bottom: 0 !important;
+}
+
+#nuova-partita #numero-giocatori {
+    display: none !important;
+}
+
+@media (max-width: 390px) {
+    #nuova-partita .game-header-card {
+        height: 174px !important;
+        min-height: 174px !important;
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+
+    #nuova-partita .game-header-topbar {
+        grid-template-columns: 36px 1fr 36px !important;
+    }
+
+    #nuova-partita .game-header-back,
+    #nuova-partita .game-header-dots {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    #nuova-partita .game-header-main {
+        bottom: 10px !important;
+        height: 40px !important;
+    }
+
+    #nuova-partita .game-header-name {
+        font-size: 31px !important;
+    }
+}
+
+
+/* =========================================================
+   CARD SCORE — REVISIONE FINALE RICHIESTA
+   - Pili Pili: stesso bordeaux in Home e Nuova Partita
+   - header leggermente meno alto, senza effetti aggiuntivi
+   - tutti gli angoli dell'header arrotondati
+   - nessun logo nella schermata Nuova Partita
+   - titolo gioco e NUOVA PARTITA neri
+   - titolo gioco centrato e leggermente più in alto
+   - nessun contatore giocatori
+   - card giocatori adattata dopo la rimozione di "Chi gioca?"
+========================================================= */
+:root {
+    --pili-pili-color: #7f1d32 !important;
+}
+
+#home .game-card.game-pili-pili,
+#home .game-pili-pili {
+    background: #7f1d32 !important;
+}
+
+#nuova-partita .game-header-card {
+    height: 165px !important;
+    min-height: 165px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    padding-bottom: 8px !important;
+    margin-top: 0 !important;
+    background: var(--selected-game-color) !important;
+    border-radius: 26px !important;
+    box-shadow: 0 10px 24px rgba(20,45,30,.16) !important;
+}
+
+#nuova-partita .game-header-topbar {
+    grid-template-columns: 36px 1fr 36px !important;
+    padding: 0 8px !important;
+}
+
+#nuova-partita .game-header-back,
+#nuova-partita .game-header-dots {
+    width: 36px !important;
+    height: 36px !important;
+}
+
+#nuova-partita .game-header-label {
+    color: #000000 !important;
+}
+
+#nuova-partita .game-header-main {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 17px !important;
+    width: 100% !important;
+    height: 42px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: translateX(-50%) !important;
+}
+
+#nuova-partita .selected-game-icon {
+    display: none !important;
+}
+
+#nuova-partita .game-header-name {
+    width: 100% !important;
+    margin: 0 !important;
+    text-align: center !important;
+    color: #000000 !important;
+    font-size: clamp(29px, 10.5vw, 40px) !important;
+    line-height: 1 !important;
+    font-weight: 850 !important;
+    letter-spacing: -1px !important;
+    text-shadow: none !important;
+}
+
+#nuova-partita #numero-giocatori {
+    display: none !important;
+}
+
+#nuova-partita .setup-card:first-of-type {
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+}
+
+#nuova-partita .setup-card:first-of-type .setup-card-title {
+    margin-bottom: 8px !important;
+}
+
+#nuova-partita .setup-card:first-of-type .setup-card-title .small-label {
+    margin-bottom: 0 !important;
+}
+
+#nuova-partita .start-button {
+    min-height: 54px !important;
+    height: 54px !important;
+    border-radius: 17px !important;
+    box-shadow:
+        0 10px 24px rgba(31,96,67,.28),
+        0 4px 10px rgba(31,96,67,.14) !important;
+}
+
+#nuova-partita .start-button:active {
+    transform: translateY(2px) scale(.99) !important;
+    box-shadow:
+        0 5px 12px rgba(31,96,67,.22),
+        0 2px 6px rgba(31,96,67,.12) !important;
+}
+
+@keyframes iniziaPartitaPulsa {
+    0%, 100% {
+        box-shadow:
+            0 10px 24px rgba(31,96,67,.24),
+            0 4px 10px rgba(31,96,67,.12);
+    }
+    50% {
+        box-shadow:
+            0 14px 30px rgba(31,96,67,.34),
+            0 5px 12px rgba(31,96,67,.16);
+    }
+}
+
+@media (max-width: 390px) {
+    #nuova-partita .game-header-card {
+        height: 160px !important;
+        min-height: 160px !important;
+    }
+    #nuova-partita .game-header-main {
+        bottom: 15px !important;
+    }
+}
