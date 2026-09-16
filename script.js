@@ -185,19 +185,10 @@ const COLORI_GIOCHI = {
     "Scopa": "#ebdcf3"
 };
 
-const COLORI_SFONDO_PARTITA = {
-    "UNO": "#dcefd5",
-    "Pili Pili": "#e84b5f",
-    "Scala 40": "#d5ebf1",
-    "Scopa": "#e8daef"
-};
-
 function applicaColoreGioco(gioco) {
     const colore = COLORI_GIOCHI[gioco] || "#236844";
-    const coloreSfondoPartita = COLORI_SFONDO_PARTITA[gioco] || colore;
     document.documentElement.style.setProperty("--selected-game-color", colore);
     document.documentElement.style.setProperty("--selected-game-color-text", "#173f31");
-    document.documentElement.style.setProperty("--match-bg-color", coloreSfondoPartita);
 }
 function scegliGioco(gioco) {
     nuovaPartita();
