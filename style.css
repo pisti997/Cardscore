@@ -5398,6 +5398,16 @@ button.is-pressed {
     display: block !important;
 }
 
+/* PARTITA IN CORSO — logo UNO ridotto quasi della metà */
+#home .saved-game-card:not(.empty-state) .saved-game-icon img[src*="uno.png"] {
+    width: 55% !important;
+    height: 55% !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
 #home .saved-game-card:not(.empty-state) .saved-game-main {
     width: 100% !important;
     min-width: 0 !important;
@@ -6973,7 +6983,7 @@ body.rules-popup-open {
 
 /* Tratteggio più netto e leggibile. */
 #nuova-partita .add-player-button {
-    border: 2px dashed #1AB2F !important;
+    border: 3px dashed #c7d2c5 !important;
     box-shadow:
         0 10px 24px rgba(30,40,34,.09),
         0 2px 6px rgba(30,40,34,.06) !important;
@@ -7278,7 +7288,7 @@ body.rules-popup-open {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transform: translateX(-40%) !important;
+    transform: translateX(-50%) !important;
 }
 
 #nuova-partita .game-header-name {
