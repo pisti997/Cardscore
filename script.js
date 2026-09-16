@@ -618,6 +618,8 @@ function aggiornaSchermataPartita() {
     const bottoneAnnulla = elemento("annulla-ultimo-turno");
     const bottoneTurnoSuccessivo = elemento("turno-successivo-btn");
     const vocemenuTimer = elemento("menu-timer-btn");
+    const voceMenuRegole = elemento("menu-regole-btn");
+
     if (bottoneAnnulla) {
         bottoneAnnulla.classList.toggle("hidden", modalitaManuale);
     }
@@ -626,6 +628,18 @@ function aggiornaSchermataPartita() {
     }
     if (vocemenuTimer) {
         vocemenuTimer.classList.toggle("hidden", !modalitaManuale);
+    }
+
+    /*
+       Le regole sono disponibili esclusivamente durante
+       una partita di Pili Pili. Il menu a tre puntini mantiene
+       esattamente la propria estetica e le altre partite non
+       mostrano la voce "Regole".
+    */
+    if (voceMenuRegole) {
+        const mostraRegole = giocoScelto === "Pili Pili";
+        voceMenuRegole.classList.toggle("hidden", !mostraRegole);
+        voceMenuRegole.setAttribute("aria-hidden", mostraRegole ? "false" : "true");
     }
 }
 /* =========================================================
@@ -2331,6 +2345,12 @@ function apriPopupRegole(event) {
         event.stopPropagation();
     }
 
+    // Le pagine delle regole appartengono esclusivamente a Pili Pili.
+    if (giocoScelto !== "Pili Pili") {
+        chiudiMenuPartita();
+        return;
+    }
+
     chiudiMenuPartita();
     chiudiPopupRegole();
 
@@ -2357,7 +2377,7 @@ function apriPopupRegole(event) {
     [1, 2].forEach(numero => {
         const img = document.createElement("img");
         img.className = "rules-page-image";
-        img.src = `./regole/pagina-${numero}.png`;
+        img.src = `./regole/pagina-${numero}.png`; // pagina-1.png e pagina-2.png = regole Pili Pili
         img.alt = `Regole del gioco - pagina ${numero}`;
         img.draggable = false;
         pages.appendChild(img);

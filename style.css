@@ -3228,6 +3228,12 @@ button.is-pressed {
     background: #fbeeee;
 }
 
+/* REGole: la voce viene mostrata da JavaScript solo per Pili Pili.
+   Nessuna modifica all'estetica del pulsante a tre puntini. */
+#menu-regole-btn.hidden {
+    display: none !important;
+}
+
 @keyframes matchMenuIn {
     from {
         opacity: 0;
