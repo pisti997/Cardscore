@@ -6973,7 +6973,7 @@ body.rules-popup-open {
 
 /* Tratteggio più netto e leggibile. */
 #nuova-partita .add-player-button {
-    border: 3px dashed #c7d2c5 !important;
+    border: 2px dashed #1AB2F !important;
     box-shadow:
         0 10px 24px rgba(30,40,34,.09),
         0 2px 6px rgba(30,40,34,.06) !important;
@@ -7278,7 +7278,7 @@ body.rules-popup-open {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transform: translateX(-50%) !important;
+    transform: translateX(-40%) !important;
 }
 
 #nuova-partita .game-header-name {
