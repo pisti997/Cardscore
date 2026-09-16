@@ -7171,6 +7171,38 @@ body.rules-popup-open {
 }
 
 /* =========================================================
+   MENU NUOVA PARTITA — stesso pulsante, menu in stile schermata partita
+========================================================= */
+#nuova-partita .game-header-card {
+    position: relative;
+    z-index: 1001;
+}
+
+#nuova-partita .new-game-menu-wrap {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    z-index: 1002;
+}
+
+#nuova-partita .new-game-menu {
+    top: 42px;
+    right: 0;
+    width: 180px;
+    z-index: 1003;
+}
+
+#nuova-partita .new-game-menu .match-menu-item {
+    min-height: 48px;
+}
+
+#nuova-partita .new-game-menu-button {
+    position: relative;
+    z-index: 1002;
+}
+
+/* =========================================================
    NUOVA PARTITA — ULTIME RIFINITURE
    - logo gioco completamente nascosto
    - titolo gioco centrato e più in basso
@@ -7211,6 +7243,23 @@ body.rules-popup-open {
     letter-spacing: 1px !important;
     font-weight: 950 !important;
 }
+
+/* Il contenuto dei tre puntini resta identico al precedente span. */
+#nuova-partita .game-header-dots span {
+    display: block;
+    font-size: 15px;
+    line-height: 1;
+    letter-spacing: 1px;
+    font-weight: 950;
+}
+
+#nuova-partita .game-header-dots {
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    color: #17251d;
+}
+
 
 /* Il logo non deve più comparire nell'header. */
 #nuova-partita .selected-game-icon {

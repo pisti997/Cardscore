@@ -361,12 +361,36 @@
                 </span>
 
 
-                <span
-                    class="game-header-dots"
-                    aria-hidden="true"
-                >
-                    •••
-                </span>
+                <div class="new-game-menu-wrap">
+
+                    <button
+                        id="new-game-menu-button"
+                        class="game-header-dots"
+                        type="button"
+                        onclick="toggleNewGameMenu(event)"
+                        aria-label="Menu"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                    >
+                        <span>•••</span>
+                    </button>
+
+                    <div
+                        id="new-game-menu"
+                        class="match-menu new-game-menu hidden"
+                    >
+                        <button
+                            id="new-game-rules-btn"
+                            type="button"
+                            class="match-menu-item"
+                            onclick="apriPopupRegole(event)"
+                        >
+                            <span>⚙️</span>
+                            <strong>Regole</strong>
+                        </button>
+                    </div>
+
+                </div>
 
             </div>
 

@@ -96,6 +96,7 @@ function mostraPagina(id) {
     chiudiPopupPuntiPersonalizzati();
     chiudiMenuPartita();
     chiudiMenuPartitaSalvata();
+    chiudiNuovaPartitaMenu();
     chiudiPopupRegole();
     chiudiPopupModificaPunteggio();
     chiudiPopupTimer();
@@ -164,6 +165,7 @@ function nuovaPartita() {
         sets.value = 2;
     aggiornaListaGiocatori();
     cambiaSistemaPunteggio();
+    aggiornaMenuNuovaPartita();
     mostraPagina("nuova-partita");
 }
 /* =========================================================
@@ -207,6 +209,7 @@ function scegliGioco(gioco) {
         }
     }
     applicaPresetGioco(gioco);
+    aggiornaMenuNuovaPartita();
     mostraPagina("nuova-partita");
 }
 /* =========================================================
@@ -2979,6 +2982,67 @@ function chiudiPopupInizioGame() {
         timerSceltaGiocatore = null;
     }
 }
+/* =========================================================
+   MENU NUOVA PARTITA
+   Il pulsante mantiene la sua estetica originale.
+   La voce Regole è disponibile esclusivamente per Pili Pili.
+   ========================================================= */
+function aggiornaMenuNuovaPartita() {
+    const rulesButton = document.getElementById("new-game-rules-btn");
+    if (!rulesButton) return;
+
+    const disponibile = giocoScelto === "Pili Pili";
+    rulesButton.classList.toggle("hidden", !disponibile);
+
+    if (!disponibile) {
+        chiudiNuovaPartitaMenu();
+    }
+}
+
+function toggleNewGameMenu(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    // Il menu delle regole esiste solo per Pili Pili.
+    if (giocoScelto !== "Pili Pili") {
+        return;
+    }
+
+    const menu = document.getElementById("new-game-menu");
+    const button = document.getElementById("new-game-menu-button");
+    if (!menu) return;
+
+    const staAprendo = menu.classList.contains("hidden");
+
+    // Non lasciare aperti altri menu.
+    chiudiMenuPartita();
+
+    if (staAprendo) {
+        menu.classList.remove("hidden");
+        if (button) button.setAttribute("aria-expanded", "true");
+        creaFadeMenu(chiudiNuovaPartitaMenu);
+    } else {
+        chiudiNuovaPartitaMenu();
+    }
+}
+
+function chiudiNuovaPartitaMenu() {
+    const menu = document.getElementById("new-game-menu");
+    const button = document.getElementById("new-game-menu-button");
+    if (menu) menu.classList.add("hidden");
+    if (button) button.setAttribute("aria-expanded", "false");
+    rimuoviFadeMenu();
+}
+
+document.addEventListener("click", function(event) {
+    const contenitore = document.querySelector(".new-game-menu-wrap");
+    if (!contenitore) return;
+    if (!contenitore.contains(event.target)) {
+        chiudiNuovaPartitaMenu();
+    }
+});
+
 /* =========================================================
    MENU PARTITA
    Per ora solo estetico
