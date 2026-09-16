@@ -7334,3 +7334,28 @@ body.rules-popup-open {
         text-align: center !important;
     }
 }
+/* =========================================================
+   NUOVA PARTITA — MENU "..." PILI PILI
+   Il pulsante conserva la grafica esistente.
+   Il menu viene portato sopra al contenuto della pagina.
+========================================================= */
+#nuova-partita .new-game-menu-wrap {
+    position: relative !important;
+    z-index: 9999 !important;
+}
+
+#nuova-partita .new-game-menu {
+    position: absolute !important;
+    top: 42px !important;
+    right: 0 !important;
+    z-index: 10000 !important;
+    display: none;
+}
+
+#nuova-partita .new-game-menu:not(.hidden) {
+    display: block !important;
+}
+
+#nuova-partita .game-header-card {
+    overflow: visible !important;
+}

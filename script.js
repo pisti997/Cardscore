@@ -2349,12 +2349,15 @@ function apriPopupRegole(event) {
     }
 
     // Le pagine delle regole appartengono esclusivamente a Pili Pili.
-    if (giocoScelto !== "Pili Pili") {
+    const gameName = (document.getElementById("gioco-selezionato")?.textContent || "").trim();
+    if (giocoScelto !== "Pili Pili" && gameName !== "Pili Pili") {
         chiudiMenuPartita();
+        chiudiNuovaPartitaMenu();
         return;
     }
 
     chiudiMenuPartita();
+    chiudiNuovaPartitaMenu();
     chiudiPopupRegole();
 
     const overlay = document.createElement("div");
@@ -3001,25 +3004,30 @@ function aggiornaMenuNuovaPartita() {
 
 function toggleNewGameMenu(event) {
     if (event) {
+        event.preventDefault();
         event.stopPropagation();
-    }
-
-    // Il menu delle regole esiste solo per Pili Pili.
-    if (giocoScelto !== "Pili Pili") {
-        return;
     }
 
     const menu = document.getElementById("new-game-menu");
     const button = document.getElementById("new-game-menu-button");
+    const gameName = (document.getElementById("gioco-selezionato")?.textContent || "").trim();
+
     if (!menu) return;
+
+    // Il menu della schermata Nuova Partita è attivo solo per Pili Pili.
+    // Usiamo anche il titolo visualizzato come fallback, così il menu
+    // continua a funzionare se la variabile viene temporaneamente azzerata.
+    if (giocoScelto !== "Pili Pili" && gameName !== "Pili Pili") {
+        return;
+    }
 
     const staAprendo = menu.classList.contains("hidden");
 
-    // Non lasciare aperti altri menu.
     chiudiMenuPartita();
 
     if (staAprendo) {
         menu.classList.remove("hidden");
+        menu.style.display = "block";
         if (button) button.setAttribute("aria-expanded", "true");
         creaFadeMenu(chiudiNuovaPartitaMenu);
     } else {
@@ -3030,7 +3038,10 @@ function toggleNewGameMenu(event) {
 function chiudiNuovaPartitaMenu() {
     const menu = document.getElementById("new-game-menu");
     const button = document.getElementById("new-game-menu-button");
-    if (menu) menu.classList.add("hidden");
+    if (menu) {
+        menu.classList.add("hidden");
+        menu.style.display = "";
+    }
     if (button) button.setAttribute("aria-expanded", "false");
     rimuoviFadeMenu();
 }
