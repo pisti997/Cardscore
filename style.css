@@ -7359,3 +7359,39 @@ body.rules-popup-open {
 #nuova-partita .game-header-card {
     overflow: visible !important;
 }
+
+
+/* =========================================================
+   FIX DEFINITIVO — MENU ... NUOVA PARTITA / PILI PILI
+   Nessuna sfocatura/backdrop e menu sempre sopra l'header.
+========================================================= */
+#nuova-partita .new-game-menu-wrap {
+    position: relative !important;
+    z-index: 99999 !important;
+    overflow: visible !important;
+}
+
+#nuova-partita #new-game-menu {
+    position: absolute !important;
+    top: 42px !important;
+    right: 0 !important;
+    width: 180px !important;
+    z-index: 100000 !important;
+    visibility: visible !important;
+}
+
+#nuova-partita #new-game-menu:not(.hidden) {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+#nuova-partita #new-game-menu.hidden {
+    display: none !important;
+}
+
+#nuova-partita .game-header-card,
+#nuova-partita .game-header-topbar {
+    overflow: visible !important;
+}

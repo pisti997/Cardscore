@@ -3029,7 +3029,9 @@ function toggleNewGameMenu(event) {
         menu.classList.remove("hidden");
         menu.style.display = "block";
         if (button) button.setAttribute("aria-expanded", "true");
-        creaFadeMenu(chiudiNuovaPartitaMenu);
+        // Il menu della Nuova Partita NON usa il backdrop sfocato.
+        // Deve restare perfettamente visibile sopra l'header, come richiesto.
+        rimuoviFadeMenu();
     } else {
         chiudiNuovaPartitaMenu();
     }
