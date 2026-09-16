@@ -2056,17 +2056,17 @@ function creaRigaStorico(elementoStorico) {
     const nome = document.createElement("span");
     nome.className = "history-player";
     nome.textContent = elementoStorico.nome;
+    dettagli.appendChild(nome);
+
+    // Il punteggio viene mostrato nella colonna destra, al posto
+    // della precedente freccia.
     const punti = document.createElement("span");
     punti.className = "history-points";
     punti.textContent = `+${ elementoStorico.punti } punti`;
-    dettagli.appendChild(nome);
-    dettagli.appendChild(punti);
-    const freccia = document.createElement("span");
-    freccia.className = "history-arrow";
-    freccia.textContent = "\u203A";
+
     riga.appendChild(turno);
     riga.appendChild(dettagli);
-    riga.appendChild(freccia);
+    riga.appendChild(punti);
     return riga;
 }
 function mostraStorico() {
