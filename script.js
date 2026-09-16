@@ -586,8 +586,12 @@ function aggiornaSchermataPartita() {
         turno.textContent = `Turno ${ numeroTurno + 1 }`;
     }
     const banner = elemento("banner-game-set");
+    const bannerTurn = elemento("match-title-turn");
     if (banner) {
         banner.setAttribute("data-turn", numeroTurno + 1);
+    }
+    if (bannerTurn) {
+        bannerTurn.textContent = `Turno ${numeroTurno + 1}`;
     }
     const obiettivo = elemento("obiettivo-container");
     const semplice = elemento("tabellone-semplice");
