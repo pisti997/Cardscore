@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f7f3f4"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="default"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="CardScore"
+    >
+
+    <title>CardScore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="icon" href="icone/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icone/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icone/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HOME
+    ====================================================== -->
+
+<section
+    id="home"
+    class="page active"
+>
+
+    <!-- HEADER -->
+    <header class="home-header">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                <img
+                    src="icone/icon-192.png"
+                    alt="CardScore"
+                >
+            </div>
+
+            <div class="brand-text">
+
+                <h1>
+                    CardScore
+                </h1>
+
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="home-content">
+
+
+        <!-- =================================================
+             SCEGLI IL GIOCO
+        ================================================== -->
+
+        <div class="home-section-heading">
+
+            <h2>
+                SCEGLI IL GIOCO
+            </h2>
+
+        </div>
+
+
+        <!-- =================================================
+             GIOCHI
+        ================================================== -->
+
+        <div class="games-grid">
+
+
+            <!-- UNO -->
+
+            <button
+                class="game-card game-uno"
+                type="button"
+                onclick="scegliGioco('UNO')"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="immagini/uno.png"
+                        alt="UNO"
+                    >
+
+                </div>
+
+                <div class="game-card-info">
+
+                    <div>
+
+                        <h3>
+                            UNO
+                        </h3>
+
+                        <span>
+                            Gioco di carte
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </button>
+
+
+            <!-- PILI PILI -->
+
+            <button
+                class="game-card game-pili-pili"
+                type="button"
+                onclick="scegliGioco('Pili Pili')"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="immagini/pili-pili.png"
+                        alt="Pili Pili"
+                    >
+
+                </div>
+
+                <div class="game-card-info">
+
+                    <div>
+
+                        <h3>
+                            PILI PILI
+                        </h3>
+
+                        <span>
+                            Gioco di carte
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </button>
+
+
+            <!-- SCALA 40 -->
+
+            <button
+                class="game-card game-scala"
+                type="button"
+                onclick="scegliGioco('Scala 40')"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="immagini/scala40.png"
+                        alt="Scala 40"
+                    >
+
+                </div>
+
+                <div class="game-card-info">
+
+                    <div>
+
+                        <h3>
+                            SCALA 40
+                        </h3>
+
+                        <span>
+                            Gioco di carte
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </button>
+
+
+            <!-- SCOPA -->
+
+            <button
+                class="game-card game-scopa"
+                type="button"
+                onclick="scegliGioco('Scopa')"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="immagini/scopa.png"
+                        alt="Scopa"
+                    >
+
+                </div>
+
+                <div class="game-card-info">
+
+                    <div>
+
+                        <h3>
+                            SCOPA
+                        </h3>
+
+                        <span>
+                            Gioco di carte
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </button>
+
+
+        </div>
+
+
+        <!-- =================================================
+             PARTITA IN CORSO
+        ================================================== -->
+
+        <div
+            id="partita-in-corso"
+            class="saved-game-card hidden"
+        >
+
+            <div class="saved-game-heading">
+
+                <h2>
+                    PARTITA IN CORSO
+                </h2>
+
+
+            </div>
+
+
+            <div class="saved-game-content">
+
+
+                <!-- ICONA GIOCO -->
+
+                <div class="saved-game-icon">
+
+                    <span>
+                        ▶
+                    </span>
+
+                </div>
+
+
+                <!-- INFORMAZIONI -->
+
+                <div class="saved-game-main">
+
+                    <div class="saved-game-header">
+
+                        <h3 id="partita-salvata-titolo">
+                            Partita
+                        </h3>
+
+                        <span
+                            id="partita-salvata-turno"
+                            class="saved-game-turn"
+                        >
+                            Turno 0
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="partita-salvata-info"
+                        class="saved-game-info"
+                    >
+                        Hai una partita da continuare
+                    </div>
+
+                </div>
+
+
+                <!-- FRECCIA -->
+
+                <div class="saved-game-arrow">
+                    ›
+                </div>
+
+            </div>
+</div>
+</main>
+
+</section>
+
+
+
+    <!-- =====================================================
+         NUOVA PARTITA
+    ====================================================== -->
+
+    <section
+        id="nuova-partita"
+        class="page"
+    >
+
+
+        <header class="game-header-card">
+
+            <div class="game-header-topbar">
+
+                <button
+                    class="game-header-back"
+                    type="button"
+                    onclick="tornaHome()"
+                    aria-label="Indietro"
+                >
+
+                    <span class="back-arrow">
+                        ‹
+                    </span>
+
+                </button>
+
+
+                <span class="game-header-label">
+                    NUOVA PARTITA
+                </span>
+
+
+                <span
+                    class="game-header-dots"
+                    aria-hidden="true"
+                >
+                    •••
+                </span>
+
+            </div>
+
+
+            <div class="game-header-main">
+<h2
+                    id="gioco-selezionato"
+                    class="game-header-name"
+                >
+                    —
+                </h2>
+
+            </div>
+
+        </header>
+
+
+        <main class="setup-content">
+
+
+            <!-- =================================================
+                 GIOCATORI
+            ================================================== -->
+
+            <div class="setup-card">
+
+                <div class="setup-card-title">
+
+                    <div>
+
+                        <span class="small-label">
+                            GIOCATORI
+                        </span>
+</div>
+</div>
+
+
+                <div
+                    id="lista-giocatori"
+                    class="players-list"
+                >
+                </div>
+
+
+                <button
+                    id="aggiungi-giocatore"
+                    class="add-player-button"
+                    type="button"
+                >
+                    + Aggiungi giocatore
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 SISTEMA PUNTEGGIO + IMPOSTAZIONI (riquadro unico)
+            ================================================== -->
+
+            <div class="setup-card">
+
+                <span class="small-label">
+                    SISTEMA DI PUNTEGGIO
+                </span>
+
+                <div
+                    class="scoring-type-field"
+                    id="scoring-type-field"
+                >
+
+                    <button
+                        type="button"
+                        class="scoring-type-summary"
+                        onclick="toggleTipoPunteggioMenu()"
+                    >
+
+                        <div class="scoring-type-icon">
+                            🏆
+                        </div>
+
+                        <div class="scoring-type-text">
+
+                            <div
+                                id="sistema-punteggio-titolo"
+                                class="scoring-type-title"
+                            >
+                                Game / Set / Match
+                            </div>
+
+                            <div
+                                id="sistema-punteggio-descrizione"
+                                class="scoring-type-desc"
+                            >
+                                Vince chi fa più game e set
+                            </div>
+
+                        </div>
+
+                        <span class="scoring-type-chevron">
+                            ⌄
+                        </span>
+
+                    </button>
+
+
+                    <div
+                        class="scoring-type-options hidden"
+                        id="scoring-type-options"
+                    >
+
+                        <button
+                            type="button"
+                            class="scoring-type-option is-selected"
+                            data-valore="game-set"
+                            onclick="selezionaTipoPunteggio('game-set')"
+                        >
+                            <span>Game / Set / Match</span>
+                            <span class="scoring-type-check">✓</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="scoring-type-option"
+                            data-valore="semplice"
+                            onclick="selezionaTipoPunteggio('semplice')"
+                        >
+                            <span>Punteggio semplice</span>
+                            <span class="scoring-type-check">✓</span>
+                        </button>
+
+                    </div>
+
+
+                    <!-- Tiene lo stato per il resto del codice,
+                         ma non è mai visibile né apribile -->
+                    <select
+                        id="sistema-punteggio"
+                        class="scoring-type-select-hidden"
+                        tabindex="-1"
+                        aria-hidden="true"
+                    >
+
+                        <option value="game-set" selected>
+                            Game / Set / Match
+                        </option>
+
+                        <option value="semplice">
+                            Punteggio semplice
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="setup-card-divider"></div>
+
+
+                <!-- GAME / SET / MATCH -->
+
+                <div id="impostazioni-game-set">
+
+                    <label class="field-label">
+                        IMPOSTAZIONI MATCH
+                    </label>
+
+
+                    <div class="settings-row">
+
+
+                        <div class="setting-item">
+
+                            <span>
+                                Punti per Game
+                            </span>
+
+                            <input
+                                id="punti-per-game"
+                                type="number"
+                                value="21"
+                                min="1"
+                                inputmode="numeric"
+                            >
+
+                        </div>
+
+
+                        <div class="setting-item">
+
+                            <span>
+                                Game per Set
+                            </span>
+
+                            <input
+                                id="game-per-set"
+                                type="number"
+                                value="3"
+                                min="1"
+                                inputmode="numeric"
+                            >
+
+                        </div>
+
+
+                        <div class="setting-item">
+
+                            <span>
+                                Set per Match
+                            </span>
+
+                            <input
+                                id="set-per-match"
+                                type="number"
+                                value="2"
+                                min="1"
+                                inputmode="numeric"
+                            >
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- PUNTEGGIO SEMPLICE -->
+
+                <div
+                    id="impostazioni-semplice"
+                    class="hidden"
+                >
+
+                    <label
+                        class="field-label"
+                        for="obiettivo-partita"
+                    >
+                        OBIETTIVO PARTITA
+                    </label>
+
+
+                    <div class="number-field">
+
+                        <input
+                            id="obiettivo-partita"
+                            type="number"
+                            value="500"
+                            min="1"
+                            step="1"
+                            inputmode="numeric"
+                        >
+
+                        <span>
+                            punti
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 INIZIA PARTITA
+            ================================================== -->
+
+            <button
+                id="inizia-partita"
+                class="primary-button start-button"
+                type="button"
+                onclick="iniziaPartita()"
+            >
+                <span class="start-button-icon">▶</span>
+                Inizia partita
+            </button>
+
+
+        </main>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PARTITA
+    ====================================================== -->
+
+    <section
+        id="partita"
+        class="page"
+    >
+
+
+        <header class="topbar match-topbar">
+
+
+            <button
+    class="back-button"
+    type="button"
+    onclick="esciPartita()"
+    aria-label="Esci"
+>
+    <span class="back-arrow">‹</span>
+</button>
+
+
+            <div class="match-heading">
+
+                <h1 id="titolo-partita">
+                    UNO
+                </h1>
+
+                <span id="numero-mano">
+                    Turno 1
+                </span>
+
+            </div>
+
+
+            <div class="match-menu-wrap">
+
+    <button
+        id="match-menu-button"
+        class="match-menu-button"
+        type="button"
+        onclick="toggleMatchMenu(event)"
+        aria-label="Menu"
+    >
+        <span>•••</span>
+    </button>
+
+    <div
+        id="match-menu"
+        class="match-menu hidden"
+    >
+        <button
+            type="button"
+            class="match-menu-item"
+            onclick="apriPopupRegole(event)"
+        >
+            <span>⚙️</span>
+            <strong>Regole</strong>
+        </button>
+
+        <button
+            id="menu-timer-btn"
+            type="button"
+            class="match-menu-item hidden"
+            onclick="apriPopupTimer()"
+        >
+            <span>⏱️</span>
+            <strong>Timer</strong>
+        </button>
+
+        <button
+            type="button"
+            class="match-menu-item danger"
+            onclick="terminaPartitaInCorso(event)"
+        >
+            <span>⏹</span>
+            <strong>Termina partita</strong>
+        </button>
+    </div>
+
+</div>
+
+
+        </header>
+
+
+        <main class="match-content">
+
+
+            <!-- =================================================
+                 BANNER GAME / SET / MATCH
+            ================================================== -->
+
+            <div
+                id="banner-game-set"
+                class="match-title hidden"
+            >
+
+                <div class="match-title-icon">
+                    🏆
+                </div>
+
+
+                <div class="match-title-text">
+
+                    <span>
+                        SISTEMA DI PUNTEGGIO
+                    </span>
+
+                    <strong>
+                        GAME / SET / MATCH
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 OBIETTIVO
+            ================================================== -->
+
+            <div
+                id="obiettivo-container"
+                class="objective-text"
+            >
+
+                Obiettivo:
+
+                <strong id="obiettivo-testo">
+                    500
+                </strong>
+
+                punti
+
+            </div>
+
+
+            <!-- =================================================
+                 TABELLONE SEMPLICE
+            ================================================== -->
+
+            <div
+                id="tabellone-semplice"
+                class="scoreboard simple-scoreboard"
+            >
+            </div>
+
+
+            <!-- =================================================
+                 TABELLONE GAME / SET / MATCH
+            ================================================== -->
+
+            <div
+                id="tabellone-game-set"
+                class="scoreboard game-set-scoreboard hidden"
+            >
+
+                <!--
+                    Il contenuto viene generato
+                    dinamicamente da JavaScript.
+                -->
+
+            </div>
+
+
+            <!-- =================================================
+                 NUOVO TURNO
+            ================================================== -->
+
+            <section class="turn-section">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="small-label">
+                            NUOVO TURNO
+                        </span>
+
+                        <h2>
+                            Inserisci punti
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BOTTONI RAPIDI -->
+
+                <div
+                    id="quick-buttons"
+                    class="quick-buttons"
+                >
+                </div>
+
+
+                <!-- INSERIMENTO MANUALE -->
+
+                <div class="manual-score-card">
+
+
+                    <div class="manual-field">
+
+                        <label
+                            for="giocatore-vincitore"
+                            class="field-label"
+                        >
+                            GIOCATORE
+                        </label>
+
+
+                        <select
+                            id="giocatore-vincitore"
+                            class="select-field"
+                        >
+                        </select>
+
+                    </div>
+
+
+                    <div class="manual-field">
+
+                        <label
+                            for="punti-mano"
+                            class="field-label"
+                        >
+                            PUNTI
+                        </label>
+
+
+                        <div class="manual-score-row">
+
+
+                            <input
+                                id="punti-mano"
+                                type="number"
+                                value="1"
+                                min="1"
+                                step="1"
+                                inputmode="numeric"
+                            >
+
+
+                            <button
+                                id="aggiungi-punti"
+                                class="primary-button"
+                                type="button"
+                                onclick="aggiungiMano()"
+                            >
+                                Aggiungi punti
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ANNULLA -->
+
+                <button
+                    id="annulla-ultimo-turno"
+                    class="undo-button"
+                    type="button"
+                    onclick="annullaUltimoTurno()"
+                >
+
+                    <span>
+                        ↶
+                    </span>
+
+                    Annulla ultimo turno
+
+                </button>
+
+                <button
+                    id="turno-successivo-btn"
+                    class="undo-button next-turn-button hidden"
+                    type="button"
+                    onclick="turnoSuccessivo()"
+                >
+
+                    <span>
+                        ➕
+                    </span>
+
+                    Turno successivo
+
+                </button>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 STORICO
+            ================================================== -->
+
+            <section class="history-section">
+
+
+                <div class="section-heading history-heading">
+
+
+                    <div>
+
+                        <span class="small-label">
+                            CRONOLOGIA
+                        </span>
+
+                        <h2>
+                            Ultimo turno
+                        </h2>
+
+                    </div>
+
+
+                    <button
+                        class="history-link"
+                        type="button"
+                        onclick="mostraStoricoCompleto()"
+                    >
+                        Vedi tutto →
+                    </button>
+
+
+                </div>
+
+
+                <div
+                    id="storico-turni"
+                    class="history-list"
+                >
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         STORICO COMPLETO
+    ====================================================== -->
+
+    <section
+        id="storico-completo"
+        class="page"
+    >
+
+
+        <header class="topbar">
+
+
+            <button
+                class="back-button"
+                type="button"
+                onclick="chiudiStorico()"
+            >
+
+                <span class="back-arrow">
+                    ‹
+                </span>
+
+                <span>
+                    Indietro
+                </span>
+
+            </button>
+
+
+            <h1>
+                Storico turni
+            </h1>
+
+
+            <div class="topbar-spacer"></div>
+
+
+        </header>
+
+
+        <main class="history-page-content">
+
+
+            <div
+                id="storico-completo-lista"
+                class="history-full-list"
+            >
+            </div>
+
+
+        </main>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>

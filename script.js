@@ -95,7 +95,6 @@ function escapeHTML(testo) {
 function mostraPagina(id) {
     chiudiPopupPuntiPersonalizzati();
     chiudiMenuPartita();
-    chiudiMenuNuovaPartita();
     chiudiMenuPartitaSalvata();
     chiudiPopupRegole();
     chiudiPopupModificaPunteggio();
@@ -165,7 +164,6 @@ function nuovaPartita() {
         sets.value = 2;
     aggiornaListaGiocatori();
     cambiaSistemaPunteggio();
-    aggiornaMenuNuovaPartita();
     mostraPagina("nuova-partita");
 }
 /* =========================================================
@@ -209,7 +207,6 @@ function scegliGioco(gioco) {
         }
     }
     applicaPresetGioco(gioco);
-    aggiornaMenuNuovaPartita();
     mostraPagina("nuova-partita");
 }
 /* =========================================================
@@ -2334,14 +2331,7 @@ function apriPopupRegole(event) {
         event.stopPropagation();
     }
 
-    /* Le pagine delle regole esistono solo per Pili Pili. */
-    if (giocoScelto !== "Pili Pili") {
-        return;
-    }
-
     chiudiMenuPartita();
-    chiudiMenuNuovaPartita();
-    chiudiMenuNuovaPartita();
     chiudiPopupRegole();
 
     const overlay = document.createElement("div");
@@ -2970,69 +2960,6 @@ function chiudiPopupInizioGame() {
     }
 }
 /* =========================================================
-   MENU NUOVA PARTITA
-   Stesso stile del menu della schermata PARTITA.
-   Regole e Timer sono disponibili solo per Pili Pili.
-   ========================================================= */
-
-function toggleSetupMenu(event) {
-    if (event) {
-        event.stopPropagation();
-    }
-
-    const menu = document.getElementById("setup-menu");
-    if (!menu) return;
-
-    const staAprendo = menu.classList.contains("hidden");
-
-    if (staAprendo) {
-        aggiornaMenuNuovaPartita();
-        menu.classList.remove("hidden");
-        creaFadeMenu(chiudiMenuNuovaPartita);
-    } else {
-        chiudiMenuNuovaPartita();
-    }
-}
-
-function chiudiMenuNuovaPartita() {
-    const menu = document.getElementById("setup-menu");
-    if (menu) {
-        menu.classList.add("hidden");
-    }
-
-    /* Rimuove il fade solo se non c'è anche il menu della partita aperto. */
-    if (!document.getElementById("match-menu") ||
-        document.getElementById("match-menu").classList.contains("hidden")) {
-        rimuoviFadeMenu();
-    }
-}
-
-function aggiornaMenuNuovaPartita() {
-    const rules = document.getElementById("setup-menu-rules");
-    const timer = document.getElementById("setup-menu-timer");
-
-    const isPiliPili = giocoScelto === "Pili Pili";
-
-    if (rules) {
-        rules.classList.toggle("hidden", !isPiliPili);
-    }
-
-    if (timer) {
-        timer.classList.toggle("hidden", !isPiliPili);
-    }
-}
-
-function annullaNuovaPartita(event) {
-    if (event) {
-        event.stopPropagation();
-    }
-
-    chiudiMenuNuovaPartita();
-    mostraPagina("home");
-    aggiornaPartitaSalvata();
-}
-
-/* =========================================================
    MENU PARTITA
    Per ora solo estetico
    ========================================================= */
@@ -3111,7 +3038,6 @@ document.addEventListener("click", function(event) {
    ========================================================= */
 function apriPopupTimer() {
     chiudiMenuPartita();
-    chiudiMenuNuovaPartita();
     chiudiPopupTimer();
     const overlay = document.createElement("div");
     overlay.className = "cardscore-overlay timer-popup-overlay";
