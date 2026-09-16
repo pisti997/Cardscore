@@ -7465,3 +7465,35 @@ body.rules-popup-open {
     -webkit-user-select: none !important;
     user-select: none !important;
 }
+
+
+/* =========================================================
+   SCORE SCREEN — FINITURA RIQUADRI
+   Ombreggiatura coerente con i riquadri della schermata
+   "Nuova partita" e coppa immagine nel banner.
+   ========================================================= */
+.match-title-icon img {
+    width: 30px !important;
+    height: 30px !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+.match-title {
+    box-shadow: 0 8px 25px rgba(28, 42, 32, 0.06) !important;
+}
+
+.match-row {
+    box-shadow: 0 8px 25px rgba(28, 42, 32, 0.06) !important;
+}
+
+.quick-button,
+.undo-button,
+.next-turn-button {
+    box-shadow: 0 8px 25px rgba(28, 42, 32, 0.06) !important;
+}
+
+.history-empty,
+.history-row {
+    box-shadow: 0 8px 25px rgba(28, 42, 32, 0.06) !important;
+}
