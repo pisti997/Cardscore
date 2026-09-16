@@ -185,21 +185,19 @@ const COLORI_GIOCHI = {
     "Scopa": "#ebdcf3"
 };
 
+const COLORI_SFONDO_PARTITA = {
+    "UNO": "#dcefd5",
+    "Pili Pili": "#e84b5f",
+    "Scala 40": "#d5ebf1",
+    "Scopa": "#e8daef"
+};
+
 function applicaColoreGioco(gioco) {
     const colore = COLORI_GIOCHI[gioco] || "#236844";
+    const coloreSfondoPartita = COLORI_SFONDO_PARTITA[gioco] || colore;
     document.documentElement.style.setProperty("--selected-game-color", colore);
     document.documentElement.style.setProperty("--selected-game-color-text", "#173f31");
-
-    // Tinta morbida dello sfondo della schermata punteggi: deriva
-    // direttamente dal colore della card del gioco nella Home.
-    const match = colore.replace("#", "");
-    const r = parseInt(match.substring(0, 2), 16);
-    const g = parseInt(match.substring(2, 4), 16);
-    const b = parseInt(match.substring(4, 6), 16);
-    document.documentElement.style.setProperty(
-        "--selected-game-color-rgb",
-        `${r}, ${g}, ${b}`
-    );
+    document.documentElement.style.setProperty("--match-bg-color", coloreSfondoPartita);
 }
 function scegliGioco(gioco) {
     nuovaPartita();
