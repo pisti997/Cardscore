@@ -485,6 +485,22 @@ function chiudiSelettoreNumerico() {
     });
 });
 
+/*
+   I campi Punti / Game / Set sono solo pulsanti che aprono la rotella.
+   Devono quindi essere completamente non-editabili: su iPhone evitiamo
+   così che il tap dia il focus al campo e faccia comparire la tastiera.
+*/
+["punti-per-game", "game-per-set", "set-per-match"].forEach(function (idCampo) {
+    const campo = elemento(idCampo);
+    if (campo) {
+        campo.readOnly = true;
+        campo.setAttribute("inputmode", "none");
+        campo.setAttribute("autocomplete", "off");
+        campo.setAttribute("autocorrect", "off");
+        campo.setAttribute("spellcheck", "false");
+    }
+});
+
 document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") chiudiSelettoreNumerico();
 });

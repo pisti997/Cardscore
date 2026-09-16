@@ -7405,3 +7405,12 @@ body.rules-popup-open {
 #nuova-partita .game-header-topbar {
     overflow: visible !important;
 }
+
+/* ===== NUOVA PARTITA — I selettori Punti/Game/Set aprono solo la rotella ===== */
+#nuova-partita #punti-per-game,
+#nuova-partita #game-per-set,
+#nuova-partita #set-per-match {
+    caret-color: transparent !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+}
