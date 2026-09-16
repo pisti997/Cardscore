@@ -7609,3 +7609,59 @@ body.rules-popup-open {
         0 10px 24px rgba(20, 45, 30, 0.14),
         0 2px 5px rgba(20, 45, 30, 0.06) !important;
 }
+
+/* =========================================================
+   PILI PILI — RIFINITURE SCHERMATA PUNTEGGI
+   - Pulsanti matita ridotti di 1/3
+   - Matita leggermente più grande
+   - Pulsanti header piatti, senza effetto 3D, con ombra evidente
+   - Nomi giocatori aumentati di 1px
+========================================================= */
+
+/* Pulsante tondo della matita dentro ogni riquadro punteggio. */
+.score-card-menu-wrap {
+    top: 6px !important;
+    right: 6px !important;
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.score-card-menu-button {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    border-radius: 50% !important;
+    box-shadow: 0 1px 4px rgba(25, 45, 32, 0.08) !important;
+}
+
+.score-card-menu-button span {
+    font-size: 16px !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+}
+
+/* Pulsanti ai lati del titolo nella schermata partita:
+   niente effetto 3D/rilievo, ma ombra molto più evidente. */
+#partita .match-topbar .back-button,
+#partita .match-topbar .match-menu-button {
+    background: #ffffff !important;
+    border: 0 !important;
+    box-shadow: 0 10px 26px rgba(20, 40, 28, 0.28) !important;
+}
+
+#partita .match-topbar .back-button:active,
+#partita .match-topbar .match-menu-button:active {
+    box-shadow: 0 7px 18px rgba(20, 40, 28, 0.24) !important;
+}
+
+/* Nomi giocatori: +1px rispetto ai 34px attuali. */
+.match-player strong {
+    font-size: 35px !important;
+}
+
+@media (max-width: 390px) {
+    .match-player strong {
+        font-size: 32px !important;
+    }
+}
