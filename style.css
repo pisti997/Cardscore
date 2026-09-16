@@ -7609,3 +7609,177 @@ body.rules-popup-open {
         0 10px 24px rgba(20, 45, 30, 0.14),
         0 2px 5px rgba(20, 45, 30, 0.06) !important;
 }
+
+
+/* =========================================================
+   SCHERMATA PUNTEGGI — NUOVO RENDER
+   Sfondo frosted/slot-machine colorato in base al gioco,
+   pulsanti header nello stesso stile di "Nuova partita",
+   matite più compatte e nomi giocatori più grandi.
+   ========================================================= */
+#partita {
+    --selected-game-color-rgb: 35, 104, 68;
+    min-height: 100dvh !important;
+    background:
+        radial-gradient(circle at 8% 15%, rgba(var(--selected-game-color-rgb), .20) 0, rgba(var(--selected-game-color-rgb), 0) 34%),
+        radial-gradient(circle at 92% 35%, rgba(var(--selected-game-color-rgb), .13) 0, rgba(var(--selected-game-color-rgb), 0) 31%),
+        radial-gradient(circle at 50% 100%, rgba(var(--selected-game-color-rgb), .10) 0, rgba(var(--selected-game-color-rgb), 0) 42%),
+        rgba(248, 248, 244, .96) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(112%);
+    backdrop-filter: blur(22px) saturate(112%);
+}
+
+/* Il contenuto conserva l'effetto vetro leggero della schermata slot. */
+#partita .match-content {
+    position: relative;
+}
+
+/* Pulsanti tondi laterali: stesso linguaggio di "Nuova partita". */
+#partita .match-topbar .back-button,
+#partita .match-topbar .match-menu-button {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1px solid #e3e7e2 !important;
+    box-shadow:
+        0 4px 0 #d9ded9,
+        0 7px 15px rgba(25, 45, 32, .12) !important;
+    color: #17251d !important;
+    transition: transform .08s ease, box-shadow .08s ease !important;
+}
+
+#partita .match-topbar .back-button:active,
+#partita .match-topbar .match-menu-button:active {
+    transform: translateY(3px) !important;
+    box-shadow:
+        0 1px 0 #d9ded9,
+        0 3px 7px rgba(25, 45, 32, .08) !important;
+}
+
+#partita .match-topbar .back-button .back-arrow {
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 31px !important;
+    line-height: 1 !important;
+}
+
+#partita .match-topbar .back-button .back-arrow::before {
+    font-size: 31px !important;
+    transform: translateY(-1px) !important;
+}
+
+#partita .match-topbar .match-menu-button span {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    display: block !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    letter-spacing: 2px !important;
+    transform: translateX(1px) !important;
+}
+
+/* Nomi giocatori +4px. */
+#partita .match-player strong {
+    font-size: 38px !important;
+}
+
+/* Matita: almeno dimezzata rispetto al render precedente. */
+#partita .score-card-menu-wrap {
+    top: 7px !important;
+    right: 7px !important;
+    width: 18px !important;
+    height: 18px !important;
+    z-index: 50 !important;
+}
+
+#partita .score-card-menu-button {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1px solid #ececea !important;
+    box-shadow:
+        0 2px 5px rgba(23, 37, 29, .10) !important;
+}
+
+#partita .score-card-menu-button span {
+    font-size: 8px !important;
+    line-height: 1 !important;
+}
+
+#partita .score-card-menu-button:active {
+    transform: scale(.92) !important;
+}
+
+/* Ombre più profonde, coerenti con "Nuova partita". */
+#partita .match-title,
+#partita .match-row,
+#partita .quick-button,
+#partita .undo-button,
+#partita .next-turn-button,
+#partita .history-empty,
+#partita .history-row,
+#partita .objective-text {
+    box-shadow:
+        0 18px 34px rgba(28, 42, 32, .16),
+        0 5px 12px rgba(28, 42, 32, .10) !important;
+}
+
+/* Il banner resta leggero ma con una vera profondità sullo sfondo. */
+#partita .match-title {
+    box-shadow:
+        0 16px 32px rgba(28, 42, 32, .14),
+        0 5px 12px rgba(28, 42, 32, .08),
+        inset 0 1px 0 rgba(255,255,255,.72) !important;
+}
+
+/* Popup: sfondo nero/verde traslucido + blur marcato. */
+#partita .cardscore-overlay,
+.cardscore-overlay {
+    background: rgba(8, 18, 12, .66) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(.72) brightness(.72) !important;
+    backdrop-filter: blur(14px) saturate(.72) brightness(.72) !important;
+}
+
+/* Il sorteggio usa lo stesso effetto quando viene aperto dalla partita. */
+#partita .starting-draw-overlay,
+.starting-draw-overlay {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(var(--selected-game-color-rgb), .24) 0, rgba(var(--selected-game-color-rgb), 0) 35%),
+        radial-gradient(circle at 85% 70%, rgba(var(--selected-game-color-rgb), .15) 0, rgba(var(--selected-game-color-rgb), 0) 38%),
+        rgba(248, 248, 244, .94) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(112%);
+    backdrop-filter: blur(22px) saturate(112%);
+}
+
+@media (max-width: 390px) {
+    #partita .match-topbar .back-button,
+    #partita .match-topbar .match-menu-button {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        min-height: 34px !important;
+    }
+
+    #partita .match-player strong {
+        font-size: 38px !important;
+    }
+
+    #partita .score-card-menu-wrap {
+        width: 18px !important;
+        height: 18px !important;
+        top: 7px !important;
+        right: 7px !important;
+    }
+}
