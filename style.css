@@ -7666,60 +7666,60 @@ body.rules-popup-open {
     }
 }
 
+
 /* =========================================================
    EFFETTO BORDO ROTANTE — riquadro del giocatore di turno
-   (ispirato al video "Rotating Border" — luce che scorre
-   lungo il perimetro del box del turno attivo)
+   (basato su un tracciato SVG che percorre l'intero perimetro,
+   cosi' la luce viaggia in modo uniforme su tutti e 4 i lati
+   del riquadro, indipendentemente da quanto e' largo o alto)
    ========================================================= */
-@property --turn-glow-angle {
-    syntax: '<angle>';
-    inherits: false;
-    initial-value: 0deg;
+.match-row .turn-ring,
+.simple-score-row .turn-ring {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 1;
 }
 
-.match-row.active-turn,
-.simple-score-row.active-turn {
-    position: relative !important;
-    isolation: isolate !important;
+.match-row.active-turn .turn-ring,
+.simple-score-row.active-turn .turn-ring {
+    display: block;
 }
 
-.match-row.active-turn::before,
-.simple-score-row.active-turn::before {
-    content: "" !important;
-    position: absolute !important;
-    inset: -3px !important;
-    border-radius: inherit !important;
-    padding: 3px !important;
-    background: conic-gradient(
-        from var(--turn-glow-angle),
-        transparent 0deg,
-        transparent 230deg,
-        rgba(24, 85, 55, 0.5) 275deg,
-        var(--green) 310deg,
-        #eaffef 335deg,
-        var(--green) 355deg,
-        transparent 360deg
-    ) !important;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
-    -webkit-mask-composite: xor !important;
-    mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0) !important;
-    mask-clip: content-box, border-box !important;
-    mask-composite: exclude !important;
-    filter: drop-shadow(0 0 4px rgba(35, 104, 68, 0.65)) !important;
-    animation: turn-glow-spin 2.6s linear infinite !important;
-    pointer-events: none !important;
-    z-index: 1 !important;
+.turn-ring-glow {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 7;
+    stroke-linecap: round;
+    opacity: 0.4;
+    stroke-dasharray: 22 78;
+    filter: blur(3px);
+    animation: turn-ring-move 2.8s linear infinite;
 }
 
-@keyframes turn-glow-spin {
+.turn-ring-core {
+    fill: none;
+    stroke: #eaffef;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 10 90;
+    filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 6px rgba(35, 104, 68, 0.6));
+    animation: turn-ring-move 2.8s linear infinite;
+}
+
+@keyframes turn-ring-move {
     to {
-        --turn-glow-angle: 360deg;
+        stroke-dashoffset: -100;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .match-row.active-turn::before,
-    .simple-score-row.active-turn::before {
+    .turn-ring-glow,
+    .turn-ring-core {
         animation: none !important;
     }
 }
