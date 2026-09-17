@@ -7665,3 +7665,61 @@ body.rules-popup-open {
         font-size: 32px !important;
     }
 }
+
+/* =========================================================
+   EFFETTO BORDO ROTANTE — riquadro del giocatore di turno
+   (ispirato al video "Rotating Border" — luce che scorre
+   lungo il perimetro del box del turno attivo)
+   ========================================================= */
+@property --turn-glow-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.match-row.active-turn,
+.simple-score-row.active-turn {
+    position: relative !important;
+    isolation: isolate !important;
+}
+
+.match-row.active-turn::before,
+.simple-score-row.active-turn::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: -3px !important;
+    border-radius: inherit !important;
+    padding: 3px !important;
+    background: conic-gradient(
+        from var(--turn-glow-angle),
+        transparent 0deg,
+        transparent 230deg,
+        rgba(24, 85, 55, 0.5) 275deg,
+        var(--green) 310deg,
+        #eaffef 335deg,
+        var(--green) 355deg,
+        transparent 360deg
+    ) !important;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+    -webkit-mask-composite: xor !important;
+    mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0) !important;
+    mask-clip: content-box, border-box !important;
+    mask-composite: exclude !important;
+    filter: drop-shadow(0 0 4px rgba(35, 104, 68, 0.65)) !important;
+    animation: turn-glow-spin 2.6s linear infinite !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+@keyframes turn-glow-spin {
+    to {
+        --turn-glow-angle: 360deg;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .match-row.active-turn::before,
+    .simple-score-row.active-turn::before {
+        animation: none !important;
+    }
+}
