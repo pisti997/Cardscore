@@ -690,11 +690,6 @@ function creaTabelloneSemplice() {
         }
         if (usaTurnoManuale() && giocatoreAttivo !== null && indice === giocatoreAttivo) {
             riga.classList.add("active-turn");
-
-            const bordoTurno = document.createElement("span");
-            bordoTurno.className = "active-turn-border";
-            bordoTurno.setAttribute("aria-hidden", "true");
-            riga.appendChild(bordoTurno);
         }
         tabellone.appendChild(riga);
     });
@@ -724,21 +719,12 @@ function creaTabelloneGameSet() {
         const riga = document.createElement("div");
         riga.className = "match-row";
 
-        const turnoAttivo = (
+        if (
             sistemaPunteggio === "game-set" &&
             giocatoreAttivo !== null &&
             indice === giocatoreAttivo
-        );
-
-        if (turnoAttivo) {
+        ) {
             riga.classList.add("active-turn");
-
-            // Bordo luminoso animato: segue il perimetro della card
-            // mantenendo il verde dell'interfaccia.
-            const bordoTurno = document.createElement("span");
-            bordoTurno.className = "active-turn-border";
-            bordoTurno.setAttribute("aria-hidden", "true");
-            riga.appendChild(bordoTurno);
         }
 
         const player = document.createElement("div");
