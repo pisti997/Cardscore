@@ -7665,3 +7665,71 @@ body.rules-popup-open {
         font-size: 32px !important;
     }
 }
+
+/* =========================================================
+   TURNO ATTIVO — BORDO ANIMATO
+   La linea percorre il perimetro della card come nel video,
+   usando esclusivamente il verde dell'interfaccia.
+   ========================================================= */
+
+.match-row.active-turn {
+    border-color: transparent !important;
+}
+
+.active-turn-border {
+    position: absolute;
+    inset: -2px;
+    width: auto;
+    height: auto;
+    padding: 2px;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 12;
+
+    /* Una "coda" luminosa percorre il bordo */
+    background: conic-gradient(
+        from -90deg,
+        transparent 0deg,
+        transparent 285deg,
+        rgba(24, 85, 55, 0.08) 310deg,
+        rgba(24, 85, 55, 0.30) 328deg,
+        var(--green-dark) 342deg,
+        rgba(24, 85, 55, 0.48) 352deg,
+        transparent 360deg
+    );
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+
+    filter: drop-shadow(0 0 2px rgba(24, 85, 55, 0.34));
+    animation: activeTurnBorderMove 2.4s linear infinite;
+}
+
+@keyframes activeTurnBorderMove {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mantiene l'effetto discreto sui display più piccoli. */
+@media (max-width: 390px) {
+    .active-turn-border {
+        inset: -2px;
+    }
+}
+
+/* Rispetta l'impostazione iOS di riduzione dei movimenti. */
+@media (prefers-reduced-motion: reduce) {
+    .active-turn-border {
+        animation: none !important;
+    }
+}
