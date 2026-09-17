@@ -666,6 +666,35 @@ function aggiornaSchermataPartita() {
     }
 }
 /* =========================================================
+   ANELLO ROTANTE — turno attivo
+   Crea un piccolo overlay SVG che percorre l'intero perimetro
+   del riquadro (tutti e 4 i lati in modo uniforme, indipendente
+   dalla forma del box) per indicare il giocatore di turno.
+========================================================= */
+function creaAnelloTurno(raggio) {
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "turn-ring");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+
+    [ "turn-ring-glow", "turn-ring-core" ].forEach(classe => {
+        const rect = document.createElementNS(NS, "rect");
+        rect.setAttribute("class", classe);
+        rect.style.x = "-3px";
+        rect.style.y = "-3px";
+        rect.style.width = "calc(100% + 6px)";
+        rect.style.height = "calc(100% + 6px)";
+        rect.setAttribute("rx", raggio);
+        rect.setAttribute("ry", raggio);
+        rect.setAttribute("pathLength", "100");
+        svg.appendChild(rect);
+    });
+
+    return svg;
+}
+
+/* =========================================================
    TABELLONE SEMPLICE
 ========================================================= */
 function creaTabelloneSemplice() {
@@ -690,6 +719,7 @@ function creaTabelloneSemplice() {
         }
         if (usaTurnoManuale() && giocatoreAttivo !== null && indice === giocatoreAttivo) {
             riga.classList.add("active-turn");
+            riga.appendChild(creaAnelloTurno(19));
         }
         tabellone.appendChild(riga);
     });
@@ -725,6 +755,7 @@ function creaTabelloneGameSet() {
             indice === giocatoreAttivo
         ) {
             riga.classList.add("active-turn");
+            riga.appendChild(creaAnelloTurno(18));
         }
 
         const player = document.createElement("div");
