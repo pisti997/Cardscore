@@ -155,8 +155,8 @@ select {
 }
 
 .simple-score-row.active-turn {
-    transform: translateY(-2px) scale(1.015);
-    border: 2px solid var(--green-dark) !important;
+    transform: none !important;
+    border: 1px solid var(--green-dark) !important;
     box-shadow:
         0 8px 20px rgba(20, 60, 35, 0.18),
         0 2px 5px rgba(20, 60, 35, 0.12) !important;
@@ -2666,8 +2666,8 @@ button.is-pressed {
 }
 
 .match-row.active-turn {
-    transform: translateY(-2px) scale(1.015);
-    border: 2px solid var(--green-dark) !important;
+    transform: none !important;
+    border: 1px solid var(--green-dark) !important;
     box-shadow:
         0 8px 20px rgba(20, 60, 35, 0.18),
         0 2px 5px rgba(20, 60, 35, 0.12) !important;
@@ -7690,25 +7690,39 @@ body.rules-popup-open {
     display: block;
 }
 
+.turn-ring-track {
+    fill: none;
+    stroke: var(--green-dark);
+    stroke-width: 3;
+    stroke-linecap: round;
+    opacity: 0.95;
+}
+
 .turn-ring-glow {
     fill: none;
     stroke: var(--green);
     stroke-width: 4;
     stroke-linecap: round;
-    opacity: 0.4;
-    stroke-dasharray: 40 78;
-    filter: blur(3px);
+    opacity: 0.42;
+    stroke-dasharray: 34 66;
+    filter: blur(2px);
     animation: turn-ring-move 2.8s linear infinite;
 }
 
 .turn-ring-core {
     fill: none;
     stroke: #eaffef;
-    stroke-width: 3;
+    stroke-width: 2;
     stroke-linecap: round;
-    stroke-dasharray: 10 90;
-    filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 6px rgba(35, 104, 68, 0.6));
+    stroke-dasharray: 13 87;
+    filter: drop-shadow(0 0 2px var(--green)) drop-shadow(0 0 5px rgba(35, 104, 68, 0.55));
     animation: turn-ring-move 2.8s linear infinite;
+}
+
+/* L'anello è solo un overlay: non deve mai spostare o ridimensionare i numeri. */
+.match-row.active-turn .turn-ring,
+.simple-score-row.active-turn .turn-ring {
+    transform: none !important;
 }
 
 @keyframes turn-ring-move {
