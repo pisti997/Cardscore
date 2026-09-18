@@ -678,8 +678,7 @@ function creaAnelloTurno(raggio) {
     svg.setAttribute("aria-hidden", "true");
     svg.setAttribute("focusable", "false");
 
-    // Struttura della scia: bordo fisso + alone + più livelli di coda sfumata.
-    [ "turn-ring-track", "turn-ring-glow" ].forEach(classe => {
+    [ "turn-ring-track", "turn-ring-glow", "turn-ring-core" ].forEach(classe => {
         const rect = document.createElementNS(NS, "rect");
         rect.setAttribute("class", classe);
         rect.style.x = "-3px";
@@ -691,42 +690,6 @@ function creaAnelloTurno(raggio) {
         rect.setAttribute("pathLength", "100");
         svg.appendChild(rect);
     });
-
-    // Coda luminosa: gli strati sono leggermente sfalsati e diventano
-    // progressivamente più trasparenti, creando una dissolvenza morbida.
-    [
-        ["trail-1", "0.28", "0s"],
-        ["trail-2", "0.22", "-0.08s"],
-        ["trail-3", "0.17", "-0.16s"],
-        ["trail-4", "0.12", "-0.24s"],
-        ["trail-5", "0.08", "-0.32s"],
-        ["trail-6", "0.045", "-0.40s"]
-    ].forEach(([classe, opacita, ritardo]) => {
-        const rect = document.createElementNS(NS, "rect");
-        rect.setAttribute("class", `turn-ring-trail ${classe}`);
-        rect.style.x = "-3px";
-        rect.style.y = "-3px";
-        rect.style.width = "calc(100% + 6px)";
-        rect.style.height = "calc(100% + 6px)";
-        rect.setAttribute("rx", raggio);
-        rect.setAttribute("ry", raggio);
-        rect.setAttribute("pathLength", "100");
-        rect.style.opacity = opacita;
-        rect.style.animationDelay = ritardo;
-        svg.appendChild(rect);
-    });
-
-    // Testa della scia: sottile, bianca e molto luminosa.
-    const core = document.createElementNS(NS, "rect");
-    core.setAttribute("class", "turn-ring-core");
-    core.style.x = "-3px";
-    core.style.y = "-3px";
-    core.style.width = "calc(100% + 6px)";
-    core.style.height = "calc(100% + 6px)";
-    core.setAttribute("rx", raggio);
-    core.setAttribute("ry", raggio);
-    core.setAttribute("pathLength", "100");
-    svg.appendChild(core);
 
     return svg;
 }
@@ -786,13 +749,13 @@ function creaTabelloneGameSet() {
         const riga = document.createElement("div");
         riga.className = "match-row";
 
-        if (
+        const turnoAttivo =
             sistemaPunteggio === "game-set" &&
             giocatoreAttivo !== null &&
-            indice === giocatoreAttivo
-        ) {
+            indice === giocatoreAttivo;
+
+        if (turnoAttivo) {
             riga.classList.add("active-turn");
-            riga.appendChild(creaAnelloTurno(18));
         }
 
         const player = document.createElement("div");
@@ -889,6 +852,12 @@ function creaTabelloneGameSet() {
         riga.appendChild(match);
         riga.appendChild(punti);
         riga.appendChild(menuWrap);
+
+        // Il bordo animato viene aggiunto per ultimo: non deve mai
+        // cambiare gli indici dei figli della card e quindi il layout.
+        if (turnoAttivo) {
+            riga.appendChild(creaAnelloTurno(18));
+        }
 
         tabellone.appendChild(riga);
     });
