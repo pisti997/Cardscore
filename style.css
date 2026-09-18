@@ -7701,7 +7701,7 @@ body.rules-popup-open {
 .turn-ring-glow {
     fill: none;
     stroke: var(--green);
-    stroke-width: 3;
+    stroke-width: 4;
     stroke-linecap: round;
     opacity: 0.42;
     stroke-dasharray: 34 66;
