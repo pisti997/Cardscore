@@ -7723,14 +7723,52 @@ body.rules-popup-open {
     animation: turn-ring-move 2.8s linear infinite;
 }
 
+/* Seconda linea: identica alla prima ma sempre a 180° sul perimetro. */
+.turn-ring-glow-opposite {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 4;
+    stroke-linecap: round;
+    opacity: 0.22;
+    stroke-dasharray: 40 60;
+    stroke-dashoffset: 50;
+    filter: blur(4px);
+    animation: turn-ring-move-opposite 2.8s linear infinite;
+}
+
+.turn-ring-core-opposite {
+    fill: none;
+    stroke: #eaffef;
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 1;
+    stroke-dasharray: 20 80;
+    stroke-dashoffset: 50;
+    filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 7px var(--green)) drop-shadow(0 0 12px rgba(35, 104, 68, 0.6));
+    animation: turn-ring-move-opposite 2.8s linear infinite;
+}
+
 .match-row.active-turn .turn-ring,
 .simple-score-row.active-turn .turn-ring {
     transform: none !important;
 }
 
 @keyframes turn-ring-move {
+    from {
+        stroke-dashoffset: 0;
+    }
     to {
         stroke-dashoffset: -100;
+    }
+}
+
+/* Parte da 50% del perimetro: resta sempre opposta alla prima. */
+@keyframes turn-ring-move-opposite {
+    from {
+        stroke-dashoffset: 50;
+    }
+    to {
+        stroke-dashoffset: -50;
     }
 }
 
