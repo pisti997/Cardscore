@@ -7718,7 +7718,7 @@ body.rules-popup-open {
     stroke-width: 2;
     stroke-linecap: round;
     opacity: 1;
-    stroke-dasharray: 12 88;
+    stroke-dasharray: 30 70;
     filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 7px var(--green)) drop-shadow(0 0 12px rgba(35, 104, 68, 0.6));
     animation: turn-ring-move 2.8s linear infinite;
 }
