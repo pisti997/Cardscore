@@ -678,7 +678,7 @@ function creaAnelloTurno(raggio) {
     svg.setAttribute("aria-hidden", "true");
     svg.setAttribute("focusable", "false");
 
-    [ "turn-ring-track", "turn-ring-tail", "turn-ring-body", "turn-ring-mid", "turn-ring-head-glow", "turn-ring-head" ].forEach(classe => {
+    [ "turn-ring-track", "turn-ring-glow", "turn-ring-core" ].forEach(classe => {
         const rect = document.createElementNS(NS, "rect");
         rect.setAttribute("class", classe);
         rect.style.x = "-3px";
