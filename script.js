@@ -749,13 +749,13 @@ function creaTabelloneGameSet() {
         const riga = document.createElement("div");
         riga.className = "match-row";
 
-        if (
+        const turnoAttivo =
             sistemaPunteggio === "game-set" &&
             giocatoreAttivo !== null &&
-            indice === giocatoreAttivo
-        ) {
+            indice === giocatoreAttivo;
+
+        if (turnoAttivo) {
             riga.classList.add("active-turn");
-            riga.appendChild(creaAnelloTurno(18));
         }
 
         const player = document.createElement("div");
@@ -852,6 +852,12 @@ function creaTabelloneGameSet() {
         riga.appendChild(match);
         riga.appendChild(punti);
         riga.appendChild(menuWrap);
+
+        // Il bordo animato viene aggiunto per ultimo: non deve mai
+        // cambiare gli indici dei figli della card e quindi il layout.
+        if (turnoAttivo) {
+            riga.appendChild(creaAnelloTurno(18));
+        }
 
         tabellone.appendChild(riga);
     });
