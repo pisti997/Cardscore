@@ -7693,7 +7693,7 @@ body.rules-popup-open {
 .turn-ring-track {
     fill: none;
     stroke: var(--green-dark);
-    stroke-width: 2;
+    stroke-width: 3;
     stroke-linecap: round;
     opacity: 0.95;
 }
@@ -7701,10 +7701,10 @@ body.rules-popup-open {
 .turn-ring-glow {
     fill: none;
     stroke: var(--green);
-    stroke-width: 2;
+    stroke-width: 3;
     stroke-linecap: round;
     opacity: 0.42;
-    stroke-dasharray: 60 40;
+    stroke-dasharray: 34 66;
     filter: blur(2px);
     animation: turn-ring-move 2.8s linear infinite;
 }
