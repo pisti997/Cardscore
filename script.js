@@ -678,7 +678,16 @@ function creaAnelloTurno(raggio) {
     svg.setAttribute("aria-hidden", "true");
     svg.setAttribute("focusable", "false");
 
-    [ "turn-ring-track", "turn-ring-glow", "turn-ring-core" ].forEach(classe => {
+    // Tracciato base + due linee luminose in movimento.
+    // La seconda linea usa lo stesso movimento ma parte a 50% del
+    // perimetro, quindi rimane sempre diametralmente opposta alla prima.
+    [
+        "turn-ring-track",
+        "turn-ring-glow",
+        "turn-ring-core",
+        "turn-ring-glow-opposite",
+        "turn-ring-core-opposite"
+    ].forEach(classe => {
         const rect = document.createElementNS(NS, "rect");
         rect.setAttribute("class", classe);
         rect.style.x = "-3px";
@@ -1773,7 +1782,7 @@ function mostraMessaggioPartita(tipo, testo) {
                 <div class="game-flip-face game-flip-front">
 
                     <div class="match-message-icon">
-                    ${ icona }
+                        <img src="immagini/coppa.png" alt="Coppa">
                     </div>
 
                     <div class="match-message-label">
