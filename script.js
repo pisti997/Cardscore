@@ -1782,7 +1782,7 @@ function mostraMessaggioPartita(tipo, testo) {
                 <div class="game-flip-face game-flip-front">
 
                     <div class="match-message-icon">
-                    ${ icona }
+                        <img src="immagini/coppa.png" alt="Coppa">
                     </div>
 
                     <div class="match-message-label">
@@ -1804,7 +1804,7 @@ function mostraMessaggioPartita(tipo, testo) {
                 <div class="game-flip-face game-flip-back">
 
                     <div class="starting-player-icon">
-                        🎯
+                        <img src="immagini/coppa.png" alt="Coppa">
                     </div>
 
                     <div class="starting-player-label">

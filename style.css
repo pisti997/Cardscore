@@ -7842,3 +7842,109 @@ body.rules-popup-open {
         max-width: 115px !important;
     }
 }
+
+
+/* =========================================================
+   POPUP GAME / NUOVO GAME — COPPA + ANIMAZIONE RIMBALZANTE
+   La coppa sostituisce il vecchio emoji 🎯.
+   GAME: icona 2x rispetto all'emoji precedente.
+   NUOVO GAME: icona +1/3 rispetto all'emoji precedente.
+   L'animazione riprende il rimbalzo/zoom usato dalla slot machine.
+========================================================= */
+.match-message-icon img {
+    width: 54px !important;
+    height: 54px !important;
+    object-fit: contain !important;
+    display: block !important;
+    animation: popupCoppaRimbalzo 0.88s cubic-bezier(.16,.84,.22,1) both;
+    transform-origin: center center;
+}
+
+.game-flip-back .starting-player-icon img {
+    width: 39px !important;
+    height: 39px !important;
+    object-fit: contain !important;
+    display: block !important;
+    animation: popupCoppaRimbalzo 0.88s cubic-bezier(.16,.84,.22,1) both;
+    transform-origin: center center;
+}
+
+@keyframes popupCoppaRimbalzo {
+    0% {
+        transform: scale(0.78) translateY(7px);
+        opacity: 0;
+    }
+    42% {
+        transform: scale(1.13) translateY(-2px);
+        opacity: 1;
+    }
+    68% {
+        transform: scale(0.98) translateY(1px);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* =========================================================
+   NUOVO GAME — PULSANTI GIOCATORI
+   Stesso colore, pulsazione e riflesso del pulsante
+   "Inizia partita" della schermata Nuova partita.
+========================================================= */
+.game-flip-back .starting-player-button {
+    position: relative !important;
+    overflow: hidden !important;
+    background: #1f6043 !important;
+    color: #ffffff !important;
+    box-shadow:
+        0 3px 0 #164a34,
+        0 8px 18px rgba(31, 96, 67, 0.20) !important;
+    animation: iniziaPartitaPulsa 2.4s ease-in-out infinite;
+}
+
+.game-flip-back .starting-player-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(
+        115deg,
+        transparent,
+        rgba(255, 255, 255, 0.32),
+        transparent
+    );
+    transform: skewX(-18deg);
+    animation: iniziaPartitaRiflesso 3.4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.game-flip-back .starting-player-button:active {
+    animation-play-state: paused;
+    transform: translateY(2px) scale(0.99) !important;
+    box-shadow:
+        0 1px 0 #164a34,
+        0 4px 10px rgba(31, 96, 67, 0.18) !important;
+}
+
+.game-flip-back .starting-player-button .starting-player-number {
+    position: relative;
+    z-index: 1;
+    background: #ffffff !important;
+    color: #1f6043 !important;
+}
+
+.game-flip-back .starting-player-button > * {
+    position: relative;
+    z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .match-message-icon img,
+    .game-flip-back .starting-player-icon img,
+    .game-flip-back .starting-player-button {
+        animation: none !important;
+    }
+}
