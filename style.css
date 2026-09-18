@@ -7719,7 +7719,6 @@ body.rules-popup-open {
     animation: turn-ring-move 2.8s linear infinite;
 }
 
-/* L'anello è solo un overlay: non deve mai spostare o ridimensionare i numeri. */
 .match-row.active-turn .turn-ring,
 .simple-score-row.active-turn .turn-ring {
     transform: none !important;
