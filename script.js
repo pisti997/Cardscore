@@ -1571,6 +1571,26 @@ function elaboraVittoriaGame(indice, conMessaggi) {
     let setVinto = false;
     let matchVinto = false;
     /*
+       Blocca il turno attivo e programma, dopo 3 secondi,
+       il giro della carta per scegliere il prossimo giocatore.
+       (Usata sia per fine Set che per fine Game normale.)
+    */
+    function bloccaTurnoEProgrammaGiroCarta() {
+        giocatoreAttivo = null;
+        if (timerSceltaGiocatore) {
+            clearTimeout(timerSceltaGiocatore);
+            timerSceltaGiocatore = null;
+        }
+        timerSceltaGiocatore = setTimeout(() => {
+            if (!partitaTerminata && sistemaPunteggio === "game-set") {
+                const popup = document.querySelector(".game-flip-card");
+                if (popup) {
+                    popup.classList.add("is-flipped");
+                }
+            }
+        }, 3000);
+    }
+    /*
        =====================================================
        IL GAME È STATO VINTO
        =====================================================
@@ -1609,20 +1629,7 @@ function elaboraVittoriaGame(indice, conMessaggi) {
             // Mostriamo il popup SET
             mostraMessaggioPartita("set", `${ giocatori[indice] } vince il Set!`);
             // Nessun giocatore attivo finché non viene scelto
-            giocatoreAttivo = null;
-            if (timerSceltaGiocatore) {
-                clearTimeout(timerSceltaGiocatore);
-                timerSceltaGiocatore = null;
-            }
-            // Dopo 3 secondi giriamo la carta
-            timerSceltaGiocatore = setTimeout(() => {
-                if (!partitaTerminata && sistemaPunteggio === "game-set") {
-                    const popup = document.querySelector(".game-flip-card");
-                    if (popup) {
-                        popup.classList.add("is-flipped");
-                    }
-                }
-            }, 3000);
+            bloccaTurnoEProgrammaGiroCarta();
         }
         return {
             setVinto,
@@ -1637,20 +1644,7 @@ function elaboraVittoriaGame(indice, conMessaggi) {
     if (conMessaggi) {
         mostraMessaggioPartita("game", `${ giocatori[indice] } vince il Game!`);
         // Blocchiamo il turno
-        giocatoreAttivo = null;
-        if (timerSceltaGiocatore) {
-            clearTimeout(timerSceltaGiocatore);
-            timerSceltaGiocatore = null;
-        }
-        // Dopo 3 secondi giriamo la carta
-        timerSceltaGiocatore = setTimeout(() => {
-            if (!partitaTerminata && sistemaPunteggio === "game-set") {
-                const popup = document.querySelector(".game-flip-card");
-                if (popup) {
-                    popup.classList.add("is-flipped");
-                }
-            }
-        }, 3000);
+        bloccaTurnoEProgrammaGiroCarta();
     }
     return {
         setVinto,
