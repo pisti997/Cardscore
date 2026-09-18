@@ -7948,3 +7948,109 @@ body.rules-popup-open {
         animation: none !important;
     }
 }
+
+
+/* =========================================================
+   MODIFICHE POPUP GAME — cerchio/coppia + pulsanti
+   Solo estetica: non modifica dimensioni dei popup né JS.
+   ========================================================= */
+
+/* DAVANTI: cerchio verde circa 2x, con rimbalzo più evidente
+   ispirato al movimento della slot machine. */
+.game-flip-front .match-message-icon {
+    width: 112px !important;
+    height: 112px !important;
+    min-width: 112px !important;
+    min-height: 112px !important;
+    margin-bottom: 18px !important;
+    animation: popupCerchioSlotBounce 1.05s cubic-bezier(.16,.84,.22,1) infinite;
+    transform-origin: center center;
+}
+
+.game-flip-front .match-message-icon img {
+    width: 88px !important;
+    height: 88px !important;
+    animation: popupCoppaSlotBounce 1.05s cubic-bezier(.16,.84,.22,1) infinite !important;
+    transform-origin: center center;
+}
+
+/* DIETRO: mantieni esattamente le dimensioni attuali,
+   ma usa lo stesso movimento rimbalzante. */
+.game-flip-back .starting-player-icon {
+    animation: popupCerchioSlotBounce 1.05s cubic-bezier(.16,.84,.22,1) infinite;
+    transform-origin: center center;
+}
+
+.game-flip-back .starting-player-icon img {
+    animation: popupCoppaSlotBounce 1.05s cubic-bezier(.16,.84,.22,1) infinite !important;
+    transform-origin: center center;
+}
+
+/* Movimento tipo slot: piccolo ingresso, overshoot, compressione
+   e assestamento, senza il semplice zoom singolo. */
+@keyframes popupCerchioSlotBounce {
+    0% {
+        transform: translateY(10px) scale(.82);
+        opacity: .72;
+    }
+    24% {
+        transform: translateY(-7px) scale(1.08);
+        opacity: 1;
+    }
+    42% {
+        transform: translateY(4px) scale(.96);
+    }
+    58% {
+        transform: translateY(-2px) scale(1.03);
+    }
+    74% {
+        transform: translateY(1px) scale(.99);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes popupCoppaSlotBounce {
+    0% {
+        transform: translateY(12px) scale(.70) rotate(-3deg);
+        opacity: 0;
+    }
+    24% {
+        transform: translateY(-8px) scale(1.12) rotate(2deg);
+        opacity: 1;
+    }
+    43% {
+        transform: translateY(5px) scale(.94) rotate(-1deg);
+    }
+    60% {
+        transform: translateY(-2px) scale(1.04) rotate(1deg);
+    }
+    76% {
+        transform: translateY(1px) scale(.99);
+    }
+    100% {
+        transform: translateY(0) scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+/* Pulsanti giocatori: più arrotondati come "Inizia partita". */
+.game-flip-back .starting-player-button {
+    border-radius: 17px !important;
+}
+
+/* Numero: verde scuro, mantenendo il cerchio bianco. */
+.game-flip-back .starting-player-button .starting-player-number {
+    color: var(--green-dark) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .game-flip-front .match-message-icon,
+    .game-flip-front .match-message-icon img,
+    .game-flip-back .starting-player-icon,
+    .game-flip-back .starting-player-icon img {
+        animation: none !important;
+    }
+}
