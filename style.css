@@ -7698,25 +7698,52 @@ body.rules-popup-open {
     opacity: 0.95;
 }
 
-.turn-ring-glow {
+/* Scia lunga: scura in coda e progressivamente più luminosa verso la testa. */
+.turn-ring-tail,
+.turn-ring-body,
+.turn-ring-mid,
+.turn-ring-head-glow,
+.turn-ring-head {
     fill: none;
-    stroke: var(--green);
-    stroke-width: 4;
     stroke-linecap: round;
-    opacity: 0.42;
-    stroke-dasharray: 34 66;
-    filter: blur(2px);
     animation: turn-ring-move 2.8s linear infinite;
 }
 
-.turn-ring-core {
-    fill: none;
+.turn-ring-tail {
+    stroke: var(--green);
+    stroke-width: 3;
+    opacity: 0.20;
+    stroke-dasharray: 48 52;
+}
+
+.turn-ring-body {
+    stroke: var(--green);
+    stroke-width: 3;
+    opacity: 0.34;
+    stroke-dasharray: 36 64;
+}
+
+.turn-ring-mid {
+    stroke: #b8e9c8;
+    stroke-width: 3;
+    opacity: 0.55;
+    stroke-dasharray: 24 76;
+}
+
+.turn-ring-head-glow {
+    stroke: var(--green);
+    stroke-width: 5;
+    opacity: 0.72;
+    stroke-dasharray: 14 86;
+    filter: blur(3px);
+}
+
+.turn-ring-head {
     stroke: #eaffef;
     stroke-width: 2;
-    stroke-linecap: round;
-    stroke-dasharray: 13 87;
-    filter: drop-shadow(0 0 2px var(--green)) drop-shadow(0 0 5px rgba(35, 104, 68, 0.55));
-    animation: turn-ring-move 2.8s linear infinite;
+    opacity: 1;
+    stroke-dasharray: 7 93;
+    filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 7px rgba(35, 104, 68, 0.72));
 }
 
 .match-row.active-turn .turn-ring,
