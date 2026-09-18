@@ -3781,6 +3781,7 @@ button.is-pressed {
     text-shadow: none !important;
     z-index: 4 !important;
     pointer-events: none !important;
+    transform: none !important;
 }
 
 .match-row.active-turn .match-player {
@@ -4012,6 +4013,7 @@ button.is-pressed {
     line-height: 1 !important;
     font-weight: 750 !important;
     letter-spacing: 0.7px !important;
+    transform: none !important;
 }
 
 .score-card-menu-wrap {
@@ -7688,6 +7690,7 @@ body.rules-popup-open {
 .match-row.active-turn .turn-ring,
 .simple-score-row.active-turn .turn-ring {
     display: block;
+    transform: none !important;
 }
 
 .turn-ring-track {
