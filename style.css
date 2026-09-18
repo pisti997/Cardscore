@@ -7690,6 +7690,7 @@ body.rules-popup-open {
     display: block;
 }
 
+/* Scia lunga con coda scura e testa luminosa. Tutti i tratti seguono lo stesso movimento, ma con offset progressivi per creare una vera sfumatura. */
 .turn-ring-track {
     fill: none;
     stroke: var(--green-dark);
@@ -7698,7 +7699,6 @@ body.rules-popup-open {
     opacity: 0.95;
 }
 
-/* Scia lunga: scura in coda e progressivamente più luminosa verso la testa. */
 .turn-ring-tail,
 .turn-ring-body,
 .turn-ring-mid,
@@ -7706,44 +7706,51 @@ body.rules-popup-open {
 .turn-ring-head {
     fill: none;
     stroke-linecap: round;
-    animation: turn-ring-move 2.8s linear infinite;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 2.8s;
 }
 
 .turn-ring-tail {
     stroke: var(--green);
     stroke-width: 3;
-    opacity: 0.20;
-    stroke-dasharray: 48 52;
+    opacity: 0.16;
+    stroke-dasharray: 50 50;
+    animation-name: turn-ring-tail-move;
 }
 
 .turn-ring-body {
     stroke: var(--green);
     stroke-width: 3;
-    opacity: 0.34;
-    stroke-dasharray: 36 64;
+    opacity: 0.32;
+    stroke-dasharray: 38 62;
+    animation-name: turn-ring-body-move;
 }
 
 .turn-ring-mid {
     stroke: #b8e9c8;
     stroke-width: 3;
-    opacity: 0.55;
-    stroke-dasharray: 24 76;
+    opacity: 0.56;
+    stroke-dasharray: 26 74;
+    animation-name: turn-ring-mid-move;
 }
 
 .turn-ring-head-glow {
     stroke: var(--green);
-    stroke-width: 5;
-    opacity: 0.72;
-    stroke-dasharray: 14 86;
+    stroke-width: 7;
+    opacity: 0.70;
+    stroke-dasharray: 13 87;
     filter: blur(3px);
+    animation-name: turn-ring-head-glow-move;
 }
 
 .turn-ring-head {
-    stroke: #eaffef;
+    stroke: #effff3;
     stroke-width: 2;
     opacity: 1;
     stroke-dasharray: 7 93;
-    filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 7px rgba(35, 104, 68, 0.72));
+    filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 8px rgba(35, 104, 68, 0.75));
+    animation-name: turn-ring-head-move;
 }
 
 .match-row.active-turn .turn-ring,
@@ -7751,10 +7758,29 @@ body.rules-popup-open {
     transform: none !important;
 }
 
-@keyframes turn-ring-move {
-    to {
-        stroke-dashoffset: -100;
-    }
+@keyframes turn-ring-tail-move {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -100; }
+}
+
+@keyframes turn-ring-body-move {
+    from { stroke-dashoffset: -10; }
+    to { stroke-dashoffset: -110; }
+}
+
+@keyframes turn-ring-mid-move {
+    from { stroke-dashoffset: -20; }
+    to { stroke-dashoffset: -120; }
+}
+
+@keyframes turn-ring-head-glow-move {
+    from { stroke-dashoffset: -33; }
+    to { stroke-dashoffset: -133; }
+}
+
+@keyframes turn-ring-head-move {
+    from { stroke-dashoffset: -36; }
+    to { stroke-dashoffset: -136; }
 }
 
 @media (prefers-reduced-motion: reduce) {
