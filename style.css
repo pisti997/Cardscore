@@ -7739,3 +7739,67 @@ body.rules-popup-open {
         animation: none !important;
     }
 }
+
+/* =========================================================
+   BLOCCO POSIZIONE PUNTEGGI — il cambio turno non deve
+   modificare in alcun modo la posizione visiva dei numeri.
+   ========================================================= */
+.match-row .score-big {
+    position: absolute !important;
+    top: 28px !important;
+    right: 28px !important;
+    width: 115px !important;
+    min-width: 115px !important;
+    max-width: 115px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    text-align: right !important;
+    font-variant-numeric: tabular-nums !important;
+    z-index: 6 !important;
+}
+
+.match-row.active-turn .score-big {
+    position: absolute !important;
+    top: 28px !important;
+    right: 28px !important;
+    width: 115px !important;
+    min-width: 115px !important;
+    max-width: 115px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    text-align: right !important;
+    z-index: 6 !important;
+}
+
+.simple-score-row .simple-player-score,
+.simple-score-row.active-turn .simple-player-score {
+    flex: 0 0 80px !important;
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    text-align: right !important;
+    font-variant-numeric: tabular-nums !important;
+    z-index: 6 !important;
+}
+
+.match-row.active-turn .turn-ring,
+.simple-score-row.active-turn .turn-ring {
+    z-index: 1 !important;
+    transform: none !important;
+}
+
+@media (max-width: 390px) {
+    .match-row .score-big,
+    .match-row.active-turn .score-big {
+        top: 28px !important;
+        right: 28px !important;
+        width: 115px !important;
+        min-width: 115px !important;
+        max-width: 115px !important;
+    }
+}
